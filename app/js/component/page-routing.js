@@ -10,7 +10,6 @@ import { Login, Logout, ResetPassword, SignUp } from './login.js'
 import { ProfileSettings } from './profile.js'
 import { PrivateRoute } from './requireuser.js'
 import { FAQ, Learning, HelpfulResources } from './static-pages.js'
-import { ResultTable } from './table.js'
 import { Season } from './season.js'
 import { PageNotFound } from './404.js'
 
