@@ -1,0 +1,59 @@
+{
+  "name": "Bot",
+  "plural": "bots",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "remoting": {
+      "sharedMethods": {
+        "*": false
+      }
+    }
+  },
+  "hidden": [
+    "authorId"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "race": {
+      "type": "string",
+      "required": true
+    },
+    "dll": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "author": {
+      "type": "belongsTo",
+      "model": "Author"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

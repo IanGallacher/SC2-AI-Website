@@ -1,0 +1,43 @@
+#sidebar {
+  width: $sidebar-width;
+  position: fixed;
+  float: left;
+  height: 100%;
+  z-index: 999;
+  background: #0e1b4d;
+  color: #fff;
+  transition: all 0.3s;
+  #toggle {
+    content: "asdfasdf";
+    float:right;
+  }
+  &.active {
+    margin-left: -$sidebar-width;
+  }
+  .sidebar-header {
+    padding: 20px;
+    background: #0e1b4d;
+  }
+  ul li {
+    a:hover {
+      color: #7386D5;
+      background: #fff;
+    }
+    &.active > a {
+      color: #fff;
+      background: #0e1b4d;
+    }
+  }
+}
+.sidebar-components {
+  padding: 20px 0;
+  p {
+    color: #fff;
+    padding: 10px;
+  }
+  li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+  }
+}

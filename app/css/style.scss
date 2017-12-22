@@ -1,0 +1,290 @@
+// Some of this you may recognize from bootstrap.
+// The prototype was made with bootstrap, and was later removed.
+// The naming conventions and definitions of classes may be similar.
+// Removing bootstrap, takes ~150kb off of the final webpack bundle.
+$sidebar-width: 250px;
+$sidebar-collapse-size: 50px;
+$mobile-threshold: 768px;
+$navbar-padding-vertical: 15px;
+@import "./clearfix.scss";
+@import "./sidebar.scss";
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+  min-height: 100vh;
+  margin: 0;
+}
+
+p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #999;
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+pre {
+  background: #E8E8E8;
+}
+
+.navbar {
+  margin: 0;
+  min-height: 50px;
+  padding: 15px 10px;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+
+  @include clearfix;
+}
+
+
+.nav {
+  margin-bottom: 0;
+  padding-left: 0; // Override default ul/ol
+  list-style: none;
+  @include clearfix;
+
+  > li {
+    position: relative;
+    display: block;
+
+    > a {
+      position: relative;
+      display: block;
+      padding: 15px;
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        background-color: #777;
+      }
+    }
+  }
+}
+
+.navbar-btn {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+.navbar-nav {
+  align-items: center;
+  float: right !important;
+  margin-right: 0;
+}
+
+.navbar-nav {
+  @media (min-width: $mobile-threshold) {
+    float: left;
+    margin: 0;
+
+    > li {
+      float: left;
+      > a {
+        padding-top:    $navbar-padding-vertical;
+        padding-bottom: $navbar-padding-vertical;
+      }
+    }
+  }
+}
+
+.navbar-header {
+  @include clearfix;
+  margin: 10px 0;
+  float: left;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px dashed #ddd;
+  margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+.flex-vertical-container {
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.flex-horizontal-container {
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.sidebar-placeholder {
+  transition: all 0.3s;
+  width: $sidebar-width;
+  flex-shrink: 0;
+  @media (max-width: $mobile-threshold)
+  {
+    width: $sidebar-collapse-size;
+  }
+}
+
+/* ---------------------------------------------------
+    PAGE-AREA STYLE
+----------------------------------------------------- */
+// Center all the content that is below the header.
+.page-area {
+  padding: 0 10%;
+}
+
+a[aria-expanded]::before {
+  display: block;
+  position: absolute;
+  right: 20px;
+  // font-family: 'Glyphicons Halflings';
+  font-size: 0.6em;
+}
+// a[aria-expanded="false"]::before {
+//   content: '\e259'; // Down arrow.
+// }
+// a[aria-expanded="true"]::before {
+//   content: '\e260'; // Up arrow.
+// }
+
+// Indent the dropdown menu.
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #0e1b4d;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+@media (max-width: $mobile-threshold) { // The sidebar can collapse on mobile
+  #sidebar[aria-expanded="false"] {
+      margin-left: $sidebar-collapse-size - $sidebar-width;
+  }
+  .Header-logo-img {
+    display:none;
+  }
+}
+@media (min-width: $mobile-threshold + 1px) {
+  .toggle-wrap {
+    display:none;
+  }
+  .sidebar-components {
+    border-bottom: 1px solid #47748b;
+  }
+}
+
+.form-signin, .form-signup {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading, .form-signup .form-signup-heading,
+.form-signin .checkbox, .form-signup .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox, .form-signup .checkbox{
+  font-weight: normal;
+}
+.form-signin .form-control, .form-signup .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus, .form-signup .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"], .form-signup input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin .btn, .form-signup .btn  {
+  margin-bottom: 10px;
+}
+
+
+////// TOGGLE bar
+$toggle-height: 4px;
+$toggle-width: 30px;
+$toggle-center-dist: ($sidebar-collapse-size/2 - $toggle-width/2);
+.toggle-wrap {
+  position: absolute;
+  cursor: pointer;
+  top: $toggle-center-dist;
+  right: $toggle-center-dist;
+
+  /*disable selection*/
+  -webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.toggle-bar,
+.toggle-bar::before,
+.toggle-bar::after,
+.toggle-wrap.active .toggle-bar,
+.toggle-wrap.active .toggle-bar::before,
+.toggle-wrap.active .toggle-bar::after {
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+.toggle-bar {
+	width: $toggle-width;
+	margin: 10px 0;
+	position: relative;
+	border-top: $toggle-height solid #CCC;
+	display: block;
+}
+.toggle-bar::before,
+.toggle-bar::after {
+	content: "";
+	display: block;
+	background: #CCC;
+	height: $toggle-height;
+	width: $toggle-width;
+	position: absolute;
+	top: -12px;
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+	-ms-transform-origin: 13%;
+	-webkit-transform-origin: 13%;
+	transform-origin: 13%;
+}
+.toggle-bar::after {
+  top: $toggle-height;
+}
+.toggle-wrap[data-expanded="true"] .toggle-bar {
+  border-top: $toggle-height solid transparent;
+}
+.toggle-wrap[data-expanded="true"] .toggle-bar::before {
+	-ms-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.toggle-wrap[data-expanded="true"] .toggle-bar::after {
+	-ms-transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}

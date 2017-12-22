@@ -1,0 +1,19 @@
+{
+  "db": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "url": "",
+    "database": "sc2aiwebsite",
+    "password": "KXZIuAJq1lumj4b42qf7Oy9Fmxhq9x9bffy6vACkVL",
+    "name": "db",
+    "user": "root",
+    "connector": "mysql"
+  },
+  "uploads": {
+    "name": "uploads",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./user_upload/",
+    "nameConflict": "makeUnique"
+  }
+}
