@@ -46,8 +46,7 @@ export class Sidebar extends React.Component {
                aria-expanded={this.state.seasonExpanded}
               >Ladder Seasons</a>
             <ul id="homeSubmenu"
-                className={this.state.seasonExpanded ? "list-unstyled" :
-                                                        "collapse"}>
+                className={this.state.seasonExpanded ? "" : "collapse"}>
               <li>
                 <Link to="/season/?season-id=">Current</Link>
               </li>

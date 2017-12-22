@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 export class FAQ extends React.Component {
   render() {
     return (
-      <div id="faq">
+      <React.Fragment>
       <div className="header">
         <h3>{"How Do I get on bot on the ladder?"}</h3>
       </div>
@@ -28,7 +28,7 @@ export class FAQ extends React.Component {
       <h3>How long do seasons last?</h3>
       </div>
       Normally 2 weeks, but can be longer if not enough games are being played
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -36,27 +36,26 @@ export class FAQ extends React.Component {
 export class Learning extends React.Component {
   render() {
     return (
-      <div id="learning">
+      <React.Fragment>
+        <div className="header">
+        <h3>Starcraft API</h3>
+        </div>
+        The best place to start creating bots is with the starcraft API.  THis is available at
+        <a href="https://github.com/Blizzard/s2client-api">https://github.com/Blizzard/s2client-api</a>  This contains examples tutorials on how to create a starcraft 2 bots
 
-      <div className="header">
-      <h3>Starcraft API</h3>
-      </div>
-      The best place to start creating bots is with the starcraft API.  THis is available at
-      <a href="https://github.com/Blizzard/s2client-api">https://github.com/Blizzard/s2client-api</a>  This contains examples tutorials on how to create a starcraft 2 bots
+        <div className="header">
+        <h3>PySC2</h3>
+        </div>
+        The deepmind python library:
+        <a href="https://github.com/deepmind/pysc2">https://github.com/deepmind/pysc2</a> is a great place to start for running minigames, and using machine learning techniques to overcome challenges.
 
-      <div className="header">
-      <h3>PySC2</h3>
-      </div>
-      The deepmind python library:
-      <a href="https://github.com/deepmind/pysc2">https://github.com/deepmind/pysc2</a> is a great place to start for running minigames, and using machine learning techniques to overcome challenges.
+        <div className="header">
+        <h3>Command Center</h3>
+        </div>
 
-      <div className="header">
-      <h3>Command Center</h3>
-      </div>
-
-      A good place to go to start creating SC2 bots is the Command Center framework available at
-      <a href="https://github.com/davechurchill/commandcenter" >https://github.com/davechurchill/commandcenter</a>
-      </div>
+        A good place to go to start creating SC2 bots is the Command Center framework available at
+        <a href="https://github.com/davechurchill/commandcenter" >https://github.com/davechurchill/commandcenter</a>
+      </React.Fragment>
     );
   }
 }
@@ -64,7 +63,7 @@ export class Learning extends React.Component {
 export class HelpfulResources extends React.Component {
   render() {
     return (
-      <div id="helpful-resources">
+      <React.Fragment>
         <div className="header">
         <h3>Discord</h3>
         </div>
@@ -79,7 +78,7 @@ export class HelpfulResources extends React.Component {
         And a reddit community <a href="https://www.reddit.com/r/sc2ai/">https://www.reddit.com/r/sc2ai/</a>
         <br />
         Both of these can be useful resources for developing bots.
-      </div>
+      </React.Fragment>
     );
   }
 }
