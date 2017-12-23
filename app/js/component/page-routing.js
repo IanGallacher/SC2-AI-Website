@@ -12,6 +12,8 @@ import { PrivateRoute } from './requireuser.js'
 import { FAQ, Learning, HelpfulResources } from './static-pages.js'
 import { Season } from './season.js'
 import { PageNotFound } from './404.js'
+import LoginLogic from './../logic/login.js'
+
 
 export default class PageRouting extends React.Component {
   render() {

@@ -1,0 +1,121 @@
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+}
+
+$padding-base-vertical:     6px !default;
+$padding-base-horizontal:   12px !default;
+$line-height-base:          1.428571429 !default; // 20/14
+$font-size-base:            14px !default;
+$btn-border-radius-base:    20px;
+$input-color: #ccc;
+
+
+input {
+  display: block;
+}
+
+.collapse {
+  display: none;
+  &.show {
+    display: block;
+  }
+}
+button {
+  display: inline-block;
+  margin-bottom: 0; // For input.btn
+//  font-weight: $btn-font-weight;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  white-space: nowrap;
+  @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
+  //@include user-select(none);
+
+  // &,
+  // &:active,
+  // &.active {
+  //   &:focus,
+  //   &.focus {
+  //     @include tab-focus;
+  //   }
+  // }
+
+  // &:hover,
+  // &:focus,
+  // &.focus {
+  //   color: $btn-default-color;
+  //   text-decoration: none;
+  // }
+  //
+  // &:active,
+  // &.active {
+  //   outline: 0;
+  //   background-image: none;
+  //   @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+  // }
+  //
+  // &.disabled,
+  // &[disabled],
+  // fieldset[disabled] & {
+  //   cursor: $cursor-disabled;
+  //   @include opacity(.65);
+  //   @include box-shadow(none);
+  // }
+
+  // [converter] extracted a& to a.btn
+}
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 105px;
+  border: 1px solid #ccc;
+  border-radius: $btn-border-radius-base;
+}
+
+// everything below
+// basically just makes a max Width
+//////
+/////
+.form-signin, .form-signup {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading, .form-signup .form-signup-heading,
+.form-signin .checkbox, .form-signup .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox, .form-signup .checkbox{
+  font-weight: normal;
+}
+.form-signin .form-control, .form-signup .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus, .form-signup .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"], .form-signup input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin .btn, .form-signup .btn  {
+  margin-bottom: 10px;
+}

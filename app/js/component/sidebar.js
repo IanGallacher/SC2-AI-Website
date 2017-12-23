@@ -42,9 +42,10 @@ export class Sidebar extends React.Component {
 
         <ul className="sidebar-components">
           <li>
-            <a onClick={this.collapseSeasonToggle.bind(this)}
+            <Link to="#"
+               onClick={this.collapseSeasonToggle.bind(this)}
                aria-expanded={this.state.seasonExpanded}
-              >Ladder Seasons</a>
+              >Ladder Seasons</Link>
             <ul id="homeSubmenu"
                 className={this.state.seasonExpanded ? "" : "collapse"}>
               <li>

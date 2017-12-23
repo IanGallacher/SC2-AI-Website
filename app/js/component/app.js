@@ -55,12 +55,10 @@ export default class App extends React.Component {
         <React.Fragment>
           <Header access_token={this.state.access_token}/>
           <div className="flex-horizontal-container">
-          <Sidebar/>
+            <Sidebar/>
             <div className="sidebar-placeholder"/>
-            <div className="flex-vertical-container">
-              <div className="page-area">
-                <PageRouting/>
-              </div>
+            <div className="page-area">
+              <PageRouting/>
             </div>
           </div>
         </React.Fragment>
