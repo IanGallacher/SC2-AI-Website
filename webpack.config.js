@@ -35,6 +35,7 @@ module.exports = {
       "/api": "107.161.27.148:3000"
     }
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
