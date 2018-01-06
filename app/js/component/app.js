@@ -58,7 +58,7 @@ export default class App extends React.Component {
             <Sidebar/>
             <div className="sidebar-placeholder"/>
             <div className="page-area">
-              <PageRouting/>
+              <PageRouting ctx={this}/>
             </div>
           </div>
         </React.Fragment>

@@ -26,21 +26,21 @@ export default class PageRouting extends React.Component {
           <Route path="/login"
                  render={(props) => <Login
                           {...props}
-                          login={this.login}
+                          login={this.props.ctx.login}
                           access_token={LoginLogic.getAccessToken()}
                           />}/>
 
           <Route path="/logout"
                  render={(props) => <Logout
                           {...props}
-                          logout={this.logout}
+                          logout={this.props.ctx.logout}
                           access_token={LoginLogic.getAccessToken()}
                           />}/>
 
           <Route path="/sign-up"
                  render={(props) => <SignUp
                           {...props}
-                          signUp={this.signUp}
+                          signUp={this.props.ctx.signUp}
                           access_token={LoginLogic.getAccessToken()}
                           />}/>
 
