@@ -1,14 +1,37 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+
+import { API_URL } from './app.js'
 
 const logo_path = require("./../../img/sc2Ladder.gif");
+
+function renderSeasonLink(id, name) {
+  let link_path = "/season/?season-id=" + id.toString();
+  return (
+    <Link to={link_path} key={id}>{name}</Link>
+  );
+}
 
 export class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { sidebarExpanded : false,
+    this.state = { season : [{id:1,name:"current"}],
+                   sidebarExpanded : false,
                    seasonExpanded : false }
+  }
+
+  loadSeasons(ctx) { // ctx is shorthand for the context of the react component
+    return new Promise (function (resolve, reject) {
+      axios.post(API_URL + "/credentials/logout", {})
+        .then(function (response) {
+          resolve(response.data);
+        })
+        .catch(function (error) {
+          reject(response.data);
+        });
+    });
   }
 
   collapseSeasonToggle() {
@@ -49,7 +72,11 @@ export class Sidebar extends React.Component {
             <ul id="homeSubmenu"
                 className={this.state.seasonExpanded ? "" : "collapse"}>
               <li>
-                <Link to="/season/?season-id=">Current</Link>
+                {
+                  this.state.season.map((s) => {
+                    return renderSeasonLink(s.id, s.name);
+                  })
+                }
               </li>
             </ul>
           </li>
