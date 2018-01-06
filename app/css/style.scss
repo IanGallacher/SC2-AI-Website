@@ -86,6 +86,7 @@ pre {
 .page-area {
   padding: 0 10%;
   min-width: 0; // Flexbox does weird things with this value. Don't let it.
+  width: 100%;
 }
 
 a[aria-expanded]::before {
