@@ -8,7 +8,7 @@ import { AdminControlPanel } from './admin.js'
 import { Bots } from './bots.js'
 import { Login, Logout, ResetPassword, SignUp } from './login.js'
 import { ProfileSettings } from './profile.js'
-import { PrivateRoute } from './requireuser.js'
+import { RequireLoggedInRoute } from './requireuser.js'
 import { FAQ, Learning, HelpfulResources } from './static-pages.js'
 import { Season } from './season.js'
 import { PageNotFound } from './404.js'
@@ -20,7 +20,7 @@ export default class PageRouting extends React.Component {
     return (
         <Switch>
           <Route path="/home" component={Season}/>
-          <Route path="/admin-control-panel"
+          <RequireLoggedInRoute path="/admin-control-panel"
                  component={AdminControlPanel}/>
 
           <Route path="/login"
@@ -47,7 +47,7 @@ export default class PageRouting extends React.Component {
           <Route path="/reset-password" component={ResetPassword}/>
           <Route path="/authors" component={AuthorBios}/>
           <Route path="/authors/*" component={AuthorBios}/>
-          <PrivateRoute path="/my-profile" component={ProfileSettings}/>
+          <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
           <Route path="/learning" component={Learning}/>
           <Route path="/faq" component={FAQ}/>
           <Route path="/helpful-resources" component={HelpfulResources}/>

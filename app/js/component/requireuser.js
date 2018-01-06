@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Route, Redirect } from 'react-router-dom'
 
-export function PrivateRoute (
+export function RequireLoggedInRoute (
                   {component: Component,
                    users_allowed: AllowedUsers }) {
   return (
