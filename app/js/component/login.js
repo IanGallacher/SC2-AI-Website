@@ -32,18 +32,15 @@ export class Login extends React.PureComponent {
     this.state = { error: "" };
     if(localStorage.getItem("access_token") === null)
       localStorage.setItem("access_token", "");
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(event) {
+  onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
     this.props.login(this);
   }
@@ -127,18 +124,15 @@ export class SignUp extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { errors: [] };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(event) {
+  onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
     this.props.signUp(this);
   }

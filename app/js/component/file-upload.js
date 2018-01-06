@@ -10,24 +10,20 @@ export default class UploadFile extends React.Component {
     this.state = { file: null };
     if(localStorage.getItem("access_token") === null)
        localStorage.setItem("access_token", "");
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.fileUpload = this.fileUpload.bind(this);
   }
 
-  onChange(event) {
+  onChange = (event) => {
     this.setState({
       file: event.target.files[0]
     });
   }
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
     this.fileUpload(this.state.file);
   }
 
-  fileUpload(file) {
+  fileUpload = (file) => {
     // Configure upload.
     const url = API_URL + "/bots/upload";//"/user-uploads/botdll/upload";
     const access_token = localStorage.getItem("access_token");

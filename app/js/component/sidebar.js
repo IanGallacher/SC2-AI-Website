@@ -34,13 +34,28 @@ export class Sidebar extends React.Component {
     });
   }
 
-  collapseSeasonToggle() {
+  componentDidMount() {
+    axios.get(API_URL + "/bots")
+    .then((response) => {
+      console.log(response.data);
+
+      this.setState({
+        bots: response.data
+      });
+    })
+    .catch((error) => {
+      console.log("ERROR");
+      console.log(error);
+    });
+  }
+
+  collapseSeasonToggle = () => {
     this.setState({
       seasonExpanded: !this.state.seasonExpanded
     });
   }
 
-  collapseSidebarToggle() {
+  collapseSidebarToggle = () => {
     this.setState({
       sidebarExpanded: !this.state.sidebarExpanded
     });
@@ -50,7 +65,7 @@ export class Sidebar extends React.Component {
     return (
       <nav id="sidebar" aria-expanded={this.state.sidebarExpanded}>
         <div id="toggle"
-             onClick={this.collapseSidebarToggle.bind(this)}
+             onClick={this.collapseSidebarToggle}
              data-expanded={this.state.sidebarExpanded}
              className="toggle-wrap">
             <span className="toggle-bar"></span>
@@ -66,7 +81,7 @@ export class Sidebar extends React.Component {
         <ul className="sidebar-components">
           <li>
             <Link to="#"
-               onClick={this.collapseSeasonToggle.bind(this)}
+               onClick={this.collapseSeasonToggle}
                aria-expanded={this.state.seasonExpanded}
               >Ladder Seasons</Link>
             <ul id="homeSubmenu"
