@@ -1,6 +1,6 @@
+import axios from 'axios'
 import React from 'react'
 import { render } from 'react-dom'
-import axios from 'axios'
 
 import { API_URL } from './app.js'
 

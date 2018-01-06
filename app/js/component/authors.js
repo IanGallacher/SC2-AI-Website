@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
@@ -13,7 +14,6 @@ export class AuthorBios extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { author: [], author_id: -1, profile: [] };
-    this.state.location = this.props.location;
   }
 
   setAuthorFromURL() {
@@ -31,19 +31,22 @@ export class AuthorBios extends React.PureComponent {
   }
 
   componentDidMount() {
-    let request = new XMLHttpRequest();
-    request.onload = function(e) {
-      if (request.readyState === 4) {
+    // Get all the authors from the server.
+    const url = API_URL + "/authors";
 
-        this.setState({
-          author: JSON.parse(request.response)
-        });
-        this.setAuthorFromURL();
-      }
-    }.bind(this);
+    axios.get(url)
+    .then((response) => {
+      console.log(response.data);
 
-    request.open("get", API_URL + "/authors", true);
-    request.send();
+      this.setState({
+        author: response.data
+      });
+      this.setAuthorFromURL();
+    })
+    .catch((error) => {
+      console.log("ERROR");
+      console.log(error);
+    });
   }
 
   componentDidUpdate() {

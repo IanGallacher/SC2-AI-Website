@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 import { render } from 'react-dom'
 
@@ -11,19 +12,18 @@ export class Bots extends React.Component {
   }
 
   componentDidMount() {
-    let request = new XMLHttpRequest();
+    axios.get(API_URL + "/bots")
+    .then((response) => {
+      console.log(response.data);
 
-    request.onload = function(e) {
-      if (request.readyState === 4) {
-        console.log(request.response); //Outputs a DOMString by default
-
-        this.setState({
-          bots: JSON.parse(request.response)
-        });
-      }
-    }.bind(this);
-    request.open("get", API_URL + "/bots", true);
-    request.send();
+      this.setState({
+        bots: response.data
+      });
+    })
+    .catch((error) => {
+      console.log("ERROR");
+      console.log(error);
+    });
   }
 
   render() {

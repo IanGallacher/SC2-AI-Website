@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 import { render } from 'react-dom'
 
@@ -11,20 +12,19 @@ export class Season extends React.Component {
   }
 
   componentDidMount() {
-    let request = new XMLHttpRequest();
+    // Get all the seasons from the server.
+    axios.get(API_URL + "/seasons")
+    .then((response) => {
+      console.log(response.data);
 
-    request.onload = function(e) {
-      if (request.readyState === 4) {
-        console.log(request.response); //Outputs a DOMString by default
-
-        this.setState({
-          season: JSON.parse(request.response)
-        });
-      }
-    }.bind(this);
-
-    request.open("get", API_URL + "/seasons", true);
-    request.send();
+      this.setState({
+        season: response.data
+      });
+    })
+    .catch((error) => {
+      console.log("ERROR");
+      console.log(error);
+    });
   }
 
   render() {
