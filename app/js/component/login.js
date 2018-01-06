@@ -58,10 +58,26 @@ export class Login extends React.PureComponent {
             className="form-signin"
             onSubmit={this.onSubmit}>
         <h2 className="form-signin-heading">Please sign in</h2>
-        <input name="username" type="text" className="form-control" placeholder="Username" onChange={this.onChange} autoFocus />
-        <input name="password" type="password" className="form-control" placeholder="Password" onChange={this.onChange} />
-        <button name="Submit" id="submit" className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <Link to="/sign-up" className="btn btn-lg btn-primary btn-block">Create new account</Link>
+        <input name="username"
+               type="text"
+               className="form-text-input-box"
+               placeholder="Username"
+               onChange={this.onChange} autoFocus />
+        <input name="password"
+               type="password"
+               className="form-text-input-box"
+               placeholder="Password"
+               onChange={this.onChange} />
+        <button name="Submit"
+                id="submit"
+                className="btn btn-lg btn-primary btn-block"
+                type="submit">
+                  Sign in
+                </button>
+        <Link to="/sign-up"
+              className="btn btn-lg btn-primary btn-block">
+                Create new account
+              </Link>
 
         <div id="message">{ this.state.error } { login_message }</div>
         <Link to="/reset-password">Forgot Password</Link>
@@ -129,31 +145,33 @@ export class SignUp extends React.PureComponent {
 
   render() {
     return (
-      <form name="form-signup" className="form-signup center-me" onSubmit={this.onSubmit}>
+      <form name="form-signup"
+            className="form-signup center-me"
+            onSubmit={this.onSubmit}>
         <h2 className="form-signup-heading">Register</h2>
         <input name="username"
                type="text"
-               className="form-control"
+               className="form-text-input-box"
                placeholder="Username"
                onChange={this.onChange}
                autoFocus />
 
         <input name="email"
                type="text"
-               className="form-control"
+               className="form-text-input-box"
                placeholder="Email"
                onChange={this.onChange} />
         <br/>
 
         <input name="password"
                type="password"
-               className="form-control"
+               className="form-text-input-box"
                placeholder="Password"
                onChange={this.onChange} />
 
         <input name="password-confirm"
                type="password"
-               className="form-control"
+               className="form-text-input-box"
                placeholder="Confirm Password"
                onChange={this.onChange} />
         <br/>
