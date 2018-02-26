@@ -18,7 +18,7 @@ export var API_URL = "http://107.161.27.148:3000/api"
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { access_token: LoginLogic.getAccessToken}
+    this.state = { access_token: LoginLogic.getAccessToken }
   }
 
 // I am using a new experimental feature of ECMAscript.

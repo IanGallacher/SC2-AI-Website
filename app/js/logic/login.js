@@ -36,6 +36,9 @@ export default class LoginLogic {
   static logout(ctx) { // ctx is shorthand for the context of the react component
     return new Promise (function (resolve, reject) {
       const access_token = localStorage.getItem("access_token");
+      
+      localStorage.setItem("access_token", "");
+      localStorage.setItem("user_id", "");
 
       let instance = axios.create({
         headers: {'Authorization': access_token}
@@ -46,7 +49,8 @@ export default class LoginLogic {
           resolve(response.data);
         })
         .catch(function (error) {
-          reject(response.data);
+          console.log(error);
+          reject(error);
         });
     });
   }
@@ -54,9 +58,9 @@ export default class LoginLogic {
   static signUp(ctx) { // ctx is shorthand for the context of the react component
     return new Promise (function (resolve, reject) {
       axios.post(API_URL + "/credentials", {
-        "username": this.state["username"],
-        "email": this.state["email"],
-        "password": this.state["password"]
+        "username": ctx.state["username"],
+        "email": ctx.state["email"],
+        "password": ctx.state["password"]
       })
       .then(function (response) {
         resolve(response);
