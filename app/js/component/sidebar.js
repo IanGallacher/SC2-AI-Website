@@ -22,25 +22,26 @@ export class Sidebar extends React.Component {
                    seasonExpanded : false }
   }
 
-  loadSeasons(ctx) { // ctx is shorthand for the context of the react component
-    return new Promise (function (resolve, reject) {
-      axios.post(API_URL + "/credentials/logout", {})
-        .then(function (response) {
-          resolve(response.data);
-        })
-        .catch(function (error) {
-          reject(response.data);
-        });
-    });
-  }
+  // loadSeasons(ctx) { // ctx is shorthand for the context of the react component
+  //   return new Promise (function (resolve, reject) {
+  //     axios.post(API_URL + "/credentials/logout", {})
+  //       .then(function (response) {
+  //         resolve(response.data);
+  //       })
+  //       .catch(function (error) {
+  //         reject(response.data);
+  //       });
+  //   });
+  // }
 
   componentDidMount() {
-    axios.get(API_URL + "/bots")
+    // Get all the seasons from the server.
+    axios.get(API_URL + "/seasons")
     .then((response) => {
       console.log(response.data);
 
       this.setState({
-        bots: response.data
+        season: response.data
       });
     })
     .catch((error) => {

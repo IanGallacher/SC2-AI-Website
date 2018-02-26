@@ -88,11 +88,11 @@ export class AuthorBios extends React.PureComponent {
       if(this.state.profile != []) {
         return (
           <div>
-            <div className="row">
-          		<div className="col-sm-10">
+            <div className="author-trading-card">
+          		<div>
                 <h1>{this.state.profile.username}</h1>
               </div>
-            	<div className="col-sm-2">
+            	<div>
                 <img className="img-thumbnail"
                      src={this.state.profile.avatar}
                      alt={this.state.profile.username}/>
