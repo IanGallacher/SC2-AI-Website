@@ -7,7 +7,25 @@ import { API_URL } from './app.js'
 const default_avatar_path = require("./../../img/avatar.jpg");
 
 class AuthorTradingCard extends React.Component {
-
+  render() {
+    return (
+      <div className="trading-card">
+        <img className="img-thumbnail"
+             src={"/" + default_avatar_path}
+             alt={this.props.user.username}/>
+        <div className="text-center">
+          <h3>{this.props.user.username}</h3>
+          <p>
+            <Link to={"/authors/?author=" + this.props.user.id.toString()}
+               name="View Profile" id="profile"
+               className="btn btn-lg btn-primary btn-block"
+               type="submit">View Profile
+            </Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
 }
 
 export class AuthorBios extends React.PureComponent {
@@ -58,49 +76,30 @@ export class AuthorBios extends React.PureComponent {
     {
       return (
         <div className="author-content">
-        <h3>Authors</h3>
-          { this.state.author.map(function(user) {
-            return (
-              <div key={user.id}>
-                <div className="trading-card">
-                  <img className="img-thumbnail"
-                       src={"/" + default_avatar_path}
-                       alt={user.username}/>
-                  <div className="text-center">
-                    <h3>{user.username}</h3>
-                    <p>
-                      <Link to={"/authors/?author=" + user.id.toString()}
-                         name="View Profile" id="profile"
-                         className="btn btn-lg btn-primary btn-block"
-                         type="submit">View Profile
-                      </Link>
-                    </p>
-                  </div>
+          <h3>Authors</h3>
+            { this.state.author.map(function(user) {
+              return (
+                <div key={user.id}>
+                  <AuthorTradingCard user={user}/>
                 </div>
-              </div>
-            );
-          })
-        }
+              );
+            })
+          }
         </div>
       );
     }
     else {
       if(this.state.profile != []) {
         return (
-          <div>
-            <div className="author-trading-card">
-          		<div>
-                <h1>{this.state.profile.username}</h1>
-              </div>
-            	<div>
-                <img className="img-thumbnail"
-                     src={this.state.profile.avatar}
-                     alt={this.state.profile.username}/>
-              </div>
+          <div className="trading-card-horizontal">
+            <img className="img-thumbnail"
+               src={this.state.profile.avatar}
+               alt={this.state.profile.username}/>
+        		<div>
+              <h1>{this.state.profile.username}</h1>
           	</div>
             <div className="row">
           		<div className="col-sm-3">
-
                   <ul className="list-group">
                     <li className="list-group-item text-muted">Profile</li>
                     <li className="list-group-item text-right">

@@ -2,20 +2,17 @@
 // Named because it looks just like a trading card.
 .img-thumbnail {
   max-width: 100%;
-    padding: 4px;
-    line-height: 1.42857143;
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 4px;
-    -webkit-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    display: inline-block;
-    max-width: 100%;
-    height: auto;
+  border-radius: 6px;
 }
 .trading-card {
-  width: 200px;
+  margin: 10px 10px 0 0;
+  max-width: 100%;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-width: 100%;
+  height: auto;
   float: left;
   // On mobile, show the thumbnails as full width.
   width: 100%;
@@ -27,4 +24,14 @@
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+.trading-card-horizontal {
+  margin-right: 10px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  height: auto;
+  float: left;
+  width: 100%;
 }
