@@ -62,7 +62,7 @@ export class AuthorBios extends React.PureComponent {
           { this.state.author.map(function(user) {
             return (
               <div key={user.id}>
-                <div className="col-md-3">
+                <div className="trading-card">
                   <img className="img-thumbnail"
                        src={"/" + default_avatar_path}
                        alt={user.username}/>
