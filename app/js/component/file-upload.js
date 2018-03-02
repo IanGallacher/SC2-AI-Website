@@ -7,30 +7,43 @@ import { API_URL } from './app.js'
 export default class UploadFile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: null };
+    this.state = { file: null, bot_name: null, bot_race: "terran" };
     if(localStorage.getItem("access_token") === null)
        localStorage.setItem("access_token", "");
   }
 
-  onChange = (event) => {
+  onTextChange = (event) => {
+    this.setState({
+      bot_name: event.target.value
+    });
+  }
+
+  onFileChange = (event) => {
     this.setState({
       file: event.target.files[0]
     });
   }
 
-  onSubmit = (event) => {
-    event.preventDefault();
-    this.fileUpload(this.state.file);
+  onRadioButtonChange = (event) => {
+    this.setState({
+      bot_race: event.target.value
+    });
   }
 
-  fileUpload = (file) => {
+  onSubmit = (event) => {
+    event.preventDefault();
+    this.fileUpload(this.state.file, this.state.bot_name, this.state.bot_race);
+  }
+
+  fileUpload = (file, bot_name, bot_race) => {
     // Configure upload.
     const url = API_URL + "/bots/upload";//"/user-uploads/botdll/upload";
     const access_token = localStorage.getItem("access_token");
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('bot_name', "asdf");
     formData.append('user_id', localStorage.getItem("user_id"));
+    formData.append('bot_name', bot_name);
+    formData.append('bot_race', bot_race);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -38,7 +51,6 @@ export default class UploadFile extends React.Component {
       }
     }
     console.log(formData);
-
     // Submit the upload
     axios.post(url, formData, config)
     .then(function (response) {
@@ -55,7 +67,12 @@ export default class UploadFile extends React.Component {
     return (
       <form onSubmit={this.onSubmit}>
         <label htmlFor="file">{this.props.label}</label>
-        <input name="file" type="file" onChange={this.onChange}/>
+        <input name="filename" type="text" onChange={this.onTextChange}/>
+        <input name="file" type="file" onChange={this.onFileChange}/>
+        <input type="radio" name="bot_race" value="terran" onChange={this.onRadioButtonChange} defaultChecked={true} /> Terran
+        <input type="radio" name="bot_race" value="protoss" onChange={this.onRadioButtonChange}/> Protoss
+        <input type="radio" name="bot_race" value="zerg" onChange={this.onRadioButtonChange}/> Zerg
+        <input type="radio" name="bot_race" value="random" onChange={this.onRadioButtonChange}/> Random
         <input type="submit" value="Submit"/>
       </form>
     )

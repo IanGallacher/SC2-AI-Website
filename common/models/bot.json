@@ -11,11 +11,12 @@
       }
     }
   },
-  "hidden": [
-    "authorId"
-  ],
   "properties": {
     "name": {
+      "type": "string",
+      "required": true
+    },
+    "author": {
       "type": "string",
       "required": true
     },
@@ -29,12 +30,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "author": {
-      "type": "belongsTo",
-      "model": "Author"
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "*",

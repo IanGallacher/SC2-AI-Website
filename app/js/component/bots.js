@@ -12,7 +12,19 @@ export class Bots extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(API_URL + "/bots")
+    let axios_param = {};
+    // If we want to filter by author.
+    if (this.props.author)
+      axios_param = {
+                      params: {
+                        filter: {
+                          "where": {
+                            "author": this.props.author.username
+                          }
+                        }
+                      }
+                    };
+    axios.get(API_URL + "/bots", axios_param)
     .then((response) => {
       console.log(response.data);
 
@@ -31,11 +43,23 @@ export class Bots extends React.Component {
       <div>
         <ResultTable label="Bots"
                      table={this.state.bots}
-                     table_name={
+                     schema={
                         [
-                          "BotName",
-                          "Author",
-                          "Race"
+                          {
+                            headerName:"Bot name",
+                            fieldName:"name",
+                            displayType:"text"
+                          },
+                          {
+                            headerName:"Author",
+                            fieldName:"author",
+                            displayType:"text"
+                          },
+                          {
+                            headerName:"Race",
+                            fieldName:"race",
+                            displayType:"text"
+                          }
                         ]
                       }/>
       </div>

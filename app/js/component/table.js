@@ -1,25 +1,28 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-function renderTableRow(row) {
+function renderTableRow(row, schema) {
   return (
     <tr key={row.id}>
       {
-        Object.keys(row).map( key => {
-          if(key == "id") return;
-          else return ( <td>{row[key]}</td> );
+        schema.map( function(schema_entry) {
+            return ( <td>{row[schema_entry.fieldName]}</td> );
         })
       }
     </tr>
   );
 }
-
+/*
+** ResultsTable takes a schema of the following format:
+** [{label:"headername",fieldname:"field",displayType:"text"}, ...]
+*/
 export class ResultTable extends React.Component {
   constructor(props) {
     super(props);
     // props.label - the name shown above the table. Optional
   }
   render() {
+    var that = this;
     if(!this.props.table) { return null; }
     return (
       <React.Fragment>
@@ -27,12 +30,12 @@ export class ResultTable extends React.Component {
         <table className="table table-striped">
           <tbody>
           	<tr>
-              { this.props.table_name.map(function(column_name) {
-                  return (<th>{column_name}</th>);
+              { this.props.schema.map( function(schema_entry) {
+                  return (<th>{schema_entry.headerName}</th>);
               }) }
             </tr>
             { this.props.table.map(function(row) {
-                return renderTableRow(row);
+                return renderTableRow(row, that.props.schema);
             }) }
           </tbody>
         </table>

@@ -10,9 +10,6 @@ module.exports = function(Bot) {
 
   Bot.upload = function (ctx,options,callback) {
     if(!options) options = {};
-    console.log(ctx);
-    console.log("\n");
-    console.log(options);
     ctx.req.params.container = 'botdll';
     Bot.app.models.UserUpload.upload(ctx.req,
                                      ctx.result,
@@ -21,18 +18,20 @@ module.exports = function(Bot) {
       if(err) {
         callback(err);
       } else {
-        var fileInfo = fileObj.files.file[0];
-        Bot.create({
-            name: fileObj.fields.bot_name,
-            authorId: fileObj.fields.user_id,
-            race: "terran",
-            dll: '/api/user-uploads/download/'+fileInfo.name
-        }, function (err,obj) {
-          if (err !== null) {
-            callback(err);
-          } else {
-            callback(null, obj);
-          }
+        Bot.app.models.Author.findById(fileObj.fields.user_id, function (err, user) {
+          var fileInfo = fileObj.files.file[0];
+          Bot.create({
+              name: fileObj.fields.bot_name,
+              author: user.username,
+              race: fileObj.fields.bot_race,
+              dll: '/api/user-uploads/download/'+fileInfo.name
+          }, function (err,obj) {
+            if (err !== null) {
+              callback(err);
+            } else {
+              callback(null, obj);
+            }
+          });
         });
       }
     });

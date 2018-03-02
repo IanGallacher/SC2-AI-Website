@@ -46,7 +46,7 @@ export class AuthorProfile extends React.PureComponent {
                         }
                       }
                     };
-    axios.get(API_URL + "/authors")
+    axios.get(API_URL + "/authors", axios_param)
     .then((response) => {
       console.log(response.data);
 
@@ -175,7 +175,7 @@ export class AuthorBios extends React.PureComponent {
     else {
       if(this.state.profile != []) {
         return (
-          <AuthorProfile profile={this.state.profile}/>
+          <AuthorProfile author_id={this.state.author_id}/>
         );
       } else {
         return ("Warning: no profile");
