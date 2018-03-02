@@ -4,17 +4,19 @@ import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { API_URL } from './app.js'
 
+import { Bots } from './bots.js'
+
 const default_avatar_path = require("./../../img/avatar.jpg");
 
 class AuthorTradingCard extends React.Component {
   render() {
     return (
       <div className="trading-card">
+        <h3>{this.props.user.username}</h3>
         <img className="img-thumbnail"
              src={"/" + default_avatar_path}
              alt={this.props.user.username}/>
         <div className="text-center">
-          <h3>{this.props.user.username}</h3>
           <p>
             <Link to={"/authors/?author=" + this.props.user.id.toString()}
                name="View Profile" id="profile"
@@ -22,6 +24,87 @@ class AuthorTradingCard extends React.Component {
                type="submit">View Profile
             </Link>
           </p>
+        </div>
+      </div>
+    );
+  }
+}
+
+export class AuthorProfile extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { profile: [] };
+  }
+
+  componentDidMount() {
+    const axios_param = {
+                      params: {
+                        filter: {
+                          "where": {
+                            "id": this.props.author_id
+                          }
+                        }
+                      }
+                    };
+    axios.get(API_URL + "/authors")
+    .then((response) => {
+      console.log(response.data);
+
+      this.setState({
+        profile: response.data[0]
+      });
+    })
+    .catch((error) => {
+      console.log("ERROR");
+      console.log(error);
+    });
+  }
+
+  render() {
+    return (
+      <div className="trading-card-horizontal">
+        <img className="img-thumbnail"
+           src={this.state.profile.avatar}
+           alt={this.state.profile.username}/>
+        <div>
+          <h1>{this.state.profile.username}</h1>
+        </div>
+        <div className="row">
+          <div className="col-sm-3">
+              <ul className="list-group">
+                <li className="list-group-item text-muted">Profile: </li>
+                <li className="list-group-item text-right">
+                  <span className="pull-left">
+                    Joined:
+                  </span>{this.state.profile.joindate}</li>
+                <li className="list-group-item text-right">
+                  <span className="pull-left">
+                    Real name:
+                  </span>{this.state.profile.name}</li>
+              </ul>
+
+              <div className="panel panel-default">
+                <div className="panel-heading">Website</div>
+                <div className="panel-body">
+                  {this.state.profile.website}
+                </div>
+              </div>
+
+              <div className="panel panel-default">
+                <div className="panel-heading">Github</div>
+                <div className="panel-body">
+                  {this.state.profile.github}
+                </div>
+              </div>
+
+            </div>
+          <div className="col-sm-9">
+            <div className="tab-content">
+              <div className="tab-pane active" id="home">
+                <Bots author={this.state.profile}/>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -77,7 +160,8 @@ export class AuthorBios extends React.PureComponent {
       return (
         <div className="author-content">
           <h3>Authors</h3>
-            { this.state.author.map(function(user) {
+            {
+              this.state.author.map(function(user) {
               return (
                 <div key={user.id}>
                   <AuthorTradingCard user={user}/>
@@ -91,65 +175,7 @@ export class AuthorBios extends React.PureComponent {
     else {
       if(this.state.profile != []) {
         return (
-          <div className="trading-card-horizontal">
-            <img className="img-thumbnail"
-               src={this.state.profile.avatar}
-               alt={this.state.profile.username}/>
-        		<div>
-              <h1>{this.state.profile.username}</h1>
-          	</div>
-            <div className="row">
-          		<div className="col-sm-3">
-                  <ul className="list-group">
-                    <li className="list-group-item text-muted">Profile</li>
-                    <li className="list-group-item text-right">
-                      <span className="pull-left">
-                        <strong>Joined</strong>
-                      </span>{this.state.profile.joindate}</li>
-                    <li className="list-group-item text-right">
-                      <span className="pull-left">
-                        <strong>Real name</strong>
-                      </span>{this.state.profile.name}</li>
-                  </ul>
-
-                  <div className="panel panel-default">
-                    <div className="panel-heading">Website</div>
-                    <div className="panel-body">
-                      {this.state.profile.website}
-                    </div>
-                  </div>
-
-                  <div className="panel panel-default">
-                    <div className="panel-heading">Github</div>
-                    <div className="panel-body">
-                      {this.state.profile.github}
-                    </div>
-                  </div>
-
-                </div>
-            	<div className="col-sm-9">
-                  <div className="tab-content">
-                    <div className="tab-pane active" id="home">
-                      <div className="table-responsive">
-                        <table className="table table-hover">
-                          <thead>
-                            <tr>
-                              <th>Bot Name</th>
-                              <th>Race</th>
-                              <th>Season</th>
-                              <th>Win Pct</th>
-                              <th>Position</th>
-                            </tr>
-                          </thead>
-                          <tbody id="items">
-                          </tbody>
-                        </table>
-                      </div>
-                     </div>
-                  </div>
-                </div>
-            </div>
-          </div>
+          <AuthorProfile profile={this.state.profile}/>
         );
       } else {
         return ("Warning: no profile");
