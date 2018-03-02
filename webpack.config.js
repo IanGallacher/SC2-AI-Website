@@ -10,7 +10,7 @@ const paths = {
 };
 
 module.exports = {
-  entry: Path.join(paths.JS, 'js/component/app.js'),
+  entry: Path.join(paths.JS, 'js/routing/app.js'),
   output: {
     path: paths.DIST,
     filename: 'js/bundle.js'

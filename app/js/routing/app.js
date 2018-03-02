@@ -10,8 +10,8 @@ import { BrowserRouter as Router,
 import PageRouting from './page-routing.js'
 import LoginLogic from './../logic/login.js'
 
-import { Header } from './header.js'
-import { Sidebar } from './sidebar.js'
+import { Header } from './../component/header.js'
+import { Sidebar } from './../component/sidebar.js'
 
 export var API_URL = "http://107.161.27.148:3000/api"
 

@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import { API_URL } from './app.js'
+import { API_URL } from './../routing/app.js'
 
 const logo_path = require("./../../img/sc2Ladder.gif");
 

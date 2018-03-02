@@ -2,7 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { render } from 'react-dom'
 
-import { API_URL } from './app.js'
+import { API_URL } from './../routing/app.js'
 import { ResultTable } from './table.js'
 
 export class Bots extends React.Component {

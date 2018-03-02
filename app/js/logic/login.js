@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { API_URL } from './../component/app.js'
+import { API_URL } from './../routing/app.js'
 
 export default class LoginLogic {
   static isLoggedIn() {
@@ -36,7 +36,7 @@ export default class LoginLogic {
   static logout(ctx) { // ctx is shorthand for the context of the react component
     return new Promise (function (resolve, reject) {
       const access_token = localStorage.getItem("access_token");
-      
+
       localStorage.setItem("access_token", "");
       localStorage.setItem("user_id", "");
 

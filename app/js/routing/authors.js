@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { API_URL } from './app.js'
 
-import { Bots } from './bots.js'
+import { Bots } from './../component/bots.js'
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 

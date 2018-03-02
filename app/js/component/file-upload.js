@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 
-import { API_URL } from './app.js'
+import { API_URL } from './../routing/app.js'
 
 export default class UploadFile extends React.Component {
   constructor(props) {

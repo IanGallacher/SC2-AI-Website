@@ -5,7 +5,7 @@ import { BrowserRouter as Router,
 
 import { AuthorBios } from './authors.js'
 import { AdminControlPanel } from './admin.js'
-import { Bots } from './bots.js'
+import { Bots } from './../component/bots.js'
 import { Login, Logout, ResetPassword, SignUp } from './login.js'
 import { ProfileSettings } from './profile.js'
 import { RequireLoggedInRoute } from './requireuser.js'
