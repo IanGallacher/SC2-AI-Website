@@ -12,7 +12,7 @@ export class Bots extends React.Component {
   }
 
   componentDidMount() {
-    let axios_param = {};
+    let axios_param = {};  console.log(this.props);
     // If we want to filter by author.
     if (this.props.author)
       axios_param = {
@@ -39,30 +39,32 @@ export class Bots extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <ResultTable label="Bots"
-                     table={this.state.bots}
-                     schema={
-                        [
-                          {
-                            headerName:"Bot name",
-                            fieldName:"name",
-                            displayType:"text"
-                          },
-                          {
-                            headerName:"Author",
-                            fieldName:"author",
-                            displayType:"text"
-                          },
-                          {
-                            headerName:"Race",
-                            fieldName:"race",
-                            displayType:"text"
-                          }
-                        ]
-                      }/>
-      </div>
-    );
+    if (this.state.bots.length > 0)
+      return (
+        <div>
+          <ResultTable
+                       table={this.state.bots}
+                       schema={
+                          [
+                            {
+                              headerName:"Bot name",
+                              fieldName:"name",
+                              displayType:"text"
+                            },
+                            {
+                              headerName:"Author",
+                              fieldName:"author",
+                              displayType:"text"
+                            },
+                            {
+                              headerName:"Race",
+                              fieldName:"race",
+                              displayType:"text"
+                            }
+                          ]
+                        }/>
+        </div>
+      );
+    return (<div>No bots found for user</div>);
   }
 }

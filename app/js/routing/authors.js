@@ -8,6 +8,19 @@ import { Bots } from './../component/bots.js'
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 
+class AuthorAvatar extends React.PureComponent {
+  render() {
+    return (this.props.avatar) ?
+      (
+        <img className="img-thumbnail grid-one-quarter"
+           src={this.props.avatar}/>
+      ) : (
+        <img className="img-thumbnail grid-one-quarter"
+           src={"/" + default_avatar_path}/>
+      )
+  }
+}
+
 class AuthorTradingCard extends React.Component {
   render() {
     return (
@@ -30,7 +43,7 @@ class AuthorTradingCard extends React.Component {
   }
 }
 
-export class AuthorProfile extends React.PureComponent {
+export class AuthorProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = { profile: [] };
@@ -61,16 +74,15 @@ export class AuthorProfile extends React.PureComponent {
   }
 
   render() {
+  console.log(this.state.profile.username);
     return (
       <div className="trading-card-horizontal">
-        <img className="img-thumbnail"
-           src={this.state.profile.avatar}
-           alt={this.state.profile.username}/>
         <div>
           <h1>{this.state.profile.username}</h1>
         </div>
-        <div className="row">
-          <div className="col-sm-3">
+        <AuthorAvatar avatar={this.state.profile.avatar}/>
+        <div className="grid-three-quarter">
+          <div className="grid-one-quarter">
               <ul className="list-group">
                 <li className="list-group-item text-muted">Profile: </li>
                 <li className="list-group-item text-right">
@@ -98,10 +110,16 @@ export class AuthorProfile extends React.PureComponent {
               </div>
 
             </div>
-          <div className="col-sm-9">
+          <div className="grid-three-quarter">
             <div className="tab-content">
               <div className="tab-pane active" id="home">
-                <Bots author={this.state.profile}/>
+              {
+                (this.state.profile.username) ? (
+                  <Bots author={this.state.profile}/>
+                ) : (
+                  <div/>
+                )
+              }
               </div>
             </div>
           </div>

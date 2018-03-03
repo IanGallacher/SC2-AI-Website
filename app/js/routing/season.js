@@ -32,15 +32,39 @@ export class Season extends React.Component {
       <div>
         <ResultTable label={this.state.season.name}
                      table={this.state.season.summary}
-                     table_name={
-                       [
-                         "BotName",
-                         "Author",
-                         "Race",
-                         "Matches",
-                         "Wins",
-                         "Win Pct"
-                       ]
+                     schema={
+                        [
+                          {
+                            headerName:"BotName",
+                            fieldName:"BotName",
+                            displayType:"text"
+                          },
+                          {
+                            headerName:"Author",
+                            fieldName:"author",
+                            displayType:"text"
+                          },
+                          {
+                            headerName:"Race",
+                            fieldName:"race",
+                            displayType:"text"
+                          },
+                          {
+                            headerName:"Matches",
+                            fieldName:"matches",
+                            displayType:"text"
+                          },
+                          {
+                            headerName:"Wins",
+                            fieldName:"wins",
+                            displayType:"text"
+                          },
+                          {
+                            headerName:"Win Pct",
+                            fieldName:"winpct",
+                            displayType:"text"
+                          }
+                        ]
                      }/>
       </div>
     );
