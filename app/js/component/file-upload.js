@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 
+import { RadioButton, RadioButtonDefault } from './button.js'
 import { API_URL } from './../routing/app.js'
 
 export default class UploadFile extends React.Component {
@@ -69,10 +70,26 @@ export default class UploadFile extends React.Component {
         <label htmlFor="file">{this.props.label}</label>
         <input name="filename" type="text" onChange={this.onTextChange}/>
         <input name="file" type="file" onChange={this.onFileChange}/>
-        <input type="radio" name="bot_race" value="terran" onChange={this.onRadioButtonChange} defaultChecked={true} /> Terran
-        <input type="radio" name="bot_race" value="protoss" onChange={this.onRadioButtonChange}/> Protoss
-        <input type="radio" name="bot_race" value="zerg" onChange={this.onRadioButtonChange}/> Zerg
-        <input type="radio" name="bot_race" value="random" onChange={this.onRadioButtonChange}/> Random
+        <RadioButtonDefault radioGroupName="bot_race"
+                            id="Terran"
+                            label="Terran"
+                            value="terran"
+                            onChange={this.onRadioButtonChange}/>
+        <RadioButton radioGroupName="bot_race"
+                     id="Protoss"
+                     label="Protoss"
+                     value="protoss"
+                     onChange={this.onRadioButtonChange}/>
+        <RadioButton radioGroupName="bot_race"
+                     id="Zerg"
+                     label="Zerg"
+                     value="zerg"
+                     onChange={this.onRadioButtonChange}/>
+        <RadioButton radioGroupName="bot_race"
+                     id="Random"
+                     label="Random"
+                     value="random"
+                     onChange={this.onRadioButtonChange}/>
         <input type="submit" value="Submit"/>
       </form>
     )

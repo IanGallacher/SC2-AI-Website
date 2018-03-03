@@ -13,7 +13,6 @@ $font-size-base:            14px !default;
 $btn-border-radius-base:    20px;
 $input-color: #ccc;
 
-
 input {
   display: block;
 }
@@ -130,4 +129,29 @@ button {
 }
 .form-signin .btn, .form-signup .btn  {
   margin-bottom: 10px;
+}
+
+/*
+** RADIO BUTTONS
+*/
+.radioButton {
+  height: 25px;
+  width: 25px;
+  margin-right: 25px;
+  background-color: #eee;
+  &:hover input ~ .checkmark {
+      background-color: #ccc;
+  }
+  float:left;
+}
+
+.radioButtonContainer {
+  background: #DDD;
+  display: block;
+  position: relative;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: $btn-border-radius-base;
+  cursor: pointer;
+  font-size: 22px;
 }
