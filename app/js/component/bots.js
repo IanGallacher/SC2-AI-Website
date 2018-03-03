@@ -12,7 +12,7 @@ export class Bots extends React.Component {
   }
 
   componentDidMount() {
-    let axios_param = {};  console.log(this.props);
+    let axios_param = {};
     // If we want to filter by author.
     if (this.props.author)
       axios_param = {
@@ -26,8 +26,6 @@ export class Bots extends React.Component {
                     };
     axios.get(API_URL + "/bots", axios_param)
     .then((response) => {
-      console.log(response.data);
-
       this.setState({
         bots: response.data
       });

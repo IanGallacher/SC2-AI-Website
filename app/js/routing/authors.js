@@ -61,8 +61,6 @@ export class AuthorProfile extends React.Component {
                     };
     axios.get(API_URL + "/authors", axios_param)
     .then((response) => {
-      console.log(response.data);
-
       this.setState({
         profile: response.data[0]
       });
@@ -74,7 +72,6 @@ export class AuthorProfile extends React.Component {
   }
 
   render() {
-  console.log(this.state.profile.username);
     return (
       <div className="trading-card-horizontal">
         <div>
@@ -155,8 +152,6 @@ export class AuthorBios extends React.PureComponent {
 
     axios.get(url)
     .then((response) => {
-      console.log(response.data);
-
       this.setState({
         author: response.data
       });

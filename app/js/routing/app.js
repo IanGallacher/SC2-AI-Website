@@ -45,7 +45,6 @@ export default class App extends React.Component {
   signUp = (ctx) => {
     LoginLogic.signUp(ctx).then(function(response) {
       console.log(response)
-      this.setState({ access_token: LoginLogic.getAccessToken() });
     });
   }
 
