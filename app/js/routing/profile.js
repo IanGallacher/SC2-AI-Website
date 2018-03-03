@@ -9,7 +9,7 @@ export class ProfileSettings extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <AuthorProfile author_id={localStorage.getItem("user_id")}/>
+        <AuthorProfile user_id={localStorage.getItem("user_id")}/>
         <UploadFile label="Upload Bot:" />
       </React.Fragment>
     );
