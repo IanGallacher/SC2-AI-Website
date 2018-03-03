@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { API_URL } from './app.js'
 
-import { AuthorProfile, AuthorTradingCard } from './../component/bots.js'
+import { AuthorProfile, AuthorTradingCard } from './../component/profile.js'
 
 export class AuthorBios extends React.PureComponent {
   constructor(props) {
