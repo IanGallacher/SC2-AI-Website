@@ -59,6 +59,7 @@ export default class App extends React.Component {
               <Sidebar/>
               <div className="sidebar-placeholder"/>
               <div className="page-zone">
+                <AlertZone/>
                 <div className="page-area">
                   <PageRouting ctx={this}/>
                 </div>

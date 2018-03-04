@@ -1,0 +1,18 @@
+.alert-zone {
+  height: auto;
+  width: 100%;
+  flex: 1;
+}
+
+.alert-error {
+  background: #ff0000;
+  height: 60px;
+  width: 100%;
+}
+
+.alert-text {
+  color: white;
+  margin-left: 50px;
+  width: 100%;
+  font-size: 20px;
+}
