@@ -2,10 +2,7 @@
 // The prototype was made with bootstrap, and was later removed.
 // The naming conventions and definitions of classes may be similar.
 // Removing bootstrap, takes ~150kb off of the final webpack bundle.
-$sidebar-width: 250px;
-$sidebar-collapse-size: 50px;
-$mobile-threshold: 768px;
-$navbar-padding-vertical: 20px;
+
 @import "./clearfix.scss";
 @import "./form.scss";
 @import "./gridsystem.scss";
@@ -13,6 +10,7 @@ $navbar-padding-vertical: 20px;
 @import "./sidebar.scss";
 @import "./table.scss";
 @import "./tradingcard.scss";
+@import "variables";
 
 body {
   font-family: 'Poppins', sans-serif;

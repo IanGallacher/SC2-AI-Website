@@ -1,4 +1,4 @@
-import 'normalize.css'; // Standardize the dom elements before continuing.
+//import 'normalize.css'; // Standardize the dom elements before continuing.
 import './../../css/style.scss'
 //require('bootstrap-sass/assets/stylesheets/_bootstrap.scss')
 
@@ -53,7 +53,7 @@ export default class App extends React.Component {
       <Router>
         <React.Fragment>
           <Header access_token={this.state.access_token}/>
-          <div className="flex-horizontal-container">
+          <div className="flex-horizontal-container after-navbar">
             <Sidebar/>
             <div className="sidebar-placeholder"/>
             <div className="page-area">

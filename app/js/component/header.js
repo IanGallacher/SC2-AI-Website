@@ -16,7 +16,7 @@ export class Header extends React.PureComponent {
     return (
       <nav className="navbar">
         <div className="container-fluid">
-          <h1 className="navbar-header">Starcraft 2 AI Ladder</h1>
+          <div className="navbar-header">Starcraft 2 AI Ladder</div>
             <ul className="nav navbar-nav">
               <li><Link to="/home">Home</Link></li>
               <li><Link to="/bots">Bots</Link></li>

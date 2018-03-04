@@ -1,14 +1,30 @@
+@import "variables";
+
 .navbar {
   margin: 0;
-  min-height: 50px;
-  padding: 15px 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: $navbar-height;
+  line-height: $navbar-height;
+  z-index: 1; // The navbar always needs to be above all other content.
   background: #fff;
   border: none;
   border-radius: 0;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-background: #24292e;
-color: rgba(255,255,255,0.75);
+  background: #24292e;
+  color: rgba(255,255,255,0.75);
   @include clearfix;
+}
+
+/*
+** Because the navbar is a fixed position, it is out of the page flow.
+** after-navbar offsets the things content below the navbar to
+** prevent overlap.
+*/
+.after-navbar {
+  position: absolute;
+  top: $navbar-height;
 }
 
 .nav {
@@ -24,7 +40,7 @@ color: rgba(255,255,255,0.75);
     > a {
       position: relative;
       display: block;
-      padding: 15px;
+      padding: 0 15px;
       &:hover,
       &:focus {
         text-decoration: none;
@@ -53,16 +69,13 @@ color: rgba(255,255,255,0.75);
 
     > li {
       float: left;
-      > a {
-        padding-top:    $navbar-padding-vertical;
-        padding-bottom: $navbar-padding-vertical;
-      }
     }
   }
 }
 
 .navbar-header {
   @include clearfix;
-  margin: 10px 0;
+  font-size: 32px;
+  margin-left: 20px;
   float: left;
 }
