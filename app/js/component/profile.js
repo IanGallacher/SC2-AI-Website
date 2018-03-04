@@ -25,7 +25,7 @@ export class AuthorTradingCard extends React.Component {
   render() {
     return (
       <div className="trading-card">
-        <h3>{this.props.user.username}</h3>
+        <title>{this.props.user.username}</title>
         <img className="img-thumbnail"
              src={"/" + default_avatar_path}
              alt={this.props.user.username}/>
@@ -90,11 +90,11 @@ export class AuthorProfile extends React.Component {
   render() {
     return (
       <div className="trading-card-horizontal">
-        <div>
-          <h1>{this.state.profile.username}</h1>
-        </div>
+        <title>{this.state.profile.username}</title>
         <AuthorAvatar avatar={this.state.profile.avatar}/>
         <div className="grid-three-quarter">
+        {
+          /*
           <div className="grid-one-quarter">
               <ul className="list-group">
                 <li className="list-group-item text-muted">Profile: </li>
@@ -107,22 +107,28 @@ export class AuthorProfile extends React.Component {
                     Real name:
                   </span>{this.state.profile.name}</li>
               </ul>
+              { (this.state.profile.website) ? (
+                  <div className="panel panel-default">
+                    <div className="panel-heading">Website:</div>
+                    <div className="panel-body">
+                      {this.state.profile.website}
+                    </div>
+                  </div>
+                ) : (
+                  <span/>
+                )
+              }
 
               <div className="panel panel-default">
-                <div className="panel-heading">Website</div>
-                <div className="panel-body">
-                  {this.state.profile.website}
-                </div>
-              </div>
-
-              <div className="panel panel-default">
-                <div className="panel-heading">Github</div>
+                <div className="panel-heading">Github:</div>
                 <div className="panel-body">
                   {this.state.profile.github}
                 </div>
               </div>
 
             </div>
+            */
+          }
           <div className="grid-three-quarter">
             <div className="tab-content">
               <div className="tab-pane active" id="home">

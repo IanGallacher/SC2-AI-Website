@@ -2,14 +2,14 @@
 // The prototype was made with bootstrap, and was later removed.
 // The naming conventions and definitions of classes may be similar.
 // Removing bootstrap, takes ~150kb off of the final webpack bundle.
-
-@import "./clearfix.scss";
-@import "./form.scss";
-@import "./gridsystem.scss";
-@import "./header.scss";
-@import "./sidebar.scss";
-@import "./table.scss";
-@import "./tradingcard.scss";
+@import "alert";
+@import "clearfix";
+@import "form";
+@import "gridsystem";
+@import "header";
+@import "sidebar";
+@import "table";
+@import "tradingcard";
 @import "variables";
 
 body {
@@ -85,9 +85,13 @@ pre {
 ----------------------------------------------------- */
 // Center all the content that is below the header.
 .page-area {
-  padding: 0 10%;
-  min-width: 0; // Flexbox does weird things with this value. Don't let it.
-  width: 100%;
+  margin: 0 10%;
+  // Flexbox does weird things with this value. Don't let it.
+  min-width: 0;
+}
+
+.page-zone {
+  flex-grow: 1;
 }
 
 a[aria-expanded]::before {

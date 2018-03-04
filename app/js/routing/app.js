@@ -10,6 +10,7 @@ import { BrowserRouter as Router,
 import PageRouting from './page-routing.js'
 import LoginLogic from './../logic/login.js'
 
+import { AlertZone } from './../component/alert.js'
 import { Header } from './../component/header.js'
 import { Sidebar } from './../component/sidebar.js'
 
@@ -53,11 +54,15 @@ export default class App extends React.Component {
       <Router>
         <React.Fragment>
           <Header access_token={this.state.access_token}/>
-          <div className="flex-horizontal-container after-navbar">
-            <Sidebar/>
-            <div className="sidebar-placeholder"/>
-            <div className="page-area">
-              <PageRouting ctx={this}/>
+          <div className="after-navbar">
+            <div className="flex-horizontal-container ">
+              <Sidebar/>
+              <div className="sidebar-placeholder"/>
+              <div className="page-zone">
+                <div className="page-area">
+                  <PageRouting ctx={this}/>
+                </div>
+              </div>
             </div>
           </div>
         </React.Fragment>
