@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { API_URL } from './../routing/app.js'
 
-import { Bots } from './bots.js'
+import { BotTable } from './bots.js'
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 
@@ -134,7 +134,7 @@ export class AuthorProfile extends React.Component {
               <div className="tab-pane active" id="home">
               {
                 (this.state.profile.username) ? (
-                  <Bots author={this.state.profile}/>
+                  <BotTable author={this.state.profile}/>
                 ) : (
                   <div/>
                 )

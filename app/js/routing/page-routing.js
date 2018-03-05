@@ -3,15 +3,19 @@ import { render } from 'react-dom'
 import { BrowserRouter as Router,
          Route, Link, Prompt, Switch, Redirect } from 'react-router-dom'
 
-import { AuthorBios } from './authors.js'
-import { AdminControlPanel } from './admin.js'
-import { Bots } from './../component/bots.js'
-import { Login, Logout, ResetPassword, SignUp } from './login.js'
-import { ProfileSettings } from './profile.js'
+import AuthorBios from './authors.js'
+import AdminControlPanel from './admin.js'
+import Bots from './bots.js'
+import Login from './login.js'
+import Logout from './logout.js'
+import ProfileSettings from './profile.js'
 import { RequireLoggedInRoute } from './requireuser.js'
+import ResetPassword from './reset-password.js'
+import Season from './season.js'
+import SignUp from './sign-up.js'
 import { FAQ, Learning, HelpfulResources } from './static-pages.js'
-import { Season } from './season.js'
-import { PageNotFound } from './404.js'
+import PageNotFound from './404.js'
+
 import LoginLogic from './../logic/login.js'
 
 

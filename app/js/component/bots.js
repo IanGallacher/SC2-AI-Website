@@ -5,7 +5,7 @@ import { render } from 'react-dom'
 import { API_URL } from './../routing/app.js'
 import { ResultTable } from './table.js'
 
-export class Bots extends React.Component {
+export class BotTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = { bots: [] };

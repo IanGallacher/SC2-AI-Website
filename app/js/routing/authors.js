@@ -5,7 +5,7 @@ import { API_URL } from './app.js'
 
 import { AuthorProfile, AuthorTradingCard } from './../component/profile.js'
 
-export class AuthorBios extends React.PureComponent {
+export default class AuthorBios extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { author: [], author_id: -1, profile: [] };

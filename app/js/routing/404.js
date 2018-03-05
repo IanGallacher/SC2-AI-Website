@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-export class PageNotFound extends React.Component {
+export default class PageNotFound extends React.Component {
   constructor(props) {
     super(props)
   }

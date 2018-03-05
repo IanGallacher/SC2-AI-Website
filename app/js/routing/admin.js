@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 
 import { API_URL } from './app.js'
 
-export class AdminControlPanel extends React.Component {
+export default class AdminControlPanel extends React.Component {
   constructor(props) {
     super(props);
     if(localStorage.getItem("access_token") === null)

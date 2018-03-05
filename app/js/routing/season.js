@@ -5,7 +5,7 @@ import { render } from 'react-dom'
 import { API_URL } from './app.js'
 import { ResultTable } from './../component/table.js'
 
-export class Season extends React.Component {
+export default class Season extends React.Component {
   constructor(props) {
     super(props);
     this.state = { season: { summary : [] } };
