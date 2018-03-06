@@ -6,8 +6,11 @@ import AlertLogic from './../logic/alert.js'
 
 const Alert = (props) => {
   return (
-    <div className="alert-error"
-         onClick={ () => { AlertLogic.removeAlertWithId(props.id); } }>
+    <div className={props.cssClass}
+         onClick={ () => {
+           AlertLogic.removeAlertWithId(props.id);
+         }
+    }>
       <div className="alert-text">
         {props.message}
       </div>
@@ -25,6 +28,7 @@ export class AlertZone extends React.Component {
             return (
                       <Alert key={message.id}
                              id={message.id}
+                             cssClass={message.cssClass}
                              message={message.message}/>
                    );
           })

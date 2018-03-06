@@ -7,7 +7,6 @@ import AuthorBios from './authors.js'
 import AdminControlPanel from './admin.js'
 import Bots from './bots.js'
 import Login from './login.js'
-import Logout from './logout.js'
 import ProfileSettings from './profile.js'
 import { RequireLoggedInRoute } from './requireuser.js'
 import ResetPassword from './reset-password.js'
@@ -33,14 +32,7 @@ export default class PageRouting extends React.Component {
                           login={this.props.ctx.login}
                           access_token={LoginLogic.getAccessToken()}
                           />}/>
-
-          <Route path="/logout"
-                 render={(props) => <Logout
-                          {...props}
-                          logout={this.props.ctx.logout}
-                          access_token={LoginLogic.getAccessToken()}
-                          />}/>
-
+                          
           <Route path="/sign-up"
                  render={(props) => <SignUp
                           {...props}

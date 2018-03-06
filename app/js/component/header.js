@@ -10,7 +10,9 @@ export class Header extends React.PureComponent {
       var loginButton = <li><Link to="/login">Login</Link></li>;
     } else {
       var profileButton = <li><Link to="/my-profile">Profile</Link></li>;
-      var logoutButton = <li><Link to="/logout">Log Out</Link></li>;
+      var logoutButton = <li onClick={this.props.logout}>
+          <a>Log Out</a>
+      </li>;
     }
 
     return (

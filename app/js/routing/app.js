@@ -41,6 +41,7 @@ export default class App extends React.Component {
       localStorage.setItem("access_token", user_data.id);
       localStorage.setItem("user_id", user_data.userId);
       this.setState({ access_token: LoginLogic.getAccessToken() });
+      AlertLogic.addMessage("Login successful", "alert-success");
     });
   }
 
@@ -49,12 +50,14 @@ export default class App extends React.Component {
       localStorage.setItem("access_token", "");
       localStorage.setItem("user_id", "");
       this.setState({ access_token: LoginLogic.getAccessToken() });
+      AlertLogic.addMessage("Logout successful", "alert-success");
     });
   }
 
   signUp = (ctx) => {
     LoginLogic.signUp(ctx).then(function(response) {
       console.log(response)
+      AlertLogic.addMessage("Account created", "alert-success");
     });
   }
 
@@ -62,7 +65,8 @@ export default class App extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          <Header access_token={this.state.access_token}/>
+          <Header access_token={this.state.access_token}
+                  logout={this.logout}/>
           <div className="after-navbar">
             <div className="flex-horizontal-container ">
               <Sidebar/>
