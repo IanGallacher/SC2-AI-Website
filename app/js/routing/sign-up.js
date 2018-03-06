@@ -69,10 +69,6 @@ export default class SignUp extends React.PureComponent {
         <button name="Submit"
                 className="btn btn-lg btn-primary btn-block"
                 type="submit">Sign up</button>
-
-        <div id="message">{ this.state.errors.map(function(error) {
-          return(<div><Error field={error.field} errors={error.errors}/></div>);
-        })}</div>
       </form>
     )
   }

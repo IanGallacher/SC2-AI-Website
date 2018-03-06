@@ -8,6 +8,7 @@ import { BrowserRouter as Router,
          Route, Link, Prompt, Switch, Redirect } from 'react-router-dom'
 
 import PageRouting from './page-routing.js'
+import AlertLogic from './../logic/alert.js'
 import LoginLogic from './../logic/login.js'
 
 import { AlertZone } from './../component/alert.js'
@@ -18,8 +19,16 @@ export var API_URL = "http://107.161.27.148:3000/api"
 
 export default class App extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { access_token: LoginLogic.getAccessToken }
+    super(props);
+    this.state = { access_token: LoginLogic.getAccessToken,
+                   alert_messages: []}
+
+// Register callback that will render new notifications.
+    AlertLogic.notify = (messages) => {
+                          this.setState({
+                            alert_messages: messages
+                          });
+                        }
   }
 
 // I am using a new experimental feature of ECMAscript.
@@ -59,7 +68,7 @@ export default class App extends React.Component {
               <Sidebar/>
               <div className="sidebar-placeholder"/>
               <div className="page-zone">
-                <AlertZone/>
+                <AlertZone messages={this.state.alert_messages}/>
                 <div className="page-area">
                   <PageRouting ctx={this}/>
                 </div>

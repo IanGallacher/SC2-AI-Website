@@ -1,3 +1,5 @@
+@import "mixin";
+
 table {
   border-spacing: 0;
   border-collapse: collapse;
@@ -16,10 +18,7 @@ tr {
 th {
   padding: 15px;
   background-color: #fff;
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;      /* IE 10+ */
-  user-select: none;          /* Likely future */
+  @include no-select;
 }
 td {
     padding: 15px;

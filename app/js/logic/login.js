@@ -2,6 +2,8 @@ import axios from 'axios'
 
 import { API_URL } from './../routing/app.js'
 
+import AlertLogic from './alert.js'
+
 export default class LoginLogic {
   static isLoggedIn() {
     return (
@@ -24,11 +26,9 @@ export default class LoginLogic {
         resolve(response.data);
       })
       .catch(function (error) {
-        console.log(error.response);
         const message = error.response.data.error.message;
-        reject(Error(message));
-        // notification that the error did not work
-        //ctx.setState({ error: message });
+        AlertLogic.addMessage(message);
+        //reject(Error(message));
       });
     });
   }
@@ -49,8 +49,14 @@ export default class LoginLogic {
           resolve(response.data);
         })
         .catch(function (error) {
-          console.log(error);
-          reject(error);
+          const codes = error.response.data.error.details.codes;
+          Object.entries(codes).forEach(
+            function([key, value]) {
+              AlertLogic.addMessage(key + " " + value[0]);
+              //ctx.setState({ errors: ctx.state.errors.concat({field: key, errors: value}) });
+            }
+          );
+          //reject(error);
         });
     });
   }
@@ -67,10 +73,10 @@ export default class LoginLogic {
       })
       .catch(function (error) {
         const codes = error.response.data.error.details.codes;
-        ctx.state.errors = [];
         Object.entries(codes).forEach(
           function([key, value]) {
-            ctx.setState({ errors: ctx.state.errors.concat({field: key, errors: value}) });
+            AlertLogic.addMessage(key + " " + value[0]);
+            //ctx.setState({ errors: ctx.state.errors.concat({field: key, errors: value}) });
           }
         );
       });
