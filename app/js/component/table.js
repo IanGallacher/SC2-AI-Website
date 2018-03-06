@@ -26,7 +26,12 @@ export class ResultTable extends React.Component {
     if(!this.props.table) { return null; }
     return (
       <React.Fragment>
-        <h3>{this.props.label}</h3>
+        { (this.props.label) ? (
+            <h3>{this.props.label}</h3>
+          ) : (
+            <React.Fragment/>
+          )
+        }
         <table className="table table-striped">
           <tbody>
           	<tr>

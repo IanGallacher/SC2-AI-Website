@@ -129,17 +129,15 @@ export class AuthorProfile extends React.Component {
             </div>
             */
           }
-          <div className="grid-three-quarter">
-            <div className="tab-content">
-              <div className="tab-pane active" id="home">
-              {
-                (this.state.profile.username) ? (
-                  <BotTable author={this.state.profile}/>
-                ) : (
-                  <div/>
-                )
-              }
-              </div>
+          <div className="tab-content">
+            <div className="tab-pane active" id="home">
+            {
+              (this.state.profile.username) ? (
+                <BotTable author={this.state.profile}/>
+              ) : (
+                <div/>
+              )
+            }
             </div>
           </div>
         </div>
