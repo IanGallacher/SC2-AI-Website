@@ -18,11 +18,14 @@ module.exports = function(Bot) {
       if(err) {
         callback(err);
       } else {
-        Bot.app.models.Author.findById(fileObj.fields.user_id, function (err, user) {
+        Bot.app.models.Author.find(
+        {"where": {"credentialsId": fileObj.fields.user_id} },
+        function (err, user) {
           var fileInfo = fileObj.files.file[0];
           Bot.create({
               name: fileObj.fields.bot_name,
-              author: user.username,
+              // We are filtering by id, there can only be one. Use user[0].
+              author: user[0].username,
               race: fileObj.fields.bot_race,
               dll: '/api/user-uploads/download/'+fileInfo.name
           }, function (err,obj) {
