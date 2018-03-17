@@ -15,7 +15,7 @@ import { AlertZone } from './../component/alert.js'
 import { Header } from './../component/header.js'
 import { Sidebar } from './../component/sidebar.js'
 
-export var API_URL = "http://107.161.27.148:3000/api"
+export var API_URL = "http://localhost:3000"
 
 export default class App extends React.Component {
   constructor(props) {
