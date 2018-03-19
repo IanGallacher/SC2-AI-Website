@@ -31,8 +31,9 @@ module.exports = {
     // Let React handle routing.
     historyApiFallback: {
       index: 'index.html'
-    }, proxy: {
-      "/api": "107.161.27.148:3000"
+    },
+    proxy: {
+      "/api": "http://localhost:3000"
     }
   },
   devtool: 'source-map',
