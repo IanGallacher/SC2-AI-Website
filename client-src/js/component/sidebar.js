@@ -34,21 +34,21 @@ export class Sidebar extends React.Component {
   //   });
   // }
 
-  componentDidMount() {
+//  componentDidMount() {
     // Get all the seasons from the server.
-    axios.get(API_URL + "/seasons")
-    .then((response) => {
-      console.log(response.data);
-
-      this.setState({
-        season: response.data
-      });
-    })
-    .catch((error) => {
-      console.log("ERROR");
-      console.log(error);
-    });
-  }
+//    axios.get(API_URL + "/seasons")
+//    .then((response) => {
+//      console.log(response.data);
+//
+//      this.setState({
+//        season: response.data
+//      });
+//    })
+//    .catch((error) => {
+//      console.log("ERROR");
+//      console.log(error);
+//    });
+//  }
 
   collapseSeasonToggle = () => {
     this.setState({

@@ -9,7 +9,7 @@ let error_table = {
 export default class Login extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { error: "" };
+    this.state = { error: "", username: "", password: "" };
     if(localStorage.getItem("access_token") === null)
       localStorage.setItem("access_token", "");
   }

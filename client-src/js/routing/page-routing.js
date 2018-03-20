@@ -30,14 +30,12 @@ export default class PageRouting extends React.Component {
                  render={(props) => <Login
                           {...props}
                           login={this.props.ctx.login}
-                          access_token={LoginLogic.getAccessToken()}
                           />}/>
                           
           <Route path="/sign-up"
                  render={(props) => <SignUp
                           {...props}
                           signUp={this.props.ctx.signUp}
-                          access_token={LoginLogic.getAccessToken()}
                           />}/>
 
           <Route path="/reset-password" component={ResetPassword}/>

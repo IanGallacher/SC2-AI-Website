@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313222308) do
+ActiveRecord::Schema.define(version: 20180318173100) do
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "owner_id"
     t.string "name", null: false
     t.string "author", null: false
     t.string "race", null: false
     t.string "dll", null: false
     t.integer "match_count", default: 0, null: false
     t.integer "win_count", default: 0, null: false
+    t.index ["owner_id"], name: "fk_rails_f93a12e463"
   end
 
   create_table "game_result_bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -47,10 +49,13 @@ ActiveRecord::Schema.define(version: 20180313222308) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "bots", "users", column: "owner_id"
   add_foreign_key "game_result_bots", "bots"
   add_foreign_key "game_result_bots", "game_results"
   add_foreign_key "game_results", "bots", column: "winner_id"

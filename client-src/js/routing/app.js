@@ -21,7 +21,16 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { access_token: LoginLogic.getAccessToken,
-                   alert_messages: []}
+                   alert_messages: [],
+                   username: "" }
+
+    LoginLogic.setUserData().then((response) => {
+      if (response.data)
+      {
+	this.setState({"username": response.data.username});
+	this.setState({"user_id": response.data.id});
+      }
+    });
 
 // Register callback that will render new notifications.
     AlertLogic.notify = (messages) => {
@@ -38,18 +47,22 @@ export default class App extends React.Component {
 // This eliminates tons of boilerplate code instide the constructor.
   login = (ctx) => {
     LoginLogic.login(ctx).then((user_data) => {
-      localStorage.setItem("access_token", user_data.id);
-      localStorage.setItem("user_id", user_data.userId);
-      this.setState({ access_token: LoginLogic.getAccessToken() });
+      LoginLogic.setUserData().then((response) => {
+	if (response.data)
+	{
+	  this.setState({"username": response.data.username});
+          localStorage.setItem("username", response.data.username);
+	  this.setState({"user_id": response.data.id});
+	}
+      });
       AlertLogic.addMessage("Login successful", "alert-success");
     });
   }
 
   logout = (ctx) => {
     LoginLogic.logout(ctx).then((response) => {
-      localStorage.setItem("access_token", "");
-      localStorage.setItem("user_id", "");
-      this.setState({ access_token: LoginLogic.getAccessToken() });
+      this.setState({"username": ""});
+      localStorage.setItem("username", "");
       AlertLogic.addMessage("Logout successful", "alert-success");
     });
   }
@@ -65,7 +78,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          <Header access_token={this.state.access_token}
+          <Header username={this.state.username}
                   logout={this.logout}/>
           <div className="after-navbar">
             <div className="flex-horizontal-container ">

@@ -1,11 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
-import LoginController from './../logic/login.js'
+import LoginLogic from './../logic/login.js'
 
 export class Header extends React.PureComponent {
   render() {
-    if(!LoginController.isLoggedIn()) {
+    if(this.props.username == "") {
       var signupButton = <li><Link to="/sign-up">Sign Up</Link></li>;
       var loginButton = <li><Link to="/login">Login</Link></li>;
     } else {
