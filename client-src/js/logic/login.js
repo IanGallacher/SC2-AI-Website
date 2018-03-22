@@ -12,7 +12,7 @@ export default class LoginLogic {
           );
   }
   
-  static setUserData() {
+  static getUserData() {
     return new Promise (function (resolve, reject) {
       axios.get(API_URL + "/users")
       .then(function (response) {
@@ -28,7 +28,6 @@ export default class LoginLogic {
         "password": ctx.state["password"]
       })
       .then(function (response) {
-	LoginLogic.setUserData();
         resolve(response.data);
       })
       .catch(function (error) {

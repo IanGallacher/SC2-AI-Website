@@ -24,7 +24,7 @@ export default class App extends React.Component {
                    alert_messages: [],
                    username: "" }
 
-    LoginLogic.setUserData().then((response) => {
+    LoginLogic.getUserData().then((response) => {
       if (response.data)
       {
 	this.setState({"username": response.data.username});
@@ -47,7 +47,7 @@ export default class App extends React.Component {
 // This eliminates tons of boilerplate code instide the constructor.
   login = (ctx) => {
     LoginLogic.login(ctx).then((user_data) => {
-      LoginLogic.setUserData().then((response) => {
+      LoginLogic.getUserData().then((response) => {
 	if (response.data)
 	{
 	  this.setState({"username": response.data.username});
