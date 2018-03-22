@@ -44,47 +44,31 @@ export class AuthorTradingCard extends React.Component {
 }
 
 export class AuthorProfile extends React.Component {
-  /*
-  ** Props contains either an author_id OR a user_id.
-  ** author_id is the id of the author.
-  ** user_id is the id of the credentials.
-  */
   constructor(props) {
     super(props);
     this.state = { profile: [] };
   }
 
-  componentDidMount() {
-    if (this.props.author_id)
-      var axios_param = {
-                        params: {
-                          filter: {
-                            "where": {
-                              "id": this.props.author_id
-                            }
-                          }
-                        }
-                      };
-    if (this.props.user_id)
-          var axios_param = {
-                            params: {
-                              filter: {
-                                "where": {
-                                  "credentialsId": this.props.user_id
-                                }
-                              }
-                            }
-                          };
-    axios.get(API_URL + "/authors", axios_param)
+  getAuthorData(author_id) {
+    if (author_id == "") return;
+    axios.get(API_URL + "/authors/" + author_id)
     .then((response) => {
       this.setState({
-        profile: response.data[0]
+        profile: response.data
       });
     })
     .catch((error) => {
       console.log("ERROR");
       console.log(error);
     });
+  }
+
+  componentDidMount() {
+    this.getAuthorData(this.props.author_id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getAuthorData(nextProps.author_id);
   }
 
   render() {

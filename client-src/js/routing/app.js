@@ -22,13 +22,17 @@ export default class App extends React.Component {
     super(props);
     this.state = { access_token: LoginLogic.getAccessToken,
                    alert_messages: [],
-                   username: "" }
+                   user_data: { username: "", user_id: "" }
+    }
 
     LoginLogic.getUserData().then((response) => {
       if (response.data)
       {
-	this.setState({"username": response.data.username});
-	this.setState({"user_id": response.data.id});
+	this.setState({ "user_data": {
+	                   "username": response.data.username,
+			   "user_id": response.data.id
+	                }
+	             });
       }
     });
 
@@ -50,9 +54,12 @@ export default class App extends React.Component {
       LoginLogic.getUserData().then((response) => {
 	if (response.data)
 	{
-	  this.setState({"username": response.data.username});
+	  this.setState({ "user_data": {
+			     "username": response.data.username,
+			     "user_id": response.data.id
+			  }
+		       });
           localStorage.setItem("username", response.data.username);
-	  this.setState({"user_id": response.data.id});
 	}
       });
       AlertLogic.addMessage("Login successful", "alert-success");
@@ -61,7 +68,7 @@ export default class App extends React.Component {
 
   logout = (ctx) => {
     LoginLogic.logout(ctx).then((response) => {
-      this.setState({"username": ""});
+      this.setState({"user_data": { "username": "", "user_id": "" } });
       localStorage.setItem("username", "");
       AlertLogic.addMessage("Logout successful", "alert-success");
     });
@@ -78,7 +85,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          <Header username={this.state.username}
+          <Header username={this.state.user_data.username}
                   logout={this.logout}/>
           <div className="after-navbar">
             <div className="flex-horizontal-container ">

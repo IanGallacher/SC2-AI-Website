@@ -4,13 +4,14 @@ import { Route, Redirect } from 'react-router-dom'
 
 import LoginLogic from './../logic/login.js'
 
-export function RequireLoggedInRoute (
-                  {component: Component,
-                   users_allowed: AllowedUsers }) {
+export function RequireLoggedInRoute ({
+                  component: Component,
+                  ...props 
+                }) {
   return (
     <Route
-      render={(props) => LoginLogic.isLoggedIn()
-        ? <Component />
+      render={(ctx) => LoginLogic.isLoggedIn()
+        ? <Component {...props}/>
         : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
   )
