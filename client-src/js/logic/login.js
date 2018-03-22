@@ -43,9 +43,6 @@ export default class LoginLogic {
     return new Promise (function (resolve, reject) {
       const access_token = localStorage.getItem("access_token");
 
-      localStorage.setItem("access_token", "");
-      localStorage.setItem("user_id", "");
-
       let instance = axios.create({
         headers: {'Authorization': access_token}
       });
