@@ -18,6 +18,10 @@ Rails.application.routes.draw do
       get 'logout', to: 'sessions#destroy'
     end
     resources :bots, only: [:index, :show]
+    scope :bots do
+      post 'create', to: 'bots#create'
+      post 'upload', to: 'bots#upload'
+    end
     resources :game_results, only: [:index]
     match "/bots/upload", to: "bots#upload", via: [:post]
 #    get "/*path", to: "routes#invalid"

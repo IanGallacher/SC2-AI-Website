@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318173100) do
+ActiveRecord::Schema.define(version: 20180321200008) do
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "owner_id"
     t.string "name", null: false
     t.string "author", null: false
     t.string "race", null: false
-    t.string "dll", null: false
     t.integer "match_count", default: 0, null: false
     t.integer "win_count", default: 0, null: false
     t.index ["owner_id"], name: "fk_rails_f93a12e463"

@@ -17,7 +17,7 @@
 coverage
 node_modules
 npm-debug.log
-
+#bundle.js
 
 #########################
 # Github's Rails Ignore #

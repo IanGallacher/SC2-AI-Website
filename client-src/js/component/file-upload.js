@@ -38,13 +38,12 @@ export default class UploadFile extends React.Component {
 
   fileUpload = (file, bot_name, bot_race) => {
     // Configure upload.
-    const url = API_URL + "/bots/upload";//"/user-uploads/botdll/upload";
+    const url = API_URL + "/bots/create";//"/user-uploads/botdll/upload";
     const access_token = localStorage.getItem("access_token");
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('user_id', localStorage.getItem("user_id"));
-    formData.append('bot_name', bot_name);
-    formData.append('bot_race', bot_race);
+    formData.append('name', bot_name);
+    formData.append('race', bot_race);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
