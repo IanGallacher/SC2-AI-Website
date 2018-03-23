@@ -12,6 +12,17 @@ function renderTableRow(row, schema) {
     </tr>
   );
 }
+
+function comparisonFactory(i) {
+  return function(a, b) {
+    if(a[i] < b[i])
+      return -1;
+    if(a[i] > b[i])
+      return 1;
+    return 0;
+  }
+}
+
 /*
 ** ResultsTable takes a schema of the following format:
 ** [{label:"headername",fieldname:"field",displayType:"text"}, ...]
@@ -19,8 +30,16 @@ function renderTableRow(row, schema) {
 export class ResultTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { table: this.props.table }
     // props.label - the name shown above the table. Optional
   }
+
+  onSort = (e, index) => {
+    const table = this.state.table;
+    table.sort(comparisonFactory(index));
+    this.setState({table})
+  }
+
   render() {
     var that = this;
     if(!this.props.table) { return null; }
@@ -35,8 +54,11 @@ export class ResultTable extends React.Component {
         <table className="table table-striped">
           <tbody>
           	<tr>
-              { this.props.schema.map( function(schema_entry) {
-                  return (<th>{schema_entry.headerName}</th>);
+              { this.props.schema.map( (schema_entry) => {
+                  return (
+		      <th onClick={e => this.onSort(e, schema_entry.fieldName)}>
+		      {schema_entry.headerName}</th>
+		  );
               }) }
             </tr>
             { this.props.table.map(function(row) {
