@@ -117,7 +117,7 @@ export class AuthorProfile extends React.Component {
             <div className="tab-pane active" id="home">
             {
               (this.state.profile.username) ? (
-                <BotTable author={this.state.profile}/>
+                <BotTable author_id={this.state.profile.id}/>
               ) : (
                 <div/>
               )

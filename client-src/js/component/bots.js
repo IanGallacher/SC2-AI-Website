@@ -12,19 +12,12 @@ export class BotTable extends React.Component {
   }
 
   componentDidMount() {
-    let axios_param = {};
-    // If we want to filter by author.
-    if (this.props.author)
-      axios_param = {
-                      params: {
-                        filter: {
-                          "where": {
-                            "author": this.props.author.username
-                          }
-                        }
-                      }
-                    };
-    axios.get(API_URL + "/bots", axios_param)
+    console.log(this.props);
+    if (!this.props.author_id)
+      var axios_url = API_URL + "/bots";
+    else
+      var axios_url = API_URL + "/users/" + this.props.author_id + "/bots";
+    axios.get(axios_url)
     .then((response) => {
       this.setState({
         bots: response.data
