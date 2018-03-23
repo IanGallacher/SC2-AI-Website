@@ -13,7 +13,8 @@ module.exports = {
   entry: Path.join(paths.JS, 'js/routing/app.js'),
   output: {
     path: paths.DIST,
-    filename: 'js/bundle.js'
+    filename: 'js/bundle.js',
+    publicPath: '/'
   },
   // Tell webpack to use html plugin
   plugins: [
