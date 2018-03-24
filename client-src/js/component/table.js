@@ -1,12 +1,27 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+function renderTableCol(col, onClick) {
+  if(onClick) {
+    return (
+      <td className="clickable"
+          onClick={onClick}>{col}</td>
+    );
+  }
+  return <td>{col}</td>;
+}
+
 function renderTableRow(row, schema) {
   return (
     <tr key={row.id}>
       {
         schema.map( function(schema_entry) {
-            return ( <td>{row[schema_entry.fieldName]}</td> );
+          if(!schema_entry.onClick)
+            return renderTableCol(row[schema_entry.fieldName]);
+          else
+            return renderTableCol(row[schema_entry.fieldName],
+                                  () => { schema_entry.onClick(row) }
+                                 );
         })
       }
     </tr>
@@ -56,9 +71,9 @@ export class ResultTable extends React.Component {
           	<tr>
               { this.props.schema.map( (schema_entry) => {
                   return (
-		      <th onClick={e => this.onSort(e, schema_entry.fieldName)}>
-		      {schema_entry.headerName}</th>
-		  );
+          		      <th onClick={e => this.onSort(e, schema_entry.fieldName)}>
+          		      {schema_entry.headerName}</th>
+            		  );
               }) }
             </tr>
             { this.props.table.map(function(row) {

@@ -1,11 +1,13 @@
 import axios from 'axios'
 import React from 'react'
 import { render } from 'react-dom'
+import { withRouter } from 'react-router'
 
 import { API_URL } from './../routing/app.js'
 import { ResultTable } from './table.js'
 
-export class BotTable extends React.Component {
+
+class BotTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = { bots: [] };
@@ -45,7 +47,11 @@ export class BotTable extends React.Component {
                             {
                               headerName:"Author",
                               fieldName:"author",
-                              displayType:"text"
+                              displayType:"text",
+                              onClick: (row) => {
+                                this.props.history.push("/authors/?author="
+                                                        + row.owner_id);
+                              }
                             },
                             {
                               headerName:"Race",
@@ -59,3 +65,5 @@ export class BotTable extends React.Component {
     return (<div>No bots found for user</div>);
   }
 }
+
+export default withRouter(BotTable);
