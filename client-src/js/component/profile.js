@@ -25,19 +25,20 @@ export class AuthorTradingCard extends React.Component {
   render() {
     return (
       <div className="trading-card">
+      <Link to={"/authors/?author=" + this.props.user.id.toString()}
+                     name="View Profile" id="profile"
+                     className="btn btn-lg btn-primary btn-block"
+                     type="submit">
         <title>{this.props.user.username}</title>
         <img className="img-thumbnail"
              src={default_avatar_path}
              alt={this.props.user.username}/>
         <div className="text-center">
           <p>
-            <Link to={"/authors/?author=" + this.props.user.id.toString()}
-               name="View Profile" id="profile"
-               className="btn btn-lg btn-primary btn-block"
-               type="submit">View Profile
-            </Link>
+View Profile
           </p>
         </div>
+      </Link>
       </div>
     );
   }

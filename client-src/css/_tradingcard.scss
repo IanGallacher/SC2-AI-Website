@@ -32,6 +32,10 @@ title {
     padding-left: 15px;
     padding-right: 15px;
   }
+  &:hover {
+      background-color: #EEE;
+      cursor: pointer;
+  }
 }
 .trading-card-horizontal {
   margin-top: 30px;
