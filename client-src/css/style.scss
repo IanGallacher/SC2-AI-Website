@@ -85,13 +85,12 @@ pre {
 ----------------------------------------------------- */
 // Center all the content that is below the header.
 .page-area {
-  margin: 0 10%;
+  margin: 30px 10% 0 10%;
   // Flexbox does weird things with this value. Don't let it.
   min-width: 0;
 }
 
 .page-zone {
-  margin-top: 30px;
   flex-grow: 1;
 }
 
