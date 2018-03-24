@@ -30,7 +30,7 @@ export default class App extends React.Component {
       {
 	this.setState({ "user_data": {
 	                   "username": response.data.username,
-			   "user_id": response.data.id
+                     "user_id": response.data.id
 	                }
 	             });
       }
@@ -52,17 +52,19 @@ export default class App extends React.Component {
   login = (ctx) => {
     LoginLogic.login(ctx).then((user_data) => {
       LoginLogic.getUserData().then((response) => {
-	if (response.data)
-	{
-	  this.setState({ "user_data": {
-			     "username": response.data.username,
-			     "user_id": response.data.id
-			  }
-		       });
-          localStorage.setItem("username", response.data.username);
-	}
+    	if (response.data)
+    	{
+    	  this.setState({ "user_data": {
+            			      "username": response.data.username,
+            			      "user_id": response.data.id
+            			    }});
+        localStorage.setItem("username", response.data.username);
+        }
       });
       AlertLogic.addMessage("Login successful", "alert-success");
+
+      // After logging in successfuly, redirect the user to the homepage.
+      ctx.props.history.push("/");
     });
   }
 
