@@ -63,10 +63,6 @@ pre {
 }
 
 .flex-horizontal {
-  > * {
-    margin: 5px;
-  }
-  justify-content: space-between;
   transition: all 0.3s;
   display: flex;
   flex-direction: row;
