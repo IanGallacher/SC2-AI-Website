@@ -37,37 +37,37 @@ export default class SignUp extends React.PureComponent {
   render() {
     return (
       <form name="form-signup"
-            className="form-signup center-me"
+            className="flex-vertical form-signup center-me"
             onSubmit={this.onSubmit}>
         <h2 className="form-signup-heading">Register</h2>
         <input name="username"
                type="text"
-               className="form-text-input-box"
+               className="text-input"
                placeholder="Username"
                onChange={this.onChange}
                autoFocus />
 
         <input name="email"
                type="text"
-               className="form-text-input-box"
+               className="text-input"
                placeholder="Email"
                onChange={this.onChange} />
         <br/>
 
         <input name="password"
                type="password"
-               className="form-text-input-box"
+               className="text-input"
                placeholder="Password"
                onChange={this.onChange} />
 
         <input name="password-confirm"
                type="password"
-               className="form-text-input-box"
+               className="text-input"
                placeholder="Confirm Password"
                onChange={this.onChange} />
         <br/>
         <button name="Submit"
-                className="btn btn-lg btn-primary btn-block"
+                className="btn btn-lg btn-primary"
                 type="submit">Sign up</button>
       </form>
     )

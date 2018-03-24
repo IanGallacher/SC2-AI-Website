@@ -56,14 +56,17 @@ pre {
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
-.flex-vertical-container {
-  transition: all 0.3s;
+.flex-vertical {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.flex-horizontal-container {
+.flex-horizontal {
+  > * {
+    margin: 5px;
+  }
+  justify-content: space-between;
   transition: all 0.3s;
   display: flex;
   flex-direction: row;

@@ -1,15 +1,15 @@
 @import "variables";
 
-@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+@mixin button-size($padding-vertical,
+                   $padding-horizontal,
+                   $font-size,
+                   $line-height,
+                   $border-radius) {
   padding: $padding-vertical $padding-horizontal;
   font-size: $font-size;
   line-height: $line-height;
   border-radius: $border-radius;
   outline: none;
-}
-
-input {
-  display: block;
 }
 
 .collapse {
@@ -18,112 +18,53 @@ input {
     display: block;
   }
 }
-button {
-  display: inline-block;
+
+.btn {
   margin-bottom: 0; // For input.btn
+  flex: 1;
   text-align: center;
   vertical-align: middle;
-  touch-action: manipulation;
-  cursor: pointer;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
   border: 1px solid transparent;
   white-space: nowrap;
+  background-color: buttonface;
+  touch-action: manipulation;
+  cursor: pointer;
   @include button-size($padding-base-vertical,
                        $padding-base-horizontal,
                        $font-size-base,
                        $line-height-base,
                        $btn-border-radius-base);
   //@include user-select(none);
-
-  // &,
-  // &:active,
-  // &.active {
-  //   &:focus,
-  //   &.focus {
-  //     @include tab-focus;
-  //   }
-  // }
-
-  // &:hover,
-  // &:focus,
-  // &.focus {
-  //   color: $btn-default-color;
-  //   text-decoration: none;
-  // }
-  //
-  // &:active,
-  // &.active {
-  //   outline: 0;
-  //   background-image: none;
-  //   @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
-  // }
-  //
-  // &.disabled,
-  // &[disabled],
-  // fieldset[disabled] & {
-  //   cursor: $cursor-disabled;
-  //   @include opacity(.65);
-  //   @include box-shadow(none);
-  // }
-
-  // [converter] extracted a& to a.btn
 }
+
 .btn-block {
   display: block;
   width: 100%;
 }
 
-.form-text-input-box {
-  display: block;
-  width: 100%;
-  padding: 105px;
+.text-input {
+  display: inherit;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: $btn-border-radius-base;
   padding-left: 15px !important;
-
   outline: none;
 
   &:focus {
     border: 1px solid #f90;
-    box-shadow: 0 0 0 2px #f90; /* or whatever colour you'd prefer */
+    box-shadow: 0 0 0 2px #f90;
+    // When two inputs are right next to each other,
+    // The border will draw behind the other unless we
+    // bring it to the front with z-index.
+    z-index: 1;
   }
 }
 
-// everything below
-// basically just makes a max Width
-//////
-/////
 .form-signin, .form-signup {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signup .form-signup-heading,
-.form-signin .checkbox,
-.form-signup .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox,
-.form-signup .checkbox{
-  font-weight: normal;
-}
-.form-signin .form-text-input-box,
-.form-signup .form-text-input-box {
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-.form-signin .form-text-input-box:focus,
-.form-signup .form-text-input-box:focus {
-  z-index: 2;
-}
-.form-signin .btn, .form-signup .btn  {
-  margin-bottom: 10px;
 }
 
 /*

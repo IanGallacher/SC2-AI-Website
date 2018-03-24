@@ -32,28 +32,27 @@ export default class Login extends React.PureComponent {
     }
     return (
       <form name="login-form"
-            className="form-signin"
+            className="flex-vertical form-signin"
             onSubmit={this.onSubmit}>
         <h2 className="form-signin-heading">Please sign in</h2>
         <input name="username"
                type="text"
-               className="form-text-input-box"
+               className="text-input"
                placeholder="Username"
                onChange={this.onChange} autoFocus />
         <input name="password"
                type="password"
-               className="form-text-input-box"
+               className="text-input"
                placeholder="Password"
                onChange={this.onChange} />
         <br/>
         <button name="Submit"
                 id="submit"
-                className="btn btn-lg btn-primary btn-block"
+                className="btn btn-lg btn-primary"
                 type="submit">
                   Sign in
                 </button>
-        <Link to="/sign-up"
-              className="btn btn-lg btn-primary btn-block">
+        <Link to="/sign-up">
                 Create new account
               </Link>
 

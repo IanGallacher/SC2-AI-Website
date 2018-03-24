@@ -27,7 +27,6 @@ export class AuthorTradingCard extends React.Component {
       <div className="trading-card">
       <Link to={"/authors/?author=" + this.props.user.id.toString()}
                      name="View Profile" id="profile"
-                     className="btn btn-lg btn-primary btn-block"
                      type="submit">
         <title>{this.props.user.username}</title>
         <img className="img-thumbnail"

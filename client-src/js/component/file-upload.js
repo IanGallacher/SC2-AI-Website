@@ -8,26 +8,20 @@ import { API_URL } from './../routing/app.js'
 export default class UploadFile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: null, bot_name: null, bot_race: "terran" };
+    this.state = { file: null, bot_name: null, bot_race: "Terran" };
     if(localStorage.getItem("access_token") === null)
        localStorage.setItem("access_token", "");
   }
 
-  onTextChange = (event) => {
-    this.setState({
-      bot_name: event.target.value
-    });
+  onChange = (event) => {
+    let new_state = {};
+    new_state[event.target.name] = event.target.value;
+    this.setState(new_state);
   }
 
   onFileChange = (event) => {
     this.setState({
       file: event.target.files[0]
-    });
-  }
-
-  onRadioButtonChange = (event) => {
-    this.setState({
-      bot_race: event.target.value
     });
   }
 
@@ -65,31 +59,28 @@ export default class UploadFile extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <label htmlFor="file">{this.props.label}</label>
-        <input name="filename" type="text" onChange={this.onTextChange}/>
-        <input name="file" type="file" onChange={this.onFileChange}/>
-        <RadioButtonDefault radioGroupName="bot_race"
-                            id="Terran"
-                            label="Terran"
-                            value="terran"
-                            onChange={this.onRadioButtonChange}/>
-        <RadioButton radioGroupName="bot_race"
-                     id="Protoss"
-                     label="Protoss"
-                     value="protoss"
-                     onChange={this.onRadioButtonChange}/>
-        <RadioButton radioGroupName="bot_race"
-                     id="Zerg"
-                     label="Zerg"
-                     value="zerg"
-                     onChange={this.onRadioButtonChange}/>
-        <RadioButton radioGroupName="bot_race"
-                     id="Random"
-                     label="Random"
-                     value="random"
-                     onChange={this.onRadioButtonChange}/>
-        <input type="submit" value="Submit"/>
+      <form className="flex-horizontal"
+            onSubmit={this.onSubmit}>
+        <input name="bot_name"
+               type="text"
+               placeholder="File Name"
+               className="text-input"
+               onChange={this.onChange}/>
+        <input name="file"
+               type="file"
+               className="btn"
+               onChange={this.onFileChange}/>
+        <select name="race"
+                className="text-input"
+                onChange={this.onChange}>
+          <option value="Terran">Terran</option>
+          <option value="Protoss">Protoss</option>
+          <option value="Zerg">Zerg</option>
+          <option value="Random">Random</option>
+        </select>
+        <input type="submit"
+               value="Submit"
+               className="btn"/>
       </form>
     )
   }

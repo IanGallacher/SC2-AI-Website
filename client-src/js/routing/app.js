@@ -90,7 +90,7 @@ export default class App extends React.Component {
           <Header username={this.state.user_data.username}
                   logout={this.logout}/>
           <div className="after-navbar">
-            <div className="flex-horizontal-container ">
+            <div className="flex-horizontal">
               <Sidebar/>
               <div className="sidebar-placeholder"/>
               <div className="page-zone">
