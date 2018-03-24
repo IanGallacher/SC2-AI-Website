@@ -16,7 +16,7 @@ class AuthorAvatar extends React.PureComponent {
            src={this.props.avatar}/>
       ) : (
         <img className="img-thumbnail grid-one-quarter"
-           src={"/" + default_avatar_path}/>
+           src={default_avatar_path}/>
       )
   }
 }
@@ -27,7 +27,7 @@ export class AuthorTradingCard extends React.Component {
       <div className="trading-card">
         <title>{this.props.user.username}</title>
         <img className="img-thumbnail"
-             src={"/" + default_avatar_path}
+             src={default_avatar_path}
              alt={this.props.user.username}/>
         <div className="text-center">
           <p>
