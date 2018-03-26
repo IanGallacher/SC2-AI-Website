@@ -12,10 +12,10 @@ class AuthorAvatar extends React.PureComponent {
   render() {
     return (this.props.avatar) ?
       (
-        <img className="img-thumbnail grid-one-quarter"
+        <img className="img-thumbnail"
            src={this.props.avatar}/>
       ) : (
-        <img className="img-thumbnail grid-one-quarter"
+        <img className="img-thumbnail"
            src={default_avatar_path}/>
       )
   }
@@ -29,9 +29,7 @@ export class AuthorTradingCard extends React.Component {
                      name="View Profile" id="profile"
                      type="submit">
         <title>{this.props.user.username}</title>
-        <img className="img-thumbnail"
-             src={default_avatar_path}
-             alt={this.props.user.username}/>
+        <AuthorAvatar avatar={this.props.user.avatar}/>
         <div className="text-center">
           <p>
 View Profile
@@ -75,7 +73,9 @@ export class AuthorProfile extends React.Component {
     return (
       <div className="trading-card-horizontal">
         <title>{this.state.profile.username}</title>
-        <AuthorAvatar avatar={this.state.profile.avatar}/>
+        <div className="grid-one-quarter">
+          <AuthorAvatar avatar={this.state.profile.avatar}/>
+        </div>
         <div className="grid-three-quarter">
         {
           /*

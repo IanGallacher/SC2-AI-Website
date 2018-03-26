@@ -54,6 +54,8 @@ export default class AuthorBios extends React.PureComponent {
           <h3>Authors</h3>
             {
               this.state.author.map(function(user) {
+                console.log("assdfa");
+                console.log(user);
               return (
                 <div key={user.id}>
                   <AuthorTradingCard user={user}/>
