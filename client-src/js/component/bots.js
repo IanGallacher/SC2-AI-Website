@@ -14,7 +14,6 @@ class BotTable extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     if (!this.props.author_id)
       var axios_url = API_URL + "/bots";
     else

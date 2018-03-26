@@ -8,7 +8,6 @@ import { ResultTable } from './../component/table.js'
 
 export default class Bots extends React.Component {
   render() {
-    console.log(this);
     return (
       <BotTable/>
     );

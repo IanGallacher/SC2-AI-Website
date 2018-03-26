@@ -5,10 +5,10 @@ import axios from 'axios'
 import { RadioButton, RadioButtonDefault } from './button.js'
 import { API_URL } from './../routing/app.js'
 
-export default class FileUpload extends React.Component {
+export default class BotUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: null, filename: null };
+    this.state = { file: null, bot_name: null, bot_race: "Terran" };
     if(localStorage.getItem("access_token") === null)
        localStorage.setItem("access_token", "");
   }
@@ -27,15 +27,17 @@ export default class FileUpload extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.fileUpload(this.state.file, this.state.filename);
+    this.fileUpload(this.state.file, this.state.bot_name, this.state.bot_race);
   }
 
-  fileUpload = (file, filename, bot_race) => {
+  fileUpload = (file, bot_name, bot_race) => {
     // Configure upload.
     const url = API_URL + this.props.uploadPath;
     const access_token = localStorage.getItem("access_token");
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('name', bot_name);
+    formData.append('race', bot_race);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -59,10 +61,23 @@ export default class FileUpload extends React.Component {
     return (
       <form className="flex-horizontal"
             onSubmit={this.onSubmit}>
+        <input name="bot_name"
+               type="text"
+               placeholder="Bot Name"
+               className="text-input"
+               onChange={this.onChange}/>
         <input name="file"
                type="file"
                className="btn"
                onChange={this.onFileChange}/>
+        <select name="race"
+                className="text-input"
+                onChange={this.onChange}>
+          <option value="Terran">Terran</option>
+          <option value="Protoss">Protoss</option>
+          <option value="Zerg">Zerg</option>
+          <option value="Random">Random</option>
+        </select>
         <input type="submit"
                value="Submit"
                className="btn"/>
