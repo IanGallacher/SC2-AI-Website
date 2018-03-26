@@ -12,11 +12,11 @@ class User < ApplicationRecord
   def save_avatar
     return unless @file.present?
     self.avatar = get_filename()
-    File.open("public/" + self.avatar, 'wb') { |file| file.write(@file.read) }
+    File.open("public" + self.avatar, 'wb') { |file| file.write(@file.read) }
   end
 
   private
   def get_filename
-    "user-upload/avatar/#{username.gsub(/[^0-9A-z.\-]/, '_')}#{File.extname @file.original_filename}"
+    "/user-upload/avatar/#{username.gsub(/[^0-9A-z.\-]/, '_')}#{File.extname @file.original_filename}"
   end
 end
