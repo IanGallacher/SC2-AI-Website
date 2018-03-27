@@ -56,6 +56,16 @@ class BotTable extends React.Component {
                               headerName:"Race",
                               fieldName:"race",
                               displayType:"text"
+                            },
+                            {
+                              headerName:"Games Won",
+                              fieldName:"win_count",
+                              displayType:"text"
+                            },
+                            {
+                              headerName:"Games Played",
+                              fieldName:"match_count",
+                              displayType:"text"
                             }
                           ]
                         }/>
