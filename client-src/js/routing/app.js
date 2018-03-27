@@ -30,7 +30,8 @@ export default class App extends React.Component {
       {
 	this.setState({ "user_data": {
 	                   "username": response.data.username,
-                     "user_id": response.data.id
+                     "user_id": response.data.id,
+                     "role": response.data.role
 	                }
 	             });
       }
@@ -56,7 +57,8 @@ export default class App extends React.Component {
     	{
     	  this.setState({ "user_data": {
             			      "username": response.data.username,
-            			      "user_id": response.data.id
+            			      "user_id": response.data.id,
+                        "role": response.data.role
             			    }});
         localStorage.setItem("username", response.data.username);
         }
@@ -88,6 +90,7 @@ export default class App extends React.Component {
       <Router>
         <React.Fragment>
           <Header username={this.state.user_data.username}
+                  role={this.state.user_data.role}
                   logout={this.logout}/>
           <div className="after-navbar">
             <div className="flex-horizontal">
