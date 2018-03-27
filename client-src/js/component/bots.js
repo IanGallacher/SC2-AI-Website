@@ -4,13 +4,14 @@ import { render } from 'react-dom'
 import { withRouter } from 'react-router'
 
 import { API_URL } from './../routing/app.js'
+import LoadingAnimation from './loading.js'
 import { ResultTable } from './table.js'
 
 
 class BotTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { bots: [] };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -31,6 +32,7 @@ class BotTable extends React.Component {
   }
 
   render() {
+    if(!this.state.bots) return <LoadingAnimation/>
     if (this.state.bots.length > 0)
     {
       const search = this.props.location.search;
@@ -42,7 +44,6 @@ class BotTable extends React.Component {
         bot_table = bot_table.filter(entry => entry.name == name_filter);
       if(race_filter)
         bot_table = bot_table.filter(entry => entry.race == race_filter);
-
       return (
         <div>
           <ResultTable
