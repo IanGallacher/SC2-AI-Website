@@ -32,16 +32,31 @@ class BotTable extends React.Component {
 
   render() {
     if (this.state.bots.length > 0)
+    {
+      const search = this.props.location.search;
+      const params = new URLSearchParams(search);
+      let name_filter = params.get('name');
+      let race_filter = params.get('race');
+      let bot_table = this.state.bots;
+      if(name_filter)
+        bot_table = bot_table.filter(entry => entry.name == name_filter);
+      if(race_filter)
+        bot_table = bot_table.filter(entry => entry.race == race_filter);
+
       return (
         <div>
           <ResultTable
-                       table={this.state.bots}
+                       table={bot_table}
                        schema={
                           [
                             {
                               headerName:"Bot name",
                               fieldName:"name",
-                              displayType:"text"
+                              displayType:"text",
+                              onClick: (row) => {
+                                this.props.history.push("/bots/?name="
+                                                        + row.name);
+                              }
                             },
                             {
                               headerName:"Author",
@@ -55,7 +70,11 @@ class BotTable extends React.Component {
                             {
                               headerName:"Race",
                               fieldName:"race",
-                              displayType:"text"
+                              displayType:"text",
+                              onClick: (row) => {
+                                this.props.history.push("/bots/?race="
+                                                        + row.race);
+                              }
                             },
                             {
                               headerName:"Games Won",
@@ -71,6 +90,7 @@ class BotTable extends React.Component {
                         }/>
         </div>
       );
+    }
     return (<div>No bots found for user</div>);
   }
 }
