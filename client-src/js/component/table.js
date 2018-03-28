@@ -68,7 +68,7 @@ export class ResultTable extends React.Component {
                      sort_direction: -this.state.sort_direction})
     else
       this.setState({sort_column: index,
-                     sort_direction: 1})
+                     sort_direction: -1})
   }
 
   renderSortArrow(index) {
