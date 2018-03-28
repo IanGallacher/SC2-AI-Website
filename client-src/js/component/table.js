@@ -28,12 +28,14 @@ function renderTableRow(row, schema) {
   );
 }
 
-function comparisonFactory(i) {
+// Sort_direction needs to be either 1 or -1. Optional.
+function comparisonFactory(i, sort_direction) {
+  if(!sort_direction) var sort_direction = 1;
   return function(a, b) {
     if(a[i] < b[i])
-      return -1;
+      return -1 * sort_direction;
     if(a[i] > b[i])
-      return 1;
+      return 1 * sort_direction;
     return 0;
   }
 }
@@ -45,14 +47,34 @@ function comparisonFactory(i) {
 export class ResultTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { table: this.props.table }
+    this.state = { table: this.props.table,
+                   // sort_column is the index of the col to sort.
+                   sort_column: null,
+                   // If sort_direction is negative, sort in reverse order.
+                   sort_direction: 1 }
     // props.label - the name shown above the table. Optional
   }
 
   onSort = (e, index) => {
     const table = this.state.table;
     table.sort(comparisonFactory(index));
-    this.setState({table})
+    if (this.state.sort_direction < 0) table.reverse();
+    this.setState({table: table})
+  }
+
+  setSortColumn = (index) => {
+    if (Math.abs(this.state.sort_column) === index)
+      this.setState({sort_column: index,
+                     sort_direction: -this.state.sort_direction})
+    else
+      this.setState({sort_column: index,
+                     sort_direction: 1})
+  }
+
+  renderSortArrow(index) {
+    var col = this.state.sort_column;
+    return (col !== null && Math.abs(col) === index)
+      && ((this.state.sort_direction > 0) ? "▲" : "▼");
   }
 
   render() {
@@ -69,10 +91,14 @@ export class ResultTable extends React.Component {
         <table className="table table-striped">
           <tbody>
           	<tr>
-              { this.props.schema.map( (schema_entry) => {
+              { this.props.schema.map( (schema_entry, index) => {
                   return (
-          		      <th onClick={e => this.onSort(e, schema_entry.fieldName)}>
-          		      {schema_entry.headerName}</th>
+          		      <th onClick={e => { this.setSortColumn(index);
+                                        this.onSort(e, schema_entry.fieldName);
+                                      }
+                    }>
+          		      {schema_entry.headerName} {this.renderSortArrow(index)}
+                    </th>
             		  );
               }) }
             </tr>

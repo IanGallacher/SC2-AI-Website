@@ -3,6 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import { API_URL } from './app.js'
+import FileUpload from './../component/file-upload.js'
 
 export default class AdminControlPanel extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ export default class AdminControlPanel extends React.Component {
     return (
       <React.Fragment>
         <button onClick={this.addSeasonBtn}>Add Season</button>
+        <FileUpload label="Upload GameResult:" uploadPath={"/game_results"}/>
       </React.Fragment>
     )
   }
