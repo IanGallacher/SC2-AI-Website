@@ -37,11 +37,13 @@
   > li {
     position: relative;
     display: block;
-
     > a {
       position: relative;
       display: block;
       padding: 0 15px;
+      &[aria-current="true"] {
+        background-color: #777;
+      }
       &:hover,
       &:focus {
         text-decoration: none;
