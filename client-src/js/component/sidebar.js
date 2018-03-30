@@ -74,7 +74,7 @@ export class Sidebar extends React.Component {
         <div className="sidebar-header">
           <Link to="/">
             <img className="Header-logo-img"
-                 src={"/"+logo_path}
+                 src={logo_path}
                  alt="Sc2Ladder" />
           </Link>
         </div>

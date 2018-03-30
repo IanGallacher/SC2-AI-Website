@@ -7,6 +7,7 @@
 @import "form";
 @import "gridsystem";
 @import "header";
+@import "loading";
 @import "sidebar";
 @import "table";
 @import "tradingcard";
@@ -56,14 +57,13 @@ pre {
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
-.flex-vertical-container {
-  transition: all 0.3s;
+.flex-vertical {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.flex-horizontal-container {
+.flex-horizontal {
   transition: all 0.3s;
   display: flex;
   flex-direction: row;
@@ -85,13 +85,12 @@ pre {
 ----------------------------------------------------- */
 // Center all the content that is below the header.
 .page-area {
-  margin: 0 10%;
+  margin: 30px 10% 0 10%;
   // Flexbox does weird things with this value. Don't let it.
   min-width: 0;
 }
 
 .page-zone {
-  margin-top: 30px;
   flex-grow: 1;
 }
 

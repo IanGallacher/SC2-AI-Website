@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { API_URL } from './../routing/app.js'
 
-import { BotTable } from './bots.js'
+import BotTable from './bots.js'
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 
@@ -12,11 +12,11 @@ class AuthorAvatar extends React.PureComponent {
   render() {
     return (this.props.avatar) ?
       (
-        <img className="img-thumbnail grid-one-quarter"
+        <img className="img-thumbnail"
            src={this.props.avatar}/>
       ) : (
-        <img className="img-thumbnail grid-one-quarter"
-           src={"/" + default_avatar_path}/>
+        <img className="img-thumbnail"
+           src={default_avatar_path}/>
       )
   }
 }
@@ -25,19 +25,17 @@ export class AuthorTradingCard extends React.Component {
   render() {
     return (
       <div className="trading-card">
+      <Link to={"/authors/?author=" + this.props.user.id.toString()}
+                     name="View Profile" id="profile"
+                     type="submit">
         <title>{this.props.user.username}</title>
-        <img className="img-thumbnail"
-             src={"/" + default_avatar_path}
-             alt={this.props.user.username}/>
+        <AuthorAvatar avatar={this.props.user.avatar}/>
         <div className="text-center">
           <p>
-            <Link to={"/authors/?author=" + this.props.user.id.toString()}
-               name="View Profile" id="profile"
-               className="btn btn-lg btn-primary btn-block"
-               type="submit">View Profile
-            </Link>
+View Profile
           </p>
         </div>
+      </Link>
       </div>
     );
   }
@@ -75,7 +73,9 @@ export class AuthorProfile extends React.Component {
     return (
       <div className="trading-card-horizontal">
         <title>{this.state.profile.username}</title>
-        <AuthorAvatar avatar={this.state.profile.avatar}/>
+        <div className="grid-one-quarter">
+          <AuthorAvatar avatar={this.state.profile.avatar}/>
+        </div>
         <div className="grid-three-quarter">
         {
           /*

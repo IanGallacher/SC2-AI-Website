@@ -1,18 +1,20 @@
 import axios from 'axios'
 import React from 'react'
 import { render } from 'react-dom'
+import { withRouter } from 'react-router'
 
 import { API_URL } from './../routing/app.js'
+import LoadingAnimation from './loading.js'
 import { ResultTable } from './table.js'
 
-export class BotTable extends React.Component {
+
+class BotTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { bots: [] };
+    this.state = {};
   }
 
   componentDidMount() {
-    console.log(this.props);
     if (!this.props.author_id)
       var axios_url = API_URL + "/bots";
     else
@@ -30,32 +32,68 @@ export class BotTable extends React.Component {
   }
 
   render() {
+    if(!this.state.bots) return <LoadingAnimation/>
     if (this.state.bots.length > 0)
+    {
+      const search = this.props.location.search;
+      const params = new URLSearchParams(search);
+      let name_filter = params.get('name');
+      let race_filter = params.get('race');
+      let bot_table = this.state.bots;
+      if(name_filter)
+        bot_table = bot_table.filter(entry => entry.name == name_filter);
+      if(race_filter)
+        bot_table = bot_table.filter(entry => entry.race == race_filter);
       return (
         <div>
           <ResultTable
-                       table={this.state.bots}
+                       table={bot_table}
                        schema={
                           [
                             {
                               headerName:"Bot name",
                               fieldName:"name",
-                              displayType:"text"
+                              displayType:"text",
+                              onClick: (row) => {
+                                this.props.history.push("/bots/?name="
+                                                        + row.name);
+                              }
                             },
                             {
                               headerName:"Author",
                               fieldName:"author",
-                              displayType:"text"
+                              displayType:"text",
+                              onClick: (row) => {
+                                this.props.history.push("/authors/?author="
+                                                        + row.owner_id);
+                              }
                             },
                             {
                               headerName:"Race",
                               fieldName:"race",
+                              displayType:"text",
+                              onClick: (row) => {
+                                this.props.history.push("/bots/?race="
+                                                        + row.race);
+                              }
+                            },
+                            {
+                              headerName:"Games Won",
+                              fieldName:"win_count",
+                              displayType:"text"
+                            },
+                            {
+                              headerName:"Games Played",
+                              fieldName:"match_count",
                               displayType:"text"
                             }
                           ]
                         }/>
         </div>
       );
+    }
     return (<div>No bots found for user</div>);
   }
 }
+
+export default withRouter(BotTable);

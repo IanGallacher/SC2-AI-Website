@@ -30,7 +30,8 @@ export default class App extends React.Component {
       {
 	this.setState({ "user_data": {
 	                   "username": response.data.username,
-			   "user_id": response.data.id
+                     "user_id": response.data.id,
+                     "role": response.data.role
 	                }
 	             });
       }
@@ -52,17 +53,20 @@ export default class App extends React.Component {
   login = (ctx) => {
     LoginLogic.login(ctx).then((user_data) => {
       LoginLogic.getUserData().then((response) => {
-	if (response.data)
-	{
-	  this.setState({ "user_data": {
-			     "username": response.data.username,
-			     "user_id": response.data.id
-			  }
-		       });
-          localStorage.setItem("username", response.data.username);
-	}
+    	if (response.data)
+    	{
+    	  this.setState({ "user_data": {
+            			      "username": response.data.username,
+            			      "user_id": response.data.id,
+                        "role": response.data.role
+            			    }});
+        localStorage.setItem("username", response.data.username);
+        }
       });
       AlertLogic.addMessage("Login successful", "alert-success");
+
+      // After logging in successfuly, redirect the user to the homepage.
+      ctx.props.history.push("/");
     });
   }
 
@@ -86,9 +90,10 @@ export default class App extends React.Component {
       <Router>
         <React.Fragment>
           <Header username={this.state.user_data.username}
+                  role={this.state.user_data.role}
                   logout={this.logout}/>
           <div className="after-navbar">
-            <div className="flex-horizontal-container ">
+            <div className="flex-horizontal">
               <Sidebar/>
               <div className="sidebar-placeholder"/>
               <div className="page-zone">

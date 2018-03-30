@@ -34,7 +34,8 @@ module.exports = {
       index: 'index.html'
     },
     proxy: {
-      "/api": "http://localhost:3000"
+      "/api": "http://localhost:3000",
+      "/user-upload": "http://localhost:3000"
     }
   },
   devtool: 'source-map',
