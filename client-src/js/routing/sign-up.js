@@ -1,6 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+import AlertLogic from './../logic/alert.js'
+import LoginLogic from './../logic/login.js'
+
+import { TextInput } from './../component/text-input.js'
+
 class Error extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +25,11 @@ class Error extends React.Component {
 export default class SignUp extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { errors: [] };
+    this.state = { errors: [],
+                   username: "",
+                   email: "",
+                   password: "",
+                   password_confirmation: ""};
   }
 
   onChange = (event) => {
@@ -31,7 +40,15 @@ export default class SignUp extends React.PureComponent {
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.signUp(this);
+    console.log(this.state);
+    LoginLogic.signUp(this.state)
+    .then(function(response) {
+      AlertLogic.addMessage("Account created", "alert-success");
+    })
+    .catch((errors) => {
+      this.setState({errors});
+      console.log(errors);
+    });
   }
 
   render() {
@@ -40,29 +57,30 @@ export default class SignUp extends React.PureComponent {
             className="flex-vertical form-signup center-me"
             onSubmit={this.onSubmit}>
         <h2 className="form-signup-heading">Register</h2>
-        <input name="username"
+        <TextInput name="username"
                type="text"
-               className="text-input"
+               error={this.state.errors.username &&
+                      this.state.errors.username}
                placeholder="Username"
                onChange={this.onChange}
                autoFocus />
 
-        <input name="email"
+        <TextInput name="email"
                type="text"
-               className="text-input"
+               error={this.state.errors.email}
                placeholder="Email"
                onChange={this.onChange} />
         <br/>
 
-        <input name="password"
+        <TextInput name="password"
                type="password"
-               className="text-input"
+               error={this.state.errors.password}
                placeholder="Password"
                onChange={this.onChange} />
 
-        <input name="password-confirm"
+        <TextInput name="password_confirmation"
                type="password"
-               className="text-input"
+               error={this.state.errors.password_confirmation}
                placeholder="Confirm Password"
                onChange={this.onChange} />
         <br/>

@@ -4,3 +4,63 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+@mixin translationTransition($time) {
+  -webkit-transition:  linear, left $time, top $time, -webkit-transform $time;
+  transition: linear, left $time, top $time, transform $time;
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name}{
+    @content;}
+  @-moz-keyframes #{$name}{
+    @content;}
+  @-ms-keyframes #{$name}{
+    @content;}
+  @keyframes #{$name}{
+    @content;}
+}
+
+@mixin animationIterationCount($iterations) {
+  -webkit-animation-iteration-count: $iterations; /* Safari 4.0 - 8.0, according to w3schools. See http:;//www.w3schools.com/cssref/css3_pr_animation-iteration-count.asp*/
+  animation-iteration-count: $iterations;
+}
+
+@mixin shake() {
+  animation: mymove 0.2s;
+  -webkit-animation-timing-function: linear /* Safari 4.0 - 8.0 */;
+  animation-timing-function: linear;
+  @include animationIterationCount(3) ;
+}// Not supported by IE 9 and earlier
+
+@include keyframes(mymove){
+  from{
+    transform: translate(2px, 0px);}
+  to{
+    transform: translate(20px, 0px);}}
+
+@include keyframes(mymove) {
+  0% { // Start at the current location.
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(7px, 0px);
+  }
+  50% { // If any non-linear interpolation is used, the 50% position is needed to smooth the animation when looping.
+    transform: translate(0px, 0px);
+  }
+  75% {
+    transform: translate(-7px, 0px);
+  }
+  100% {
+    // End at the initial location.
+    transform: translate(0px, 0px);
+  }
+}
+
+@mixin input-placeholder($color) {
+  &::-webkit-input-placeholder { color: $color !important; }
+  &:-moz-placeholder { color: $color !important; } /* Firefox 18- */
+  &::-moz-placeholder { color: $color !important; } /* Firefox 19+ */
+  &:-ms-input-placeholder { color: $color !important; }
+}

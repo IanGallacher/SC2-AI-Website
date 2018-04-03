@@ -20,15 +20,14 @@ export var API_URL = "/api"
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { access_token: LoginLogic.getAccessToken,
-                   alert_messages: [],
+    this.state = { alert_messages: [],
                    user_data: { username: "", user_id: "" }
     }
 
     LoginLogic.getUserData().then((response) => {
       if (response.data)
       {
-	this.setState({ "user_data": {
+	   this.setState({ "user_data": {
 	                   "username": response.data.username,
                      "user_id": response.data.id,
                      "role": response.data.role
@@ -43,46 +42,12 @@ export default class App extends React.Component {
                             alert_messages: messages
                           });
                         }
-  }
 
-// I am using a new experimental feature of ECMAscript.
-// At the time I am writing this, the proposal is currently in stage 2.
-// Instead of writing "this.login = this.login.bind(this);" in the constructor,
-// you are able to use arrow notation instead for binding methods.
-// This eliminates tons of boilerplate code instide the constructor.
-  login = (ctx) => {
-    LoginLogic.login(ctx).then((user_data) => {
-      LoginLogic.getUserData().then((response) => {
-    	if (response.data)
-    	{
-    	  this.setState({ "user_data": {
-            			      "username": response.data.username,
-            			      "user_id": response.data.id,
-                        "role": response.data.role
-            			    }});
-        localStorage.setItem("username", response.data.username);
-        }
-      });
-      AlertLogic.addMessage("Login successful", "alert-success");
-
-      // After logging in successfuly, redirect the user to the homepage.
-      ctx.props.history.push("/");
-    });
-  }
-
-  logout = (ctx) => {
-    LoginLogic.logout(ctx).then((response) => {
-      this.setState({"user_data": { "username": "", "user_id": "" } });
-      localStorage.setItem("username", "");
-      AlertLogic.addMessage("Logout successful", "alert-success");
-    });
-  }
-
-  signUp = (ctx) => {
-    LoginLogic.signUp(ctx).then(function(response) {
-      console.log(response)
-      AlertLogic.addMessage("Account created", "alert-success");
-    });
+    LoginLogic.notify = (user_data) => {
+                          this.setState({
+                            user_data: user_data
+                          });
+                        }
   }
 
   render() {
@@ -90,8 +55,7 @@ export default class App extends React.Component {
       <Router>
         <React.Fragment>
           <Header username={this.state.user_data.username}
-                  role={this.state.user_data.role}
-                  logout={this.logout}/>
+                  role={this.state.user_data.role}/>
           <div className="after-navbar">
             <div className="flex-horizontal">
               <Sidebar/>

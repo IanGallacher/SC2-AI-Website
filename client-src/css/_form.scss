@@ -1,3 +1,4 @@
+@import "mixin";
 @import "variables";
 
 @mixin button-size($padding-vertical,
@@ -43,6 +44,34 @@
   width: 100%;
 }
 
+.input-container {
+  position: relative;
+}
+
+$errorColor: #f90;
+.command-invalid-tooltip {
+  background: $errorColor;
+  position: absolute;
+  top: 50%; // The top and the translateY(-50%) allow for centering of the tooltip.
+  transform: translateX(-105%) translateY(-50%); // TranslateX to position the tooltip to the left of the command, translateY to align with the command. The translateY goes hand in hand with margin-top.
+  // margin-top: -($commandMargin) ;// tooltips are larger because of the border. In order to center vertically, we have to take that into account.
+  padding: 5px;
+  border: 1px solid $errorColor; // needed to erase a small gap between the tooltip and the triangle reminder.
+  //@include roundCorners;
+}
+
+// Triangle label. // For an explanation of how this works, see CSS triangle http://codepen.io/chriscoyier/pen/lotjh
+.command-invalid-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50% ;// center vertically.
+  transform: translateY(-50%) ;// center vertically.
+  left: 100% ; // Position on the right side of the tooltip.
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent transparent $errorColor;
+}
+
 .text-input {
   display: inherit;
   padding: 10px;
@@ -51,13 +80,30 @@
   padding-left: 15px !important;
   outline: none;
 
+  color: black;
   &:focus {
     border: 1px solid #f90;
     box-shadow: 0 0 0 2px #f90;
     // When two inputs are right next to each other,
     // The border will draw behind the other unless we
     // bring it to the front with z-index.
-    z-index: 1;
+    z-index: 3;
+  }
+
+  &.error {
+    @include shake;
+    @include input-placeholder(#d6887a)
+    background-color: #ffcdc4;
+    border: 1px solid #ce2b0e;
+    box-shadow: 0 0 0 1px #ce2b0e;
+    &:focus {
+      border: 1px solid #f90;
+      box-shadow: 0 0 0 2px #f90;
+      // When two inputs are right next to each other,
+      // The border will draw behind the other unless we
+      // bring it to the front with z-index.
+      z-index: 3;
+    }
   }
 }
 

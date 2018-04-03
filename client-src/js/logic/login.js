@@ -11,26 +11,35 @@ export default class LoginLogic {
             || !localStorage.getItem("username") == ""
           );
   }
-  
+
   static getUserData() {
-    return new Promise (function (resolve, reject) {
+    return new Promise ((resolve, reject) => {
       axios.get(API_URL + "/users")
-      .then(function (response) {
-	resolve(response);
+      .then((response) => {
+	      resolve(response);
       });
     })
   }
 
-  static login(ctx) { // ctx is shorthand for the context of the react component
-    return new Promise (function (resolve, reject) {
+  static login(login_data) {
+  console.log(this);
+    return new Promise ((resolve, reject) => {
       axios.post(API_URL + "/login", {
-        "username": ctx.state["username"],
-        "password": ctx.state["password"]
+        "username": login_data["username"],
+        "password": login_data["password"]
       })
-      .then(function (response) {
+      .then((response) => {
+        localStorage.setItem("username", response.data.username);
+        this.getUserData().then((response) => {
+        	if (response.data) {
+            this.notify({ "username": response.data.username,
+                			    "user_id": response.data.id,
+                          "role": response.data.role });
+          }
+        });
         resolve(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         const message = error.response.data.message;
         AlertLogic.addMessage(message);
         //reject(Error(message));
@@ -38,48 +47,46 @@ export default class LoginLogic {
     });
   }
 
-  static logout(ctx) { // ctx is shorthand for the context of the react component
-    return new Promise (function (resolve, reject) {
-      const access_token = localStorage.getItem("access_token");
-
-      let instance = axios.create({
-        headers: {'Authorization': access_token}
+  static logout() {
+  console.log(this);
+    return new Promise ((resolve, reject) => {
+      axios.get(API_URL + "/logout")
+      .then((response) => {
+      console.log(this);
+        localStorage.setItem("username", "");
+        this.notify({ "username": "",
+            			    "user_id": "",
+                      "role": "" });
+        resolve(response.data);
+      })
+      .catch((error) => {
+        const codes = error;
+        console.log(error);
+        Object.entries(codes).forEach(
+          ([key, value]) => {
+            AlertLogic.addMessage(key + " " + value[0]);
+          }
+        );
+        //reject(error);
       });
-
-      instance.get(API_URL + "/logout")
-        .then(function (response) {
-          resolve(response.data);
-        })
-        .catch(function (error) {
-          const codes = error.response.data.error.details.codes;
-          Object.entries(codes).forEach(
-            function([key, value]) {
-              AlertLogic.addMessage(key + " " + value[0]);
-            }
-          );
-          //reject(error);
-        });
     });
   }
 
-  static signUp(ctx) { // ctx is shorthand for the context of the react component
-    return new Promise (function (resolve, reject) {
+  static signUp({username, email, password, password_confirmation}) {
+    console.log(username); console.log(email); console.log(password);
+    return new Promise ((resolve, reject) => {
       axios.post(API_URL + "/users", {
-        "username": ctx.state["username"],
-        "email": ctx.state["email"],
-        "password": ctx.state["password"]
+        "username": username,
+        "email": email,
+        "password": password,
+        "password_confirmation": password_confirmation
       })
-      .then(function (response) {
-        resolve(response);
+      .then((response) => {
+        resolve(response.data);
       })
-      .catch(function (error) {
-        const codes = error.response.data.error.details.codes;
-        Object.entries(codes).forEach(
-          function([key, value]) {
-            AlertLogic.addMessage(key + " " + value[0]);
-            //ctx.setState({ errors: ctx.state.errors.concat({field: key, errors: value}) });
-          }
-        );
+      .catch((error) => {
+        const codes = error.response.data;
+        reject(codes);
       });
     });
   }

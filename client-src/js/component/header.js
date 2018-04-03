@@ -10,7 +10,7 @@ export class Header extends React.Component {
       var loginButton = <li><NavLink to="/login">Login</NavLink></li>;
     } else {
       var profileButton = <li><NavLink to="/my-profile">Profile</NavLink></li>;
-      var logoutButton = <li onClick={this.props.logout}>
+      var logoutButton = <li onClick={() => {LoginLogic.logout()}}>
           <a>Log Out</a>
       </li>;
     }

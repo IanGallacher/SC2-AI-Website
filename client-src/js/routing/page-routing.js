@@ -29,13 +29,11 @@ export default class PageRouting extends React.Component {
           <Route path="/login"
                  render={(props) => <Login
                           {...props}
-                          login={this.props.ctx.login}
                           />}/>
-                          
+
           <Route path="/sign-up"
                  render={(props) => <SignUp
                           {...props}
-                          signUp={this.props.ctx.signUp}
                           />}/>
 
           <Route path="/reset-password" component={ResetPassword}/>

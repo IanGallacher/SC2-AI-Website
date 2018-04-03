@@ -2,6 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Link } from 'react-router-dom'
 
+import AlertLogic from './../logic/alert.js'
+import LoginLogic from './../logic/login.js'
+
 let error_table = {
   "presence" : "is required."
 }
@@ -22,7 +25,12 @@ export default class Login extends React.PureComponent {
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.login(this);
+    LoginLogic.login(this.state).then((user_data) => {
+      AlertLogic.addMessage("Login successful", "alert-success");
+
+      // After logging in successfuly, redirect the user to the homepage.
+      this.props.history.push("/");
+    });;
   }
 
   render() {
