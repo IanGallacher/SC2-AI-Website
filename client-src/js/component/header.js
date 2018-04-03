@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { NavLink } from 'react-router-dom'
+import AlertLogic from './../logic/alert.js'
 import LoginLogic from './../logic/login.js'
 
 export class Header extends React.Component {
@@ -10,7 +11,10 @@ export class Header extends React.Component {
       var loginButton = <li><NavLink to="/login">Login</NavLink></li>;
     } else {
       var profileButton = <li><NavLink to="/my-profile">Profile</NavLink></li>;
-      var logoutButton = <li onClick={() => {LoginLogic.logout()}}>
+      var logoutButton = <li onClick={() => {
+        LoginLogic.logout()
+        AlertLogic.addMessage("Logout successful", "alert-success");
+      }}>
           <a>Log Out</a>
       </li>;
     }

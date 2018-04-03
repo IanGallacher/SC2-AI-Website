@@ -3,65 +3,42 @@
 
 $error-color: #f90;
 
-@mixin button-size($padding-vertical,
-$padding-horizontal,
-$font-size,
-$line-height,
-$border-radius) {
-  padding: $padding-vertical $padding-horizontal;
-  font-size: $font-size;
-  line-height: $line-height;
-  border-radius: $border-radius;
-  outline: none;
-}
-
-.collapse {
-  display: none;
-
-  &.show {
-    display: block;
-  }
-}
-
-.btn {
-  @include button-size($padding-base-vertical,
-  $padding-base-horizontal,
-  $font-size-base,
-  $line-height-base,
-  $btn-border-radius-base);
-  margin-bottom: 0; // For input.btn
-  flex: 1;
-  text-align: center;
-  vertical-align: middle;
-  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-  border: 1px solid transparent;
-  white-space: nowrap;
-  background-color: buttonface;
-  touch-action: manipulation;
-  cursor: pointer;
-}
-
-.btn-block {
-  display: block;
-  width: 100%;
+.form-signin,
+.form-signup {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
 }
 
 .input-container {
   position: relative;
+  // Let the children of input-contianers draw on top of each other.
+  z-index: auto;
+
+  .text-input {
+    width: 100%;
+    box-sizing: border-box;
+    // Create a stacking context for children eleements.
+    // IE: their z-orders interact.
+    position: relative;
+  }
 }
 
-.command-invalid-tooltip {
+.tooltip-error {
   background: $error-color;
   position: absolute;
-  top: 50%; // The top and the translateY(-50%) allow for centering of the tooltip.
-  transform: translateX(-105%) translateY(-50%); // TranslateX to position the tooltip to the left of the command, translateY to align with the command. The translateY goes hand in hand with margin-top.
-  // margin-top: -($commandMargin);// tooltips are larger because of the border. In order to center vertically, we have to take that into account.
-  padding: 5px;
-  border: 1px solid $error-color; // needed to erase a small gap between the tooltip and the triangle reminder.
+  // The top and the translateY(-50%) allow for centering of the tooltip.
+  top: 50%;
+  transform: translateX(-110%) translateY(-50%);
+  padding: 7px;
+  // Let's erase a small gap between the tooltip and the triangle reminder.
+  border: 1px solid $error-color;
+  border-radius: 4px;
 }
 
-// Triangle label. // For an explanation of how this works, see CSS triangle http://codepen.io/chriscoyier/pen/lotjh
-.command-invalid-tooltip::after {
+// Triangle label.
+// see CSS triangle http://codepen.io/chriscoyier/pen/lotjh
+.tooltip-error::after {
   content: '';
   position: absolute;
   top: 50%;// center vertically.
@@ -95,6 +72,8 @@ $border-radius) {
     background-color: #ffcdc4;
     border: 1px solid #ce2b0e;
     box-shadow: 0 0 0 1px #ce2b0e;
+    // The border always needs to be drawn on top of other buttons.
+    z-index: 3;
 
     &::placeholder {
       color: #d6887a !important;
@@ -103,15 +82,6 @@ $border-radius) {
     &:focus {
       border: 1px solid #f90;
       box-shadow: 0 0 0 2px #f90;
-      // The border always needs to be drawn on top of other buttons.
-      z-index: 3;
     }
   }
-}
-
-.form-signin,
-.form-signup {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
 }

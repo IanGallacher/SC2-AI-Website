@@ -1,3 +1,37 @@
+@import 'variables';
+
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size,
+$line-height, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+  outline: none;
+}
+
+.btn {
+  @include button-size($padding-base-vertical,
+  $padding-base-horizontal,
+  $font-size-base,
+  $line-height-base,
+  $btn-border-radius-base);
+  margin-bottom: 0; // For input.btn
+  flex: 1;
+  text-align: center;
+  vertical-align: middle;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  white-space: nowrap;
+  background-color: buttonface;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
 .radio-button {
   height: 25px;
   width: 25px;
