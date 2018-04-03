@@ -1,12 +1,15 @@
 const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const Path = require('path');
 
 const paths = {
+  ROOT: Path.resolve(__dirname, ''),
   DIST: Path.resolve(__dirname, 'public'),
   SRC: Path.resolve(__dirname, 'client-src'),
   JS: Path.resolve(__dirname, 'client-src'),
+  SCSS: Path.resolve(__dirname, 'client-src'),
 };
 
 module.exports = {
@@ -24,6 +27,10 @@ module.exports = {
     new ExtractTextPlugin({
         filename: "[name].[contenthash].css",
         disable: process.env.NODE_ENV === "development"
+    }),
+    new StyleLintPlugin({
+      configFile: Path.join(__dirname, ".scss-lint-config.json"),
+      context: paths.SCSS,
     })
   ],
   devServer: {
