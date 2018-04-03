@@ -1,4 +1,4 @@
-#sidebar {
+.sidebar {
   width: $sidebar-width;
   position: fixed;
   float: left;
@@ -7,33 +7,41 @@
   background: #0e1b4d;
   color: #fff;
   transition: all 0.3s;
-  #toggle {
-    float:right;
+
+  .toggle {
+    float: right;
   }
+
   &.active {
     margin-left: -$sidebar-width;
   }
+
   .sidebar-header {
     padding: 20px;
     background: #0e1b4d;
   }
+
   ul li {
     a:hover {
-      color: #7386D5;
+      color: #7386d5;
       background: #fff;
     }
+
     &.active > a {
       color: #fff;
       background: #0e1b4d;
     }
   }
 }
+
 .sidebar-components {
   padding: 20px 0;
+
   p {
     color: #fff;
     padding: 10px;
   }
+
   li a {
     padding: 10px;
     font-size: 1.1em;

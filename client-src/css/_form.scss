@@ -1,11 +1,13 @@
-@import "mixin";
-@import "variables";
+@import 'mixin';
+@import 'variables';
+
+$error-color: #f90;
 
 @mixin button-size($padding-vertical,
-                   $padding-horizontal,
-                   $font-size,
-                   $line-height,
-                   $border-radius) {
+$padding-horizontal,
+$font-size,
+$line-height,
+$border-radius) {
   padding: $padding-vertical $padding-horizontal;
   font-size: $font-size;
   line-height: $line-height;
@@ -15,12 +17,18 @@
 
 .collapse {
   display: none;
+
   &.show {
     display: block;
   }
 }
 
 .btn {
+  @include button-size($padding-base-vertical,
+  $padding-base-horizontal,
+  $font-size-base,
+  $line-height-base,
+  $btn-border-radius-base);
   margin-bottom: 0; // For input.btn
   flex: 1;
   text-align: center;
@@ -31,12 +39,6 @@
   background-color: buttonface;
   touch-action: manipulation;
   cursor: pointer;
-  @include button-size($padding-base-vertical,
-                       $padding-base-horizontal,
-                       $font-size-base,
-                       $line-height-base,
-                       $btn-border-radius-base);
-  //@include user-select(none);
 }
 
 .btn-block {
@@ -48,28 +50,26 @@
   position: relative;
 }
 
-$errorColor: #f90;
 .command-invalid-tooltip {
-  background: $errorColor;
+  background: $error-color;
   position: absolute;
   top: 50%; // The top and the translateY(-50%) allow for centering of the tooltip.
   transform: translateX(-105%) translateY(-50%); // TranslateX to position the tooltip to the left of the command, translateY to align with the command. The translateY goes hand in hand with margin-top.
-  // margin-top: -($commandMargin) ;// tooltips are larger because of the border. In order to center vertically, we have to take that into account.
+  // margin-top: -($commandMargin);// tooltips are larger because of the border. In order to center vertically, we have to take that into account.
   padding: 5px;
-  border: 1px solid $errorColor; // needed to erase a small gap between the tooltip and the triangle reminder.
-  //@include roundCorners;
+  border: 1px solid $error-color; // needed to erase a small gap between the tooltip and the triangle reminder.
 }
 
 // Triangle label. // For an explanation of how this works, see CSS triangle http://codepen.io/chriscoyier/pen/lotjh
 .command-invalid-tooltip::after {
-  content: "";
+  content: '';
   position: absolute;
-  top: 50% ;// center vertically.
-  transform: translateY(-50%) ;// center vertically.
-  left: 100% ; // Position on the right side of the tooltip.
+  top: 50%;// center vertically.
+  transform: translateY(-50%);// center vertically.
+  left: 100%; // Position on the right side of the tooltip.
   border-width: 8px;
   border-style: solid;
-  border-color: transparent transparent transparent $errorColor;
+  border-color: transparent transparent transparent $error-color;
 }
 
 .text-input {
@@ -79,8 +79,8 @@ $errorColor: #f90;
   border-radius: $btn-border-radius-base;
   padding-left: 15px !important;
   outline: none;
+  color: #000;
 
-  color: black;
   &:focus {
     border: 1px solid #f90;
     box-shadow: 0 0 0 2px #f90;
@@ -92,48 +92,26 @@ $errorColor: #f90;
 
   &.error {
     @include shake;
-    @include input-placeholder(#d6887a)
     background-color: #ffcdc4;
     border: 1px solid #ce2b0e;
     box-shadow: 0 0 0 1px #ce2b0e;
+
+    &::placeholder {
+      color: #d6887a !important;
+    }
+
     &:focus {
       border: 1px solid #f90;
       box-shadow: 0 0 0 2px #f90;
-      // When two inputs are right next to each other,
-      // The border will draw behind the other unless we
-      // bring it to the front with z-index.
+      // The border always needs to be drawn on top of other buttons.
       z-index: 3;
     }
   }
 }
 
-.form-signin, .form-signup {
+.form-signin,
+.form-signup {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
-}
-
-/*
-** RADIO BUTTONS
-*/
-.radioButton {
-  height: 25px;
-  width: 25px;
-  margin-right: 25px;
-  background-color: #eee;
-  &:hover input ~ .checkmark {
-      background-color: #ccc;
-  }
-  float:left;
-}
-
-.radioButtonContainer {
-  background: #DDD;
-  display: block;
-  position: relative;
-  padding: 15px;
-  margin-bottom: 12px;
-  border-radius: $btn-border-radius-base;
-  cursor: pointer;
-  font-size: 22px;
 }

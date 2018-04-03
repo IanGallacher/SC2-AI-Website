@@ -1,29 +1,33 @@
 // A "trading card" is a tileable summary of an object.
 // Named because it looks just like a trading card.
 title {
-  font-size: 30px;
   display: block;
+  font-size: 30px;
   padding-bottom: 15px;
 }
+
 .img-thumbnail {
-  max-width: 100%;
   border-radius: 6px;
+  max-width: 100%;
 }
+
 .trading-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
   margin: 10px 10px 0 0;
   max-width: 100%;
   padding: 15px;
-  background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 4px;
   max-width: 100%;
   height: auto;
   float: left;
   // On mobile, show the thumbnails as full width.
   width: 100%;
+
   title {
     text-align: center;
   }
+
   @media (min-width: 992px) {
     float: left;
     width: 33%;
@@ -32,16 +36,18 @@ title {
     padding-left: 15px;
     padding-right: 15px;
   }
+
   &:hover {
-      background-color: #EEE;
-      cursor: pointer;
+    background-color: #eee;
+    cursor: pointer;
   }
 }
+
 .trading-card-horizontal {
   margin-top: 30px;
   padding: 15px;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 4px;
   height: auto;
   float: left;

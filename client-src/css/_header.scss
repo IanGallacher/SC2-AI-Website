@@ -1,6 +1,7 @@
-@import "variables";
+@import 'variables';
 
 .navbar {
+  @include clearfix;
   margin: 0;
   position: fixed;
   top: 0;
@@ -9,12 +10,11 @@
   line-height: $navbar-height;
   z-index: 1; // The navbar always needs to be above all other content.
   background: #fff;
-  border: none;
+  border-style: none;
   border-radius: 0;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   background: #24292e;
-  color: rgba(255,255,255,0.75);
-  @include clearfix;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /*
@@ -29,26 +29,29 @@
 }
 
 .nav {
+  @include clearfix;
   margin-bottom: 0;
   padding-left: 0; // Override default ul/ol
   list-style: none;
-  @include clearfix;
 
   > li {
     position: relative;
     display: block;
+
     > a {
       position: relative;
       display: block;
       padding: 0 15px;
-      &[aria-current="true"] {
-        background-color: #777;
-      }
+
       &:hover,
       &:focus {
         text-decoration: none;
         background-color: #777;
       }
+    }
+
+    >a[aria-current='true'] {
+      background-color: #777;
     }
   }
 }
@@ -56,7 +59,7 @@
 .navbar-btn {
   box-shadow: none;
   outline: none !important;
-  border: none;
+  border-style: none;
 }
 
 .navbar-nav {

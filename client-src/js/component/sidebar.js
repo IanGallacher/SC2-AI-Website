@@ -64,11 +64,13 @@ export class Sidebar extends React.Component {
 
   render() {
     return (
-      <nav id="sidebar" aria-expanded={this.state.sidebarExpanded}>
+      <nav id="sidebar"
+           aria-expanded={this.state.sidebarExpanded}
+           className="sidebar">
         <div id="toggle"
              onClick={this.collapseSidebarToggle}
              data-expanded={this.state.sidebarExpanded}
-             className="toggle-wrap">
+             className="toggle toggle-wrap">
             <span className="toggle-bar"></span>
         </div>
         <div className="sidebar-header">

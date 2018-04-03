@@ -1,19 +1,18 @@
-// Some of this you may recognize from bootstrap.
-// The prototype was made with bootstrap, and was later removed.
-// The naming conventions and definitions of classes may be similar.
-// Removing bootstrap, takes ~150kb off of the final webpack bundle.
-@import "alert";
-@import "clearfix";
-@import "form";
-@import "gridsystem";
-@import "header";
-@import "loading";
-@import "sidebar";
-@import "table";
-@import "tradingcard";
-@import "variables";
+@charset 'utf-8';
+
+@import 'alert';
+@import 'clearfix';
+@import 'form';
+@import 'gridsystem';
+@import 'header';
+@import 'loading';
+@import 'sidebar';
+@import 'table';
+@import 'tradingcard';
+@import 'variables';
 
 body {
+  background: #fafafa;
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
   min-height: 100vh;
@@ -28,7 +27,9 @@ p {
   color: #999;
 }
 
-a, a:hover, a:focus {
+a,
+a:hover,
+a:focus {
   color: inherit;
   text-decoration: none;
   transition: all 0.3s;
@@ -37,11 +38,11 @@ a, a:hover, a:focus {
 
 ul {
   list-style: none;
-  padding-left: 0; // hiding the dots is not good enough for some browsers.
+  padding-left: 0; // hiding the dots is not good enough for some browser s.
 }
 
 pre {
-  background: #E8E8E8;
+  background: #e8e8e8;
   overflow-x: auto;
   white-space: nowrap;
   min-width: 0;
@@ -74,8 +75,7 @@ pre {
   transition: all 0.3s;
   width: $sidebar-width;
   flex-shrink: 0;
-  @media (max-width: $mobile-threshold)
-  {
+  @media (max-width: $mobile-threshold) {
     width: $sidebar-collapse-size;
   }
 }
@@ -85,7 +85,7 @@ pre {
 ----------------------------------------------------- */
 // Center all the content that is below the header.
 .page-area {
-  margin: 30px 10% 0 10%;
+  margin: 30px 10% 0;
   // Flexbox does weird things with this value. Don't let it.
   min-width: 0;
 }
@@ -101,10 +101,10 @@ a[aria-expanded]::before {
   // font-family: 'Glyphicons Halflings';
   font-size: 0.6em;
 }
-// a[aria-expanded="false"]::before {
+// a[aria-expanded='false']::before {
 //   content: '\e259'; // Down arrow.
 // }
-// a[aria-expanded="true"]::before {
+// a[aria-expanded='true']::before {
 //   content: '\e260'; // Up arrow.
 // }
 
@@ -119,17 +119,19 @@ ul ul a {
     MEDIAQUERIES
 ----------------------------------------------------- */
 @media (max-width: $mobile-threshold) { // The sidebar can collapse on mobile
-  #sidebar[aria-expanded="false"] {
-      margin-left: $sidebar-collapse-size - $sidebar-width;
+  .sidebar[aria-expanded='false'] {
+    margin-left: $sidebar-collapse-size - $sidebar-width;
   }
-  .Header-logo-img {
-    display:none;
+
+  .header-logo-img {
+    display: none;
   }
 }
 @media (min-width: $mobile-threshold + 1px) {
   .toggle-wrap {
-    display:none;
+    display: none;
   }
+
   .sidebar-components {
     border-bottom: 1px solid #47748b;
   }
@@ -139,6 +141,7 @@ ul ul a {
 $toggle-height: 4px;
 $toggle-width: 30px;
 $toggle-center-dist: ($sidebar-collapse-size/2 - $toggle-width/2);
+
 .toggle-wrap {
   position: absolute;
   cursor: pointer;
@@ -147,59 +150,51 @@ $toggle-center-dist: ($sidebar-collapse-size/2 - $toggle-width/2);
 
   /*disable selection*/
   -webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  user-select: none;
 }
+
 .toggle-bar,
 .toggle-bar::before,
 .toggle-bar::after,
 .toggle-wrap.active .toggle-bar,
 .toggle-wrap.active .toggle-bar::before,
 .toggle-wrap.active .toggle-bar::after {
-	-webkit-transition: all .2s ease-in-out;
-	-moz-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
+
 .toggle-bar {
-	width: $toggle-width;
-	margin: 10px 0;
-	position: relative;
-	border-top: $toggle-height solid #CCC;
-	display: block;
+  width: $toggle-width;
+  margin: 10px 0;
+  position: relative;
+  border-top: $toggle-height solid #ccc;
+  display: block;
 }
+
 .toggle-bar::before,
 .toggle-bar::after {
-	content: "";
-	display: block;
-	background: #CCC;
-	height: $toggle-height;
-	width: $toggle-width;
-	position: absolute;
-	top: -12px;
-	-ms-transform: rotate(0deg);
-	-webkit-transform: rotate(0deg);
-	transform: rotate(0deg);
-	-ms-transform-origin: 13%;
-	-webkit-transform-origin: 13%;
-	transform-origin: 13%;
+  content: '';
+  display: block;
+  background: #ccc;
+  height: $toggle-height;
+  width: $toggle-width;
+  position: absolute;
+  top: -12px;
+  transform: rotate(0deg);
+  transform-origin: 13%;
 }
+
 .toggle-bar::after {
   top: $toggle-height;
 }
-.toggle-wrap[data-expanded="true"] .toggle-bar {
+
+.toggle-wrap[data-expanded='true'] .toggle-bar {
   border-top: $toggle-height solid transparent;
 }
-.toggle-wrap[data-expanded="true"] .toggle-bar::before {
-	-ms-transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
-	transform: rotate(45deg);
+
+.toggle-wrap[data-expanded='true'] .toggle-bar::before {
+  transform: rotate(45deg);
 }
-.toggle-wrap[data-expanded="true"] .toggle-bar::after {
-	-ms-transform: rotate(-45deg);
-	-webkit-transform: rotate(-45deg);
-	transform: rotate(-45deg);
+
+.toggle-wrap[data-expanded='true'] .toggle-bar::after {
+  transform: rotate(-45deg);
 }

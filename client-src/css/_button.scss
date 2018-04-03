@@ -1,21 +1,22 @@
-.radioButton {
+.radio-button {
   height: 25px;
   width: 25px;
   margin-right: 25px;
   background-color: #eee;
+  float: left;
+
   &:hover input ~ .checkmark {
-      background-color: #ccc;
+    background-color: #ccc;
   }
-  float:left;
 }
 
-.radioButtonContainer {
-  background: #CCC;
+.radio-button-container {
+  background: #ccc;
   display: block;
   position: relative;
   padding: 15px;
   margin-bottom: 12px;
   border-radius: 10px;
-  cursor: pointer;
   font-size: 22px;
+  cursor: pointer;
 }

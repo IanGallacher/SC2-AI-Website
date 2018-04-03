@@ -1,35 +1,45 @@
-@import "mixin";
+@import 'mixin';
 
-$border-color: #CCC;
+$border-color: #ccc;
+
 table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
+
   tr {
     &:nth-child(0) {
+      background-color: rgba(0, 0, 0, 0.1);;
     }
+
     &:nth-child(even) {
       background-color: rgba(0, 0, 0, 0.1);;
     }
+
     &:nth-child(odd) {
       background-color: rgba(0, 0, 0, 0.15);;
     }
   }
+
   th {
-    padding: 15px;
     background-color: #fff;
-    @include no-select;
+    padding: 15px;
+    user-select: none;
   }
+
   td {
-      padding: 15px;
-      border: 1px solid $border-color;
-      &:first-child { border-left: none; }
-      &:last-child { border-right: none; }
+    padding: 15px;
+    border: 1px solid $border-color;
+    &:first-child { border-left-style: none; }
+    &:last-child { border-right-style: none; }
   }
 }
-td.clickable {
-  &:hover {
-    cursor: pointer;
-    background-color: #ccc;
+
+td {
+  .clickable {
+    &:hover {
+      cursor: pointer;
+      background-color: #ccc;
+    }
   }
 }

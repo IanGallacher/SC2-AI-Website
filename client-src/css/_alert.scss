@@ -1,4 +1,4 @@
-@import "mixin";
+@import 'mixin';
 
 .alert-zone {
   height: auto;
@@ -6,36 +6,38 @@
   flex: 1;
   // Don't move the page content when showing alerts.
   position: fixed;
+  cursor: pointer;
+  user-select: none;
   // Show alerts above all page content.
   z-index: 1;
-  cursor: pointer;
-  @include no-select;
 }
 
 .alert-error {
   animation: alert-show 0.4s 1;
-  background: #FF2121;
+  background: #ff2121;
   height: 60px;
   width: 100%;
-  border-bottom: 2px solid #EE1111;
+  border-bottom: 2px solid #e11;
+
   &:hover {
-    background: #FF3535;
+    background: #ff3535;
   }
 }
 
 .alert-success {
   animation: alert-show 0.4s 1;
-  background: #21BB21;
+  background: #21bb21;
   height: 60px;
   width: 100%;
-  border-bottom: 2px solid #11AA11;
+  border-bottom: 2px solid #1a1;
+
   &:hover {
-    background: #35BB35;
+    background: #35bb35;
   }
 }
 
 .alert-text {
-  color: white;
+  color: #fff;
   margin-left: 50px;
   width: 100%;
   font-size: 20px;
@@ -43,10 +45,7 @@
 }
 
 @keyframes alert-show {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+  0% { opacity: 0; }
+
+  100% { opacity: 1; }
 }

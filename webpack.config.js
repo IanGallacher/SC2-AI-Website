@@ -29,7 +29,6 @@ module.exports = {
         disable: process.env.NODE_ENV === "development"
     }),
     new StyleLintPlugin({
-      configFile: Path.join(__dirname, ".scss-lint-config.json"),
       context: paths.SCSS,
     })
   ],
