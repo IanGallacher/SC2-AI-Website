@@ -38,30 +38,20 @@ export default class RecentResults extends React.Component {
                             displayType:"text"
                           },
                           {
-                            headerName:"Author",
-                            fieldName:"author",
+                            headerName:"Map",
+                            fieldName:"map",
                             displayType:"text"
                           },
                           {
-                            headerName:"Race",
-                            fieldName:"race",
+                            headerName:"Winner",
+                            fieldName:"winner",
                             displayType:"text"
                           },
                           {
-                            headerName:"Matches",
-                            fieldName:"matches",
-                            displayType:"text"
+                            headerName:"Replay",
+                            fieldName:"replay",
+                            displayType:"link"
                           },
-                          {
-                            headerName:"Wins",
-                            fieldName:"wins",
-                            displayType:"text"
-                          },
-                          {
-                            headerName:"Win Pct",
-                            fieldName:"winpct",
-                            displayType:"text"
-                          }
                         ]
                      }/>
       </div>
