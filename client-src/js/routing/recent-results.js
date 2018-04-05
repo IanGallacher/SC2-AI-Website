@@ -44,8 +44,12 @@ export default class RecentResults extends React.Component {
                           },
                           {
                             headerName:"Winner",
-                            fieldName:"winner",
-                            displayType:"text"
+                            fieldName:"winner_name",
+                            displayType:"text",
+                            onClick: (row) => {
+                              this.props.history.push("/bots/?name="
+                                                      + row.winner_name);
+                            }
                           },
                           {
                             headerName:"Replay",

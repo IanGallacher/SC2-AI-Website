@@ -2,7 +2,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 
-import { RadioButton, RadioButtonDefault } from './button.js'
 import { API_URL } from './../routing/app.js'
 
 export default class BotUpload extends React.Component {

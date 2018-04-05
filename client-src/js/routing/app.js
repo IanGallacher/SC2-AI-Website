@@ -27,12 +27,12 @@ export default class App extends React.Component {
     LoginLogic.getUserData().then((response) => {
       if (response.data)
       {
-	   this.setState({ "user_data": {
-	                   "username": response.data.username,
+     this.setState({ "user_data": {
+                     "username": response.data.username,
                      "user_id": response.data.id,
                      "role": response.data.role
-	                }
-	             });
+                  }
+               });
       }
     });
 
@@ -55,7 +55,8 @@ export default class App extends React.Component {
       <Router>
         <React.Fragment>
           <Header username={this.state.user_data.username}
-                  role={this.state.user_data.role}/>
+                  role={this.state.user_data.role}
+                  logout={this.logout}/>
           <div className="after-navbar">
             <div className="flex-horizontal">
               <Sidebar/>
