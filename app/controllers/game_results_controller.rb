@@ -15,7 +15,8 @@ class GameResultsController < ApplicationController
   end
 
   def game_result_params
-    p = params.permit(:map, :bot_1, :bot_2, :file, :winner_id)
+    p = params.permit(:map, :file, :winner_id)
+    p[:game_result_bots_attributes] = JSON.parse(params[:gba])
     p[:winner_id] ||= Bot.where(name: params[:winner_name]).first.id
     #p[:owner_id] = current_user.id
     #p[:author] ||= current_user.username
