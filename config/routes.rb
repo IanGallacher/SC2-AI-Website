@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
     get "users/:user_id/bots", to: 'user_bots#index'
     post "users/:user_id/create_avatar", to: 'users#upload'
-    resources :game_results, only: [:index]
+    resources :game_results, only: [:index, :create]
     match "/bots/upload", to: "bots#upload", via: [:post]
 #    get "/*path", to: "routes#invalid"
   end
