@@ -5,7 +5,7 @@ function renderTableCol(row, schema_entry) {
   var col = row[schema_entry.fieldName];
   return (
     <td className={ schema_entry.onClick && "clickable" }
-        onClick={schema_entry.onClick}>
+        onClick={() => schema_entry.onClick(row)}>
           { (schema_entry.displayValue) ? schema_entry.displayValue(row) : col }
         </td>
   );
