@@ -12,7 +12,7 @@ export default class ProfileSettings extends React.Component {
     return (
       <React.Fragment>
         <AuthorProfile author_id={this.props.author_id}/>
-        <FileUpload label="Upload Bot:" uploadPath={avatarPath}/>
+        <FileUpload label="Upload Avatar:" uploadPath={avatarPath}/>
         <BotUpload label="Upload Bot:" uploadPath="/bots/create"/>
       </React.Fragment>
     );

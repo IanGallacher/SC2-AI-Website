@@ -9,6 +9,7 @@ import Bots from './bots.js'
 import Login from './login.js'
 import ProfileSettings from './profile.js'
 import { RequireLoggedInRoute } from './requireuser.js'
+import RecentResults from './recent-results.js'
 import ResetPassword from './reset-password.js'
 import Season from './season.js'
 import SignUp from './sign-up.js'
@@ -22,7 +23,7 @@ export default class PageRouting extends React.Component {
   render() {
     return (
         <Switch>
-          <Route path="/home" component={Season}/>
+          <Route path="/home" component={RecentResults}/>
           <RequireLoggedInRoute path="/admin-control-panel"
                  component={AdminControlPanel}/>
 

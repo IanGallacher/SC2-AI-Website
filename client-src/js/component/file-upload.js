@@ -2,47 +2,61 @@ import React from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 
-import { RadioButton, RadioButtonDefault } from './button.js'
 import { API_URL } from './../routing/app.js'
 
 export default class FileUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: null, filename: null };
-    if(localStorage.getItem("access_token") === null)
-       localStorage.setItem("access_token", "");
+    console.log(props);
+    this.state = { };
+    this.form_values = {};
+  }
+
+  componentDidMount() {
+    // Make sure we have a form_value for each child object.
+    if(this.props.children)
+    this.props.children.forEach(child => {
+      if(child.props.group)
+        this.form_values[child.props.group] = [];
+      else
+        this.form_values[child.props.name] = "";
+    })
   }
 
   onChange = (event) => {
-    let new_state = {};
-    new_state[event.target.name] = event.target.value;
-    this.setState(new_state);
+    var group = event.target.getAttribute("group");
+    console.log(event.target.id);
+    if(group) {
+      var obj = {[event.target.name]: Number(event.target.value)};
+      this.form_values[group][event.target.getAttribute("id")] = obj;
+    }
+    else
+      this.form_values[event.target.name] = event.target.value;
   }
 
   onFileChange = (event) => {
-    this.setState({
-      file: event.target.files[0]
-    });
+    this.form_values["file"] = event.target.files[0];
   }
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.fileUpload(this.state.file, this.state.filename);
+    var uploadValues = this.form_values;
+    this.fileUpload(this.form_values);
   }
 
-  fileUpload = (file, filename, bot_race) => {
+  fileUpload = (data) => {
     // Configure upload.
     const url = API_URL + this.props.uploadPath;
-    const access_token = localStorage.getItem("access_token");
     const formData = new FormData();
-    formData.append('file', file);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-        'Authorization': access_token
+    Object.keys(this.form_values).forEach((key) => {
+      var d = data[key];
+      if(typeof(data[key]) === "object" && key != "file") {
+        d = JSON.stringify(data[key])
       }
-    }
-    console.log(formData);
+      formData.append(key, d);
+    })
+
+    const config = { headers: { 'content-type': 'multipart/form-data' } }
     // Submit the upload
     axios.post(url, formData, config)
     .then(function (response) {
@@ -56,13 +70,19 @@ export default class FileUpload extends React.Component {
   }
 
   render() {
+    const children = this.props.children;
+    // We have to do this at render time to make sure we get the most up to date
+    // state of all children.
+    var childrenWithProps = React.Children.map(children, child =>
+      React.cloneElement(child, { onChange: this.onChange })
+    );
     return (
-      <form className="flex-horizontal"
-            onSubmit={this.onSubmit}>
+      <form className="flex-horizontal" onSubmit={this.onSubmit}>
         <input name="file"
                type="file"
                className="btn"
                onChange={this.onFileChange}/>
+        { childrenWithProps }
         <input type="submit"
                value="Submit"
                className="btn"/>

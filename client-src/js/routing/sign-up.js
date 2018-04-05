@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import AlertLogic from './../logic/alert.js'
 import LoginLogic from './../logic/login.js'
 
-import { TextInput } from './../component/text-input.js'
+import { TextInput } from './../component/form.js'
 
 class Error extends React.Component {
   constructor(props) {
