@@ -32,14 +32,12 @@ table {
     border: 1px solid $border-color;
     &:first-child { border-left-style: none; }
     &:last-child { border-right-style: none; }
-  }
-}
 
-td {
-  .clickable {
-    &:hover {
-      cursor: pointer;
-      background-color: #ccc;
+    &.clickable {
+      &:hover {
+        cursor: pointer;
+        background-color: #ccc;
+      }
     }
   }
 }
