@@ -1,28 +1,21 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-function renderTableCol(col, onClick) {
-  if(onClick) {
-    return (
-      <td className="clickable"
-          onClick={onClick}>{col}</td>
-    );
-  }
-  return <td>{col}</td>;
+function renderTableCol(row, schema_entry) {
+  var col = row[schema_entry.fieldName];
+  return (
+    <td className={ schema_entry.onClick && "clickable" }
+        onClick={schema_entry.onClick}>
+          { (schema_entry.displayValue) ? schema_entry.displayValue(row) : col }
+        </td>
+  );
 }
 
 function renderTableRow(row, schema) {
   return (
     <tr key={row.id}>
       {
-        schema.map( function(schema_entry) {
-          if(!schema_entry.onClick)
-            return renderTableCol(row[schema_entry.fieldName]);
-          else
-            return renderTableCol(row[schema_entry.fieldName],
-                                  () => { schema_entry.onClick(row) }
-                                 );
-        })
+        schema.map( (schema_entry) => renderTableCol( row, schema_entry) )
       }
     </tr>
   );

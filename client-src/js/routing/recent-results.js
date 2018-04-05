@@ -35,8 +35,22 @@ export default class RecentResults extends React.Component {
                           {
                             headerName:"BotName",
                             fieldName:"BotName",
-                            displayType:"text"
+                            displayType:"text",
+                            displayValue: (row) => {
+                              console.log(row)
+                              if(row.bots.length > 0)
+                                return row.bots[0].name;
+                            }
                           },
+                            {
+                              headerName:"BotName",
+                              fieldName:"BotName",
+                              displayType:"text",
+                              displayValue: (row) => {
+                                if(row.bots.length > 0)
+                                  return row.bots[1].name;
+                              }
+                            },
                           {
                             headerName:"Map",
                             fieldName:"map",
