@@ -98,7 +98,6 @@ export class Sidebar extends React.Component {
               </li>
             </ul>
           </li>
-          <li><Link to="/authors">Bot Authors</Link></li>
           <li><Link to="/learning">Learning</Link></li>
           <li><Link to="/faq">FAQ</Link></li>
           <li><Link to="/helpful-resources">Helpful Resources</Link></li>

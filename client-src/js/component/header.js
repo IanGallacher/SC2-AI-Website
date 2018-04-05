@@ -31,6 +31,7 @@ export class Header extends React.Component {
               { adminButton }
               <li><NavLink to="/home">Home</NavLink></li>
               <li><NavLink to="/bots">Bots</NavLink></li>
+              <li><NavLink to="/authors">Authors</NavLink></li>
               { signupButton }
               { loginButton }
               { profileButton }
