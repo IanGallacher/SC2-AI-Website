@@ -3,6 +3,8 @@ import { render } from 'react-dom'
 
 function renderTableCol(row, schema_entry) {
   var col = row[schema_entry.fieldName];
+  if(schema_entry.displayType === "download")
+    col = "download"
   return (
     <td className={ schema_entry.onClick && "clickable" }
         onClick={() => schema_entry.onClick(row)}>
@@ -14,9 +16,7 @@ function renderTableCol(row, schema_entry) {
 function renderTableRow(row, schema) {
   return (
     <tr key={row.id}>
-      {
-        schema.map( (schema_entry) => renderTableCol( row, schema_entry) )
-      }
+      { schema.map( (schema_entry) => renderTableCol( row, schema_entry) ) }
     </tr>
   );
 }

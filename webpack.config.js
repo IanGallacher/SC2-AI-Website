@@ -41,6 +41,7 @@ module.exports = {
     },
     proxy: {
       "/api": "http://localhost:3000",
+      "/replay": "http://localhost:3000",
       "/user-upload": "http://localhost:3000"
     }
   },

@@ -37,7 +37,6 @@ export default class RecentResults extends React.Component {
                             fieldName:"BotName",
                             displayType:"text",
                             displayValue: (row) => {
-                              console.log(row)
                               if(row.bots.length > 0)
                                 return row.bots[0].name;
                             }
@@ -68,7 +67,11 @@ export default class RecentResults extends React.Component {
                           {
                             headerName:"Replay",
                             fieldName:"replay",
-                            displayType:"link"
+                            displayType:"download",
+                            onClick: (row) => {
+                              console.log(row)
+                              window.location.href = row.replay
+                            }
                           },
                         ]
                      }/>

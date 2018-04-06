@@ -17,7 +17,7 @@ export default class AuthorBios extends React.PureComponent {
     const search = this.props.location.search;
     if(search!="") {
       const params = new URLSearchParams(search);
-      author_id = params.get('author');
+      author_id = params.get('author_id');
     }
     this.setState({
       profile: this.state.author[author_id-1],

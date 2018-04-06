@@ -25,7 +25,7 @@ export class AuthorTradingCard extends React.Component {
   render() {
     return (
       <div className="trading-card">
-      <Link to={"/authors/?author=" + this.props.user.id.toString()}
+      <Link to={"/authors/?author_id=" + this.props.user.id.toString()}
                      name="View Profile" id="profile"
                      type="submit">
         <title>{this.props.user.username}</title>
