@@ -10,8 +10,6 @@ class User < ApplicationRecord
   before_update :save_avatar
 
   def save_avatar
-    puts "not present"
-    byebug
     return unless @file.present?
     self.avatar = get_filename()
     File.open("public" + self.avatar, 'wb') { |file| file.write(@file.read) }

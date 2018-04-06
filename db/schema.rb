@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326225634) do
+ActiveRecord::Schema.define(version: 20180406000840) do
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "owner_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20180326225634) do
   create_table "game_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "map", null: false
     t.bigint "winner_id"
+    t.string "replay"
     t.index ["winner_id"], name: "fk_rails_f187e71c0b"
   end
 

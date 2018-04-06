@@ -12,7 +12,8 @@ class GameResult < ActiveRecord::Base
   def save_replay
     puts "CHECKING REPLAY"
     return unless @file.present?
-    File.open(get_filename(), 'wb') { |file| file.write(@file.read) }
+    self.replay = get_filename()
+    File.open("public" + get_filename(), 'wb') { |file| file.write(@file.read) }
   end
 
   def winner_name
@@ -24,7 +25,7 @@ class GameResult < ActiveRecord::Base
   def get_filename
     extname = File.extname(@file.original_filename)
     basename = File.basename(@file.original_filename, extname)
-    "public/replay/#{basename.gsub(/[^0-9A-z.\-]/, '_')}.Sc2Replay"
+    "/replay/#{basename.gsub(/[^0-9A-z.\-]/, '_')}.Sc2Replay"
   end
 end
 
