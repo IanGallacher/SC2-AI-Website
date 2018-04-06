@@ -31,8 +31,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^2.0.0",
-    "webpack": "^3.10.0"
+    "strong-error-handler": "^2.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -54,7 +53,7 @@
     "stylelint-config-sass-guidelines": "^5.0.0",
     "stylelint-webpack-plugin": "^0.10.4",
     "url-loader": "^0.6.2",
-    "webpack": "^3.10.0",
+    "webpack": "^3.11.0",
     "webpack-dev-server": "^2.9.7"
   },
   "repository": {

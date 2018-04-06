@@ -9,11 +9,11 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: best_dev_env
+  database: sc2-ai-dev
   host: 127.0.0.1
   pool: 5
   username: root
-  password:
+  password: <%= ENV["MYSQL_PASSWORD"] %>
   socket: /var/lib/mysql/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -23,19 +23,19 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: best_dev_test 
+  database: sc2-ai-test
   host: 127.0.0.1
   pool: 5
   username: root
-  password:
+  password: <%= ENV["MYSQL_PASSWORD"] %>
   socket: /tmp/mysql.sock
 
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: test-mysql2_production
+  database: sc2-ai-production
   pool: 5
   username: root
-  password:
-  socket: /tmp/mysql.sock
+  password: <%= ENV["MYSQL_PASSWORD"] %>
+  socket: /var/lib/mysql/mysql.sock 
