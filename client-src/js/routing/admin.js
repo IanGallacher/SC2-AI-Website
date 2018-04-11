@@ -63,7 +63,9 @@ export default class AdminControlPanel extends React.Component {
     return (
       <React.Fragment>
         <button onClick={this.addSeasonBtn}>Add Season</button>
-        <FileUpload label="Upload GameResult:" uploadPath={"/game_results"}>
+        <FileUpload label="Upload GameResult:"
+                    uploadPath={"/game_results"}
+                    validFileExtensions={[".png"]}>
           <TextInput name="map"
              type="text"
              placeholder="Map Name"/>

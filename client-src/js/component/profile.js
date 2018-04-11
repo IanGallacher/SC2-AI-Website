@@ -24,10 +24,9 @@ class AuthorAvatar extends React.PureComponent {
 export class AuthorTradingCard extends React.Component {
   render() {
     return (
-      <div className="trading-card">
       <Link to={"/authors/?author_id=" + this.props.user.id.toString()}
                      name="View Profile" id="profile"
-                     type="submit">
+                     type="submit" className="trading-card">
         <title>{this.props.user.username}</title>
         <AuthorAvatar avatar={this.props.user.avatar}/>
         <div className="text-center">
@@ -36,7 +35,6 @@ View Profile
           </p>
         </div>
       </Link>
-      </div>
     );
   }
 }

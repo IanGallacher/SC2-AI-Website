@@ -40,10 +40,37 @@ export default class FileUpload extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
+    if(!validate(oForm)) return;
     var uploadValues = this.form_values;
     this.fileUpload(this.form_values);
   }
 
+  validate = (oForm) => {
+      var arrInputs = oForm.getElementsByTagName("input");
+      for (var i = 0; i < arrInputs.length; i++) {
+          var oInput = arrInputs[i];
+          if (oInput.type == "file") {
+              var sFileName = oInput.value;
+              if (sFileName.length > 0) {
+                  var blnValid = false;
+                  for (var j = 0; j < this.props.validFileExtensions.length; j++) {
+                      var sCurExtension = _validFileExtensions[j];
+                      if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                          blnValid = true;
+                          break;
+                      }
+                  }
+
+                  if (!blnValid) {
+                      alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                      return false;
+                  }
+              }
+          }
+      }
+
+      return true;
+  }
   fileUpload = (data) => {
     // Configure upload.
     const url = API_URL + this.props.uploadPath;
