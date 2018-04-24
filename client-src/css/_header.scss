@@ -1,57 +1,48 @@
 @import 'variables';
 
 .navbar {
-  @include clearfix;
   margin: 0;
-  position: fixed;
   top: 0;
   width: 100%;
   height: $navbar-height;
   line-height: $navbar-height;
   z-index: 1; // The navbar always needs to be above all other content.
-  background: #fff;
   border-style: none;
   border-radius: 0;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
   background: #24292e;
   color: rgba(255, 255, 255, 0.75);
 }
 
-/*
-** Because the navbar is a fixed position, it is out of the page flow.
-** after-navbar offsets the things content below the navbar to
-** prevent overlap.
-*/
-.after-navbar {
-  position: absolute;
-  top: $navbar-height;
-  width: 100%;
-}
-
 .nav {
-  @include clearfix;
   margin-bottom: 0;
   padding-left: 0; // Override default ul/ol
   list-style: none;
+  height: 100%;
+  user-select: none;
 
   > li {
     position: relative;
-    display: block;
+    height: 100%;
 
     > a {
       position: relative;
       display: block;
+      height: 100%;
       padding: 0 15px;
+      //font-size: 14px;
 
       &:hover,
-      &:focus {
+      &:focus,
+      &[aria-current='true'] {
         text-decoration: none;
         background-color: #777;
       }
     }
 
-    >a[aria-current='true'] {
-      background-color: #777;
+    > a[aria-current='true'] {
+      box-sizing: border-box;
+      border-bottom: 5px solid $accent-color;
     }
   }
 }
@@ -80,7 +71,6 @@
 }
 
 .navbar-header {
-  @include clearfix;
   font-size: 32px;
   margin-left: 20px;
   float: left;

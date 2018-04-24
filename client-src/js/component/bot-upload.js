@@ -8,8 +8,6 @@ export default class BotUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = { file: null, bot_name: null, bot_race: "Terran" };
-    if(localStorage.getItem("access_token") === null)
-       localStorage.setItem("access_token", "");
   }
 
   onChange = (event) => {
@@ -32,17 +30,11 @@ export default class BotUpload extends React.Component {
   fileUpload = (file, bot_name, bot_race) => {
     // Configure upload.
     const url = API_URL + this.props.uploadPath;
-    const access_token = localStorage.getItem("access_token");
     const formData = new FormData();
     formData.append('file', file);
     formData.append('name', bot_name);
     formData.append('race', bot_race);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-        'Authorization': access_token
-      }
-    }
+    const config = { headers: { 'content-type': 'multipart/form-data' } }
     console.log(formData);
     // Submit the upload
     axios.post(url, formData, config)

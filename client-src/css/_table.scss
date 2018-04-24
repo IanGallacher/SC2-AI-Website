@@ -6,18 +6,26 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 
   tr {
-    &:nth-child(0) {
-      background-color: rgba(0, 0, 0, 0.1);;
+    transition: all 0.2s ease-in-out;
+    &:nth-child(0) { background-color: rgba(0, 0, 0, 0.1); }
+    &:nth-child(even) { background-color: rgba(0, 0, 0, 0.1); }
+    &:nth-child(odd) { background-color: rgba(0, 0, 0, 0.15); }
+
+
+    td div {
+      transition: all 0.2s ease-in-out;
     }
 
-    &:nth-child(even) {
-      background-color: rgba(0, 0, 0, 0.1);;
-    }
-
-    &:nth-child(odd) {
-      background-color: rgba(0, 0, 0, 0.15);;
+    &.destroying td div {
+      height: 0 !important;
+      line-height: 0 !important;
+      padding: 0 !important;
     }
   }
 
@@ -28,8 +36,9 @@ table {
   }
 
   td {
-    padding: 15px;
     border: 1px solid $border-color;
+    padding: 15px;
+    overflow: hidden;
     &:first-child { border-left-style: none; }
     &:last-child { border-right-style: none; }
 
@@ -40,4 +49,30 @@ table {
       }
     }
   }
+
+  table {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+  }
+}
+
+.sub-table-container {
+  margin: 15px;
+}
+
+tr.goal-met {
+  &:nth-child(even) { background-color: rgba(0, 255, 0, 0.5); }
+  &:nth-child(odd) { background-color: rgba(0, 255, 0, 0.25); }
+}
+
+tr.goal-failure {
+  &:nth-child(even) { background-color: rgba(255, 0, 0, 0.5); }
+  &:nth-child(odd) { background-color: rgba(255, 0, 0, 0.25); }
+}
+
+.sort-arrow {
+  position: absolute;
+  left: 5px;
+  transform: translateY(-100%);
 }

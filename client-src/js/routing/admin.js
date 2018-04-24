@@ -9,8 +9,6 @@ import { TextInput, Dropdown, DropdownOption } from './../component/form.js'
 export default class AdminControlPanel extends React.Component {
   constructor(props) {
     super(props);
-    if(localStorage.getItem("access_token") === null)
-       localStorage.setItem("access_token", "");
 
     this.state = { bots: [] };
   }

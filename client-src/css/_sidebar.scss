@@ -48,3 +48,12 @@
     display: block;
   }
 }
+
+.sidebar-placeholder {
+  transition: all 0.3s;
+  width: $sidebar-width;
+  flex-shrink: 0;
+  @media (max-width: $mobile-threshold) {
+    width: $sidebar-collapse-size;
+  }
+}

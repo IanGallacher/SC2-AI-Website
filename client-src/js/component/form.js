@@ -13,11 +13,7 @@ export const Dropdown = (props) => {
 }
 
 export const DropdownOption = (props) => {
-  return (
-    <option value={props.value}>
-      {props.label}
-    </option>
-  );
+  return <option value={props.value}>{props.label}</option>
 }
 
 export const TextInput = (props) => {

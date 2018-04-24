@@ -14,7 +14,7 @@ function renderSeasonLink(id, name) {
   );
 }
 
-export class Sidebar extends React.Component {
+export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { season : [{id:1,name:"current"}],

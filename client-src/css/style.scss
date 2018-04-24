@@ -15,7 +15,6 @@
 body {
   background: #fafafa;
   font-family: 'Poppins', sans-serif;
-  background: #fafafa;
   min-height: 100vh;
   margin: 0;
 }
@@ -70,15 +69,6 @@ pre {
   display: flex;
   flex-direction: row;
   width: 100%;
-}
-
-.sidebar-placeholder {
-  transition: all 0.3s;
-  width: $sidebar-width;
-  flex-shrink: 0;
-  @media (max-width: $mobile-threshold) {
-    width: $sidebar-collapse-size;
-  }
 }
 
 /* ---------------------------------------------------
@@ -136,66 +126,4 @@ ul ul a {
   .sidebar-components {
     border-bottom: 1px solid #47748b;
   }
-}
-
-////// TOGGLE bar
-$toggle-height: 4px;
-$toggle-width: 30px;
-$toggle-center-dist: ($sidebar-collapse-size/2 - $toggle-width/2);
-
-.toggle-wrap {
-  position: absolute;
-  cursor: pointer;
-  top: $toggle-center-dist;
-  right: $toggle-center-dist;
-
-  /*disable selection*/
-  -webkit-touch-callout: none;
-  user-select: none;
-}
-
-.toggle-bar,
-.toggle-bar::before,
-.toggle-bar::after,
-.toggle-wrap.active .toggle-bar,
-.toggle-wrap.active .toggle-bar::before,
-.toggle-wrap.active .toggle-bar::after {
-  transition: all 0.2s ease-in-out;
-}
-
-.toggle-bar {
-  width: $toggle-width;
-  margin: 10px 0;
-  position: relative;
-  border-top: $toggle-height solid #ccc;
-  display: block;
-}
-
-.toggle-bar::before,
-.toggle-bar::after {
-  content: '';
-  display: block;
-  background: #ccc;
-  height: $toggle-height;
-  width: $toggle-width;
-  position: absolute;
-  top: -12px;
-  transform: rotate(0deg);
-  transform-origin: 13%;
-}
-
-.toggle-bar::after {
-  top: $toggle-height;
-}
-
-.toggle-wrap[data-expanded='true'] .toggle-bar {
-  border-top: $toggle-height solid transparent;
-}
-
-.toggle-wrap[data-expanded='true'] .toggle-bar::before {
-  transform: rotate(45deg);
-}
-
-.toggle-wrap[data-expanded='true'] .toggle-bar::after {
-  transform: rotate(-45deg);
 }

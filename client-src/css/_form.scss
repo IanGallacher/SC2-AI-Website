@@ -78,10 +78,5 @@ $error-color: #f90;
     &::placeholder {
       color: #d6887a !important;
     }
-
-    &:focus {
-      border: 1px solid #f90;
-      box-shadow: 0 0 0 2px #f90;
-    }
   }
 }

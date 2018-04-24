@@ -7,10 +7,7 @@ import AlertLogic from './../logic/alert.js'
 const Alert = (props) => {
   return (
     <div className={props.cssClass}
-         onClick={ () => {
-           AlertLogic.removeAlertWithId(props.id);
-         }
-    }>
+         onClick={() => AlertLogic.removeAlertWithId(props.id) }>
       <div className="alert-text">
         {props.message}
       </div>
@@ -23,18 +20,13 @@ export class AlertZone extends React.Component {
     return (
       <div className="alert-zone">
       {
-        (this.props.messages.length > 0) ? (
-          this.props.messages.map((message) => {
-            return (
-                      <Alert key={message.id}
-                             id={message.id}
-                             cssClass={message.cssClass}
-                             message={message.message}/>
-                   );
-          })
-        ) : (
-          <span/>
-        )
+        (this.props.messages.length > 0) &&
+          this.props.messages.map((message) =>
+            <Alert key={message.id}
+                   id={message.id}
+                   cssClass={message.cssClass}
+                   message={message.message}/>
+          )
       }
       </div>
     );

@@ -13,10 +13,26 @@ function renderTableCol(row, schema_entry) {
   );
 }
 
+function renderTableColEditable(schema_entry) {
+  if(schema_entry.displayType === "download")
+    col = "N/A"
+  return (
+    <td>{ schema_entry.fieldName }</td>
+  );
+}
+
 function renderTableRow(row, schema) {
   return (
     <tr key={row.id}>
       { schema.map( (schema_entry) => renderTableCol( row, schema_entry) ) }
+    </tr>
+  );
+}
+
+function renderTableRowEditable(schema) {
+  return (
+    <tr>
+      { schema.map( (schema_entry) => renderTableColEditable(schema_entry) ) }
     </tr>
   );
 }
@@ -75,12 +91,7 @@ export class ResultTable extends React.Component {
     if(!this.props.table) { return null; }
     return (
       <React.Fragment>
-        { (this.props.label) ? (
-            <h3>{this.props.label}</h3>
-          ) : (
-            <React.Fragment/>
-          )
-        }
+        { (this.props.label) && <h3>{this.props.label}</h3> }
         <table className="table table-striped">
           <tbody>
           	<tr>
