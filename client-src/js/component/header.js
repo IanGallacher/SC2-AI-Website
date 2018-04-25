@@ -9,10 +9,19 @@ import {
   RenderIfLoggedOut
 } from './../logic/permission.js'
 
-let HeaderLink = ({link, text}) => <li><NavLink to={link}>{text}</NavLink></li>
+let HeaderLink = ({link, text}) => <li className="navbar-btn">
+  <NavLink to={link}>{text}</NavLink>
+</li>;
 const Separator = () => <li>|</li>
 
 export default class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { season : [{id:1,name:"current"}],
+                   sidebarExpanded : false,
+                   seasonExpanded : false }
+  }
+
   logout = () => {
     LoginLogic.logout()
     AlertLogic.addMessage("Logout successful", "alert-success");
@@ -23,9 +32,9 @@ export default class Header extends React.Component {
     let role = this.props.role;
 
     return (
-      <nav className="navbar">
+      <nav className="header">
         <div className="navbar-header">Starcraft 2 AI Ladder</div>
-        <ul className="nav navbar-nav">
+        <ul className="navbar">
           <RenderIfRole role="admin">
             <HeaderLink link="/admin-control-panel" text="Admin"/>
           </RenderIfRole>

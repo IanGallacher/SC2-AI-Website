@@ -67,12 +67,6 @@ export default class Sidebar extends React.Component {
       <nav id="sidebar"
            aria-expanded={this.state.sidebarExpanded}
            className="sidebar">
-        <div id="toggle"
-             onClick={this.collapseSidebarToggle}
-             data-expanded={this.state.sidebarExpanded}
-             className="toggle toggle-wrap">
-            <span className="toggle-bar"></span>
-        </div>
         <div className="sidebar-header">
           <Link to="/">
             <img className="Header-logo-img"

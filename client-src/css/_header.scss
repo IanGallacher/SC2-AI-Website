@@ -1,6 +1,14 @@
 @import 'variables';
 
-.navbar {
+.nav {
+  margin-bottom: 0;
+  padding-left: 0; // Override default ul/ol
+  list-style: none;
+  height: 100%;
+  user-select: none;
+}
+
+.header {
   margin: 0;
   top: 0;
   width: 100%;
@@ -10,63 +18,25 @@
   border-style: none;
   border-radius: 0;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-  background: #24292e;
+  background: $nav-background;
   color: rgba(255, 255, 255, 0.75);
 }
 
-.nav {
-  margin-bottom: 0;
-  padding-left: 0; // Override default ul/ol
-  list-style: none;
-  height: 100%;
-  user-select: none;
-
-  > li {
-    position: relative;
-    height: 100%;
-
-    > a {
-      position: relative;
-      display: block;
-      height: 100%;
-      padding: 0 15px;
-      //font-size: 14px;
-
-      &:hover,
-      &:focus,
-      &[aria-current='true'] {
-        text-decoration: none;
-        background-color: #777;
-      }
-    }
-
-    > a[aria-current='true'] {
-      box-sizing: border-box;
-      border-bottom: 5px solid $accent-color;
-    }
-  }
-}
-
-.navbar-btn {
-  box-shadow: none;
-  outline: none !important;
-  border-style: none;
-}
-
-.navbar-nav {
+.navbar {
+  background: $nav-background;
   align-items: center;
   float: right !important;
-  margin-right: 0;
-}
+  margin: 0;
+  height: 100%; // Needed so border-box children are calculated correctly.
+  > li { float: left; }
 
-.navbar-nav {
-  @media (min-width: $mobile-threshold) {
+  @media (min-width: $mobile-threshold + 1px) {
     float: left;
     margin: 0;
+  }
 
-    > li {
-      float: left;
-    }
+  @media (max-width: $mobile-threshold) {
+    width: 100vw;
   }
 }
 
@@ -74,4 +44,30 @@
   font-size: 32px;
   margin-left: 20px;
   float: left;
+}
+
+.navbar-btn {
+  position: relative;
+  height: 100%;
+  float: right;
+
+  > a {
+    position: relative;
+    display: block;
+    height: 100%;
+    padding: 0 15px;
+    //font-size: 14px;
+
+    &:hover,
+    &:focus,
+    &[aria-current='true'] {
+      text-decoration: none;
+      background-color: #777;
+    }
+  }
+
+  > a[aria-current='true'] {
+    box-sizing: border-box;
+    border-bottom: 5px solid $accent-color;
+  }
 }

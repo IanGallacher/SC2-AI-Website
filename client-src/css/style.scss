@@ -105,25 +105,3 @@ ul ul a {
   padding-left: 30px !important;
   background: #0e1b4d;
 }
-
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-@media (max-width: $mobile-threshold) { // The sidebar can collapse on mobile
-  .sidebar[aria-expanded='false'] {
-    margin-left: $sidebar-collapse-size - $sidebar-width;
-  }
-
-  .header-logo-img {
-    display: none;
-  }
-}
-@media (min-width: $mobile-threshold + 1px) {
-  .toggle-wrap {
-    display: none;
-  }
-
-  .sidebar-components {
-    border-bottom: 1px solid #47748b;
-  }
-}

@@ -59,7 +59,7 @@ $line-height, $border-radius) {
 ////// TOGGLE bar
 $toggle-height: 4px;
 $toggle-width: 30px;
-$toggle-center-dist: ($sidebar-collapse-size/2 - $toggle-width/2);
+$toggle-center-dist: ($toggle-width/2);
 
 .toggle-wrap {
   position: absolute;
