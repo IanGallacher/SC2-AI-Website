@@ -1,3 +1,10 @@
+######################
+# Ignore build files #
+######################
+/public
+/test
+
+
 *.csv
 *.dat
 *.iml
@@ -21,7 +28,7 @@ npm-debug.log
 
 #########################
 # Github's Rails Ignore #
-########################
+#########################
 *.rbc
 capybara-*.html
 .rspec
