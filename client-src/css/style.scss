@@ -17,6 +17,9 @@ body {
   background: #fafafa;
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  padding: 0;
   margin: 0;
 }
 
@@ -47,6 +50,18 @@ pre {
   overflow-x: auto;
   white-space: nowrap;
   min-width: 0;
+}
+
+// Setup a layout that will support a scrollbar below the header.
+.app {
+  height: 100vh;
+  flex-direction: column;
+  display: flex;
+}
+
+// The zone to display the scrollbar below the header.
+.main-content {
+  overflow-y: auto;
 }
 
 .line {

@@ -10,7 +10,6 @@ export default class Modal extends React.Component {
   first_load = true;
   componentWillReceiveProps(props) {
     // If the prop has removed the element, update the state
-    console.log("asdf")
     if(!this.first_load) this.setState({ hidden: false });
     else this.first_load = false;
   }
