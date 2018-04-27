@@ -5,34 +5,24 @@ import { Link } from 'react-router-dom'
 import { API_URL } from './../routing/app.js'
 
 import BotTable from './bots.js'
+import { Image, EditableImage } from './image.js'
 
 const default_avatar_path = require("./../../img/avatar.jpg");
-
-class AuthorAvatar extends React.PureComponent {
-  render() {
-    return (this.props.avatar) ?
-      (
-        <img className="img-thumbnail"
-           src={this.props.avatar}/>
-      ) : (
-        <img className="img-thumbnail"
-           src={default_avatar_path}/>
-      )
-  }
-}
 
 export class AuthorTradingCard extends React.Component {
   render() {
     return (
-      <Link to={"/authors/?author_id=" + this.props.user.id.toString()}
-                     name="View Profile" id="profile"
-                     type="submit" className="trading-card">
+      <Link to={`/authors/?author_id=${this.props.user.id.toString()}`}
+            name="View Profile" id="profile"
+            type="submit" className="trading-card">
         <title>{this.props.user.username}</title>
-        <AuthorAvatar avatar={this.props.user.avatar}/>
+        <Image
+          img={this.props.user.avatar}
+          fallback={default_avatar_path}
+          className="img-thumbnail"
+        />
         <div className="text-center">
-          <p>
-View Profile
-          </p>
+          <p> View Profile </p>
         </div>
       </Link>
     );
@@ -48,15 +38,8 @@ export class AuthorProfile extends React.Component {
   getAuthorData(author_id) {
     if (author_id == "") return;
     axios.get(API_URL + "/authors/" + author_id)
-    .then((response) => {
-      this.setState({
-        profile: response.data
-      });
-    })
-    .catch((error) => {
-      console.log("ERROR");
-      console.log(error);
-    });
+    .then(response => this.setState({ profile: response.data }))
+    .catch(error => console.log(error));
   }
 
   componentDidMount() {
@@ -72,7 +55,13 @@ export class AuthorProfile extends React.Component {
       <div className="trading-card-horizontal">
         <title>{this.state.profile.username}</title>
         <div className="grid-one-quarter">
-          <AuthorAvatar avatar={this.state.profile.avatar}/>
+          <EditableImage
+            img={this.state.profile.avatar}
+            fallback={default_avatar_path}
+            className="img-thumbnail"
+            editing={this.props.editing}
+            edit_url={`/users/${this.props.author_id}/create_avatar`}
+          />
         </div>
         <div className="grid-three-quarter">
         {

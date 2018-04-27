@@ -6,6 +6,32 @@ title {
   padding-bottom: 15px;
 }
 
+.img-container {
+  position: relative;
+}
+
+.img-container.img-edit .img-thumbnail { opacity: 0.3; }
+.img-container.img-edit:hover .img-thumbnail { opacity: 0.5; }
+
+.img-edit {
+  border-radius: 6px;
+  max-width: 100%;
+  max-height: 100%;
+  flex: 1;
+  object-fit: cover;
+  overflow: hidden;
+  cursor: pointer;
+
+  &::after {
+    font-size: 35px;
+    content: '\f044'; // font-awesome edit icon
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .img-thumbnail {
   border-radius: 6px;
   max-width: 100%;
@@ -13,6 +39,8 @@ title {
   flex: 1;
   object-fit: cover;
   overflow: hidden;
+  user-select: none;
+  transition: opacity 0.3s;
 }
 
 .trading-card {

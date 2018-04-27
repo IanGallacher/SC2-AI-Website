@@ -40,7 +40,7 @@ export default class PageRouting extends React.Component {
           <Route path="/reset-password" component={ResetPassword}/>
           <Route path="/authors" component={AuthorBios}/>
           <Route path="/authors/*" component={AuthorBios}/>
-          <RequireLoggedInRoute path="/my-profile" component={ProfileSettings} author_id={this.props.ctx.state.user_data.user_id}/>
+          <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
           <Route path="/learning" component={Learning}/>
           <Route path="/faq" component={FAQ}/>
           <Route path="/helpful-resources" component={HelpfulResources}/>

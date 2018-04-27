@@ -60,3 +60,16 @@ export const RadioButtonDefault = (props) => {
     </label>
   );
 }
+
+export const Slider = (props) => {
+  let checked_class = props.toggled ? "checked" : "";
+  return <label className="switch">
+    <div className={`slider-label ${checked_class}`}>{props.label}</div>
+    <input
+      type="checkbox"
+      defaultChecked={props.toggled}
+      onChange={props.onChange}
+    />
+    <span className="slider"></span>
+  </label>
+}

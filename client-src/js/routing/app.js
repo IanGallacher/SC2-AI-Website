@@ -10,9 +10,11 @@ import PageRouting from './page-routing.js'
 import AlertLogic from './../logic/alert.js'
 import LoginLogic from './../logic/login.js'
 
+import { ModalContext } from './../context/modal-context.js'
 import { UserContext } from './../context/user-context.js'
 import { AlertZone } from './../component/alert.js'
 import Header from './../component/header.js'
+import Modal from './../component/modal.js'
 import Sidebar from './../component/sidebar.js'
 
 export var API_URL = "/api"
@@ -27,7 +29,8 @@ export default class App extends React.Component {
         id: "",
         role: "",
         calorie_goal: localStorage.getItem("calorie_goal"),
-      }
+      },
+      modalContent: "No content"
     }
 
     LoginLogic.getUserData().then((response) => {
@@ -63,6 +66,9 @@ export default class App extends React.Component {
       user_data: Object.assign(this.state.user_data, { calorie_goal: goal })
     });
   }
+  showModal = modalContent => {
+    this.setState({modalContent})
+  }
 
   render() {
     // Router must be where it is on the tree, don't put providers below it.
@@ -70,6 +76,7 @@ export default class App extends React.Component {
       <UserContext.Provider value={{
           updateGoal: this.updateGoal,
           ...this.state.user_data}}>
+      <ModalContext.Provider value={{showModal: this.showModal}}>
         <Router>
           <React.Fragment>
             <Header username={this.state.user_data.username}
@@ -85,11 +92,13 @@ export default class App extends React.Component {
                 </div>
               </div>
             </div>
+            <Modal modalContent={this.state.modalContent}/>
           </React.Fragment>
         </Router>
+      </ModalContext.Provider>
       </UserContext.Provider>
     )
   }
 }
 
-render(<App/>, document.body);
+render(<App/>, document.getElementById('app'));
