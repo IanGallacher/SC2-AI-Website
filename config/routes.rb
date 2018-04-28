@@ -26,8 +26,8 @@ Rails.application.routes.draw do
     post "users/:user_id/create_avatar", to: 'users#upload'
     resources :game_results, only: [:index, :create]
     match "/bots/upload", to: "bots#upload", via: [:post]
-#    get "/*path", to: "routes#invalid"
+    get "/*path", to: "routes#invalid"
   end
-#  get "/*path", to: "home#index"
+  get "/*path", to: "home#index"
   root "home#index"
 end

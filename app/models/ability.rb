@@ -5,7 +5,7 @@ class Ability
     signed_in = user.present?
     user ||= User.new
     can :read, :all
-    cannot :read, GameResult unless signed_in
+    #cannot :read, GameResult unless signed_in
 #    cannot :create, Bot unless signed_in
     can :update, Bot, owner_id: user.id
     # Define abilities for the passed in user here. For example:
