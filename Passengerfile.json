@@ -1,0 +1,6 @@
+{
+  "environment": "production",
+  "port": 80,
+  "daemonize": true,
+  "user": "sc2aiwebsite"
+}
