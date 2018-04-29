@@ -46,18 +46,8 @@ export default class App extends React.Component {
     });
 
 // Register callback that will render new notifications.
-    AlertLogic.notify = (messages) => {
-      this.setState({
-        alert_messages: messages
-      });
-    }
-
-    LoginLogic.notify = (user_data) => {
-      console.log(user_data)
-      this.setState({
-        user_data: user_data
-      });
-    }
+    AlertLogic.notify = alert_messages => this.setState({ alert_messages });
+    LoginLogic.notify = user_data => this.setState({ user_data });
   }
 
   updateGoal = (goal) => {

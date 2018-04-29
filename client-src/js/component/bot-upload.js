@@ -69,9 +69,7 @@ export default class BotUpload extends React.Component {
           <option value="Zerg">Zerg</option>
           <option value="Random">Random</option>
         </select>
-        <input type="submit"
-               value="Submit"
-               className="btn"/>
+        <input type="submit" value="Submit" className="btn"/>
       </form>
     )
   }

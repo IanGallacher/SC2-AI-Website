@@ -30,13 +30,13 @@ export default class AuthorBios extends React.PureComponent {
     const url = API_URL + "/authors";
 
     axios.get(url)
-    .then((response) => {
+    .then(response => {
       this.setState({
         author: response.data
       });
       this.setAuthorFromURL();
     })
-    .catch((error) => {
+    .catch(error => {
       console.log("ERROR");
       console.log(error);
     });
@@ -47,15 +47,12 @@ export default class AuthorBios extends React.PureComponent {
   }
 
   render() {
-    if(this.state.author_id == -1)
-    {
+    if(this.state.author_id == -1) {
       return (
         <div className="author-content">
           <h3>Authors</h3>
             {
-              this.state.author.map(function(user) {
-                console.log("assdfa");
-                console.log(user);
+              this.state.author.map(user => {
               return (
                 <div key={user.id}>
                   <AuthorTradingCard user={user}/>
@@ -65,15 +62,10 @@ export default class AuthorBios extends React.PureComponent {
           }
         </div>
       );
-    }
-    else {
-      if(this.state.profile != []) {
-        return (
-          <AuthorProfile author_id={this.state.author_id}/>
-        );
-      } else {
+    } else {
+      if(this.state.profile === [])
         return ("Warning: no profile");
-      }
+      return <AuthorProfile author_id={this.state.author_id}/>;
     }
   }
 }
