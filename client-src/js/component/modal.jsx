@@ -1,26 +1,23 @@
-import React from 'react'
-import { render } from 'react-dom'
-import axios from 'axios'
+import React from "react";
+import PropTypes from "prop-types";
 
 export default class Modal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hidden: true }
-      console.log("Constructor")
+    this.state = { hidden: true };
+    console.log("Constructor");
   }
 
+  static propTypes = { modalContent: PropTypes.node }
+
   first_load = true;
-  componentWillReceiveProps(props) {
-    console.log("propsasdfasdf")
+  componentWillReceiveProps() {
     // If the prop has removed the element, update the state
     if(!this.first_load) this.setState({ hidden: false });
     else this.first_load = false;
   }
 
-  toggleHidden = () => {
-    console.log("toggle")
-    this.setState({ hidden: !this.state.hidden})
-  }
+  toggleHidden = () => { this.setState({ hidden: !this.state.hidden}); }
 
   render() {
     let is_hidden_class = (this.state.hidden) ? "modal-hidden" : "";

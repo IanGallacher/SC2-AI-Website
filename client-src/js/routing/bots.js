@@ -1,10 +1,6 @@
-import axios from 'axios'
-import React from 'react'
-import { render } from 'react-dom'
+import React from "react";
 
-import { API_URL } from './app.js'
-import BotTable from './../component/bots.js'
-import { ResultTable } from './../component/table.js'
+import BotTable from "./../component/bots.jsx";
 
 export default class Bots extends React.Component {
   render() {

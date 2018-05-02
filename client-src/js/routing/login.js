@@ -1,13 +1,9 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
+import ReactRouterPropTypes from "react-router-prop-types";
 
-import AlertLogic from './../logic/alert.js'
-import LoginLogic from './../logic/login.js'
-
-let error_table = {
-  "presence" : "is required."
-}
+import AlertLogic from "./../logic/alert.js";
+import LoginLogic from "./../logic/login.js";
 
 export default class Login extends React.PureComponent {
   constructor(props) {
@@ -15,56 +11,54 @@ export default class Login extends React.PureComponent {
     this.state = { error: "", username: "", password: "" };
   }
 
-  onChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
+  static propTypes = { history: ReactRouterPropTypes.history }
 
-  onSubmit = (event) => {
+  onChange = e => { this.setState({ [e.target.name]: e.target.value }); }
+
+  onSubmit = event => {
     event.preventDefault();
-    LoginLogic.login(this.state).then((user_data) => {
+    LoginLogic.login(this.state).then(() => {
       AlertLogic.addMessage("Login successful", "alert-success");
 
       // After logging in successfuly, redirect the user to the homepage.
       this.props.history.push("/");
-    });;
+    });
   }
 
   render() {
-    let login_message = ""
-    if(this.props.location.state && this.props.location.state.from) {
-      login_message = this.props.location.state.from.pathname + " requires login"
-    }
+    let login_message = "";
+    // if(this.props.location.state && this.props.location.state.from) {
+    //   login_message = `${this.props.location.state.from.pathname} requires login`;
+    // }
     return (
       <form name="login-form"
-            className="flex-vertical form-signin"
-            onSubmit={this.onSubmit}>
+        className="flex-vertical form-signin"
+        onSubmit={this.onSubmit}>
         <h2 className="form-signin-heading">Please sign in</h2>
         <input name="username"
-               type="text"
-               className="text-input"
-               placeholder="Username"
-               onChange={this.onChange} autoFocus />
+          type="text"
+          className="text-input"
+          placeholder="Username"
+          onChange={this.onChange} autoFocus />
         <input name="password"
-               type="password"
-               className="text-input"
-               placeholder="Password"
-               onChange={this.onChange} />
+          type="password"
+          className="text-input"
+          placeholder="Password"
+          onChange={this.onChange} />
         <br/>
         <button name="Submit"
-                id="submit"
-                className="btn btn-lg btn-primary"
-                type="submit">
+          id="submit"
+          className="btn btn-lg btn-primary"
+          type="submit">
                   Sign in
-                </button>
+        </button>
         <Link to="/sign-up">
                 Create new account
-              </Link>
+        </Link>
 
         <div id="message">{ this.state.error } { login_message }</div>
         <Link to="/reset-password">Forgot Password</Link>
       </form>
-    )
+    );
   }
 }

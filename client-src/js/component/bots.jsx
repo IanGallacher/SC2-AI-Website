@@ -1,12 +1,12 @@
-import axios from 'axios'
-import React from 'react'
-import { render } from 'react-dom'
-import { withRouter } from 'react-router'
+import axios from "axios";
+import React from "react";
+import PropTypes from "prop-types";
+import ReactRouterPropTypes from "react-router-prop-types";
+import { withRouter } from "react-router";
 
-import { API_URL } from './../routing/app.js'
-import LoadingAnimation from './loading.js'
-import { ResultTable } from './table.js'
-
+import { API_URL } from "./../routing/app.js";
+import LoadingAnimation from "./loading.jsx";
+import { ResultTable } from "./table.jsx";
 
 class BotTable extends React.Component {
   constructor(props) {
@@ -14,18 +14,23 @@ class BotTable extends React.Component {
     this.state = {};
   }
 
+  static propTypes = {
+    history: ReactRouterPropTypes.history,
+    location: ReactRouterPropTypes.location.isRequired,
+    author_id: PropTypes.number
+  }
+
   componentDidMount() {
-    if (!this.props.author_id)
-      var axios_url = API_URL + "/bots";
-    else
-      var axios_url = `${API_URL}/users/${this.props.author_id}/bots`;
+    let axios_url = `${API_URL}/bots`;
+    if (this.props.author_id)
+      axios_url = `${API_URL}/users/${this.props.author_id}/bots`;
     axios.get(axios_url)
-    .then((response) => { this.setState({ bots: response.data }); })
-    .catch((error) => { console.log(error); });
+      .then(response => this.setState({ bots: response.data }))
+      .catch(error => console.log(error));
   }
 
   render() {
-    if(!this.state.bots) return <LoadingAnimation/>
+    if(!this.state.bots) return <LoadingAnimation/>;
     if (this.state.bots.length > 0) {
       const search = this.props.location.search;
       const params = new URLSearchParams(search);
@@ -81,5 +86,4 @@ class BotTable extends React.Component {
     return (<div>No bots found for user</div>);
   }
 }
-
 export default withRouter(BotTable);

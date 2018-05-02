@@ -1,9 +1,9 @@
-import axios from 'axios'
-import React from 'react'
-import { render } from 'react-dom'
-import { API_URL } from './app.js'
+import axios from "axios";
+import React from "react";
+import ReactRouterPropTypes from "react-router-prop-types";
+import { API_URL } from "./app.js";
 
-import { AuthorProfile, AuthorTradingCard } from './../component/profile.js'
+import { AuthorProfile, AuthorTradingCard } from "./../component/profile.jsx";
 
 export default class AuthorBios extends React.PureComponent {
   constructor(props) {
@@ -11,13 +11,14 @@ export default class AuthorBios extends React.PureComponent {
     this.state = { author: [], author_id: -1, profile: [] };
   }
 
+  static propTypes = { location: ReactRouterPropTypes.location.isRequired }
+
   setAuthorFromURL() {
     let author_id = -1;
-    let profile = [];
     const search = this.props.location.search;
-    if(search!="") {
+    if(search != "") {
       const params = new URLSearchParams(search);
-      author_id = params.get('author_id');
+      author_id = params.get("author_id");
     }
     this.setState({
       profile: this.state.author[author_id-1],
@@ -27,19 +28,13 @@ export default class AuthorBios extends React.PureComponent {
 
   componentDidMount() {
     // Get all the authors from the server.
-    const url = API_URL + "/authors";
+    const url = `${API_URL}/authors`;
 
     axios.get(url)
-    .then(response => {
-      this.setState({
-        author: response.data
+      .then(response => {
+        this.setState({ author: response.data });
+        this.setAuthorFromURL();
       });
-      this.setAuthorFromURL();
-    })
-    .catch(error => {
-      console.log("ERROR");
-      console.log(error);
-    });
   }
 
   componentDidUpdate() {
@@ -48,23 +43,20 @@ export default class AuthorBios extends React.PureComponent {
 
   render() {
     if(this.state.author_id == -1) {
-      return (
-        <div className="author-content">
-          <h3>Authors</h3>
-            {
-              this.state.author.map(user => {
-              return (
-                <div key={user.id}>
-                  <AuthorTradingCard user={user}/>
-                </div>
-              );
-            })
-          }
-        </div>
-      );
+      return <div className="author-content">
+        <h3>Authors</h3>
+        {
+          this.state.author.map(user => {
+            return (
+              <div key={user.id}>
+                <AuthorTradingCard user={user}/>
+              </div>
+            );
+          })
+        }
+      </div>;
     } else {
-      if(this.state.profile === [])
-        return ("Warning: no profile");
+      if(this.state.profile === []) return ("Warning: no profile");
       return <AuthorProfile author_id={this.state.author_id}/>;
     }
   }

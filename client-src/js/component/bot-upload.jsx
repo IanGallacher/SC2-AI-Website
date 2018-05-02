@@ -1,8 +1,8 @@
-import React from 'react'
-import { render } from 'react-dom'
-import axios from 'axios'
+import axios from "axios";
+import React from "react";
+import PropTypes from "prop-types";
 
-import { API_URL } from './../routing/app.js'
+import { API_URL } from "./../routing/app.js";
 
 export default class BotUpload extends React.Component {
   constructor(props) {
@@ -10,19 +10,21 @@ export default class BotUpload extends React.Component {
     this.state = { file: null, bot_name: null, bot_race: "Terran" };
   }
 
-  onChange = (event) => {
+  static propTypes = { uploadPath: PropTypes.string }
+
+  onChange = event => {
     let new_state = {};
     new_state[event.target.name] = event.target.value;
     this.setState(new_state);
   }
 
-  onFileChange = (event) => {
+  onFileChange = event => {
     this.setState({
       file: event.target.files[0]
     });
   }
 
-  onSubmit = (event) => {
+  onSubmit = () => {
     event.preventDefault();
     this.fileUpload(this.state.file, this.state.bot_name, this.state.bot_race);
   }
@@ -31,39 +33,33 @@ export default class BotUpload extends React.Component {
     // Configure upload.
     const url = API_URL + this.props.uploadPath;
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('name', bot_name);
-    formData.append('race', bot_race);
-    const config = { headers: { 'content-type': 'multipart/form-data' } }
+    formData.append("file", file);
+    formData.append("name", bot_name);
+    formData.append("race", bot_race);
+    const config = { headers: { "content-type": "multipart/form-data" } };
     console.log(formData);
     // Submit the upload
     axios.post(url, formData, config)
-    .then(function (response) {
-      console.log("upload response");
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log("ERROR");
-      console.log(error);
-    });
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
   }
 
   render() {
     return (
       <form className="flex-horizontal"
-            onSubmit={this.onSubmit}>
+        onSubmit={this.onSubmit}>
         <input name="bot_name"
-               type="text"
-               placeholder="Bot Name"
-               className="text-input"
-               onChange={this.onChange}/>
+          type="text"
+          placeholder="Bot Name"
+          className="text-input"
+          onChange={this.onChange}/>
         <input name="file"
-               type="file"
-               className="btn"
-               onChange={this.onFileChange}/>
+          type="file"
+          className="btn"
+          onChange={this.onFileChange}/>
         <select name="race"
-                className="text-input"
-                onChange={this.onChange}>
+          className="text-input"
+          onChange={this.onChange}>
           <option value="Terran">Terran</option>
           <option value="Protoss">Protoss</option>
           <option value="Zerg">Zerg</option>
@@ -71,6 +67,6 @@ export default class BotUpload extends React.Component {
         </select>
         <input type="submit" value="Submit" className="btn"/>
       </form>
-    )
+    );
   }
 }

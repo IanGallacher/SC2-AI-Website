@@ -17,10 +17,7 @@ table {
     &:nth-child(even) { background-color: rgba(0, 0, 0, 0.1); }
     &:nth-child(odd) { background-color: rgba(0, 0, 0, 0.15); }
 
-
-    td div {
-      transition: all 0.2s ease-in-out;
-    }
+    td div { transition: all 0.2s ease-in-out; }
 
     &.destroying td div {
       height: 0 !important;
@@ -31,6 +28,7 @@ table {
 
   th {
     background-color: #fff;
+    position: relative;
     padding: 15px;
     user-select: none;
   }

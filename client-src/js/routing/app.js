@@ -1,23 +1,22 @@
 //import 'normalize.css'; // Standardize the dom elements before continuing.
-import './../../css/style.scss'
+import "./../../css/style.scss";
 
-import React from 'react'
-import { render } from 'react-dom'
-import { BrowserRouter as Router,
-         Route, Link, Prompt, Switch, Redirect } from 'react-router-dom'
+import React from "react";
+import { render } from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import PageRouting from './page-routing.js'
-import AlertLogic from './../logic/alert.js'
-import LoginLogic from './../logic/login.js'
+import PageRouting from "./page-routing.js";
+import AlertLogic from "./../logic/alert.js";
+import LoginLogic from "./../logic/login.js";
 
-import { ModalContext } from './../context/modal-context.js'
-import { UserContext } from './../context/user-context.js'
-import { AlertZone } from './../component/alert.js'
-import Header from './../component/header.js'
-import Modal from './../component/modal.js'
-import Sidebar from './../component/sidebar.js'
+import { ModalContext } from "./../context/modal-context.js";
+import { UserContext } from "./../context/user-context.js";
+import AlertZone from "./../component/alert.jsx";
+import Header from "./../component/header.jsx";
+import Modal from "./../component/modal.jsx";
+import Sidebar from "./../component/sidebar.jsx";
 
-export var API_URL = "/api"
+export var API_URL = "/api";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,7 +30,7 @@ export default class App extends React.Component {
         calorie_goal: localStorage.getItem("calorie_goal"),
       },
       modalContent: "No content"
-    }
+    };
 
     LoginLogic.getUserData().then((response) => {
       if (response.data)
@@ -42,53 +41,53 @@ export default class App extends React.Component {
             role: response.data.role,
             calorie_goal: response.data.calorie_goal
           }
-       });
+        });
     });
 
-// Register callback that will render new notifications.
+    // Register callback that will render new notifications.
     AlertLogic.notify = alert_messages => this.setState({ alert_messages });
     LoginLogic.notify = user_data => this.setState({ user_data });
   }
 
-  updateGoal = (goal) => {
-    console.log(goal)
+  updateGoal = goal => {
     this.setState({
       user_data: Object.assign(this.state.user_data, { calorie_goal: goal })
     });
   }
+
   showModal = modalContent => {
-    this.setState({modalContent})
+    this.setState({modalContent});
   }
 
   render() {
     // Router must be where it is on the tree, don't put providers below it.
     return (
       <UserContext.Provider value={{
-          updateGoal: this.updateGoal,
-          ...this.state.user_data}}>
-      <ModalContext.Provider value={{showModal: this.showModal}}>
-        <Router>
-          <React.Fragment>
-            <Header username={this.state.user_data.username}
-                    role={this.state.user_data.role}
-                    logout={this.logout}/>
-            <div className="flex-horizontal main-content">
-              <Sidebar/>
-              <div className="sidebar-placeholder"/>
-              <div className="page-zone">
-                <AlertZone messages={this.state.alert_messages}/>
-                <div className="page-area">
-                  <PageRouting ctx={this}/>
+        updateGoal: this.updateGoal,
+        ...this.state.user_data}}>
+        <ModalContext.Provider value={{showModal: this.showModal}}>
+          <Router>
+            <React.Fragment>
+              <Header username={this.state.user_data.username}
+                role={this.state.user_data.role}
+                logout={this.logout}/>
+              <div className="flex-horizontal main-content">
+                <Sidebar/>
+                <div className="sidebar-placeholder"/>
+                <div className="page-zone">
+                  <AlertZone messages={this.state.alert_messages}/>
+                  <div className="page-area">
+                    <PageRouting ctx={this}/>
+                  </div>
                 </div>
               </div>
-            </div>
-            <Modal modalContent={this.state.modalContent}/>
-          </React.Fragment>
-        </Router>
-      </ModalContext.Provider>
+              <Modal modalContent={this.state.modalContent}/>
+            </React.Fragment>
+          </Router>
+        </ModalContext.Provider>
       </UserContext.Provider>
-    )
+    );
   }
 }
 
-render(<App/>, document.getElementById('app'));
+render(<App/>, document.getElementById("app"));

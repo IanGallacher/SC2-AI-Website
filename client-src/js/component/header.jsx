@@ -1,36 +1,44 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { NavLink } from 'react-router-dom'
-import AlertLogic from './../logic/alert.js'
-import LoginLogic from './../logic/login.js'
+import React from "react";
+import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
+
+import AlertLogic from "./../logic/alert.js";
+import LoginLogic from "./../logic/login.js";
 import {
   RenderIfRole,
   RenderIfLoggedIn,
   RenderIfLoggedOut
-} from './../logic/permission.js'
+} from "./../logic/permission.js";
 
-let HeaderLink = ({link, text}) => <li className="navbar-btn">
+const Separator = () => <li>|</li>;
+
+const HeaderLink = ({link, text}) => <li className="navbar-btn">
   <NavLink to={link}>{text}</NavLink>
 </li>;
-const Separator = () => <li>|</li>
+HeaderLink.propTypes = {
+  link: PropTypes.string,
+  text: PropTypes.string
+};
 
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = { season : [{id:1,name:"current"}],
-                   sidebarExpanded : false,
-                   seasonExpanded : false }
+      sidebarExpanded : false,
+      seasonExpanded : false };
+  }
+
+  static propTypes = {
+    role: PropTypes.string,
+    username: PropTypes.string
   }
 
   logout = () => {
-    LoginLogic.logout()
+    LoginLogic.logout();
     AlertLogic.addMessage("Logout successful", "alert-success");
   }
 
   render() {
-    let username = this.props.username;
-    let role = this.props.role;
-
     return (
       <nav className="header">
         <div className="navbar-header">Starcraft 2 AI Ladder</div>
@@ -53,6 +61,6 @@ export default class Header extends React.Component {
           </RenderIfLoggedIn>
         </ul>
       </nav>
-    )
+    );
   }
 }

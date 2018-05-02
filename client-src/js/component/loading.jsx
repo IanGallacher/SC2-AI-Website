@@ -1,9 +1,7 @@
 // Code is from SpinKit.
 // http://tobiasahlin.com/spinkit/
 
-import React from 'react'
-import { render } from 'react-dom'
-import { Link } from 'react-router-dom'
+import React from "react";
 
 export default function LoadingAnimation() {
   return (
@@ -21,5 +19,5 @@ export default function LoadingAnimation() {
       <div className="sk-circle11 sk-child"></div>
       <div className="sk-circle12 sk-child"></div>
     </div>
-  )
+  );
 }

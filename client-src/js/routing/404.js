@@ -1,14 +1,7 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React from "react";
 
-export default class PageNotFound extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
+export default class PageNotFound extends React.PureComponent {
   render() {
-    return (
-      <p> PAGE NOT FOUND! </p>
-    )
+    return <p>PAGE NOT FOUND!</p>;
   }
 }
