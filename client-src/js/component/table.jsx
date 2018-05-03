@@ -40,7 +40,8 @@ export class ResultTable extends React.Component {
     this.state = {
       table: this.props.table,
       sort_index: null,
-      sort_direction: 1
+      sort_direction: 1,
+      destroying: []
     };
     // props.label
   }
