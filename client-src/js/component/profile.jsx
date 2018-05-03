@@ -55,8 +55,7 @@ export class AuthorProfile extends React.Component {
   getAuthorData(author_id) {
     if (author_id == "") return;
     axios.get(`${API_URL}/authors/${author_id}`)
-      .then(response => this.setState({ profile: response.data }))
-      .catch(error => console.log(error));
+      .then(response => this.setState({ profile: response.data }));
   }
 
   componentDidMount() {

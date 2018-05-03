@@ -15,8 +15,7 @@ export default class RecentResults extends React.Component {
 
   componentDidMount() {
     axios.get(API_URL + "/game_results")
-      .then(response => this.setState({game_results: response.data}))
-      .catch(error => console.log(error));
+      .then(response => this.setState({game_results: response.data}));
   }
 
   render() {

@@ -43,7 +43,6 @@ export default class LoginLogic {
   }
 
   static logout() {
-    console.log(this);
     return new Promise (resolve => {
       axios.get(API_URL + "/logout")
         .then(response => {

@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import PropTypes from "prop-types";
 
+import AlertLogic from "./../logic/alert.js";
 import { API_URL } from "./../routing/app.js";
 
 export default class BotUpload extends React.Component {
@@ -37,11 +38,9 @@ export default class BotUpload extends React.Component {
     formData.append("name", bot_name);
     formData.append("race", bot_race);
     const config = { headers: { "content-type": "multipart/form-data" } };
-    console.log(formData);
     // Submit the upload
     axios.post(url, formData, config)
-      .then(response => console.log(response))
-      .catch(error => console.log(error));
+      .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"));
   }
 
   render() {

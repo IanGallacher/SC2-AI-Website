@@ -13,8 +13,7 @@ export default class Season extends React.Component {
   componentDidMount() {
     // Get all the seasons from the server.
     axios.get(`${API_URL}/seasons`)
-      .then(response => this.setState({ season: response.data }))
-      .catch(error => console.log(error));
+      .then(response => this.setState({ season: response.data }));
   }
 
   render() {

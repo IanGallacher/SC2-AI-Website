@@ -25,8 +25,7 @@ class BotTable extends React.Component {
     if (this.props.author_id)
       axios_url = `${API_URL}/users/${this.props.author_id}/bots`;
     axios.get(axios_url)
-      .then(response => this.setState({ bots: response.data }))
-      .catch(error => console.log(error));
+      .then(response => this.setState({ bots: response.data }));
   }
 
   render() {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 
+import AlertLogic from "./../logic/alert.js";
 import { API_URL } from "./app.js";
 import FileUpload from "./../component/file-upload.jsx";
 import { TextInput, Dropdown } from "./../component/form.jsx";
@@ -13,8 +14,7 @@ export default class AdminControlPanel extends React.Component {
 
   componentDidMount() {
     const axios_url = `${API_URL}/bots`;
-    axios.get(axios_url)
-      .then(response => this.setState({bots: response.data}));
+    axios.get(axios_url).then(response => this.setState({bots: response.data}));
   }
 
   onChange = (event) => {
@@ -23,10 +23,10 @@ export default class AdminControlPanel extends React.Component {
 
   addSeasonBtn = () => {
     // Configure upload.
-    const url = `${API_URL}/seasons`;
+    const axios_url = `${API_URL}/seasons`;
 
-    axios.post(url, { "name": "Season", "summary": [{}] })
-      .then(response => console.log(response));
+    axios.post(axios_url, { "name": "Season", "summary": [{}] })
+      .then(() => AlertLogic.addMessage("Season Created!", "alert-success"));
   }
 
   render() {
