@@ -5,16 +5,16 @@ export default class Modal extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hidden: true };
-    console.log("Constructor");
   }
 
   static propTypes = { modalContent: PropTypes.node }
 
   first_load = true;
-  componentWillReceiveProps() {
+  componentWillReceiveProps = (nextProps) => {
+    if(this.first_load) { this.first_load = false; return; }
+    if(this.props.modalContent == nextProps.modalContent) return;
     // If the prop has removed the element, update the state
-    if(!this.first_load) this.setState({ hidden: false });
-    else this.first_load = false;
+    this.setState({ hidden: false });
   }
 
   toggleHidden = () => { this.setState({ hidden: !this.state.hidden}); }
