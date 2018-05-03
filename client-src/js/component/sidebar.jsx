@@ -4,16 +4,18 @@ import { Link } from "react-router-dom";
 const logo_path = require("./../../img/sc2Ladder.gif");
 
 function renderSeasonLink(id, name) {
-  let link_path = `/season/?season-id=${id.toString()}`;
+  let link_path = `/season/?season-id=${id}`;
   return <Link to={link_path} key={id}>{name}</Link>;
 }
 
 export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { season : [{id:1,name:"current"}],
+    this.state = {
+      season : [{id:1,name:"current"}],
       sidebarExpanded : false,
-      seasonExpanded : false };
+      seasonExpanded : false
+    };
   }
 
   collapseSeasonToggle = () => {
@@ -46,11 +48,7 @@ export default class Sidebar extends React.Component {
             <ul id="homeSubmenu"
               className={this.state.seasonExpanded ? "" : "collapse"}>
               <li>
-                {
-                  this.state.season.map((s) => {
-                    return renderSeasonLink(s.id, s.name);
-                  })
-                }
+                { this.state.season.map(s => renderSeasonLink(s.id, s.name)) }
               </li>
             </ul>
           </li>

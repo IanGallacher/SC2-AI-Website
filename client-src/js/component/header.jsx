@@ -57,7 +57,7 @@ export default class Header extends React.Component {
           <RenderIfLoggedIn>
             <HeaderLink link="/my-profile" text="Profile"/>
             <Separator/>
-            <li onClick={this.logout}><a>Logout</a></li>
+            <li className="navbar-btn" onClick={this.logout}><a>Logout</a></li>
           </RenderIfLoggedIn>
         </ul>
       </nav>

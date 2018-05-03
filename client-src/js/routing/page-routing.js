@@ -22,15 +22,8 @@ export default class PageRouting extends React.Component {
         <RequireLoggedInRoute path="/admin-control-panel"
           component={AdminControlPanel}/>
 
-        <Route path="/login"
-          render={(props) => <Login
-            {...props}
-          />}/>
-
-        <Route path="/sign-up"
-          render={(props) => <SignUp
-            {...props}
-          />}/>
+        <Route path="/login"render={props => <Login {...props}/>}/>
+        <Route path="/sign-up" render={props => <SignUp {...props}/>}/>
 
         <Route path="/reset-password" component={ResetPassword}/>
         <Route path="/authors" component={AuthorBios}/>
