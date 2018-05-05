@@ -8,7 +8,7 @@ import { ResultTable } from "./../component/table.jsx";
 export default class RecentResults extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { game_results: [] };
+    this.state = { game_results: null };
   }
 
   static propTypes = { history: ReactRouterPropTypes.history }

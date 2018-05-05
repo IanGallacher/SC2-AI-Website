@@ -70,16 +70,23 @@ export class AuthorProfile extends React.Component {
     return (
       <div className="trading-card-horizontal">
         <title>{this.state.profile.username}</title>
-        <div className="grid-one-quarter">
-          <EditableImage
-            img={this.state.profile.avatar}
-            fallback={default_avatar_path}
-            className="img-thumbnail"
-            editing={this.props.editing}
-            edit_url={`/users/${this.props.author_id}/create_avatar`}
-          />
-        </div>
-        <div className="grid-three-quarter">
+        <div className="flex-horizontal">
+          <div className="trading-card-details-img-zone">
+            <EditableImage
+              img={this.state.profile.avatar}
+              fallback={default_avatar_path}
+              className="img-thumbnail"
+              editing={this.props.editing}
+              edit_url={`/users/${this.props.author_id}/create_avatar`}
+            />
+          </div>
+          {
+            (this.state.profile.username) ? (
+              <BotTable author_id={this.state.profile.id}/>
+            ) : (
+              <div/>
+            )
+          }
           {
           /*
           <div className="grid-one-quarter">
@@ -116,17 +123,6 @@ export class AuthorProfile extends React.Component {
             </div>
             */
           }
-          <div className="tab-content">
-            <div className="tab-pane active" id="home">
-              {
-                (this.state.profile.username) ? (
-                  <BotTable author_id={this.state.profile.id}/>
-                ) : (
-                  <div/>
-                )
-              }
-            </div>
-          </div>
         </div>
       </div>
     );

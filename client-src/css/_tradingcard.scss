@@ -36,7 +36,6 @@ title {
   border-radius: 6px;
   max-width: 100%;
   max-height: 100%;
-  flex: 1;
   object-fit: cover;
   overflow: hidden;
   user-select: none;
@@ -84,4 +83,8 @@ title {
   height: auto;
   float: left;
   width: 100%;
+}
+
+.trading-card-details-img-zone {
+  max-width: 500px;
 }

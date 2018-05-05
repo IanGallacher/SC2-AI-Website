@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import LoadingAnimation from "./loading.jsx";
 
 function renderTableCol(row, schema_entry) {
   let {fieldName, displayValue, onClick, headerName} = schema_entry;
@@ -38,7 +39,7 @@ export class ResultTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      table: this.props.table,
+      table: [],
       sort_index: null,
       sort_direction: 1,
       destroying: []
@@ -109,10 +110,23 @@ export class ResultTable extends React.Component {
     </tr>;
   }
 
+  renderTable = (contents, schema) => {
+    return <table className="table table-striped">
+      <thead>
+        <this.TableHeader schema={schema}/>
+      </thead>
+      <tbody>
+        <tr><td colSpan={schema.length}>{contents}</td></tr>
+      </tbody>
+    </table>;
+  }
+
   render() {
-    if(!this.props.table) { return null; }
     let {schema, label, nullMessage} = this.props;
     let table = this.state.table;
+    if(!this.props.table) return this.renderTable(<LoadingAnimation/>, schema);
+    if(table && table.length == 0) return this.renderTable(nullMessage, schema);
+
     return <React.Fragment>
       { (label) && <h3>{label}</h3> }
       <table className="table table-striped">
@@ -123,7 +137,6 @@ export class ResultTable extends React.Component {
           {this.state.table.map(row => renderTableRow(row, schema))}
         </tbody>
       </table>
-      {(table && table.length === 0) && <div>{nullMessage}</div>}
     </React.Fragment>;
   }
 }
