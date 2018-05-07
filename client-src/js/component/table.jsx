@@ -35,7 +35,7 @@ function comparisonFactory(i, sort_direction) {
 ** ResultsTable takes a schema of the following format:
 ** [{label:"headername",fieldname:"field",displayType:"text"}, ...]
 */
-export class ResultTable extends React.Component {
+export default class ResultTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

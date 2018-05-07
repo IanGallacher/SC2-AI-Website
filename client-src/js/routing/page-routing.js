@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import AuthorBios from "./authors.js";
+import AuthorList from "./author-list.js";
+import AuthorProfile from "./author-profile.js";
 import AdminControlPanel from "./admin.js";
 import Bots from "./bots.js";
 import Login from "./login.js";
@@ -16,6 +17,7 @@ import PageNotFound from "./404.js";
 
 export default class PageRouting extends React.Component {
   render() {
+  //<Route path="/authors/*" component={AuthorProfile}/>
     return (
       <Switch>
         <Route path="/home" component={RecentResults}/>
@@ -26,8 +28,8 @@ export default class PageRouting extends React.Component {
         <Route path="/sign-up" render={props => <SignUp {...props}/>}/>
 
         <Route path="/reset-password" component={ResetPassword}/>
-        <Route path="/authors" component={AuthorBios}/>
-        <Route path="/authors/*" component={AuthorBios}/>
+        <Route path="/authors/*" component={AuthorProfile}/>
+        <Route path="/authors" component={AuthorList}/>
         <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
         <Route path="/learning" component={Learning}/>
         <Route path="/faq" component={FAQ}/>
