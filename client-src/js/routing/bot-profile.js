@@ -2,14 +2,19 @@ import axios from "axios";
 import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
+import {
+  PieChart,
+  Pie
+} from "recharts";
 
 import { API_URL } from "./../routing/app.js";
+import LoadingAnimation from "./../component/loading.jsx";
 import ResultTable from "./../component/table.jsx";
 
-class Bots extends React.Component {
+class BotProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { bot: null };
   }
 
   static propTypes = {
@@ -17,10 +22,31 @@ class Bots extends React.Component {
     location: ReactRouterPropTypes.location.isRequired
   }
 
+
+  getBotData(bot_id) {
+    axios.get(`${API_URL}/bots/${bot_id}`)
+      .then(response => this.setState({ bot_id, bot_data: response.data }) );
+  }
+
+  getBotId() {
+    let bot_id = -1;
+    const search = this.props.location.search;
+    if(search != "") {
+      const params = new URLSearchParams(search);
+      bot_id = params.get("bot_id");
+    }
+    return bot_id;
+  }
+
   componentDidMount() {
-    let axios_url = `${API_URL}/bots`;
+    let axios_url = `${API_URL}/bots/${this.getBotId()}`;
     axios.get(axios_url)
-      .then(response => this.setState({ bots: response.data }));
+      .then(response => this.setState({ bot: response.data }));
+    this.getBotData(this.getBotId());
+  }
+
+  componentWillReceiveProps() {
+    this.getBotData(this.getBotId());
   }
 
   renderLabel = (args) => {
@@ -39,17 +65,38 @@ class Bots extends React.Component {
   }
 
   render() {
-    const search = this.props.location.search;
-    const params = new URLSearchParams(search);
-    let bot_table = null;
-    
-    // Filter based on search params.
-    if(this.state.bots) bot_table = this.state.bots.filter(entry => {
-      for(let pair of params.entries()) {
-        if (entry[pair[0]] && entry[pair[0]] !== pair[1]) return false;
-      }
-      return true;
-    });
+    let bot = this.state.bot;
+    if (bot === null) return <div className="trading-card-horizontal">
+      <LoadingAnimation/>
+    </div>;
+
+    let data = [
+      {name: "Victories", value: bot.win_count},
+      {name: "Defeats", value: bot.match_count - bot.win_count}
+    ];
+    return (
+      <React.Fragment>
+        <div className="trading-card-horizontal">
+          <title>{`Bot Name: ${bot.name}`}</title>
+          {`Bot Author: ${bot.author}`}
+          <PieChart width={400} height={400}>
+            <Pie
+              data={data}
+              dataKey="value"
+              cx={200}
+              cy={200}
+              outerRadius={40}
+              fill="#8884d8"
+              label={this.renderLabel}
+              isAnimationActive={false}
+            />
+          </PieChart>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  renderBotTable(bot_table) {
     return <ResultTable table={bot_table} nullMessage="No bots found for user"
       schema={
         [
@@ -92,4 +139,4 @@ class Bots extends React.Component {
     />;
   }
 }
-export default withRouter(Bots);
+export default withRouter(BotProfile);

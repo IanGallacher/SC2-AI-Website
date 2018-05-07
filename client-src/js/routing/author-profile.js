@@ -75,7 +75,7 @@ class AuthorProfile extends React.Component {
                     fieldName:"name",
                     displayType:"text",
                     onClick: (row) => {
-                      this.props.history.push(`/bots/?name=${row.name}`);
+                      this.props.history.push(`/bot/?bot_id=${row.id}`);
                     }
                   },
                   {

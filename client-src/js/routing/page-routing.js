@@ -5,6 +5,7 @@ import AuthorList from "./author-list.js";
 import AuthorProfile from "./author-profile.js";
 import AdminControlPanel from "./admin.js";
 import Bots from "./bots.js";
+import BotProfile from "./bot-profile.js";
 import Login from "./login.js";
 import ProfileSettings from "./profile.js";
 import { RequireLoggedInRoute } from "./../logic/permission.js";
@@ -34,6 +35,7 @@ export default class PageRouting extends React.Component {
         <Route path="/learning" component={Learning}/>
         <Route path="/faq" component={FAQ}/>
         <Route path="/helpful-resources" component={HelpfulResources}/>
+        <Route path="/bot/*" component={BotProfile}/>
         <Route path="/bots" component={Bots}/>
         <Route path="/season" component={Season}/>
         <Route path="*" exact={true} component={PageNotFound}/>

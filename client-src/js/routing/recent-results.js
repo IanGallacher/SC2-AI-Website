@@ -51,7 +51,7 @@ export default class RecentResults extends React.Component {
                 fieldName:"winner_name",
                 displayType:"text",
                 onClick: row => {
-                  this.props.history.push(`/bots/?name=${row.winner_name}`);
+                  this.props.history.push(`/bot/?bot_id=${row.winner_id}`);
                 }
               },
               {
