@@ -13,7 +13,7 @@ import RecentResults from "./recent-results.js";
 import ResetPassword from "./reset-password.js";
 import Season from "./season.js";
 import SignUp from "./sign-up.js";
-import { FAQ, Learning, HelpfulResources } from "./static-pages.js";
+import { FAQ, Learning } from "./static-pages.js";
 import PageNotFound from "./404.js";
 
 export default class PageRouting extends React.Component {
@@ -34,7 +34,6 @@ export default class PageRouting extends React.Component {
         <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
         <Route path="/learning" component={Learning}/>
         <Route path="/faq" component={FAQ}/>
-        <Route path="/helpful-resources" component={HelpfulResources}/>
         <Route path="/bot/*" component={BotProfile}/>
         <Route path="/bots" component={Bots}/>
         <Route path="/season" component={Season}/>

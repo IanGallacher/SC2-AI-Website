@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const logo_path = require("./../../img/sc2Ladder.gif");
+const logo_path = require("./../../img/Yc40O.png");
 
 function renderSeasonLink(id, name) {
   let link_path = `/season/?season-id=${id}`;

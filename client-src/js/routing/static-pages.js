@@ -54,15 +54,6 @@ export class Learning extends React.Component {
 
         A good place to go to start creating SC2 bots is the Command Center framework available at
         <a href="https://github.com/davechurchill/commandcenter" >https://github.com/davechurchill/commandcenter</a>
-      </React.Fragment>
-    );
-  }
-}
-
-export class HelpfulResources extends React.Component {
-  render() {
-    return (
-      <React.Fragment>
         <div>
           <h3>Discord</h3>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import AlertLogic from "./../logic/alert.js";
 import LoginLogic from "./../logic/login.js";
@@ -10,6 +10,7 @@ import {
   RenderIfLoggedOut
 } from "./../logic/permission.js";
 
+const logo_path = require("./../../img/Yc40O.png");
 const Separator = () => <li>|</li>;
 
 const HeaderLink = ({link, text}) => <li className="navbar-btn">
@@ -41,6 +42,11 @@ export default class Header extends React.Component {
   render() {
     return (
       <nav className="header">
+        <Link to="/">
+          <img className="Header-logo-img"
+            src={logo_path}
+            alt="Sc2Ladder" />
+        </Link>
         <div className="navbar-header">Starcraft 2 AI Ladder</div>
         <ul className="navbar">
           <RenderIfRole role="admin">
@@ -49,6 +55,8 @@ export default class Header extends React.Component {
           <HeaderLink link="/home" text="Home"/>
           <HeaderLink link="/bots" text="Bots"/>
           <HeaderLink link="/authors" text="Authors"/>
+          <HeaderLink link="/learning" text="Learning"/>
+          <HeaderLink link="/faq" text="FAQ"/>
           <RenderIfLoggedOut>
             <Separator/>
             <HeaderLink link="/sign-up" text="Sign Up"/>

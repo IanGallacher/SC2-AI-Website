@@ -59,8 +59,10 @@ pre {
 }
 
 // The zone to display the scrollbar below the header.
+// flex: 1 makes sure that the height always fills the page.
 .main-content {
   overflow-y: auto;
+  flex: 1;
 }
 
 .line {
@@ -76,7 +78,6 @@ pre {
 .flex-vertical {
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 
 .flex-horizontal {
@@ -91,13 +92,33 @@ pre {
 ----------------------------------------------------- */
 // Center all the content that is below the header.
 .page-area {
-  margin: 30px 10% 0;
-  // Flexbox does weird things with this value. Don't let it.
-  min-width: 0;
+  @include clearfix;
+  margin: auto;
+  margin-top: 0;
+  width: 1000px;
+  min-height: 100%;
+  background-color: #ddd;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  box-sizing: border-box;
+  flex: 1;
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
+}
+
+// Don't jump the page when the scrollbar appears.
+// https://css-tricks.com/elegant-fix-jumping-scrollbar-issue/
+.page-scroll-offset {
+  margin-left: calc(100vw - 100%);
+  min-height: 100%;
 }
 
 .page-zone {
   flex-grow: 1;
+  background: #333;
+  height: 100%;
+  overflow-y: auto;
 }
 
 a[aria-expanded]::before {
@@ -119,4 +140,8 @@ ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
   background: #0e1b4d;
+}
+
+.recharts-wrapper {
+  float: left;
 }

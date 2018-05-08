@@ -14,7 +14,7 @@ import { UserContext } from "./../context/user-context.js";
 import AlertZone from "./../component/alert.jsx";
 import Header from "./../component/header.jsx";
 import Modal from "./../component/modal.jsx";
-import Sidebar from "./../component/sidebar.jsx";
+// import Sidebar from "./../component/sidebar.jsx";
 
 export var API_URL = "/api";
 
@@ -61,6 +61,8 @@ export default class App extends React.Component {
 
   render() {
     // Router must be where it is on the tree, don't put providers below it.
+    // <Sidebar/>
+    // <div className="sidebar-placeholder"/>
     return (
       <UserContext.Provider value={{
         updateGoal: this.updateGoal,
@@ -72,12 +74,12 @@ export default class App extends React.Component {
                 role={this.state.user_data.role}
                 logout={this.logout}/>
               <div className="flex-horizontal main-content">
-                <Sidebar/>
-                <div className="sidebar-placeholder"/>
                 <div className="page-zone">
-                  <AlertZone messages={this.state.alert_messages}/>
-                  <div className="page-area">
-                    <PageRouting ctx={this}/>
+                  <div className="page-scroll-offset flex-vertical">
+                    <AlertZone messages={this.state.alert_messages}/>
+                    <div className="page-area">
+                      <PageRouting ctx={this}/>
+                    </div>
                   </div>
                 </div>
               </div>
