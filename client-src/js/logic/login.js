@@ -31,7 +31,7 @@ export default class LoginLogic {
             if (response.data) {
               this.notify({
                 "username": response.data.username,
-                "user_id": response.data.id,
+                "id": response.data.id,
                 "role": response.data.role
               });
             }
@@ -49,7 +49,7 @@ export default class LoginLogic {
           localStorage.setItem("username", "");
           this.notify({
             "username": "",
-            "user_id": "",
+            "id": "",
             "role": ""
           });
           resolve(response.data);
