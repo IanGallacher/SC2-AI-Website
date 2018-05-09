@@ -5,6 +5,8 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import AlertLogic from "./../logic/alert.js";
 import LoginLogic from "./../logic/login.js";
 
+import { TextInput } from "./../component/form.jsx";
+
 export default class Login extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -26,23 +28,17 @@ export default class Login extends React.PureComponent {
   }
 
   render() {
-    let login_message = "";
-    // if(this.props.location.state && this.props.location.state.from) {
-    //   login_message = `${this.props.location.state.from.pathname} requires login`;
-    // }
     return (
       <form name="login-form"
-        className="flex-vertical form-signin"
+        className="flex-vertical form-container"
         onSubmit={this.onSubmit}>
         <h2 className="form-signin-heading">Please sign in</h2>
-        <input name="username"
+        <TextInput name="username"
           type="text"
-          className="text-input"
           placeholder="Username"
           onChange={this.onChange} autoFocus />
-        <input name="password"
+        <TextInput name="password"
           type="password"
-          className="text-input"
           placeholder="Password"
           onChange={this.onChange} />
         <br/>
@@ -52,11 +48,9 @@ export default class Login extends React.PureComponent {
           type="submit">
                   Sign in
         </button>
-        <Link to="/sign-up">
-                Create new account
-        </Link>
-
-        <div id="message">{ this.state.error } { login_message }</div>
+        <br/>
+        <Link to="/sign-up">Create new account</Link>
+        <div id="message">{ this.state.error }</div>
         <Link to="/reset-password">Forgot Password</Link>
       </form>
     );

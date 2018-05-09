@@ -31,7 +31,7 @@ export default class SignUp extends React.PureComponent {
   render() {
     return (
       <form name="form-signup"
-        className="flex-vertical form-signup center-me"
+        className="flex-vertical form-container"
         onSubmit={this.onSubmit}>
         <h2 className="form-signup-heading">Register</h2>
         <TextInput name="username"

@@ -3,11 +3,32 @@
 
 $error-color: #f90;
 
-.form-signin,
-.form-signup {
+.form-container {
   max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+  padding: 25px 50px;
+  margin: 25px auto;
+  //border: 5px solid #111;
+  box-shadow: 1px 1px 5px #000;
+  background-color: #555;
+  border-radius: 15px;
+  color: #eee;
+  text-align: center;
+
+  // Add a bit of vertical space if sorting the form vertically.
+  &.flex-vertical > div {
+    margin-bottom: 3px;
+  }
+
+  > div {
+    display: inline;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    // Have the same stacking context as the other input elments in the form.
+    position: relative;
+  }
 }
 
 .input-container {
