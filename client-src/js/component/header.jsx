@@ -49,9 +49,6 @@ export default class Header extends React.Component {
         </Link>
         <div className="navbar-header">Starcraft 2 AI Ladder</div>
         <ul className="navbar">
-          <RenderIfRole role="admin">
-            <HeaderLink link="/admin-control-panel" text="Admin"/>
-          </RenderIfRole>
           <HeaderLink link="/home" text="Home"/>
           <HeaderLink link="/bots" text="Bots"/>
           <HeaderLink link="/authors" text="Authors"/>
@@ -63,8 +60,11 @@ export default class Header extends React.Component {
             <HeaderLink link="/login" text="Login"/>
           </RenderIfLoggedOut>
           <RenderIfLoggedIn>
-            <HeaderLink link="/my-profile" text="Profile"/>
             <Separator/>
+            <RenderIfRole role="admin">
+              <HeaderLink link="/admin-control-panel" text="Admin"/>
+            </RenderIfRole>
+            <HeaderLink link="/my-profile" text="Profile"/>
             <li className="navbar-btn" onClick={this.logout}><a>Logout</a></li>
           </RenderIfLoggedIn>
         </ul>
