@@ -13,27 +13,28 @@
 }
 
 .alert-error {
-  animation: alert-show 0.4s 1;
+  transition: all 0.2s ease-in-out;
+  opacity: 0;
   background: #ff2121;
-  height: 60px;
+  height: 0;
   width: 100%;
   border-bottom: 2px solid #e11;
-
-  &:hover {
-    background: #ff3535;
-  }
+  &:hover { background: #ff3535; }
 }
 
 .alert-success {
-  animation: alert-show 0.4s 1;
+  transition: all 0.2s ease-in-out;
   background: #21bb21;
-  height: 60px;
+  opacity: 0;
+  height: 0;
   width: 100%;
   border-bottom: 2px solid #1a1;
+  &:hover { background: #35bb35; }
+}
 
-  &:hover {
-    background: #35bb35;
-  }
+.alert-visable {
+  height: 60px;
+  opacity: 1;
 }
 
 .alert-text {
@@ -42,10 +43,4 @@
   width: 100%;
   font-size: 20px;
   line-height: 60px;
-}
-
-@keyframes alert-show {
-  0% { opacity: 0; }
-
-  100% { opacity: 1; }
 }
