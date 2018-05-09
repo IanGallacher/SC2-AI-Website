@@ -18,7 +18,6 @@ import PageNotFound from "./404.js";
 
 export default class PageRouting extends React.Component {
   render() {
-  //<Route path="/authors/*" component={AuthorProfile}/>
     return (
       <Switch>
         <Route path="/home" component={RecentResults}/>

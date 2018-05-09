@@ -75,9 +75,7 @@ export default class FileUpload extends React.Component {
         className="btn"
         onChange={this.onFileChange}/>
       { childrenWithProps }
-      <input type="submit"
-        value="Submit"
-        className="btn"/>
+      <input type="submit" value="Submit" className="btn"/>
     </form>;
   }
 }

@@ -1,8 +1,8 @@
 import axios from "axios";
 import React from "react";
-import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import ReactRouterPropTypes from "react-router-prop-types";
+import { withRouter } from "react-router";
 
 import { API_URL } from "./app.js";
 import { EditableImage } from "./../component/image.jsx";
@@ -17,7 +17,7 @@ class AuthorProfile extends React.Component {
   }
 
   static propTypes = {
-    author_id: PropTypes.string,
+    author_id: PropTypes.number,
     editing: PropTypes.bool,
     history: ReactRouterPropTypes.history,
     location: ReactRouterPropTypes.location.isRequired,
@@ -35,7 +35,7 @@ class AuthorProfile extends React.Component {
   }
 
   getAuthorId() {
-    let author_id = -1;
+    let author_id = this.props.author_id;
     const search = this.props.location.search;
     if(search != "") {
       const params = new URLSearchParams(search);

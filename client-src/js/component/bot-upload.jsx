@@ -25,7 +25,7 @@ export default class BotUpload extends React.Component {
     });
   }
 
-  onSubmit = () => {
+  onSubmit = event => {
     event.preventDefault();
     this.fileUpload(this.state.file, this.state.bot_name, this.state.bot_race);
   }
@@ -45,8 +45,7 @@ export default class BotUpload extends React.Component {
 
   render() {
     return (
-      <form className="flex-horizontal"
-        onSubmit={this.onSubmit}>
+      <form className="flex-horizontal" onSubmit={this.onSubmit}>
         <input name="bot_name"
           type="text"
           placeholder="Bot Name"

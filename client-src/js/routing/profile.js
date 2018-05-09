@@ -3,7 +3,7 @@ import React from "react";
 import { UserContext } from "./../context/user-context.js";
 import BotUpload from "./../component/bot-upload.jsx";
 import { Slider } from "./../component/form.jsx";
-import { AuthorProfile } from "./../component/profile.jsx";
+import AuthorProfile from "./author-profile.js";
 
 export default class ProfileSettings extends React.Component {
   constructor(props) {
@@ -16,15 +16,16 @@ export default class ProfileSettings extends React.Component {
   }
 
   render() {
-    return <UserContext.Consumer>{ user_data => <React.Fragment>
-      <Slider
-        label="edit"
-        onChange={this.toggleEdit}
-        toggled={this.state.editing}
-      />
-      <AuthorProfile author_id={user_data.id} editing={this.state.editing}/>
-      <BotUpload label="Upload Bot:" uploadPath="/bots/create"/>
-    </React.Fragment>
+    return <UserContext.Consumer>{ user_data => (!user_data.id)
+      ? null : <React.Fragment>
+        <Slider
+          label="edit"
+          onChange={this.toggleEdit}
+          toggled={this.state.editing}
+        />
+        <AuthorProfile author_id={user_data.id} editing={this.state.editing}/>
+        <BotUpload label="Upload Bot:" uploadPath="/bots/create"/>
+      </React.Fragment>
     }</UserContext.Consumer>;
   }
 }

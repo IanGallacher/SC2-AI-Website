@@ -3,7 +3,7 @@ import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
 import { API_URL } from "./app.js";
 
-import AuthorTradingCard from "./../component/profile.jsx";
+import AuthorTradingCard from "./../component/author-trading-card.jsx";
 
 export default class AuthorList extends React.PureComponent {
   constructor(props) {
