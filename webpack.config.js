@@ -69,15 +69,9 @@ module.exports = {
         }]
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        // The url-loader will create a dataurl if the file is small enough.
+        test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader?limit=100000'
-      },
-      {
-        test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
-        loader: "file-loader",
-        options: {
-          outputPath: "img/"
-        }
       }
     ]
   },
