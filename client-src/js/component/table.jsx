@@ -54,16 +54,11 @@ export default class ResultTable extends React.Component {
     nullMessage: PropTypes.string
   }
 
-  _deleteRow(row) {
-    this.setState({ destroying: this.state.destroying.concat([row.id]) },
-      () => setTimeout(() => {
-        this.setState({ table: this.state.table.filter(e => e != row),
-          destroying: this.state.destroying.filter(ele => ele !== row.id) });
-      }, 200)
-    );
-  }
-
+  // Figure out what components have been added or removed.
+  // We use that information to animate the addition/removal.
   componentWillReceiveProps(props) {
+    // If we have not yet recieved a table, there is nothing to do.
+    if(props.table === null) return;
     // If the prop has removed the element, update the state
     for(let c of this.state.table) {
       if(!props.table.find(e => e.id === c.id)) this._deleteRow(c);
@@ -72,6 +67,15 @@ export default class ResultTable extends React.Component {
       return !this.state.table.find(e => e.id === row.id);
     });
     this.setState({ table: this.state.table.concat(newRows) });
+  }
+
+  _deleteRow(row) {
+    this.setState({ destroying: this.state.destroying.concat([row.id]) },
+      () => setTimeout(() => {
+        this.setState({ table: this.state.table.filter(e => e != row),
+          destroying: this.state.destroying.filter(ele => ele !== row.id) });
+      }, 200)
+    );
   }
 
   updateSort = (sort_index, key) => {
