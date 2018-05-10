@@ -26,6 +26,7 @@
     "linebreak-style": ["error", "windows"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
+    "no-unused-vars": ["warn"],
     "no-console": [ "warn" ]
   }
 }
