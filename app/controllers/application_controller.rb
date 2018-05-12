@@ -1,5 +1,19 @@
 class ApplicationController < ActionController::Base
 #  protect_from_forgery with: :exception
+#  def render_standard_error(exception, status)
+#    error_hash = { error: exception.message }
+#    error_hash[:backtrace] = exception.backtrace unless Rails.env.production?
+#    render json: error_hash, status: status
+#  end
+#
+#  rescue_from ::StandardError do |exception|
+#    render_standard_error(exception, 500)
+#  end
+#
+#  rescue_from ActiveRecord::RecordNotFound do |exception|
+#    render_standard_error(exception, 404)
+#  end
+
   rescue_from CanCan::AccessDenied do |exception|
     if exception.message != "You are not authorized to access this page."
       render json: {error: exception.message}, status: 403

@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428224807) do
+ActiveRecord::Schema.define(version: 20180511173440) do
+
+  create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "bot_id", null: false
+    t.integer "mmr", null: false
+    t.datetime "created_at", null: false
+    t.index ["bot_id"], name: "index_bot_histories_on_bot_id"
+  end
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "owner_id"
@@ -57,6 +64,7 @@ ActiveRecord::Schema.define(version: 20180428224807) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "bot_histories", "bots"
   add_foreign_key "bots", "users", column: "owner_id"
   add_foreign_key "game_result_bots", "bots"
   add_foreign_key "game_result_bots", "game_results"

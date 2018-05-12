@@ -1,6 +1,5 @@
 class GameResult < ActiveRecord::Base
   include BetterJson
-
   has_many :game_result_bots  
   accepts_nested_attributes_for :game_result_bots
   has_many :bots, through: "game_result_bots"
@@ -8,6 +7,7 @@ class GameResult < ActiveRecord::Base
   
   attr_writer :file
   before_save :save_replay
+  after_save :update_mmr
 
   def save_replay
     puts "CHECKING REPLAY"
@@ -19,6 +19,20 @@ class GameResult < ActiveRecord::Base
   def winner_name
     return if winner.nil?
     winner.name
+  end
+
+  def update_mmr
+    bot_1_id = self.game_result_bots[0].bot_id
+    bot_2_id = self.game_result_bots[1].bot_id
+    # Keep track of the current mmr before changing the database
+    bot_1_mmr = BotHistory.where(bot_id: bot_1_id).last.mmr
+    bot_2_mmr = BotHistory.where(bot_id: bot_2_id).last.mmr
+    score = 0
+    if (self.winner_id == bot_1_id)
+      score = 1
+    end
+    BotHistory.create(bot_id: bot_1_id, competitor_mmr: bot_2_mmr, score: score) 
+    BotHistory.create(bot_id: bot_2_id, competitor_mmr: bot_1_mmr, score: 1-score) 
   end
 
   private

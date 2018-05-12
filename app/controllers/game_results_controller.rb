@@ -31,8 +31,6 @@ class GameResultsController < ApplicationController
 	p[:winner_id] = Bot.where(name: params[:Bot2Name]).first.id
       end
     end
-    #p[:owner_id] = current_user.id
-    #p[:author] ||= current_user.username
     return p
   end
 end
