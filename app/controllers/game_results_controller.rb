@@ -23,8 +23,14 @@ class GameResultsController < ApplicationController
       attributes.push bot_id: Bot.where(name: params[:Bot1Name]).first.id
       attributes.push bot_id: Bot.where(name: params[:Bot2Name]).first.id
       p[:game_result_bots_attributes] = attributes
+      p[:map] = params[:Map]
+      if params[:Result] == "Player1Win"
+	p[:winner_id] = Bot.where(name: params[:Bot1Name]).first.id
+      end
+      if params[:Result] == "Player2Win"
+	p[:winner_id] = Bot.where(name: params[:Bot2Name]).first.id
+      end
     end
-    p[:winner_id] ||= Bot.where(name: params[:winner_name]).first.id
     #p[:owner_id] = current_user.id
     #p[:author] ||= current_user.username
     return p
