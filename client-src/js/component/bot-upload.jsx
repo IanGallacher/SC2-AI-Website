@@ -3,12 +3,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import AlertLogic from "./../logic/alert.js";
+import { TextInput } from "./form.jsx";
 import { API_URL } from "./../routing/app.js";
 
 export default class BotUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: null, bot_name: null, bot_race: "Terran" };
+    this.state = { file: "", name: "", race: "Terran", errors: []};
   }
 
   static propTypes = { uploadPath: PropTypes.string }
@@ -27,26 +28,28 @@ export default class BotUpload extends React.Component {
 
   onSubmit = event => {
     event.preventDefault();
-    this.fileUpload(this.state.file, this.state.bot_name, this.state.bot_race);
+    this.fileUpload(this.state.file, this.state.name, this.state.race);
   }
 
-  fileUpload = (file, bot_name, bot_race) => {
+  fileUpload = (file, name, race) => {
     // Configure upload.
     const url = API_URL + this.props.uploadPath;
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("name", bot_name);
-    formData.append("race", bot_race);
+    formData.append("name", name);
+    formData.append("race", race);
     const config = { headers: { "content-type": "multipart/form-data" } };
     // Submit the upload
     axios.post(url, formData, config)
-      .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"));
+      .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"))
+      .catch(error=>this.setState({errors: error.response.data}));
   }
 
   render() {
     return (
       <form className="flex-horizontal" onSubmit={this.onSubmit}>
-        <input name="bot_name"
+        <TextInput name="name"
+          error={this.state.errors.name}
           type="text"
           placeholder="Bot Name"
           className="text-input"
