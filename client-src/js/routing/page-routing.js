@@ -13,6 +13,7 @@ import RecentResults from "./recent-results.js";
 import ResetPassword from "./reset-password.js";
 import Season from "./season.js";
 import SignUp from "./sign-up.js";
+import SplashScreen from "./splash-screen.js";
 import { FAQ, Learning } from "./static-pages.js";
 import PageNotFound from "./404.js";
 
@@ -28,14 +29,15 @@ export default class PageRouting extends React.Component {
         <Route path="/sign-up" render={props => <SignUp {...props}/>}/>
 
         <Route path="/reset-password" component={ResetPassword}/>
+        <Route exact strict path="/authors" component={AuthorList}/>
         <Route path="/authors/*" component={AuthorProfile}/>
-        <Route path="/authors" component={AuthorList}/>
         <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
         <Route path="/learning" component={Learning}/>
         <Route path="/faq" component={FAQ}/>
+        <Route exact strict path="/bots" component={Bots}/>
         <Route path="/bot/*" component={BotProfile}/>
-        <Route path="/bots" component={Bots}/>
         <Route path="/season" component={Season}/>
+        <Route exact path="/" component={SplashScreen}/>
         <Route path="*" exact={true} component={PageNotFound}/>
       </Switch>
     );
