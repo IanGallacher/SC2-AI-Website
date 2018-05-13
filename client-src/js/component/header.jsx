@@ -52,7 +52,9 @@ export default class Header extends React.Component {
           <HeaderLink link="/home" text="Home"/>
           <HeaderLink link="/bots" text="Bots"/>
           <HeaderLink link="/authors" text="Authors"/>
-          <HeaderLink link="/learning" text="Learning"/>
+          <li className="navbar-btn">
+            <a href="http://wiki.sc2ai.net">Wiki</a>
+          </li>
           <HeaderLink link="/faq" text="FAQ"/>
           <RenderIfLoggedOut>
             <Separator/>

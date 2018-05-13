@@ -14,7 +14,7 @@ import ResetPassword from "./reset-password.js";
 import Season from "./season.js";
 import SignUp from "./sign-up.js";
 import SplashScreen from "./splash-screen.js";
-import { FAQ, Learning } from "./static-pages.js";
+import FAQ from "./faq.js";
 import PageNotFound from "./404.js";
 
 export default class PageRouting extends React.Component {
@@ -32,7 +32,6 @@ export default class PageRouting extends React.Component {
         <Route exact strict path="/authors" component={AuthorList}/>
         <Route path="/authors/*" component={AuthorProfile}/>
         <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
-        <Route path="/learning" component={Learning}/>
         <Route path="/faq" component={FAQ}/>
         <Route exact strict path="/bots" component={Bots}/>
         <Route path="/bot/*" component={BotProfile}/>
