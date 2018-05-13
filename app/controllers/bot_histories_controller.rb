@@ -3,6 +3,6 @@ class BotHistoriesController < ApplicationController
     render json: BotHistory.all
   end
   def show
-    render json: BotHistory.find(params[:id])
+    render json: BotHistory.where(bot_id: params[:id])
   end
 end
