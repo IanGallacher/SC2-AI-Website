@@ -1,0 +1,4 @@
+# Ignore everything in this directory, except this file.
+# We keep track of this file to make sure the directory gets added to the repo.
+*
+!.gitignore
