@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
 import { Link } from "react-router-dom";
@@ -34,6 +35,8 @@ class BotProfile extends React.Component {
   getBotData(bot_id) {
     axios.get(`${API_URL}/bots/${bot_id}`)
       .then(response => this.setState({ bot_id, bot_data: response.data }) );
+    axios.get(`${API_URL}/bot_histories/${bot_id}`)
+      .then(response => this.setState({ bot_history: response.data }));
   }
 
   getBotId() {
@@ -95,19 +98,20 @@ class BotProfile extends React.Component {
       <LoadingAnimation/>
     </div>;
 
-    const data = [
+    const win_percentage = [
       {name: "Victories", value: bot.win_count},
       {name: "Defeats", value: bot.match_count - bot.win_count}
     ];
-    const lineData = [
-      {name: "Page A", uv: 4000, pv: 2400, amt: 2400},
-      {name: "Page B", uv: 3000, pv: 1398, amt: 2210},
-      {name: "Page C", uv: 2000, pv: 9800, amt: 2290},
-      {name: "Page D", uv: 2780, pv: 3908, amt: 2000},
-      {name: "Page E", uv: 1890, pv: 4800, amt: 2181},
-      {name: "Page F", uv: 2390, pv: 3800, amt: 2500},
-      {name: "Page G", uv: 3490, pv: 4300, amt: 2100},
-    ];
+
+    let bot_history = [];
+    if(this.state.bot_history)
+      bot_history = this.state.bot_history.map(entry => {
+        let new_entry = {};
+        new_entry.name = moment(entry.created_at).calendar();
+        new_entry.value = entry.mmr;
+        return new_entry;
+      });
+
     return (
       <React.Fragment>
         <div className="trading-card-horizontal">
@@ -116,8 +120,8 @@ class BotProfile extends React.Component {
             {`Bot Author: ${bot.author}`}
           </Link>
           <br/>
-          <VictoryChart data={data}/>
-          {SimpleLineChart(lineData)}
+          <VictoryChart data={win_percentage}/>
+          {SimpleLineChart(bot_history)}
         </div>
       </React.Fragment>
     );
