@@ -125,15 +125,8 @@ a[aria-expanded]::before {
   display: block;
   position: absolute;
   right: 20px;
-  // font-family: 'Glyphicons Halflings';
   font-size: 0.6em;
 }
-// a[aria-expanded='false']::before {
-//   content: '\e259'; // Down arrow.
-// }
-// a[aria-expanded='true']::before {
-//   content: '\e260'; // Up arrow.
-// }
 
 // Indent the dropdown menu.
 ul ul a {

@@ -12,7 +12,7 @@ export default class BotUpload extends React.Component {
     this.state = { file: "", name: "", race: "Terran", errors: []};
   }
 
-  static propTypes = { uploadPath: PropTypes.string }
+  static propTypes = { uploadPath: PropTypes.string, label: PropTypes.string }
 
   onChange = event => {
     let new_state = {};
@@ -46,7 +46,8 @@ export default class BotUpload extends React.Component {
   }
 
   render() {
-    return (
+    return <div className="trading-card-horizontal">
+      <title>{this.props.label}</title>
       <form className="flex-horizontal" onSubmit={this.onSubmit}>
         <TextInput name="name"
           error={this.state.errors.name}
@@ -68,6 +69,6 @@ export default class BotUpload extends React.Component {
         </select>
         <input type="submit" value="Submit" className="btn"/>
       </form>
-    );
+    </div>;
   }
 }
