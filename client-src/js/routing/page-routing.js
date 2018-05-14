@@ -21,7 +21,7 @@ export default class PageRouting extends React.Component {
   render() {
     return (
       <Switch>
-        <Route path="/home" component={RecentResults}/>
+        <Route path="/results" component={RecentResults}/>
         <RequireLoggedInRoute path="/admin-control-panel"
           component={AdminControlPanel}/>
 
