@@ -93,6 +93,7 @@ pre {
 // Center all the content that is below the header.
 .page-area {
   @include clearfix;
+  transition: all 0.2s ease-in-out;
   margin: auto;
   margin-top: 0;
   width: 1000px;
@@ -102,7 +103,7 @@ pre {
   padding: 20px;
   box-sizing: border-box;
   flex: 1;
-  @media (max-width: 1000px) {
+  @media (max-width: 1040px) {
     width: 100%;
   }
 }

@@ -20,14 +20,15 @@
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
   background: $nav-background;
   color: rgba(255, 255, 255, 0.75);
+  @media (max-width: $mobile-threshold) { height: $navbar-height * 2; }
+}
 
-  img {
-    float: left;
-    padding: 5px;
-    padding-left: 15px;
-    max-width: 90%;
-    max-height: 90%;
-  }
+.header-img {
+  float: left;
+  padding: 5px;
+  padding-left: 15px;
+  max-width: $navbar-height * 0.85;
+  max-height: $navbar-height * 0.85;
 }
 
 .navbar {
@@ -35,16 +36,17 @@
   align-items: center;
   float: right !important;
   margin: 0;
-  height: 100%; // Needed so border-box children are calculated correctly.
   > li { float: left; }
 
   @media (min-width: $mobile-threshold + 1px) {
     float: left;
     margin: 0;
+    height: 100%; // Needed so border-box children are calculated correctly.
   }
 
   @media (max-width: $mobile-threshold) {
     width: 100vw;
+    height: $navbar-height; // Needed so border-box children are calculated correctly.
   }
 }
 
@@ -52,6 +54,10 @@
   font-size: 32px;
   margin-left: 20px;
   float: left;
+
+  @media (max-width: 410px) {
+    font-size: 24px;
+  }
 }
 
 .navbar-btn {
@@ -77,5 +83,11 @@
   > a[aria-current='true'] {
     box-sizing: border-box;
     border-bottom: 5px solid $accent-color;
+  }
+
+  &.unessential {
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 }

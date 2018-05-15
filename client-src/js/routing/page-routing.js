@@ -21,6 +21,7 @@ export default class PageRouting extends React.Component {
   render() {
     return (
       <Switch>
+        <Route exact path="/" component={SplashScreen}/>
         <Route path="/results" component={RecentResults}/>
         <RequireLoggedInRoute path="/admin-control-panel"
           component={AdminControlPanel}/>
@@ -33,10 +34,9 @@ export default class PageRouting extends React.Component {
         <Route path="/authors/*" component={AuthorProfile}/>
         <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
         <Route path="/faq" component={FAQ}/>
-        <Route exact strict path="/bots" component={Bots}/>
+        <Route path="/bots" component={Bots}/>
         <Route path="/bot/*" component={BotProfile}/>
         <Route path="/season" component={Season}/>
-        <Route exact path="/" component={SplashScreen}/>
         <Route path="*" exact={true} component={PageNotFound}/>
       </Switch>
     );
