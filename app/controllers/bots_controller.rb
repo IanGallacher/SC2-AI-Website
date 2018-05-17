@@ -12,10 +12,12 @@ class BotsController < ApplicationController
 
   def create
 #    authorize! :create, Bot
-    if Bot.create(bot_params)
-      render json: {status: :ok}
+    bot = Bot.create(bot_params)
+    if bot.errors.any?
+      render json: bot.errors, status: :unprocessable_entity
     else
-      render json: @bot.errors, status: :unprocessable_entity
+      BotHistory.create(bot_id: bot.id, mmr: 1600) 
+      render json: {status: :ok}
     end
   end
 
@@ -27,10 +29,6 @@ class BotsController < ApplicationController
       render json: @bot.errors, status: :unprocessable_entity
     end
   end
-
-#  def destroy
-#    render json: Bot.destroy(params[:id])
-#  end
 
   private
   def set_bot

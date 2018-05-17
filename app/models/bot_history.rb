@@ -7,7 +7,11 @@ class BotHistory < ApplicationRecord
   K_FACTOR = 10
 
   def calculate_mmr
-    previous_mmr = BotHistory.where(bot_id: self.bot_id).last.mmr
+    my_history = BotHistory.where(bot_id: self.bot_id).last
+    if my_history.nil?
+      return
+    end
+    previous_mmr = my_history.mmr
     self.mmr = previous_mmr + K_FACTOR * (@score - expected_mmr(previous_mmr, @competitor_mmr))
   end
 
