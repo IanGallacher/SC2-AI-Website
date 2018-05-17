@@ -1,4 +1,4 @@
-class Bot < ActiveRecord::Base
+class Bot < ApplicationRecord
   has_many :game_result_bots 
   has_many :bot_histories
   has_many :game_results, through: :game_result_bots

@@ -1,4 +1,4 @@
-class GameResult < ActiveRecord::Base
+class GameResult < ApplicationRecord
   include BetterJson
   has_many :game_result_bots  
   accepts_nested_attributes_for :game_result_bots
