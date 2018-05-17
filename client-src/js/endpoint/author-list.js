@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
-import { API_URL } from "./app.js";
+import { API_URL } from "./../app.js";
 
 import AuthorTradingCard from "./../component/author-trading-card.jsx";
 

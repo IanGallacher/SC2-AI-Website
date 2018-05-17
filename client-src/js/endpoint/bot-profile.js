@@ -5,7 +5,7 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
-import { API_URL } from "./../routing/app.js";
+import { API_URL } from "./../app.js";
 import LoadingAnimation from "./../component/loading.jsx";
 import { SimpleLineChart, VictoryChart } from "./../component/chart.jsx";
 import ResultTable from "./../component/table.jsx";

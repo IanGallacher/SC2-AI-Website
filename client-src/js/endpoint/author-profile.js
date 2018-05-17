@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
-import { API_URL } from "./app.js";
+import { API_URL } from "./../app.js";
 import { EditableImage } from "./../component/image.jsx";
 import FetchTable from "./../component/table-fetch.jsx";
 

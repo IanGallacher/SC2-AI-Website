@@ -1,19 +1,19 @@
 //import 'normalize.css'; // Standardize the dom elements before continuing.
-import "./../../css/style.scss";
+import "./../css/style.scss";
 
 import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import PageRouting from "./page-routing.js";
-import AlertLogic from "./../logic/alert.js";
-import LoginLogic from "./../logic/login.js";
+import AlertLogic from "./logic/alert.js";
+import LoginLogic from "./logic/login.js";
 
-import { ModalContext } from "./../context/modal-context.js";
-import { UserContext } from "./../context/user-context.js";
-import AlertZone from "./../component/alert.jsx";
-import Header from "./../component/header.jsx";
-import Modal from "./../component/modal.jsx";
+import { ModalContext } from "./context/modal-context.js";
+import { UserContext } from "./context/user-context.js";
+import AlertZone from "./component/alert.jsx";
+import Header from "./component/header.jsx";
+import Modal from "./component/modal.jsx";
 
 export var API_URL = "/api";
 
@@ -70,7 +70,7 @@ export default class App extends React.Component {
               <Header username={this.state.user_data.username}
                 role={this.state.user_data.role}
                 logout={this.logout}/>
-              <div className="flex-horizontal main-content">
+              <div className="main-content flex-horizontal">
                 <div className="page-zone">
                   <div className="page-scroll-offset flex-vertical">
                     <AlertZone messages={this.state.alert_messages}/>

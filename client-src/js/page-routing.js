@@ -1,21 +1,21 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import AuthorList from "./author-list.js";
-import AuthorProfile from "./author-profile.js";
-import AdminControlPanel from "./admin.js";
-import Bots from "./bots.js";
-import BotProfile from "./bot-profile.js";
-import Login from "./login.js";
-import ProfileSettings from "./profile.js";
-import { RequireLoggedInRoute } from "./../logic/permission.js";
-import RecentResults from "./recent-results.js";
-import ResetPassword from "./reset-password.js";
-import Season from "./season.js";
-import SignUp from "./sign-up.js";
-import SplashScreen from "./splash-screen.js";
-import FAQ from "./faq.js";
-import PageNotFound from "./404.js";
+import AuthorList from "./endpoint/author-list.js";
+import AuthorProfile from "./endpoint/author-profile.js";
+import AdminControlPanel from "./endpoint/admin.js";
+import Bots from "./endpoint/bots.js";
+import BotProfile from "./endpoint/bot-profile.js";
+import Login from "./endpoint/login.js";
+import ProfileSettings from "./endpoint/profile.js";
+import { RequireLoggedInRoute } from "./logic/permission.js";
+import RecentResults from "./endpoint/recent-results.js";
+import ResetPassword from "./endpoint/reset-password.js";
+import Season from "./endpoint/season.js";
+import SignUp from "./endpoint/sign-up.js";
+import SplashScreen from "./endpoint/splash-screen.js";
+import FAQ from "./endpoint/faq.js";
+import PageNotFound from "./endpoint/404.js";
 
 export default class PageRouting extends React.Component {
   render() {

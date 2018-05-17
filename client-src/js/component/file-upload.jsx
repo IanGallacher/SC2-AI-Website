@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import AlertLogic from "./../logic/alert.js";
-import { API_URL } from "./../routing/app.js";
+import { API_URL } from "./../app.js";
 
 export default class FileUpload extends React.Component {
   constructor(props) {

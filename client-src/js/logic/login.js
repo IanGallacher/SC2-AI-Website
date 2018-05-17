@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./../routing/app.js";
+import { API_URL } from "./../app.js";
 import AlertLogic from "./alert.js";
 
 export default class LoginLogic {

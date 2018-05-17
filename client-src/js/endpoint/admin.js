@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 
 import AlertLogic from "./../logic/alert.js";
-import { API_URL } from "./app.js";
+import { API_URL } from "./../app.js";
 import FileUpload from "./../component/file-upload.jsx";
 import { TextInput, Dropdown } from "./../component/form.jsx";
 

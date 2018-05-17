@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import AlertLogic from "./../logic/alert.js";
 import { TextInput } from "./form.jsx";
-import { API_URL } from "./../routing/app.js";
+import { API_URL } from "./../app.js";
 
 export default class BotUpload extends React.Component {
   constructor(props) {

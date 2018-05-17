@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 
-import { API_URL } from "./app.js";
+import { API_URL } from "./../app.js";
 import ResultTable from "./../component/table.jsx";
 
 export default class Season extends React.Component {

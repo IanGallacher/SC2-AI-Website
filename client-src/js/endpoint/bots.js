@@ -3,7 +3,7 @@ import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
-import { API_URL } from "./../routing/app.js";
+import { API_URL } from "./../app.js";
 import ResultTable from "./../component/table.jsx";
 
 class Bots extends React.Component {
@@ -42,7 +42,7 @@ class Bots extends React.Component {
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
     let bot_table = null;
-    
+
     // Filter based on search params.
     if(this.state.bots) bot_table = this.state.bots.filter(entry => {
       for(let pair of params.entries()) {
