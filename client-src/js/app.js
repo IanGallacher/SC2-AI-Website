@@ -74,9 +74,7 @@ export default class App extends React.Component {
                 <div className="page-zone">
                   <div className="page-scroll-offset flex-vertical">
                     <AlertZone messages={this.state.alert_messages}/>
-                    <div className="page-area">
-                      <PageRouting ctx={this}/>
-                    </div>
+                    <PageRouting ctx={this}/>
                   </div>
                 </div>
               </div>

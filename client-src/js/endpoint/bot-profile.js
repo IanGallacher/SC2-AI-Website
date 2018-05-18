@@ -108,7 +108,7 @@ class BotProfile extends React.Component {
       bot_history = this.state.bot_history.map(entry => {
         let new_entry = {};
         new_entry.name = moment(entry.created_at).calendar();
-        new_entry.value = entry.mmr;
+        new_entry.MMR = entry.mmr;
         return new_entry;
       });
 
@@ -121,7 +121,7 @@ class BotProfile extends React.Component {
           </Link>
           <br/>
           <VictoryChart data={win_percentage}/>
-          {SimpleLineChart(bot_history)}
+          {SimpleLineChart(bot_history, "MMR")}
         </div>
       </React.Fragment>
     );

@@ -7,7 +7,8 @@ import {
 } from "recharts";
 const RADIAN = Math.PI / 180;
 
-export const SimpleLineChart = (data) => {
+export const SimpleLineChart = (data, key) => {
+  key = key || "value";
   return (
     <LineChart width={600} height={300} data={data}
       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
@@ -15,7 +16,7 @@ export const SimpleLineChart = (data) => {
       <YAxis domain={["dataMin - 20", "dataMax + 20"]}/>
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip/>
-      <Line type="monotone" dataKey="value" stroke="#8884d8"/>
+      <Line type="monotone" dataKey={key} stroke="#8884d8"/>
     </LineChart>
   );
 };
