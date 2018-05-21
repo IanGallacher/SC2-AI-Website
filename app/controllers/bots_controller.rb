@@ -16,7 +16,6 @@ class BotsController < ApplicationController
     if bot.errors.any?
       render json: bot.errors, status: :unprocessable_entity
     else
-      BotHistory.create(bot_id: bot.id, mmr: 1600) 
       render json: {status: :ok}
     end
   end
