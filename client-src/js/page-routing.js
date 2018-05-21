@@ -59,7 +59,7 @@ export default class PageRouting extends React.Component {
         <PageRoute path="/bots" component={Bots}/>
         <PageRoute path="/bot/*" component={BotProfile}/>
         <PageRoute path="/season" component={Season}/>
-        <Route path="/" component={SplashScreen}/>
+        <Route exact strict path="/" component={SplashScreen}/>
         <PageRoute path="*" exact={true} component={PageNotFound}/>
       </Switch>
     );
