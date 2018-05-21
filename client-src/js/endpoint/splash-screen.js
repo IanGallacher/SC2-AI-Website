@@ -13,29 +13,35 @@ function distance(p1, p2) {
 export default class SplashScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    this.state = { width: window.innerWidth, height: window.innerHeight };
     this.TOTAL_POINTS = 350;
     this.setupPoints();
   }
 
   componentDidMount() {
     requestAnimationFrame(() => this.update());
-    window.setInterval(() => {
-      this.forceUpdate();
-    }, 10);
+    window.addEventListener("resize", this.updateDimensions);
+    // window.setInterval(() => {
+    //   this.forceUpdate();
+    // }, 10);
   }
 
   componentWillUnmount() {
     window.clearInterval();
   }
 
+  updateDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setupPoints();
+  }
+
   setupPoints = () => {
     this.points = [{x: 0, y: 0}];
+    this.initial_points = [];
     this.edges = [];
     let offset = 100;
-    let width = this.width + offset;
-    let height = this.height + offset;
+    let width = this.state.width + offset;
+    let height = this.state.height + offset;
     let a = [];
     for (let l = 0; l < this.TOTAL_POINTS; l++)
       a.push({
@@ -49,8 +55,8 @@ export default class SplashScreen extends React.Component {
   drawPoints() {
     if(!this.canvas) return;
     const canvas = this.canvas;
-    canvas.width = this.width;
-    canvas.height = this.height;
+    canvas.width = this.state.width;
+    canvas.height = this.state.height;
     const ctx = canvas.getContext("2d");
 
     this.edges = [];
