@@ -27,8 +27,7 @@ export default class App extends React.Component {
         id: "",
         role: "",
         calorie_goal: localStorage.getItem("calorie_goal"),
-      },
-      modalContent: "No content"
+      }
     };
 
     LoginLogic.getUserData().then((response) => {
@@ -54,8 +53,8 @@ export default class App extends React.Component {
     });
   }
 
-  showModal = modalContent => {
-    this.setState({modalContent});
+  showModal = (m) => {
+    this.modal.showModal(m);
   }
 
   render() {
@@ -78,7 +77,7 @@ export default class App extends React.Component {
                   </div>
                 </div>
               </div>
-              <Modal modalContent={this.state.modalContent}/>
+              <Modal ref={r => this.modal = r}/>
             </React.Fragment>
           </Router>
         </ModalContext.Provider>
