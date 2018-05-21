@@ -86,6 +86,11 @@ class Bots extends React.Component {
             headerName:"Games Played",
             fieldName:"match_count",
             displayType:"text"
+          },
+          {
+            headerName:"MMR",
+            fieldName:"current_mmr",
+            displayType:"text"
           }
         ]
       }

@@ -44,7 +44,6 @@ export default class ResultTable extends React.Component {
       sort_direction: 1,
       destroying: []
     };
-    // props.label
   }
 
   static propTypes = {

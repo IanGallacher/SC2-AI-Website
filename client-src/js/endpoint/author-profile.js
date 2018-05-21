@@ -79,14 +79,6 @@ class AuthorProfile extends React.Component {
                     }
                   },
                   {
-                    headerName:"Author",
-                    fieldName:"author",
-                    displayType:"text",
-                    onClick: (row) => {
-                      this.props.history.push(`/authors/?author_id=${row.owner_id}`);
-                    }
-                  },
-                  {
                     headerName:"Race",
                     fieldName:"race",
                     displayType:"text",
@@ -95,13 +87,18 @@ class AuthorProfile extends React.Component {
                     }
                   },
                   {
-                    headerName:"Games Won",
-                    fieldName:"win_count",
+                    headerName:"Win Rate",
+                    displayValue: row => {
+                      // Avoid dividing by 0.
+                      if(row.match_count === 0) return ("N/A");
+                      let win_ratio = row.win_count / row.match_count;
+                      return `${win_ratio.toFixed(2)}%`;
+                    },
                     displayType:"text"
                   },
                   {
-                    headerName:"Games Played",
-                    fieldName:"match_count",
+                    headerName:"MMR",
+                    fieldName:"current_mmr",
                     displayType:"text"
                   }
                 ]}/>
