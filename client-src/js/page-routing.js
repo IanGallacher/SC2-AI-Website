@@ -52,7 +52,9 @@ export default class PageRouting extends React.Component {
         <PageRoute path="/reset-password" component={ResetPassword}/>
         <PageRoute exact strict path="/authors" component={AuthorList}/>
         <PageRoute path="/authors/*" component={AuthorProfile}/>
-        <RequireLoggedInRoute path="/my-profile" component={ProfileSettings}/>
+        <RequireLoggedInRoute
+          path="/my-profile"
+          component={pageView(ProfileSettings)}/>
         <PageRoute path="/faq" component={FAQ}/>
         <PageRoute path="/bots" component={Bots}/>
         <PageRoute path="/bot/*" component={BotProfile}/>
