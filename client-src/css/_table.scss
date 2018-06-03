@@ -59,16 +59,6 @@ table {
   margin: 15px;
 }
 
-tr.goal-met {
-  &:nth-child(even) { background-color: rgba(0, 255, 0, 0.5); }
-  &:nth-child(odd) { background-color: rgba(0, 255, 0, 0.25); }
-}
-
-tr.goal-failure {
-  &:nth-child(even) { background-color: rgba(255, 0, 0, 0.5); }
-  &:nth-child(odd) { background-color: rgba(255, 0, 0, 0.25); }
-}
-
 .sort-arrow {
   position: absolute;
   left: 5px;

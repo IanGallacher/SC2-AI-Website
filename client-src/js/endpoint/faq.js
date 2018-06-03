@@ -2,32 +2,31 @@ import React from "react";
 
 export default class FAQ extends React.Component {
   render() {
-    return (
-      <React.Fragment>
-        <div>
-          <h3>{"How Do I get on bot on the ladder?"}</h3>
-        </div>
-      Compile you code into either a release DLL or a command center config file.  Then either upload through your profile, or add a download link.  Your DLL should export the following functions:
-        <br />
-        <pre><code>void *CreateNewAgent(); // Returns a pointer to a class deriving from sc2::Agent
-          <br />
-      const char *GetAgentName(); // Returns a string identifier for the agent name
-          <br />
-      int GetAgentRace(); // Returns the agents prefered race. should be sc2::Race cast to int.
-        </code></pre><br />
+    return <React.Fragment>
+      <div>
+        <h3>I get an &quot;Unable to open map&quot; error when trying to open a Replay</h3>
+      </div>
+      Besides the replay you need the map files. You can download them here (Insert link to the zipped map files. The zip should be stored on the server.). Put the folder &quot;Maps&quot; in the StarCraft 2 root directory, e.g. under windows you then have &quot;C:\Program Files (x86)\StarCraft II\Maps\&quot;.
 
-      Once you register your bot, it will need to be verified to check for crashes etc. and will be entered into the next season.
+      <div>
+        <h3>I want to develop a bot. Where to start?</h3>
+      </div>
+      <a href="http://wiki.sc2ai.net/Main_Page">Check out the &quot;Getting started&quot; section of our wiki</a>. It lists the different frameworks in which you can develop your bot and gives some example bots.
 
-        <div>
-          <h3>Can I update my bot?</h3>
-        </div>
-      At the moment the best way to do that is to submit a new bot and deactivate the old one. Currently bots can not be updated while the season is progressing, but the updated version will be added in to the next season.
+      <div>
+        <h3>When can I submit my bot?</h3>
+      </div>
+      Whenever you like. Once you register your bot, it will need to be verified to check for crashes etc. and will be entered into the ladder as soon as possible.
 
-        <div>
-          <h3>How long do seasons last?</h3>
-        </div>
-      Normally 2 weeks, but can be longer if not enough games are being played
-      </React.Fragment>
-    );
+      <div>
+        <h3>Can I update my bot after submission?</h3>
+      </div>
+      Yes. After verification it replaces the old version of your bot and inherits its win/loss/ELO stats. A continuous ELO rating is used to encourage well rounded bots and not &quot;one trick ponies&quot;.
+
+      <div>
+        <h3>You have more in detail questions?</h3>
+      </div>
+      <a href="https://discord.gg/qTZ65sh">This discord (https://discord.gg/qTZ65sh) is the perfect place to ask them.</a>
+    </React.Fragment>;
   }
 }

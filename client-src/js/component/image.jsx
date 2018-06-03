@@ -29,6 +29,7 @@ export const EditableImage = props => {
   return <ModalContext.Consumer>{modal => <div
     // If we are in edit mode and the image was clicked, open a modal to edit.
     onClick={()=>props.editing && modal.showModal(editImage(props.edit_url))}
+    // fa is font awesome, used for the pencil icon.
     className={`fa img-container ${edit_class}`}> {
       (props.img) ? (
         <img className={props.className} src={props.img}/>

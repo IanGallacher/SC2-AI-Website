@@ -7,8 +7,31 @@ import { withRouter } from "react-router";
 import { API_URL } from "./../app.js";
 import { EditableImage } from "./../component/image.jsx";
 import FetchTable from "./../component/table-fetch.jsx";
+import { TextInput } from "./../component/form.jsx";
+import FormZone from "./../component/form-zone.jsx";
 
 const default_avatar_path = require("./../../img/avatar.jpg");
+
+
+function AuthorDetails(props) {
+  if (props.editing) return <FormZone
+    method="patch"
+    uploadPath={props.edit_url}>
+    <TextInput name="github"
+      type="text"
+      placeholder={props.profile.github ? props.profile.github : "Github"}
+      className="text-input"/>
+  </FormZone>;
+  if (props.profile.github) return <div className="author-details">
+    <div>Github: {props.profile.github && props.profile.github} </div>
+  </div>;
+  return null;
+}
+AuthorDetails.propTypes = {
+  editing: PropTypes.bool,
+  edit_url: PropTypes.string,
+  profile: PropTypes.object
+};
 
 class AuthorProfile extends React.Component {
   constructor(props) {
@@ -63,8 +86,11 @@ class AuthorProfile extends React.Component {
               fallback={default_avatar_path}
               className="img-thumbnail"
               editing={this.props.editing}
-              edit_url={`/users/${this.props.author_id}/create_avatar`}
-            />
+              edit_url={`/users/${this.props.author_id}/create_avatar`}/>
+            <AuthorDetails
+              editing={this.props.editing}
+              profile={this.state.profile}
+              edit_url={`/users/${this.props.author_id}`}/>
           </div>
           {
             (this.state.profile.username) ? (
@@ -120,24 +146,6 @@ class AuthorProfile extends React.Component {
                     Real name:
                   </span>{this.state.profile.name}</li>
               </ul>
-              { (this.state.profile.website) ? (
-                  <div className="panel panel-default">
-                    <div className="panel-heading">Website:</div>
-                    <div className="panel-body">
-                      {this.state.profile.website}
-                    </div>
-                  </div>
-                ) : (
-                  <span/>
-                )
-              }
-
-              <div className="panel panel-default">
-                <div className="panel-heading">Github:</div>
-                <div className="panel-body">
-                  {this.state.profile.github}
-                </div>
-              </div>
 
             </div>
             */

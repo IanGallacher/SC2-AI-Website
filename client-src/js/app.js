@@ -25,8 +25,7 @@ export default class App extends React.Component {
       user_data: {
         username: "",
         id: "",
-        role: "",
-        calorie_goal: localStorage.getItem("calorie_goal"),
+        role: ""
       }
     };
 
@@ -36,8 +35,7 @@ export default class App extends React.Component {
           user_data: {
             username: response.data.email,
             id: response.data.id,
-            role: response.data.role,
-            calorie_goal: response.data.calorie_goal
+            role: response.data.role
           }
         });
     });
@@ -45,12 +43,6 @@ export default class App extends React.Component {
     // Register callback that will render new notifications.
     AlertLogic.notify = alert_messages => this.setState({ alert_messages });
     LoginLogic.notify = user_data => this.setState({ user_data });
-  }
-
-  updateGoal = goal => {
-    this.setState({
-      user_data: Object.assign(this.state.user_data, { calorie_goal: goal })
-    });
   }
 
   showModal = (m) => {
@@ -69,7 +61,7 @@ export default class App extends React.Component {
               <Header username={this.state.user_data.username}
                 role={this.state.user_data.role}
                 logout={this.logout}/>
-              <div className="main-content flex-horizontal">
+              <div className="scroll-zone flex-horizontal">
                 <div className="page-zone">
                   <div className="page-scroll-offset flex-vertical">
                     <AlertZone messages={this.state.alert_messages}/>

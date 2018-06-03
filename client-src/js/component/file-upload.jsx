@@ -14,7 +14,8 @@ export default class FileUpload extends React.Component {
 
   static propTypes = {
     children: PropTypes.element,
-    uploadPath: PropTypes.string
+    uploadPath: PropTypes.string,
+    method: PropTypes.string.isRequired
   }
 
   componentDidMount() {
@@ -72,7 +73,7 @@ export default class FileUpload extends React.Component {
     return <form className="flex-horizontal" onSubmit={this.onSubmit}>
       <input name="file"
         type="file"
-        className="btn"
+        className="btZn"
         onChange={this.onFileChange}/>
       { childrenWithProps }
       <input type="submit" value="Submit" className="btn"/>

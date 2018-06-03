@@ -1,19 +1,19 @@
 class GameResult < ApplicationRecord
   include BetterJson
-  has_many :game_result_bots  
+  has_many :game_result_bots
   accepts_nested_attributes_for :game_result_bots
   has_many :bots, through: "game_result_bots"
   belongs_to :winner, class_name: "Bot", foreign_key: "winner_id", optional: true, counter_cache: :win_count
-  
-  attr_writer :file
+
+  attr_writer :replayfile
   before_save :save_replay
   after_save :update_mmr
 
   def save_replay
     puts "CHECKING REPLAY"
-    return unless @file.present?
+    return unless @replayfile.present?
     self.replay = get_filename()
-    File.open("public" + get_filename(), 'wb') { |file| file.write(@file.read) }
+    File.open("public" + get_filename(), 'wb') { |replayfile| file.write(@replayfile.read) }
   end
 
   def winner_name
@@ -31,15 +31,14 @@ class GameResult < ApplicationRecord
     if (self.winner_id == bot_1_id)
       score = 1
     end
-    BotHistory.create(bot_id: bot_1_id, competitor_mmr: bot_2_mmr, score: score) 
-    BotHistory.create(bot_id: bot_2_id, competitor_mmr: bot_1_mmr, score: 1-score) 
+    BotHistory.create(bot_id: bot_1_id, competitor_mmr: bot_2_mmr, score: score)
+    BotHistory.create(bot_id: bot_2_id, competitor_mmr: bot_1_mmr, score: 1-score)
   end
 
   private
   def get_filename
-    extname = File.extname(@file.original_filename)
-    basename = File.basename(@file.original_filename, extname)
+    extname = File.extname(@replayfile.original_filename)
+    basename = File.basename(@replayfile.original_filename, extname)
     "/replay/#{basename.gsub(/[^0-9A-z.\-]/, '_')}.Sc2Replay"
   end
 end
-
