@@ -2,6 +2,10 @@
 
 .splash-screen {
   position: absolute;
+  // Setting the width in vh units makes the canvas independant of the
+  // browser's zoom or magnification level.
+  width: 100vw;
+  height: 100vh;
   top: 0;
   left: 0;
 }
@@ -18,4 +22,9 @@
   width: 800px;
   background: rgba(200, 200, 200, 0.7);
   text-align: center;
+
+  @media (max-width: $max-content-width) {
+    width: 80%;
+    font-size: 80%;
+  }
 }

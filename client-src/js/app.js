@@ -61,9 +61,9 @@ export default class App extends React.Component {
               <Header username={this.state.user_data.username}
                 role={this.state.user_data.role}
                 logout={this.logout}/>
-              <div className="scroll-zone flex-horizontal">
+              <div className="scroll-zone">
                 <div className="page-zone">
-                  <div className="page-scroll-offset flex-vertical">
+                  <div className="page-scroll-offset">
                     <AlertZone messages={this.state.alert_messages}/>
                     <PageRouting ctx={this}/>
                   </div>

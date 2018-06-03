@@ -79,6 +79,8 @@ pre {
   display: flex;
   flex-direction: row;
   width: 100%;
+
+  @media(max-width: $max-mobile-width) { flex-direction: column; }
 }
 
 /* ---------------------------------------------------
@@ -86,27 +88,34 @@ pre {
 ----------------------------------------------------- */
 // Center all the content that is below the header.
 .page-area {
-  @include clearfix;
-  transition: all 0.2s ease-in-out;
   margin: auto;
   margin-top: 0;
-  width: 1000px;
+  width: $max-content-width;
   min-height: 100%;
   background-color: #ddd;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
   padding: 20px;
   box-sizing: border-box;
-  flex: 1;
-  @media (max-width: 1040px) {
-    width: 100%;
-  }
+  // Avoid horizontal scrollbars by scalling by page width once we are too small.
+  @media (max-width: $max-content-width) { width: 100%; }
 }
 
 // Don't jump the page when the scrollbar appears.
 // https://css-tricks.com/elegant-fix-jumping-scrollbar-issue/
+// Essentially, 100vw - 100% is the width of the scrollbar, if it exists.
+// Use a before tag instead of margin to make use of max and min.
 .page-scroll-offset {
-  margin-left: calc(100vw - 100%);
   min-height: 100%;
+  display: flex;
+  flex-direction: row;
+
+  &::before {
+    content: '';
+    display: block;
+    width: calc(100vw - (#{$max-content-width} + (100vw - 100%)));
+    min-width: 0;
+    max-width: calc(100vw - 100%);
+  }
 }
 
 .page-zone {

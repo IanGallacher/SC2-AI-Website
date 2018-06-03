@@ -1,3 +1,5 @@
+@import 'variables';
+
 .sidebar {
   width: $sidebar-width;
   position: fixed;
@@ -6,19 +8,8 @@
   background: #0e1b4d;
   color: #fff;
   transition: all 0.3s;
-
-  .toggle {
-    float: right;
-  }
-
-  &.active {
-    margin-left: -$sidebar-width;
-  }
-
-  .sidebar-header {
-    padding: 20px;
-    background: #0e1b4d;
-  }
+  .toggle { float: right; }
+  &.active { margin-left: -$sidebar-width; }
 
   ul li {
     a:hover {
@@ -32,6 +23,12 @@
     }
   }
 }
+
+.sidebar-header {
+  padding: 20px;
+  background: #0e1b4d;
+}
+
 
 .sidebar-components {
   padding: 20px 0;
@@ -52,12 +49,12 @@
   transition: all 0.3s;
   width: $sidebar-width;
   flex-shrink: 0;
-  @media (max-width: $mobile-threshold) {
+  @media (max-width: $max-content-width) {
     width: $sidebar-collapse-size;
   }
 }
 
-@media (max-width: $mobile-threshold) { // The sidebar can collapse on mobile
+@media (max-width: $max-content-width) { // The sidebar can collapse on mobile
   .sidebar[aria-expanded='false'] {
     margin-left: $sidebar-collapse-size - $sidebar-width;
   }
@@ -66,7 +63,7 @@
     display: none;
   }
 }
-@media (min-width: $mobile-threshold + 1px) {
+@media (min-width: $max-content-width + 1px) {
   .toggle-wrap {
     display: none;
   }
