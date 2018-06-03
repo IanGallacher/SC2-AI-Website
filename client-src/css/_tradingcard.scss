@@ -8,6 +8,10 @@ title {
   padding-bottom: 15px;
 }
 
+.author-content {
+  @media (max-width: $max-mobile-width) { margin: 0 4%; }
+}
+
 .img-container {
   position: relative;
 }
@@ -63,7 +67,8 @@ title {
     text-align: center;
   }
 
-  @media (min-width: $max-content-width) {
+  @media (max-width: $max-mobile-width) { height: auto; }
+  @media (min-width: $max-mobile-width) {
     float: left;
     width: 250px;
     position: relative;

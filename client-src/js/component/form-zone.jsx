@@ -19,7 +19,6 @@ export default class FormZone extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.children);
     // Make sure we have a form_value for each child object.
     if(this.props.children)
       React.Children.forEach(child => {

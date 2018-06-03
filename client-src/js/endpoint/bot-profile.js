@@ -2,7 +2,6 @@ import axios from "axios";
 import moment from "moment";
 import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
@@ -112,19 +111,11 @@ class BotProfile extends React.Component {
         return new_entry;
       });
 
-    return (
-      <React.Fragment>
-        <div className="trading-card-horizontal">
-          <title>{`Bot Name: ${bot.name}`}</title>
-          <Link to={`/authors/?author_id=${bot.owner_id}`}>
-            {`Bot Author: ${bot.author}`}
-          </Link>
-          <br/>
-          <VictoryChart data={win_percentage}/>
-          {SimpleLineChart(bot_history, "MMR")}
-        </div>
-      </React.Fragment>
-    );
+    return <div className="trading-card-horizontal">
+      <br/>
+      <VictoryChart data={win_percentage}/>
+      {SimpleLineChart(bot_history, "MMR")}
+    </div>;
   }
 }
 export default withRouter(BotProfile);

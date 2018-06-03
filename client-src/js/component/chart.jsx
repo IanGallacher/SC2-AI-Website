@@ -3,14 +3,15 @@ import PropTypes from "prop-types";
 import {
   PieChart,
   Pie,
+  ResponsiveContainer,
   Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Sector
 } from "recharts";
 const RADIAN = Math.PI / 180;
 
 export const SimpleLineChart = (data, key) => {
   key = key || "value";
-  return (
-    <LineChart width={600} height={300} data={data}
+  return <ResponsiveContainer width="100%" height={300}>
+    <LineChart data={data}
       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
       <XAxis dataKey="name"/>
       <YAxis domain={["dataMin - 20", "dataMax + 20"]}/>
@@ -18,7 +19,7 @@ export const SimpleLineChart = (data, key) => {
       <Tooltip/>
       <Line type="monotone" dataKey={key} stroke="#8884d8"/>
     </LineChart>
-  );
+  </ResponsiveContainer>;
 };
 
 const renderActiveShape = (p) => {

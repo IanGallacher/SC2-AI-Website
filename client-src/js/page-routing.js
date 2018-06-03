@@ -29,7 +29,6 @@ function pageView(WrappedComponent) {
 }
 
 function PageRoute({component, render, ...props}) {
-  console.log(props);
   return <div className="page-area">
     <Route props={{...props}} component={component} render={render}/>
   </div>;
