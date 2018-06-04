@@ -4,6 +4,7 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
+import FilterBar from "./../component/filter.jsx";
 import ResultTable from "./../component/table.jsx";
 
 class Bots extends React.Component {
@@ -50,51 +51,54 @@ class Bots extends React.Component {
       }
       return true;
     });
-    return <ResultTable table={bot_table} nullMessage="No bots found for user"
-      schema={
-        [
-          {
-            headerName:"Bot name",
-            fieldName:"name",
-            displayType:"text",
-            onClick: (row) => {
-              this.props.history.push(`/bot/?bot_id=${row.id}`);
+    return <React.Fragment>
+      <FilterBar/>
+      <ResultTable table={bot_table} nullMessage="No bots found for user"
+        schema={
+          [
+            {
+              headerName:"Bot name",
+              fieldName:"name",
+              displayType:"text",
+              onClick: (row) => {
+                this.props.history.push(`/bot/?bot_id=${row.id}`);
+              }
+            },
+            {
+              headerName:"Author",
+              fieldName:"author",
+              displayType:"text",
+              onClick: (row) => {
+                this.props.history.push(`/authors/?author_id=${row.owner_id}`);
+              }
+            },
+            {
+              headerName:"Race",
+              fieldName:"race",
+              displayType:"text",
+              onClick: (row) => {
+                this.props.history.push(`/bots/?race=${row.race}`);
+              }
+            },
+            {
+              headerName:"Games Won",
+              fieldName:"win_count",
+              displayType:"text"
+            },
+            {
+              headerName:"Games Played",
+              fieldName:"match_count",
+              displayType:"text"
+            },
+            {
+              headerName:"MMR",
+              fieldName:"current_mmr",
+              displayType:"text"
             }
-          },
-          {
-            headerName:"Author",
-            fieldName:"author",
-            displayType:"text",
-            onClick: (row) => {
-              this.props.history.push(`/authors/?author_id=${row.owner_id}`);
-            }
-          },
-          {
-            headerName:"Race",
-            fieldName:"race",
-            displayType:"text",
-            onClick: (row) => {
-              this.props.history.push(`/bots/?race=${row.race}`);
-            }
-          },
-          {
-            headerName:"Games Won",
-            fieldName:"win_count",
-            displayType:"text"
-          },
-          {
-            headerName:"Games Played",
-            fieldName:"match_count",
-            displayType:"text"
-          },
-          {
-            headerName:"MMR",
-            fieldName:"current_mmr",
-            displayType:"text"
-          }
-        ]
-      }
-    />;
+          ]
+        }
+      />
+    </React.Fragment>;
   }
 }
 export default withRouter(Bots);

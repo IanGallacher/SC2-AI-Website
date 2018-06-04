@@ -1,0 +1,29 @@
+@import 'variables';
+
+.filter-bar {
+  height: $filterbar-height;
+  width: 100%;
+  background-color: #3b4044;
+}
+
+.filter-bar-label {
+  height: $filterbar-height;
+  line-height: $filterbar-height;
+  margin-left: 15px;
+  color: #ddd;
+  display: inline-block;
+}
+
+.filter-tag {
+  height: $filterbar-height;
+  line-height: $filterbar-height;
+  background-color: #efc07a;
+  padding: 0 10px;
+  margin-left: 15px;
+  width: auto;
+  display: inline-block;
+
+  /*disable selection*/
+  -webkit-touch-callout: none;
+  user-select: none;
+}
