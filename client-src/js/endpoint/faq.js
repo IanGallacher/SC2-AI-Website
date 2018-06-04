@@ -2,11 +2,11 @@ import React from "react";
 
 export default class FAQ extends React.Component {
   render() {
-    return <React.Fragment>
+    return <div className="text-zone">
       <div>
         <h3>I get an &quot;Unable to open map&quot; error when trying to open a Replay</h3>
       </div>
-      Besides the replay you need the map files. You can download them here (Insert link to the zipped map files. The zip should be stored on the server.). Put the folder &quot;Maps&quot; in the StarCraft 2 root directory, e.g. under windows you then have &quot;C:\Program Files (x86)\StarCraft II\Maps\&quot;.
+      Besides the replay you need the map files. <a href="/assets/Maps.zip">You can download them here.</a> Put the folder &quot;Maps&quot; in the StarCraft 2 root directory, e.g. under windows you then have &quot;C:\Program Files (x86)\StarCraft II\Maps\&quot;.
 
       <div>
         <h3>I want to develop a bot. Where to start?</h3>
@@ -27,6 +27,6 @@ export default class FAQ extends React.Component {
         <h3>You have more in detail questions?</h3>
       </div>
       <a href="https://discord.gg/qTZ65sh">This discord (https://discord.gg/qTZ65sh) is the perfect place to ask them.</a>
-    </React.Fragment>;
+    </div>;
   }
 }
