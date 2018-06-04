@@ -13,7 +13,7 @@ class GameResult < ApplicationRecord
     puts "CHECKING REPLAY"
     return unless @replayfile.present?
     self.replay = get_filename()
-    File.open("public" + get_filename(), 'wb') { |replayfile| file.write(@replayfile.read) }
+    File.open("public" + get_filename(), 'wb') { |replayfile| replayfile.write(@replayfile.read) }
   end
 
   def winner_name
