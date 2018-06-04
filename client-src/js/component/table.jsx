@@ -77,7 +77,6 @@ export default class ResultTable extends React.Component {
   }
 
   _deleteRow(row) {
-    console.log(row);
     this.destroying = this.destroying.concat([row.id]);
     setTimeout(() => {
       this.destroying = this.destroying.filter(ele => ele !== row.id);
@@ -135,7 +134,6 @@ export default class ResultTable extends React.Component {
   }
 
   render() {
-    console.log("destroying", this.state.destroying);
     var that = this;
     let {schema, label, nullMessage} = this.props;
     let table = this.state.table;
