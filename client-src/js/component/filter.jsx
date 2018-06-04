@@ -34,10 +34,10 @@ class FilterBar extends React.Component {
     for(let pair of params.entries()) entry_list.push(pair);
 
     // Don't draw the filter bar if there is nothing to draw.
-    if(entry_list.length <= 0) return null;
+    let is_hidden = (entry_list.length <= 0) ? "filter-hidden" : "";
 
     // Filter based on search params.
-    return <div className="filter-bar">
+    return <div className={`filter-bar ${is_hidden}`}>
       <div className="filter-bar-label">Filters:</div>
       {
         entry_list.map(pair => <FilterTag key={pair[0]} pair={pair}/>)

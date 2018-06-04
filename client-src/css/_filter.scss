@@ -1,6 +1,7 @@
 @import 'variables';
 
 .filter-bar {
+  transition: height 0.2s ease-in-out;
   height: $filterbar-height;
   width: 100%;
   background-color: #3b4044;
@@ -26,4 +27,8 @@
   /*disable selection*/
   -webkit-touch-callout: none;
   user-select: none;
+}
+
+.filter-hidden {
+  height: 0;
 }

@@ -9,12 +9,12 @@ function renderTableCol(row, schema_entry) {
     key={headerName}
     className={ onClick && "clickable" }
     onClick={() => onClick && onClick(row)}>
-    { contents }
+    <div className="collapse-container">{ contents }</div>
   </td>;
 }
 
-function renderTableRow(row, schema) {
-  return <tr key={row.id}>
+function renderTableRow(row, schema, style) {
+  return <tr key={row.id} className={style}>
     { schema.map(schema_entry => renderTableCol(row, schema_entry)) }
   </tr>;
 }
@@ -44,6 +44,8 @@ export default class ResultTable extends React.Component {
       sort_direction: 1,
       destroying: []
     };
+    // Cache what destroying is before adding it to state.
+    this.destroying = [];
   }
 
   static propTypes = {
@@ -52,7 +54,6 @@ export default class ResultTable extends React.Component {
     schema: PropTypes.array,
     nullMessage: PropTypes.string
   }
-
   // Figure out what components have been added or removed.
   // We use that information to animate the addition/removal.
   componentWillReceiveProps(props) {
@@ -60,21 +61,30 @@ export default class ResultTable extends React.Component {
     if(props.table === null) return;
     // If the prop has removed the element, update the state
     for(let c of this.state.table) {
-      if(!props.table.find(e => e.id === c.id)) this._deleteRow(c);
+      if(!props.table.find(e => e.id === c.id))
+        this._deleteRow(c);
     }
-    let newRows = props.table.filter(row => {
-      return !this.state.table.find(e => e.id === row.id);
+    for(let c of props.table) {
+      if(!this.state.table.find(e => e.id === c.id)) {
+        let new_m = this.state.table;
+        new_m.push(c);
+        this.setState( {table: new_m} );
+      }
+    }
+    this.setState({
+      destroying: this.destroying
     });
-    this.setState({ table: this.state.table.concat(newRows) });
   }
 
   _deleteRow(row) {
-    this.setState({ destroying: this.state.destroying.concat([row.id]) },
-      () => setTimeout(() => {
-        this.setState({ table: this.state.table.filter(e => e != row),
-          destroying: this.state.destroying.filter(ele => ele !== row.id) });
-      }, 200)
-    );
+    console.log(row);
+    this.destroying = this.destroying.concat([row.id]);
+    setTimeout(() => {
+      this.destroying = this.destroying.filter(ele => ele !== row.id);
+      this.setState({ table: this.state.table.filter(e => e != row),
+        destroying: this.destroying
+      });
+    }, 200);
   }
 
   updateSort = (sort_index, key) => {
@@ -125,6 +135,8 @@ export default class ResultTable extends React.Component {
   }
 
   render() {
+    console.log("destroying", this.state.destroying);
+    var that = this;
     let {schema, label, nullMessage} = this.props;
     let table = this.state.table;
     if(!this.props.table) return this.renderTable(<LoadingAnimation/>, schema);
@@ -137,7 +149,12 @@ export default class ResultTable extends React.Component {
           <this.TableHeader schema={schema}/>
         </thead>
         <tbody>
-          {this.state.table.map(row => renderTableRow(row, schema))}
+          {this.state.table.map(row => {
+            let style = "";
+            if(this.state.destroying.indexOf(row.id) > -1)
+              style += " destroying";
+            return renderTableRow(row, that.props.schema, style);
+          })}
         </tbody>
       </table>
     </React.Fragment>;
