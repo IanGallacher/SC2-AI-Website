@@ -1,9 +1,10 @@
 ######################
 # Ignore build files #
 ######################
-/public
+/public/*
 /test
 
+!.keep
 
 *.csv
 *.dat
