@@ -2,7 +2,6 @@
 # Ignore build files #
 ######################
 /public/*
-/test
 
 !.keep
 
