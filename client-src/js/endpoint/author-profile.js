@@ -114,7 +114,7 @@ class AuthorProfile extends React.Component {
                   },
                   {
                     headerName:"Win Rate",
-                    displayValue: row => {
+                    render: row => {
                       // Avoid dividing by 0.
                       if(row.match_count === 0) return ("N/A");
                       let win_ratio = row.win_count / row.match_count;

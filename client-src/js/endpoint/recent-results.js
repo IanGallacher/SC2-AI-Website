@@ -28,7 +28,7 @@ export default class RecentResults extends React.Component {
               {
                 headerName:"First Bot",
                 displayType:"text",
-                displayValue: row => {
+                render: row => {
                   if(row.bots.length > 0 && row.bots.length >= 2)
                     return row.bots[0].name;
                 }
@@ -36,7 +36,7 @@ export default class RecentResults extends React.Component {
               {
                 headerName:"Second Bot",
                 displayType:"text",
-                displayValue: row => {
+                render: row => {
                   if(row.bots.length > 0 && row.bots.length >= 2)
                     return row.bots[1].name;
                 }
@@ -58,8 +58,14 @@ export default class RecentResults extends React.Component {
                 headerName:"Replay",
                 fieldName:"replay",
                 displayType:"download",
-                display: () => <div className="btn">{ "Download" }</div>,
-                onClick: row => { window.location.href = row.replay; }
+                sortable: false,
+                render: row => {
+                  if (row.replay)
+                    return <form method="get" action={row.replay}>
+                      <button className="btn">Download</button>
+                    </form>;
+                  else return <div>Replay missing</div>;
+                }
               },
             ]
           }/>

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import LoadingAnimation from "./loading.jsx";
 
 function renderTableCol(row, schema_entry) {
-  let {fieldName, displayValue, onClick, headerName} = schema_entry;
-  let contents = (displayValue) ? displayValue(row) : row[fieldName];
+  let {fieldName, render, onClick, headerName} = schema_entry;
+  let contents = (render) ? render(row) : row[fieldName];
   return <td
     key={headerName}
     className={ onClick && "clickable" }
@@ -33,7 +33,7 @@ function comparisonFactory(i, sort_direction) {
 
 /*
 ** ResultsTable takes a schema of the following format:
-** [{label:"headername",fieldname:"field",displayType:"text"}, ...]
+** [{label:"headername",fieldname:"field"}, ...]
 */
 export default class ResultTable extends React.Component {
   constructor(props) {
@@ -111,9 +111,11 @@ export default class ResultTable extends React.Component {
 
   TableHeader = ({schema}) => {
     return <tr>
-      { schema.map( ({headerName, fieldName}, index) => {
+      { schema.map( ({headerName, fieldName, sortable}, index) => {
         return (
-          <th key={index} onClick={() => this.updateSort(index, fieldName)}>
+          <th key={index} onClick={
+            () => sortable !== false && this.updateSort(index, fieldName)
+          }>
             {headerName}
             {this.renderSortArrow(index)}
           </th>
