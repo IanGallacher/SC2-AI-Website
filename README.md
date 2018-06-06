@@ -1,24 +1,45 @@
-# README
+# Rough Instructions
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+These instructions are very quick and dirty. If you get stuck, feel free to ask for help on one of the [comunity hubs](http://sc2ai.net/Joinus.php). 
 
-Things you may want to cover:
+Note that this guide does not yet cover setting up pre-requisite software, and it may make bad recommendations.
 
-* Ruby version
+## Setup
 
-* System dependencies
+* Install Ruby and stuff...
 
-* Configuration
+* Install Bundler: `gem install bundler`.
 
-* Database creation
+* Clone this repo to your computer.
 
-* Database initialization
+* Open a terminal in the repo folder.
 
-* How to run the test suite
+* Run `bundle install.`
 
-* Services (job queues, cache servers, search engines, etc.)
+* Run `npm install`.
 
-* Deployment instructions
+* Run `npx webpack`.
 
-* ...
+* Setup a mysql instance.
+
+* Create an environment variable `MYSQL_PASSWORD` and set it to the password for the root mysql login.
+
+* Run `rails db:create`.
+
+* Run `rails db:migrate`.
+
+## Run
+
+* Open two **separate** terminals into the repo folder.
+
+* Run `rails s` in one terminal.
+
+* Run `npm run start:dev` in the other terminal.
+
+* Navigate your web browser to `http://localhost:8080/`
+
+* The website should display on your screen.
+
+* Any issues, blame TheDoctor (it's definitely all his fault).
+
+
