@@ -54,8 +54,8 @@ export default class Header extends React.Component {
         </Link>
         <div className="navbar-header">Starcraft 2 AI Ladder</div>
         <ul className="navbar">
-          <HeaderLink link="/results" text="Results"/>
           <HeaderLink link="/bots" text="Bots"/>
+          <HeaderLink link="/results" text="Results"/>
           <HeaderLink link="/authors" text="Authors"/>
           <li className="navbar-btn unessential">
             <a href="http://wiki.sc2ai.net">Wiki</a>
