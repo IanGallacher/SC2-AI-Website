@@ -149,12 +149,14 @@ export default class ResultTable extends React.Component {
           <this.TableHeader schema={schema}/>
         </thead>
         <tbody>
-          {this.state.table.map(row => {
-            let style = "";
-            if(this.state.destroying.indexOf(row.id) > -1)
-              style += " destroying";
-            return renderTableRow(row, that.props.schema, style);
-          })}
+          {
+            this.state.table.map(row => {
+              let style = "";
+              if (this.state.destroying.indexOf(row.id) > -1)
+                style += " destroying";
+              return renderTableRow(row, that.props.schema, style);
+            })
+          }
         </tbody>
       </table>
     </React.Fragment>;

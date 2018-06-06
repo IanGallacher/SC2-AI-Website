@@ -44,13 +44,25 @@ class Bots extends React.Component {
     const params = new URLSearchParams(search);
     let bot_table = null;
 
-    // Filter based on search params.
-    if(this.state.bots) bot_table = this.state.bots.filter(entry => {
-      for(let pair of params.entries()) {
-        if (entry[pair[0]] && entry[pair[0]] !== pair[1]) return false;
-      }
-      return true;
-    });
+    // If we have recieved data, filter and sort the data.
+    if(this.state.bots) {
+      // Filter based on search params.
+      bot_table = this.state.bots.filter(entry => {
+        for(let pair of params.entries()) {
+          if (entry[pair[0]] && entry[pair[0]] !== pair[1]) return false;
+        }
+        return true;
+      });
+
+      // Default sorting of the data is sorting by bot MMR.
+      bot_table = bot_table.sort(
+        (row1, row2) => {
+          if(row1.current_mmr < row2.current_mmr)
+            return 1;
+          else return -1;
+        }
+      );
+    }
     return <React.Fragment>
       <FilterBar/>
       <ResultTable table={bot_table} nullMessage="No bots found for user"
