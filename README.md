@@ -36,7 +36,7 @@ Note that this guide does not yet cover setting up pre-requisite software, and i
 
 * Run `npm run start:dev` in the other terminal.
 
-* Navigate your web browser to `http://localhost:3000/`
+* Navigate your web browser to `http://localhost:8080/`
 
 * The website should display on your screen.
 
