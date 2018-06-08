@@ -20,7 +20,7 @@ class Bot < ApplicationRecord
 
   def win_rate_race
     my_matches = GameResult.joins(:bots).where(:bots => {id: self.id}).to_a
-    victory = GameResult.where(winner_id: 1).to_a
+    victory = GameResult.where(winner_id: self.id).to_a
     vs_terran = my_matches & vs_race("Terran", self.id).to_a
     vs_protoss = my_matches & vs_race("Protoss", self.id).to_a
     vs_zerg = my_matches & vs_race("Zerg", self.id).to_a
