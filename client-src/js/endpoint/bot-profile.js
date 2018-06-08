@@ -7,7 +7,8 @@ import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
 import LoadingAnimation from "./../component/loading.jsx";
-import { SimpleLineChart, VictoryChart } from "./../component/chart.jsx";
+import { SimpleLineChart } from "./../component/chart.jsx";
+import WinRatePieChart from "./../component/win-rate-pie-chart.jsx";
 import ResultTable from "./../component/table.jsx";
 
 class BotProfile extends React.Component {
@@ -93,15 +94,12 @@ class BotProfile extends React.Component {
   }
 
   render() {
-    let bot = this.state.bot;
-    if (bot === null) return <div className="trading-card-horizontal">
-      <LoadingAnimation/>
-    </div>;
-
-    const win_percentage = [
-      {name: "Victories", value: bot.win_count},
-      {name: "Defeats", value: bot.match_count - bot.win_count}
-    ];
+    const bot = this.state.bot;
+    if (bot === null) {
+      return <div className="trading-card-horizontal">
+        <LoadingAnimation/>
+      </div>;
+    }
 
     let bot_history = [];
     if(this.state.bot_history)
@@ -112,13 +110,32 @@ class BotProfile extends React.Component {
         return new_entry;
       });
 
+    const win_rate_terran = bot.win_rate_race.terran;
+    const win_rate_protoss = bot.win_rate_race.protoss;
+    const win_rate_zerg = bot.win_rate_race.zerg;
     return <div className="trading-card-horizontal">
-      <title>{`Bot Name: ${bot.name}`}</title>
-      <Link to={`/authors/?author_id=${bot.owner_id}`}>
-        {`Bot Author: ${bot.author}`}
-      </Link>
-      <br/>
-      <VictoryChart data={win_percentage}/>
+      <div className="trading-card-header">
+        <title>{`Bot Name: ${bot.name}`}</title>
+        <Link to={`/authors/?author_id=${bot.owner_id}`}>
+          {`Bot Author: ${bot.author}`}
+        </Link>
+      </div>
+      <WinRatePieChart
+        label="vs all"
+        victories={bot.win_count}
+        defeats={bot.match_count - bot.win_count}/>
+      <WinRatePieChart
+        label="vs terran"
+        victories={win_rate_terran.win_count}
+        defeats={win_rate_terran.match_count - win_rate_terran.win_count}/>
+      <WinRatePieChart
+        label="vs protoss"
+        victories={win_rate_protoss.win_count}
+        defeats={win_rate_protoss.match_count - win_rate_protoss.win_count}/>
+      <WinRatePieChart
+        label="vs zerg"
+        victories={win_rate_zerg.win_count}
+        defeats={win_rate_zerg.match_count - win_rate_zerg.win_count}/>
       {SimpleLineChart(bot_history, "MMR")}
     </div>;
   }

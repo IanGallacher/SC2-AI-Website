@@ -2,6 +2,7 @@
 
 @import 'alert';
 @import 'button';
+@import 'chart';
 @import 'clearfix';
 @import 'filter';
 @import 'form';
@@ -144,13 +145,4 @@ ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
   background: #0e1b4d;
-}
-
-.recharts-wrapper {
-  width: 100%;
-  float: left;
-}
-
-.recharts-responsive-container {
-  float: left;
 }

@@ -42,7 +42,9 @@ const renderActiveShape = (p) => {
         y={cy}
         dy={8}
         textAnchor="middle"
-        fill={fill}>{payload.name}</text>
+        fill={fill}>
+        {payload.name}
+      </text>
       <Sector
         cx={cx}
         cy={cy}
@@ -50,8 +52,7 @@ const renderActiveShape = (p) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
-        fill={fill}
-      />
+        fill={fill}/>
       <Sector
         cx={cx}
         cy={cy}
@@ -59,8 +60,7 @@ const renderActiveShape = (p) => {
         endAngle={endAngle}
         innerRadius={outerRadius + 6}
         outerRadius={outerRadius + 10}
-        fill={fill}
-      />
+        fill={fill}/>
       <path
         d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
         stroke={fill}
@@ -75,42 +75,64 @@ const renderActiveShape = (p) => {
         y={ey}
         dy={18}
         textAnchor={textAnchor}
-        fill="#999">{`(Rate ${(percent * 100).toFixed(2)}%)`}</text>
+        fill="#999">
+        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+      </text>
     </g>
   );
 };
 
-export class VictoryChart extends React.Component {
+export class PieChartCustom extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0 };
+    this.state = { activeIndex: null };
   }
 
   static propTypes = {
+    className: PropTypes.string,
     data: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       value: PropTypes.number
-    }))
+    })).isRequired,
+    height: PropTypes.number,
+    width: PropTypes.number
   }
 
   onPieEnter = (data, index) => {
     this.setState({ activeIndex: index });
   }
 
+  onPieLeave = (data) => {
+    this.setState({ activeIndex: null });
+  }
+
   render() {
+    const props = this.props;
+    let width = props.width || 200;
+    let height = props.height || 300;
     const COLORS = ["#00CC22", "#BB1100", "#FFBB28", "#FF8042"];
-    return <PieChart width={300} height={300}>
+    let offset = -(400 - width)/2;
+    let style= {
+      top: "-25px"
+    };
+    if(this.state.activeIndex !== null) {
+      style.width = "400px";
+      style.left = `${offset}px`;
+      width = 400;
+    }
+    return <PieChart width={width} height={height} style={style}>
       <Pie
         activeIndex={this.state.activeIndex}
         activeShape={renderActiveShape}
         data={this.props.data}
         dataKey="value"
         isAnimationActive={false}
-        cx={150}
-        cy={150}
-        innerRadius={60}
+        cx={width/2}
+        cy={height/2}
+        innerRadius={50}
         outerRadius={80}
-        onMouseEnter={this.onPieEnter}>
+        onMouseEnter={this.onPieEnter}
+        onMouseLeave={this.onPieLeave}>
         {
           this.props.data.map((entry, index) => <Cell
             key={index} fill={COLORS[index % COLORS.length]}/>)

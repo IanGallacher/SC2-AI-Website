@@ -1,0 +1,28 @@
+@import 'variables';
+
+.recharts-wrapper {
+  width: 100%;
+  float: left;
+}
+
+.recharts-responsive-container {
+  float: left;
+}
+
+$win-rate-width: 200px;
+
+.win-rate-zone {
+  width: $win-rate-width;
+  min-height: 100px;
+  float: left;
+}
+
+.win-rate-label {
+  font-size: 22px;
+  text-align: center;
+}
+
+.win-rate-subtitle {
+  font-size: 14px;
+  text-align: center;
+}
