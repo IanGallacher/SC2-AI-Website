@@ -6,14 +6,16 @@ class GameResult < ApplicationRecord
   belongs_to :winner, class_name: "Bot", foreign_key: "winner_id", optional: true, counter_cache: :win_count
 
   attr_writer :replayfile
-  before_save :save_replay
-  after_save :update_mmr
+  after_save :save_replay, :update_mmr
 
   def save_replay
-    puts "CHECKING REPLAY"
+    puts "Replay upload attempt"
     return unless @replayfile.present?
     self.replay = get_filename()
-    File.open("public" + get_filename(), 'wb') { |replayfile| replayfile.write(@replayfile.read) }
+    File.open("public" + get_filename(), 'wb') {
+      |replayfile| replayfile.write(@replayfile.read)
+    }
+    puts "Replay upload complete"
   end
 
   def winner_name
@@ -39,6 +41,6 @@ class GameResult < ApplicationRecord
   def get_filename
     extname = File.extname(@replayfile.original_filename)
     basename = File.basename(@replayfile.original_filename, extname)
-    "/replay/#{basename.gsub(/[^0-9A-z.\-]/, '_')}.Sc2Replay"
+    "/replay/#{basename.gsub(/[^0-9A-z.\-]/, '_')}_ResultID#{id}.Sc2Replay"
   end
 end
