@@ -26,38 +26,33 @@ export default class RecentResults extends React.Component {
           schema={
             [
               {
-                headerName:"First Bot",
-                displayType:"text",
+                columnLabel:"First Bot",
                 render: row => {
                   if(row.bots.length > 0 && row.bots.length >= 2)
                     return row.bots[0].name;
                 }
               },
               {
-                headerName:"Second Bot",
-                displayType:"text",
+                columnLabel:"Second Bot",
                 render: row => {
                   if(row.bots.length > 0 && row.bots.length >= 2)
                     return row.bots[1].name;
                 }
               },
               {
-                headerName:"Map",
-                fieldName:"map",
-                displayType:"text"
+                columnLabel:"Map",
+                fieldName:"map"
               },
               {
-                headerName:"Winner",
+                columnLabel:"Winner",
                 fieldName:"winner_name",
-                displayType:"text",
                 onClick: row => {
                   this.props.history.push(`/bot/?bot_id=${row.winner_id}`);
                 }
               },
               {
-                headerName:"Replay",
+                columnLabel:"Replay",
                 fieldName:"replay",
-                displayType:"download",
                 sortable: false,
                 render: row => {
                   if (row.replay)

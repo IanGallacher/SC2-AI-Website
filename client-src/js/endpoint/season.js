@@ -24,34 +24,28 @@ export default class Season extends React.Component {
           schema={
             [
               {
-                headerName:"BotName",
-                fieldName:"BotName",
-                displayType:"text"
+                columnLabel:"BotName",
+                fieldName:"BotName"
               },
               {
-                headerName:"Author",
-                fieldName:"author",
-                displayType:"text"
+                columnLabel:"Author",
+                fieldName:"author"
               },
               {
-                headerName:"Race",
-                fieldName:"race",
-                displayType:"text"
+                columnLabel:"Race",
+                fieldName:"race"
               },
               {
-                headerName:"Matches",
-                fieldName:"matches",
-                displayType:"text"
+                columnLabel:"Matches",
+                fieldName:"matches"
               },
               {
-                headerName:"Wins",
-                fieldName:"wins",
-                displayType:"text"
+                columnLabel:"Wins",
+                fieldName:"wins"
               },
               {
-                headerName:"Win Pct",
-                fieldName:"winpct",
-                displayType:"text"
+                columnLabel:"Win Pct",
+                fieldName:"winpct"
               }
             ]
           }/>

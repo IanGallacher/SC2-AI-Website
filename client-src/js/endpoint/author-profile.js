@@ -99,7 +99,6 @@ class AuthorProfile extends React.Component {
                   {
                     headerName:"Bot name",
                     fieldName:"name",
-                    displayType:"text",
                     onClick: (row) => {
                       this.props.history.push(`/bot/?bot_id=${row.id}`);
                     }
@@ -107,7 +106,6 @@ class AuthorProfile extends React.Component {
                   {
                     headerName:"Race",
                     fieldName:"race",
-                    displayType:"text",
                     onClick: (row) => {
                       this.props.history.push(`/bots/?race=${row.race}`);
                     }
@@ -119,13 +117,11 @@ class AuthorProfile extends React.Component {
                       if(row.match_count === 0) return ("N/A");
                       let win_ratio = row.win_count / row.match_count;
                       return `${win_ratio.toFixed(2) * 100}%`;
-                    },
-                    displayType:"text"
+                    }
                   },
                   {
                     headerName:"MMR",
-                    fieldName:"current_mmr",
-                    displayType:"text"
+                    fieldName:"current_mmr"
                   }
                 ]}/>
             ) : (

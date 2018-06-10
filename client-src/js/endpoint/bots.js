@@ -69,43 +69,37 @@ class Bots extends React.Component {
         schema={
           [
             {
-              headerName:"Bot name",
+              columnLabel:"Bot name",
               fieldName:"name",
-              displayType:"text",
-              onClick: (row) => {
+              onClick: row => {
                 this.props.history.push(`/bot/?bot_id=${row.id}`);
               }
             },
             {
-              headerName:"Author",
+              columnLabel:"Author",
               fieldName:"author",
-              displayType:"text",
-              onClick: (row) => {
+              onClick: row => {
                 this.props.history.push(`/authors/?author_id=${row.owner_id}`);
               }
             },
             {
-              headerName:"Race",
+              columnLabel:"Race",
               fieldName:"race",
-              displayType:"text",
-              onClick: (row) => {
+              onClick: row => {
                 this.props.history.push(`/bots/?race=${row.race}`);
               }
             },
             {
-              headerName:"Games Won",
-              fieldName:"win_count",
-              displayType:"text"
+              columnLabel:"Games Won",
+              fieldName:"win_count"
             },
             {
-              headerName:"Games Played",
-              fieldName:"match_count",
-              displayType:"text"
+              columnLabel:"Games Played",
+              fieldName:"match_count"
             },
             {
-              headerName:"MMR",
-              fieldName:"current_mmr",
-              displayType:"text"
+              columnLabel:"MMR",
+              fieldName:"current_mmr"
             }
           ]
         }

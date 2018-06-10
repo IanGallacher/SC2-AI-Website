@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import LoadingAnimation from "./loading.jsx";
 
 function renderTableCol(row, schema_entry) {
-  let {fieldName, render, onClick, headerName} = schema_entry;
+  let {fieldName, render, onClick, columnLabel} = schema_entry;
   let contents = (render) ? render(row) : row[fieldName];
   return <td
-    key={headerName}
+    key={columnLabel}
     className={ onClick && "clickable" }
     onClick={() => onClick && onClick(row)}>
     <div className="collapse-container">{ contents }</div>
@@ -31,10 +31,17 @@ function comparisonFactory(i, sort_direction) {
   };
 }
 
-/*
-** ResultsTable takes a schema of the following format:
-** [{label:"headername",fieldname:"field"}, ...]
-*/
+let PropTypeSchemaEntry = PropTypes.shape({
+  columnLabel: PropTypes.string.isRequired,
+  // Specify either fieldName or render to tell the table how to draw the row.
+  fieldName: PropTypes.string,
+  render: PropTypes.func,
+  // Set sortable to false to disable sorting when clicking the column header.
+  sortable: PropTypes.bool,
+  // Optional function to describe what happens when the cell is clicked.
+  onClick: PropTypes.func
+});
+
 export default class ResultTable extends React.Component {
   constructor(props) {
     super(props);
@@ -51,7 +58,7 @@ export default class ResultTable extends React.Component {
   static propTypes = {
     table: PropTypes.array, // Immutable table data.
     label: PropTypes.string, // The name shown above the table.
-    schema: PropTypes.array,
+    schema: PropTypes.arrayOf(PropTypeSchemaEntry).isRequired,
     nullMessage: PropTypes.string
   }
   // Figure out what components have been added or removed.
@@ -59,7 +66,7 @@ export default class ResultTable extends React.Component {
   componentWillReceiveProps(props) {
     // If we have not yet recieved a table, there is nothing to do.
     if(props.table === null) return;
-    // If the prop has removed the element, update the state
+    // If the prop has removed the element, update the state.
     for(let c of this.state.table) {
       if(!props.table.find(e => e.id === c.id))
         this._deleteRow(c);
@@ -111,12 +118,12 @@ export default class ResultTable extends React.Component {
 
   TableHeader = ({schema}) => {
     return <tr>
-      { schema.map( ({headerName, fieldName, sortable}, index) => {
+      { schema.map( ({columnLabel, fieldName, sortable}, index) => {
         return (
           <th key={index} onClick={
             () => sortable !== false && this.updateSort(index, fieldName)
           }>
-            {headerName}
+            {columnLabel}
             {this.renderSortArrow(index)}
           </th>
         );
