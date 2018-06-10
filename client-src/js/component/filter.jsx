@@ -8,11 +8,24 @@ class FilterTag extends React.Component {
     super(props);
   }
 
-  static propTypes = { pair: PropTypes.array }
+  static propTypes = {
+    category: PropTypes.string,
+    query: PropTypes.string,
+    location: ReactRouterPropTypes.location.isRequired,
+    history: ReactRouterPropTypes.history.isRequired
+  }
+
+  removeFilter = () => {
+    const search = this.props.location.search;
+    const params = new URLSearchParams(search);
+    params.delete(this.props.category);
+    this.props.history.push(`/bots/?${params.toString()}`);
+  }
 
   render() {
     return <div className="filter-tag">
-      {`${this.props.pair[0]}: ${this.props.pair[1]}`}
+      {`${this.props.category}: ${this.props.query}`}
+      <span className="modal-exit" onClick={this.removeFilter}>&times;</span>
     </div>;
   }
 }
@@ -24,7 +37,8 @@ class FilterBar extends React.Component {
   }
 
   static propTypes = {
-    location: ReactRouterPropTypes.location.isRequired
+    location: ReactRouterPropTypes.location.isRequired,
+    history: ReactRouterPropTypes.history.isRequired
   }
 
   render() {
@@ -40,7 +54,10 @@ class FilterBar extends React.Component {
     return <div className={`filter-bar ${is_hidden}`}>
       <div className="filter-bar-label">Filters:</div>
       {
-        entry_list.map(pair => <FilterTag key={pair[0]} pair={pair}/>)
+        entry_list.map(pair => {
+          return <FilterTag key={pair[0]} category={pair[0]} query={pair[1]}
+            location={this.props.location} history={this.props.history}/>;
+        })
       }
     </div>;
   }

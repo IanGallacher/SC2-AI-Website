@@ -102,7 +102,7 @@ export class PieChartCustom extends React.Component {
     this.setState({ activeIndex: index });
   }
 
-  onPieLeave = (data) => {
+  onPieLeave = () => {
     this.setState({ activeIndex: null });
   }
 
