@@ -65,16 +65,17 @@ class EditAllBots extends React.PureComponent {
           },
           {
             columnLabel:"delete?",
-            onClick: row => {
-              const axios_url = `${API_URL}/bots/${row.id}`;
-              axios.delete(axios_url).then(
-                () => AlertLogic.addMessage("Succesfully deleted bot", "alert-success")
-              ).catch(
-                () => AlertLogic.addError("Something went wrong")
-              );
-            },
+            // onClick: row => {
+            //   const axios_url = `${API_URL}/bots/${row.id}`;
+            //   axios.delete(axios_url).then(
+            //     () => AlertLogic.addMessage("Succesfully deleted bot", "alert-success")
+            //   ).catch(
+            //     () => AlertLogic.addError("Something went wrong")
+            //   );
+            // },
             render: () => {
-              return <div className="fa fa-trash"/>;
+              return <div>Deleting is currently disabled</div>;
+              // return <div className="fa fa-trash"/>;
             }
           }
         ]
