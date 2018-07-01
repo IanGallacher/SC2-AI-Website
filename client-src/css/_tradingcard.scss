@@ -2,10 +2,20 @@
 
 // A "trading card" is a tileable summary of an object.
 // Named because it looks just like a trading card.
-title {
+.trading-card-title {
   display: block;
   font-size: 30px;
   padding-bottom: 15px;
+  text-align: center;
+}
+
+.trading-card-subtitle {
+  display: block;
+  font-size: 15px;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  color: #888;
+  text-align: center;
 }
 
 .author-content {
@@ -54,7 +64,7 @@ title {
   flex-direction: column;
   margin: 10px 10px 0 0;
   max-width: 100%;
-  padding: 15px;
+  padding: 15px 15px 5px;
   border-radius: 4px;
   height: auto;
   float: left;
@@ -62,10 +72,6 @@ title {
   width: 100%;
   height: 350px;
   box-sizing: border-box;
-
-  title {
-    text-align: center;
-  }
 
   @media (max-width: $max-mobile-width) { height: auto; }
   @media (min-width: $max-mobile-width) {

@@ -9,6 +9,7 @@ import { EditableImage } from "./../component/image.jsx";
 import FetchTable from "./../component/table-fetch.jsx";
 import { TextInput } from "./../component/form.jsx";
 import FormZone from "./../component/form-zone.jsx";
+import UserTitle from "./../component/user-title.jsx";
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 
@@ -75,10 +76,16 @@ class AuthorProfile extends React.Component {
     this.getAuthorData(this.getAuthorId());
   }
 
+  renderRoleIfNecessary = (role) => {
+    if(role != "user")
+      return <div className="trading-card-subtitle">{ `${role}` }</div>;
+    return null;
+  }
+
   render() {
     return (
       <div className="trading-card-horizontal">
-        <title>{this.state.profile.username}</title>
+        <UserTitle user={this.state.profile}/>
         <div className="flex-horizontal">
           <div className="trading-card-details-img-zone">
             <EditableImage
