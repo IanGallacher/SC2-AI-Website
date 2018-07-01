@@ -2,11 +2,16 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    #Wbyebug
     signed_in = user.present?
+    user ||= User.new
     user ||= User.new
     can :read, :all
     #cannot :read, GameResult unless signed_in
-#    cannot :create, Bot unless signed_in
+    can :create, Bot if signed_in
+    # can :destroy, Bot, owner_id: user.id
+    can :destroy, Bot if user.role == 'admin'
+    can :destroy, Bot, owner_id: user.id
     can :update, Bot, owner_id: user.id
     # Define abilities for the passed in user here. For example:
     #

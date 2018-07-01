@@ -1,7 +1,5 @@
 class BotsController < ApplicationController
-  protect_from_forgery only: :destroy
-  before_action :set_bot, only: :upload
-
+#  protect_from_forgery only: :destroy
   def index
     render json: Bot.all
   end
@@ -11,7 +9,7 @@ class BotsController < ApplicationController
   end
 
   def create
-#    authorize! :create, Bot
+    authorize! :create, Bot
     bot = Bot.create(bot_params)
     if bot.errors.any?
       render json: bot.errors, status: :unprocessable_entity
@@ -21,6 +19,7 @@ class BotsController < ApplicationController
   end
 
   def upload
+    @bot = Bot.find(params[:id]);
     authorize! :update, @bot
     if @bot.update dll: params[:dll]
       render json: {status: :ok}
@@ -29,10 +28,14 @@ class BotsController < ApplicationController
     end
   end
 
-  private
-  def set_bot
+  def destroy
     @bot = Bot.find(params[:id]);
+    authorize! :destroy, @bot
+    puts 'authorized'
+    @bot.destroy
   end
+
+  private
 
   def bot_params
     p = params.permit(:name, :author, :race, :file)

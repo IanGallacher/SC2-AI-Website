@@ -1,25 +1,29 @@
 class Bot < ApplicationRecord
   include BetterJson
   has_many :bot_histories
-  has_many :game_result_bots
+  has_many :game_result_bots, dependent: :nullify
   has_many :game_results, through: :game_result_bots
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
   validates :name, :author, :race, presence: true
   after_create :create_history, :save_dll
+  before_destroy :destroy_history
 
   attr_writer :file
 
   def save_dll
     puts "Attempt to upload bot"
     return unless @file.present?
-    self.executable = get_filename()
     File.open(get_filename(), 'wb') { |file| file.write(@file.read) }
     puts "Bot upload complete"
   end
 
   def create_history
     BotHistory.create(bot_id: self.id, mmr: 1600)
+  end
+
+  def destroy_history
+    BotHistory.where(bot_id: self.id).destroy_all
   end
 
   def current_mmr
