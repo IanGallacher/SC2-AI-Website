@@ -4,18 +4,12 @@ import PropTypes from "prop-types";
 
 import { Image } from "./image.jsx";
 import UserTitle from "./user-title.jsx";
+import UserPropType from "./../custom-proptypes/user.js";
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 
 export default class AuthorTradingCard extends React.Component {
-  static propTypes = {
-    user: PropTypes.shape({
-      avatar: PropTypes.string,
-      id: PropTypes.number,
-      role: PropTypes.string,
-      username: PropTypes.string
-    })
-  }
+  static propTypes = { user: UserPropType }
 
   render() {
     return (

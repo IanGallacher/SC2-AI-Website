@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import PropTypes from "prop-types";
 import ReactRouterPropTypes from "react-router-prop-types";
+import UserPropType from "./../custom-proptypes/user.js";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
@@ -31,7 +32,7 @@ function AuthorDetails(props) {
 AuthorDetails.propTypes = {
   editing: PropTypes.bool,
   edit_url: PropTypes.string,
-  profile: PropTypes.object
+  profile: UserPropType
 };
 
 class AuthorProfile extends React.Component {
@@ -45,10 +46,7 @@ class AuthorProfile extends React.Component {
     editing: PropTypes.bool,
     history: ReactRouterPropTypes.history,
     location: ReactRouterPropTypes.location.isRequired,
-    profile: PropTypes.shape({
-      username: PropTypes.string,
-      avatar: PropTypes.string
-    })
+    profile: UserPropType
   }
 
   getAuthorData(author_id) {
