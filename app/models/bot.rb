@@ -6,9 +6,17 @@ class Bot < ApplicationRecord
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
   validates :name, :author, :race, presence: true
-  after_create :create_history
+  after_create :create_history, :save_dll
 
   attr_writer :file
+
+  def save_dll
+    puts "Attempt to upload bot"
+    return unless @file.present?
+    self.executable = get_filename()
+    File.open(get_filename(), 'wb') { |file| file.write(@file.read) }
+    puts "Bot upload complete"
+  end
 
   def create_history
     BotHistory.create(bot_id: self.id, mmr: 1600)
@@ -34,8 +42,17 @@ class Bot < ApplicationRecord
   end
 
   private
+  def get_filepath
+    return "public/user-upload/dll/"
+  end
+
+  # Things are uploaded to the public folder, but public is not part of the url.
+  def get_urlpath
+    return "user-upload/dll/"
+  end
+
   def get_filename
-    return "public/user-upload/dll/#{name.gsub(/[^0-9A-z.\-]/, '_')}.dll"
+    return "#{get_filepath}#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}.dll"
   end
 
   def vs_race(race, id)
