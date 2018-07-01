@@ -97,21 +97,21 @@ class AuthorProfile extends React.Component {
               <FetchTable url={`${API_URL}/users/${this.state.profile.id}/bots`}
                 schema={[
                   {
-                    headerName:"Bot name",
+                    columnLabel:"Bot name",
                     fieldName:"name",
-                    onClick: (row) => {
+                    onClick: row => {
                       this.props.history.push(`/bot/?bot_id=${row.id}`);
                     }
                   },
                   {
-                    headerName:"Race",
+                    columnLabel:"Race",
                     fieldName:"race",
-                    onClick: (row) => {
+                    onClick: row => {
                       this.props.history.push(`/bots/?race=${row.race}`);
                     }
                   },
                   {
-                    headerName:"Win Rate",
+                    columnLabel:"Win Rate",
                     render: row => {
                       // Avoid dividing by 0.
                       if(row.match_count === 0) return ("N/A");
@@ -120,7 +120,7 @@ class AuthorProfile extends React.Component {
                     }
                   },
                   {
-                    headerName:"MMR",
+                    columnLabel:"MMR",
                     fieldName:"current_mmr"
                   }
                 ]}/>
