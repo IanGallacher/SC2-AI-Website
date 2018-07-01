@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
     # devise_for does not create routes to get the users.
     resources :authors, only: [:index, :show]
-    resources :users, only: [:index]
+    resources :users, only: [:index, :update]
     # Custom endpoints for login and logout.
     # We want /logout instead of /users/logout.
     devise_scope :user do

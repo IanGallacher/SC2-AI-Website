@@ -5,7 +5,6 @@ class Ability
     #Wbyebug
     signed_in = user.present?
     user ||= User.new
-    user ||= User.new
     can :read, :all
     #cannot :read, GameResult unless signed_in
     can :create, Bot if signed_in
@@ -13,6 +12,8 @@ class Ability
     can :destroy, Bot if user.role == 'admin'
     can :destroy, Bot, owner_id: user.id
     can :update, Bot, owner_id: user.id
+    can :create, User, id: user.id
+    can :update, User, id: user.id
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
