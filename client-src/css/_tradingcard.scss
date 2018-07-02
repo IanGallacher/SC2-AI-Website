@@ -18,6 +18,11 @@
   text-align: center;
 }
 
+.profile-details {
+  color: #666;
+  margin-left: 15px;
+}
+
 .author-content {
   @media (max-width: $max-mobile-width) { margin: 0 4%; }
 }

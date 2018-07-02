@@ -27,7 +27,9 @@ function AuthorDetails(props) {
       className="text-input"/>
   </FormZone>;
   if (props.profile.github) return <div className="author-details">
-    <div>Github: {props.profile.github && props.profile.github} </div>
+    <div className="profile-details">
+      Github: {props.profile.github && props.profile.github}
+    </div>
   </div>;
   return null;
 }
