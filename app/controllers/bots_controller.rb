@@ -19,17 +19,28 @@ class BotsController < ApplicationController
   end
 
   def upload
-    @bot = Bot.find(params[:id]);
+    @bot = Bot.find(params[:id])
     authorize! :update, @bot
     if @bot.update dll: params[:dll]
-      render json: {status: :ok}
+      render json: { status: :ok }
+    else
+      render json: @bot.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @bot = Bot.find(params[:id])
+    authorize! :update, @bot
+    puts 'authorized'
+    if @bot.update(bot_params)
+      render json: { status: :ok }
     else
       render json: @bot.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @bot = Bot.find(params[:id]);
+    @bot = Bot.find(params[:id])
     authorize! :destroy, @bot
     puts 'authorized'
     @bot.destroy

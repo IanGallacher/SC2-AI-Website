@@ -5,8 +5,11 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import UserPropType from "./../custom-proptypes/user.js";
 import { withRouter } from "react-router";
 
+import { ModalContext } from "./../context/modal-context.js";
+
 import { API_URL } from "./../app.js";
 import { EditableImage } from "./../component/image.jsx";
+import BotUpload from "./../component/bot-upload.jsx";
 import FetchTable from "./../component/table-fetch.jsx";
 import { TextInput } from "./../component/form.jsx";
 import FormZone from "./../component/form-zone.jsx";
@@ -17,7 +20,6 @@ const default_avatar_path = require("./../../img/avatar.jpg");
 
 function AuthorDetails(props) {
   if (props.editing) return <FormZone
-    method="patch"
     uploadPath={props.edit_url}>
     <TextInput name="github"
       type="text"
@@ -34,6 +36,15 @@ AuthorDetails.propTypes = {
   edit_url: PropTypes.string,
   profile: UserPropType
 };
+
+function renderBotDetails(bot) {
+  return <BotUpload
+    bot={bot}
+    uploadPath={`/bots/${bot.id}`}
+    label="asdf"
+    method="patch"
+  />;
+}
 
 class AuthorProfile extends React.Component {
   constructor(props) {
@@ -82,7 +93,7 @@ class AuthorProfile extends React.Component {
 
   render() {
     return (
-      <div className="trading-card-horizontal">
+      <ModalContext.Consumer>{modal => <div className="trading-card-horizontal">
         <UserTitle user={this.state.profile}/>
         <div className="flex-horizontal">
           <div className="trading-card-details-img-zone">
@@ -127,6 +138,15 @@ class AuthorProfile extends React.Component {
                   {
                     columnLabel:"MMR",
                     fieldName:"current_mmr"
+                  },
+                  {
+                    columnLabel:"Edit",
+                    fieldName:"current_mmr",
+                    showColumnIf: () => this.props.editing,
+                    onClick: row => {
+                      modal.showModal(renderBotDetails(row));
+                    },
+                    render: row => <div className="fa fa-edit"/>
                   }
                 ]}/>
             ) : (
@@ -152,7 +172,8 @@ class AuthorProfile extends React.Component {
             */
           }
         </div>
-      </div>
+      </div>}
+      </ModalContext.Consumer>
     );
   }
 }

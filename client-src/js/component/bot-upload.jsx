@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import AlertLogic from "./../logic/alert.js";
+import BotPropType from "./../custom-proptypes/bot.js";
 import { TextInput } from "./form.jsx";
 import { API_URL } from "./../app.js";
 
@@ -12,7 +13,12 @@ export default class BotUpload extends React.Component {
     this.state = { file: "", name: "", race: "Terran", errors: []};
   }
 
-  static propTypes = { uploadPath: PropTypes.string, label: PropTypes.string }
+  static propTypes = {
+    bot: BotPropType,
+    uploadPath: PropTypes.string,
+    label: PropTypes.string,
+    method: PropTypes.string
+  }
 
   onChange = event => {
     let new_state = {};
@@ -35,24 +41,30 @@ export default class BotUpload extends React.Component {
     // Configure upload.
     const url = API_URL + this.props.uploadPath;
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("name", name);
-    formData.append("race", race);
+    if (file) formData.append("file", file);
+    if (name) formData.append("name", name);
+    if (race) formData.append("race", race);
     const config = { headers: { "content-type": "multipart/form-data" } };
     // Submit the upload
-    axios.post(url, formData, config)
-      .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"))
-      .catch(error=>this.setState({errors: error.response.data}));
+    if (this.props.method == "patch")
+      axios.patch(url, formData, config)
+        .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"))
+        .catch(error=>this.setState({errors: error.response.data}));
+    else
+      axios.post(url, formData, config)
+        .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"))
+        .catch(error=>this.setState({errors: error.response.data}));
   }
 
   render() {
-    return <div className="trading-card-horizontal">
-      <title>{this.props.label}</title>
+    let bot = this.props.bot;
+    return <React.Fragment>
+      <title>{this.props.label}</title>asdfasdfa
       <form className="flex-horizontal" onSubmit={this.onSubmit}>
         <TextInput name="name"
           error={this.state.errors.name}
           type="text"
-          placeholder="Bot Name"
+          placeholder={ bot ? bot.name : "Bot Name" }
           className="text-input"
           onChange={this.onChange}/>
         <input name="file"
@@ -61,7 +73,8 @@ export default class BotUpload extends React.Component {
           onChange={this.onFileChange}/>
         <select name="race"
           className="text-input"
-          onChange={this.onChange}>
+          onChange={this.onChange}
+          defaultValue={bot && bot.race}>
           <option value="Terran">Terran</option>
           <option value="Protoss">Protoss</option>
           <option value="Zerg">Zerg</option>
@@ -69,6 +82,6 @@ export default class BotUpload extends React.Component {
         </select>
         <input type="submit" value="Submit" className="btn"/>
       </form>
-    </div>;
+    </React.Fragment>;
   }
 }

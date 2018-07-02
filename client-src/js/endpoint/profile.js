@@ -24,7 +24,9 @@ export default class ProfileSettings extends React.Component {
           toggled={this.state.editing}
         />
         <AuthorProfile author_id={user_data.id} editing={this.state.editing}/>
-        <BotUpload label="Upload Bot:" uploadPath="/bots/create"/>
+        <div className="trading-card-horizontal">
+          <BotUpload label="Upload Bot:" uploadPath="/bots/create"/>
+        </div>
       </React.Fragment>
     }</UserContext.Consumer>;
   }

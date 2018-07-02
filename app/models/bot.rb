@@ -7,6 +7,7 @@ class Bot < ApplicationRecord
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
   validates :name, :author, :race, presence: true
   after_create :create_history, :save_dll
+  after_update :save_dll
   before_destroy :destroy_history
 
   attr_writer :file

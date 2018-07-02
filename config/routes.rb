@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       post 'login', to: 'sessions#create'
       get 'logout', to: 'sessions#destroy'
     end
-    resources :bots, only: [:index, :show, :destroy]
+    resources :bots, only: [:index, :show, :update, :destroy]
     resources :bot_histories, only: [:index, :show]
     scope :bots do
       post 'create', to: 'bots#create'

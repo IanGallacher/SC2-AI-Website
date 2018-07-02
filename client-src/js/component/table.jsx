@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import LoadingAnimation from "./loading.jsx";
 
 function renderTableCol(row, schema_entry) {
-  let {fieldName, render, onClick, columnLabel} = schema_entry;
+  let {fieldName, render, onClick, columnLabel, showColumnIf} = schema_entry;
+  if (showColumnIf && !showColumnIf()) return null;
   let contents = (render) ? render(row) : row[fieldName];
   return <td
     key={columnLabel}
@@ -118,7 +119,8 @@ export default class ResultTable extends React.Component {
 
   TableHeader = ({schema}) => {
     return <tr>
-      { schema.map( ({columnLabel, fieldName, sortable}, index) => {
+      { schema.map(({columnLabel, fieldName, sortable, showColumnIf}, index) => {
+        if (showColumnIf && !showColumnIf()) return null;
         return (
           <th key={index} onClick={
             () => sortable !== false && this.updateSort(index, fieldName)
