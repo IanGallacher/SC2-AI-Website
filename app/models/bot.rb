@@ -6,16 +6,22 @@ class Bot < ApplicationRecord
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
   validates :name, :author, :race, presence: true
+  before_create :set_file_path
   after_create :create_history, :save_dll
+  before_update :set_file_path
   after_update :save_dll
   before_destroy :destroy_history
 
   attr_writer :file
 
+  def set_file_path
+    self.executable = "#{get_urlpath}#{get_filename}"
+  end
+
   def save_dll
     puts "Attempt to upload bot"
     return unless @file.present?
-    File.open(get_filename(), 'wb') { |file| file.write(@file.read) }
+    File.open("#{get_filepath}#{get_filename}", 'wb') { |file| file.write(@file.read) }
     puts "Bot upload complete"
   end
 
@@ -56,8 +62,12 @@ class Bot < ApplicationRecord
     return "user-upload/dll/"
   end
 
+  def get_file_extension
+    return File.extname @file.path
+  end
+
   def get_filename
-    return "#{get_filepath}#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}.dll"
+    return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{get_file_extension}"
   end
 
   def vs_race(race, id)

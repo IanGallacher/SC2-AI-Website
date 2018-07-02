@@ -59,7 +59,7 @@ export default class BotUpload extends React.Component {
   render() {
     let bot = this.props.bot;
     return <React.Fragment>
-      <title>{this.props.label}</title>asdfasdfa
+      <title>{this.props.label}</title>
       <form className="flex-horizontal" onSubmit={this.onSubmit}>
         <TextInput name="name"
           error={this.state.errors.name}
