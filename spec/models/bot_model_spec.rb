@@ -1,18 +1,16 @@
 require 'rails_helper'
 
 describe 'Bot Model - ' do
+  let(:bot) { FactoryBot.create(Bot, file: fixture_file_upload('bot.examp')) }
+
   it 'should save dll to disk' do
-    b = FactoryBot.create(Bot)
+    expect(File.exist? bot.bot_filepath).to be true
   end
 
-  it 'should find saved dll' do
-
-  end
-
-  it 'should know the dll url' do
-
-  end
   it 'should find win rates against specific races'
-  it 'should know current mmr'
+
+  it 'should know current mmr' do
+    expect(bot.mmr).to eq 1600
+  end
 end
 
