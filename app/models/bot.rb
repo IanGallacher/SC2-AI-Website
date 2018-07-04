@@ -48,7 +48,7 @@ class Bot < ApplicationRecord
   end
 
   def bot_url
-    return "#{bot_url}#{bot_filename}"
+    return "#{bot_urlroot}#{bot_filename}"
   end
 
   def bot_filepath
@@ -69,7 +69,7 @@ class Bot < ApplicationRecord
   end
 
   # Things are uploaded to the public folder, but public is not part of the url.
-  def bot_url
+  def bot_urlroot
     return "user-upload/dll/"
   end
 
@@ -78,6 +78,7 @@ class Bot < ApplicationRecord
   end
 
   def bot_filename
+    return File.basename(self.executable if self.executable.present?
     return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{bot_file_extension}"
   end
 
