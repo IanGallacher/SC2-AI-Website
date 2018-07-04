@@ -9,18 +9,18 @@ class Bot < ApplicationRecord
   after_create :create_history
   before_save :set_file_path
   after_save :save_dll
-  before_destroy :destroy_history
+  before_destroy :destroy_history, :destroy_bot_executable
 
   attr_writer :file
 
   def set_file_path
-    self.executable = "#{get_urlpath}#{get_filename}"
+    self.executable = "#{bot_url}"
   end
 
   def save_dll
     puts "Attempt to upload bot"
     return unless @file.present?
-    File.open("#{get_filepath}#{get_filename}", 'wb') { |file| file.write(@file.read) }
+    File.open("#{bot_filepath}", 'wb') { |file| file.write(@file.read) }
     puts "Bot upload complete"
   end
 
@@ -30,6 +30,10 @@ class Bot < ApplicationRecord
 
   def destroy_history
     BotHistory.where(bot_id: self.id).destroy_all
+  end
+
+  def destroy_bot_executable
+    File.delete("#{bot_filepath}")
   end
 
   def current_mmr
@@ -51,22 +55,30 @@ class Bot < ApplicationRecord
     return return_array
   end
 
+  def bot_url
+    return "#{bot_url}#{bot_filename}"
+  end
+
+  def bot_filepath
+    return "#{bot_directory}#{bot_filename}"
+  end
+
   private
-  def get_filepath
+  def bot_directory
     return "public/user-upload/dll/"
   end
 
   # Things are uploaded to the public folder, but public is not part of the url.
-  def get_urlpath
+  def bot_url
     return "user-upload/dll/"
   end
 
-  def get_file_extension
+  def bot_file_extension
     return File.extname @file.path
   end
 
-  def get_filename
-    return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{get_file_extension}"
+  def bot_filename
+    return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{bot_file_extension}"
   end
 
   def vs_race(race, id)
