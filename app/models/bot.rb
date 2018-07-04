@@ -6,10 +6,9 @@ class Bot < ApplicationRecord
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
   validates :name, :author, :race, presence: true
-  before_create :set_file_path
-  after_create :create_history, :save_dll
-  before_update :set_file_path
-  after_update :save_dll
+  after_create :create_history
+  before_save :set_file_path
+  after_save :save_dll
   before_destroy :destroy_history
 
   attr_writer :file
