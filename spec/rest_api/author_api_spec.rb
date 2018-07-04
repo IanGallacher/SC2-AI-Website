@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe 'Author API - ' do
-  it 'should show one author' do
-  end
-
-  it 'should show all authors' do
-  end
+  it 'should show one author'
+  it 'should show all authors'
 end
