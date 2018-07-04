@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'User API - ' do
   context 'as logged out user - ' do

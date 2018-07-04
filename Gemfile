@@ -28,8 +28,6 @@ gem 'eventmachine', '= 1.0.7'
 # Gem to catch outgoing mail
 gem 'mailcatcher'
 
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 
@@ -39,6 +37,10 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem "faker", "~> 1.8"
 end
 
 group :development do
@@ -52,5 +54,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem "rspec", "~> 3.7"

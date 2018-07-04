@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'User Model - ' do
   it 'should save avatar to disk'

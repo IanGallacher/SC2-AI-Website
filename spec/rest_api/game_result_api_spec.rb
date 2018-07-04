@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Game Result API - ' do
   context 'as non admin -' do # Any user that is not an admin, logged in or not.

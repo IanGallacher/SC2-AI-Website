@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Game Result Bot Association Model - ' do
   it 'should cache the counter'

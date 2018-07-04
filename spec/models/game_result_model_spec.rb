@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Game Result Model - ' do
   it 'should save the replay to disk'

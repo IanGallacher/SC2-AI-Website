@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Bot History API - ' do
   it 'should show one bot history'

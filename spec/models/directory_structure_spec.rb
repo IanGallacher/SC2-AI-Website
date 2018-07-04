@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Directory Structure' do
   it 'should have the correct directories' do

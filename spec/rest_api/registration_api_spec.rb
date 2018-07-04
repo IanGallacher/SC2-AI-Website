@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'User Registraion API - ' do
   it 'should not register duplicate usernames'
