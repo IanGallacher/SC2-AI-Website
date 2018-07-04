@@ -28,14 +28,6 @@ class Bot < ApplicationRecord
     BotHistory.create(bot_id: self.id, mmr: 1600)
   end
 
-  def destroy_history
-    BotHistory.where(bot_id: self.id).destroy_all
-  end
-
-  def destroy_bot_executable
-    File.delete("#{bot_filepath}")
-  end
-
   def current_mmr
     return BotHistory.where(bot_id: self.id).last.mmr
   end
@@ -64,6 +56,14 @@ class Bot < ApplicationRecord
   end
 
   private
+  def destroy_history
+    BotHistory.where(bot_id: self.id).destroy_all
+  end
+
+  def destroy_bot_executable
+    File.delete("#{bot_filepath}")
+  end
+
   def bot_directory
     return "public/user-upload/dll/"
   end
