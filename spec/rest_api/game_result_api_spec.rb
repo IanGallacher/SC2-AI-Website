@@ -27,9 +27,16 @@ describe 'Game Result API -', type: :request do
 
   context 'a non admin' do # Any user that is not an admin, logged in or not.
     before do
-      regular_user = FactoryBot.create(:user, username: 'regular_user', email: 'regular_user@example.com')
+      regular_user = FactoryBot.create(
+        :user,
+        username: 'regular_user',
+        email: 'regular_user@example.com'
+      )
       regular_user.update_attributes(role: 'user')
-      post login_path, params: { username: 'regular_user', password: 'asdfasdf' }
+      post login_path, params: {
+        username: 'regular_user',
+        password: 'asdfasdf'
+      }
     end
 
     # Any user can view game result data.
