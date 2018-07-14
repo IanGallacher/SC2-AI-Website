@@ -64,7 +64,7 @@ export default class ResultTable extends React.Component {
   }
   // Figure out what components have been added or removed.
   // We use that information to animate the addition/removal.
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     // If we have not yet recieved a table, there is nothing to do.
     if(props.table === null) return;
     // If the prop has removed the element, update the state.

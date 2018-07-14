@@ -83,7 +83,7 @@ class AuthorProfile extends React.Component {
     this.getAuthorData(this.getAuthorId());
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     this.getAuthorData(this.getAuthorId());
   }
 

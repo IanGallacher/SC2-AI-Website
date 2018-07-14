@@ -29,7 +29,7 @@ class BotProfile extends React.Component {
     this.getBotData(this.getBotId());
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     this.getBotData(this.getBotId());
   }
 

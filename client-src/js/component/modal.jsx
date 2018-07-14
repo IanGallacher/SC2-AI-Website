@@ -15,7 +15,7 @@ export default class Modal extends React.Component {
   static propTypes = { modalContent: PropTypes.node }
 
   first_load = true;
-  componentWillReceiveProps = (nextProps) => {
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
     if(this.first_load) { this.first_load = false; return; }
     if(this.props.modalContent == nextProps.modalContent) return;
   }
