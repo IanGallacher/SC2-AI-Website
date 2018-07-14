@@ -6,7 +6,10 @@ import AlertLogic from "./../logic/alert.js";
 import { API_URL } from "./../app.js";
 import FileUpload from "./../component/file-upload.jsx";
 import { TextInput, Dropdown } from "./../component/form.jsx";
+import { confirmDestructiveAction } from "./../component/confirm-destructive-action.jsx";
 import ResultTable from "./../component/table.jsx";
+
+import { ModalContext } from "./../context/modal-context.js";
 
 class ManualGameUpload extends React.PureComponent {
   static propTypes = {
@@ -45,43 +48,50 @@ class EditAllBots extends React.PureComponent {
   render() {
     // If we have recieved data, filter and sort the data.
     let bot_table = this.props.bots;
-    return <ResultTable table={bot_table} nullMessage="No bots found for user"
-      schema={
-        [
-          {
-            columnLabel:"Bot name",
-            fieldName:"name"
-          },
-          {
-            columnLabel:"Author",
-            fieldName:"author"
-          },
-          {
-            columnLabel:"Race",
-            fieldName:"race"
-          },
-          {
-            columnLabel:"Games Played",
-            fieldName:"match_count"
-          },
-          {
-            columnLabel:"delete?",
-            // onClick: row => {
-            //   const axios_url = `${API_URL}/bots/${row.id}`;
-            //   axios.delete(axios_url).then(
-            //     () => AlertLogic.addMessage("Succesfully deleted bot", "alert-success")
-            //   ).catch(
-            //     () => AlertLogic.addError("Something went wrong")
-            //   );
-            // },
-            render: () => {
-              return <div>Deleting is currently disabled</div>;
-              // return <div className="fa fa-trash"/>;
+    return <ModalContext.Consumer>{modalContext =>
+      <ResultTable table={bot_table} nullMessage="No bots found for user"
+        schema={
+          [
+            {
+              columnLabel:"Bot name",
+              fieldName:"name"
+            },
+            {
+              columnLabel:"Author",
+              fieldName:"author"
+            },
+            {
+              columnLabel:"Race",
+              fieldName:"race"
+            },
+            {
+              columnLabel:"Games Played",
+              fieldName:"match_count"
+            },
+            {
+              columnLabel:"delete?",
+              onClick: row => {
+                modalContext.showModal(
+                  confirmDestructiveAction(
+                    function() {
+                      const axios_url = `${API_URL}/bots/${row.id}`;
+                      axios.delete(axios_url).then(
+                        () => AlertLogic.addMessage("Succesfully deleted bot", "alert-success")
+                      ).catch(
+                        () => AlertLogic.addMessage("Something went wrong")
+                      );
+                    }
+                  )
+                );
+              },
+              render: () => {
+                return <div className="fa fa-trash"/>;
+              }
             }
-          }
-        ]
-      }
-    />;
+          ]
+        }
+      />
+    }</ModalContext.Consumer>;
   }
 }
 

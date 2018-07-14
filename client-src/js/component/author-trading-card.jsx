@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import { Image } from "./image.jsx";
 import UserTitle from "./user-title.jsx";

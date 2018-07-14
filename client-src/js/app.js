@@ -49,13 +49,22 @@ export default class App extends React.Component {
     this.modal.showModal(m);
   }
 
+  closeModal = (m) => {
+    this.modal.closeModal(m);
+  }
+
   render() {
     // Router must be where it is on the tree, don't put providers below it.
     return (
       <UserContext.Provider value={{
         updateGoal: this.updateGoal,
         ...this.state.user_data}}>
-        <ModalContext.Provider value={{showModal: this.showModal}}>
+        <ModalContext.Provider value={
+          {
+            showModal: this.showModal,
+            closeModal: this.closeModal
+          }
+        }>
           <Router>
             <React.Fragment>
               <Header username={this.state.user_data.username}
