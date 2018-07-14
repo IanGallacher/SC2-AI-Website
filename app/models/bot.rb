@@ -14,14 +14,13 @@ class Bot < ApplicationRecord
   attr_writer :file
 
   def set_file_path
+    return unless @file.present?
     self.executable = "#{bot_url}"
   end
 
   def save_dll
-    puts "Attempt to upload bot"
     return unless @file.present?
     File.open("#{bot_filepath}", 'wb') { |file| file.write(@file.read) }
-    puts "Bot upload complete"
   end
 
   def create_history
@@ -33,7 +32,7 @@ class Bot < ApplicationRecord
   end
 
   def win_rate_race
-    my_matches = GameResult.joins(:bots).where(:bots => {id: self.id}).to_a
+    my_matches = GameResult.joins(:bots).where(:bots => { id: self.id }).to_a
     victory = GameResult.where(winner_id: self.id).to_a
     vs_terran = my_matches & vs_race("Terran", self.id).to_a
     vs_protoss = my_matches & vs_race("Protoss", self.id).to_a
@@ -61,6 +60,7 @@ class Bot < ApplicationRecord
   end
 
   def destroy_bot_executable
+    return unless self.executable.present?
     File.delete("#{bot_filepath}")
   end
 
@@ -78,7 +78,7 @@ class Bot < ApplicationRecord
   end
 
   def bot_filename
-    return File.basename(self.executable if self.executable.present?
+    return File.basename(self.executable) if self.executable.present?
     return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{bot_file_extension}"
   end
 

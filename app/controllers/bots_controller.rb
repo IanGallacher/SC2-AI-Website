@@ -31,7 +31,11 @@ class BotsController < ApplicationController
   def destroy
     @bot = Bot.find(params[:id])
     authorize! :destroy, @bot
-    @bot.destroy
+    if @bot.destroy
+      render json: { status: :ok }
+    else
+      render json: @bot.errors, status: :unprocessable_entity
+    end
   end
 
   private

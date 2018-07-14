@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe 'Bot History Model - ' do
+describe 'Bot History Model -' do
 end

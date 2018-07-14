@@ -4,10 +4,6 @@ class UsersController < ApplicationController
     render json: current_user.as_json
   end
 
-  def show
-    render json: User.find(params[:id])
-  end
-
   def upload
     @user = User.find(params[:user_id])
     authorize! :update, @user

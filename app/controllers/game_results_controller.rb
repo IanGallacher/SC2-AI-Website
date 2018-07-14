@@ -7,6 +7,7 @@ class GameResultsController < ApplicationController
   end
 
   def create
+    authorize! :create, GameResult
     if GameResult.create(game_result_params)
       render json: {status: :ok}
     else

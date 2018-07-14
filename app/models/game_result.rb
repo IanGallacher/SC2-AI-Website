@@ -9,7 +9,6 @@ class GameResult < ApplicationRecord
   after_save :save_replay, :update_mmr
 
   def save_replay
-    puts "Replay upload attempt"
     return unless @replayfile.present?
     self.replay = get_filename()
     File.open("public" + get_filename(), 'wb') {
