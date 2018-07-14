@@ -32,6 +32,9 @@ class GameResultsController < ApplicationController
         p[:winner_id] = Bot.where(name: params[:Bot2Name]).first.id
       end
     end
+    if p[:winner_name].present?
+      p[:winner_id] = Bot.where(name: params[:winner_name]).first.id
+    end
     return p
   end
 end
