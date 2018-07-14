@@ -61,7 +61,7 @@ export default class FileUpload extends React.Component {
     const config = { headers: { "content-type": "multipart/form-data" } };
     // Submit the upload
     axios.post(url, formData, config)
-      .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"));
+      .then(() => AlertLogic.addSuccess("Upload successful!"));
   }
 
   render() {

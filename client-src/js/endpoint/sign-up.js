@@ -24,7 +24,7 @@ export default class SignUp extends React.PureComponent {
   onSubmit = (event) => {
     event.preventDefault();
     LoginLogic.signUp(this.state)
-      .then(() => AlertLogic.addMessage("Account created", "alert-success"))
+      .then(() => AlertLogic.addSuccess("Account created"))
       .catch(errors => this.setState({errors}));
   }
 

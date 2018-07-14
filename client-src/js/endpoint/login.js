@@ -20,7 +20,7 @@ export default class Login extends React.PureComponent {
   onSubmit = event => {
     event.preventDefault();
     LoginLogic.login(this.state).then(() => {
-      AlertLogic.addMessage("Login successful", "alert-success");
+      AlertLogic.addSuccess("Login successful");
 
       // After logging in successfuly, redirect the user to the homepage.
       this.props.history.push("/");

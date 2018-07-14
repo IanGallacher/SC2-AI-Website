@@ -58,7 +58,7 @@ export default class FormZone extends React.Component {
     const config = { headers: { "content-type": "multipart/form-data" } };
     // Submit the upload
     axios[this.props.method](url, formData, config)
-      .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"));
+      .then(() => AlertLogic.addSuccess("Upload successful!"));
   }
 
   render() {

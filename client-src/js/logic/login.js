@@ -38,7 +38,7 @@ export default class LoginLogic {
           });
           resolve(response.data);
         })
-        .catch(error => AlertLogic.addMessage(error.response.data.message));
+        .catch(error => AlertLogic.addError(error.response.data.message));
     });
   }
 
@@ -57,7 +57,7 @@ export default class LoginLogic {
         .catch(error => {
           Object.entries(error).forEach(
             ([key, value]) => {
-              AlertLogic.addMessage(`${key} ${value[0]}`);
+              AlertLogic.addError(`${key} ${value[0]}`);
             }
           );
         //reject(error);

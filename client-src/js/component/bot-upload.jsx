@@ -48,11 +48,11 @@ export default class BotUpload extends React.Component {
     // Submit the upload
     if (this.props.method == "patch")
       axios.patch(url, formData, config)
-        .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"))
+        .then(() => AlertLogic.addSuccess("Upload successful!"))
         .catch(error=>this.setState({errors: error.response.data}));
     else
       axios.post(url, formData, config)
-        .then(() => AlertLogic.addMessage("Upload successful!", "alert-success"))
+        .then(() => AlertLogic.addSuccess("Upload successful!"))
         .catch(error=>this.setState({errors: error.response.data}));
   }
 

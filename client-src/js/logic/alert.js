@@ -3,8 +3,7 @@ var messages = [];
 
 export default class AlertLogic {
   static addMessage(message, cssClass) {
-    if(cssClass === undefined)
-      cssClass = "alert-error";
+    cssClass = cssClass || "alert-error";
     var thing = { id: alert_id,
       message: message,
       cssClass: cssClass,
@@ -17,6 +16,14 @@ export default class AlertLogic {
     alert_id++;
     if(this.notify)
       this.notify(messages);
+  }
+
+  static addSuccess(message) {
+    AlertLogic.addMessage(message, "alert-success");
+  }
+
+  static addError(message) {
+    AlertLogic.addMessage(message, "alert-error");
   }
 
   static getMessages() {

@@ -76,9 +76,9 @@ class EditAllBots extends React.PureComponent {
                     function() {
                       const axios_url = `${API_URL}/bots/${row.id}`;
                       axios.delete(axios_url).then(
-                        () => AlertLogic.addMessage("Succesfully deleted bot", "alert-success")
+                        () => AlertLogic.addSuccess("Succesfully deleted bot")
                       ).catch(
-                        () => AlertLogic.addMessage("Something went wrong")
+                        () => AlertLogic.addError("Something went wrong")
                       );
                     }
                   )

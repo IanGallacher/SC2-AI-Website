@@ -43,7 +43,7 @@ export default class Header extends React.Component {
 
   logout = () => {
     LoginLogic.logout();
-    AlertLogic.addMessage("Logout successful", "alert-success");
+    AlertLogic.addSuccess("Logout successful");
   }
 
   render() {
