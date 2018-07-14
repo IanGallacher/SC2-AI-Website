@@ -17,6 +17,7 @@ class ManualGameUpload extends React.PureComponent {
     return <div>
       <div>Manual result upload:</div>
       <FileUpload label="Upload GameResult:"
+        ajaxFileKey="replayfile"
         uploadPath={"/game_results"}
         validFileExtensions={[".png"]}>
         <TextInput name="map"

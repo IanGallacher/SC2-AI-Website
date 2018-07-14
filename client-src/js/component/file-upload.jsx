@@ -14,6 +14,7 @@ export default class FileUpload extends React.Component {
 
   static propTypes = {
     children: PropTypes.element,
+    ajaxFileKey: PropTypes.string,
     uploadPath: PropTypes.string,
     method: PropTypes.string.isRequired
   }
@@ -65,13 +66,14 @@ export default class FileUpload extends React.Component {
 
   render() {
     const children = this.props.children;
+    let ajaxFileKey = this.props.ajaxFileKey ? this.props.ajaxFileKey : "file";
     // We have to do this at render time to make sure we get the most up to date
     // state of all children.
     var childrenWithProps = React.Children.map(children, child =>
       React.cloneElement(child, { onChange: this.onChange })
     );
     return <form className="flex-horizontal" onSubmit={this.onSubmit}>
-      <input name="file"
+      <input name={ajaxFileKey}
         type="file"
         className="btZn"
         onChange={this.onFileChange}/>
