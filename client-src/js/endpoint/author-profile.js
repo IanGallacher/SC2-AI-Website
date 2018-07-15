@@ -20,17 +20,20 @@ const default_avatar_path = require("./../../img/avatar.jpg");
 
 function AuthorDetails(props) {
   if (props.editing) return <FormZone
-    uploadPath={props.edit_url}>
+    method="patch" uploadPath={props.edit_url}>
     <TextInput name="github"
       type="text"
       placeholder={props.profile.github ? props.profile.github : "Github"}
       className="text-input"/>
   </FormZone>;
   if (props.profile.github) return <div className="author-details">
-    <div className="profile-details">
-      Github: {props.profile.github && props.profile.github}
-    </div>
-  </div>;
+      <div className="profile-details">
+        <a href={props.profile.github}>
+          <i className="fab fa-github"></i>
+          &nbsp;Github: {props.profile.github}
+        </a>
+      </div>
+    </div>;
   return null;
 }
 AuthorDetails.propTypes = {
