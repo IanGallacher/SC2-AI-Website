@@ -27,13 +27,13 @@ function AuthorDetails(props) {
       className="text-input"/>
   </FormZone>;
   if (props.profile.github) return <div className="author-details">
-      <div className="profile-details">
-        <a href={props.profile.github}>
-          <i className="fab fa-github"></i>
-          &nbsp;Github: {props.profile.github}
-        </a>
-      </div>
-    </div>;
+    <div className="profile-details">
+      <a href={props.profile.github}>
+        <i className="fab fa-github"></i>
+        &nbsp;Github: {props.profile.github}
+      </a>
+    </div>
+  </div>;
   return null;
 }
 AuthorDetails.propTypes = {
