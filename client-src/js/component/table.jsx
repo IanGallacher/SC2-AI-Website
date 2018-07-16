@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingAnimation from "./loading.jsx";
 
-function renderTableCol(row, schema_entry) {
+function renderTableCell(row, schema_entry) {
   let {fieldName, render, onClick, columnLabel, showColumnIf} = schema_entry;
   if (showColumnIf && !showColumnIf()) return null;
   let contents = (render) ? render(row) : row[fieldName];
@@ -16,7 +16,7 @@ function renderTableCol(row, schema_entry) {
 
 function renderTableRow(row, schema, style) {
   return <tr key={row.id} className={style}>
-    { schema.map(schema_entry => renderTableCol(row, schema_entry)) }
+    { schema.map(schema_entry => renderTableCell(row, schema_entry)) }
   </tr>;
 }
 
