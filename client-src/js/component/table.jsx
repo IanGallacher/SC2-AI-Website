@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingAnimation from "./loading.jsx";
 
+import SchemaEntryPropType from "./../custom-proptypes/schema-entry.js";
+
 function renderTableCell(row, schema_entry) {
   let {fieldName, render, onClick, columnLabel, showColumnIf} = schema_entry;
   if (showColumnIf && !showColumnIf()) return null;
@@ -32,17 +34,6 @@ function comparisonFactory(i, sort_direction) {
   };
 }
 
-let PropTypeSchemaEntry = PropTypes.shape({
-  columnLabel: PropTypes.string.isRequired,
-  // Specify either fieldName or render to tell the table how to draw the row.
-  fieldName: PropTypes.string,
-  render: PropTypes.func,
-  // Set sortable to false to disable sorting when clicking the column header.
-  sortable: PropTypes.bool,
-  // Optional function to describe what happens when the cell is clicked.
-  onClick: PropTypes.func
-});
-
 export default class ResultTable extends React.Component {
   constructor(props) {
     super(props);
@@ -59,7 +50,7 @@ export default class ResultTable extends React.Component {
   static propTypes = {
     table: PropTypes.array, // Immutable table data.
     label: PropTypes.string, // The name shown above the table.
-    schema: PropTypes.arrayOf(PropTypeSchemaEntry).isRequired,
+    schema: PropTypes.arrayOf(SchemaEntryPropType).isRequired,
     nullMessage: PropTypes.string
   }
   // Figure out what components have been added or removed.
