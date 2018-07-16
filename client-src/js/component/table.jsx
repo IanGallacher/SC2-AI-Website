@@ -22,13 +22,22 @@ function renderTableRow(row, schema, style) {
   </tr>;
 }
 
+function columnValue(row, index, schema_entry) {
+  if(schema_entry.sortValue)
+    return schema_entry.sortValue(row);
+  else
+    return row[index];
+}
+
 // Sort_direction needs to be either 1 or -1. Optional.
-function comparisonFactory(i, sort_direction) {
-  if(!sort_direction) sort_direction = 1;
+function comparisonFactory(col_index, schema_entry, sort_direction) {
+  sort_direction = sort_direction || 1;
   return (a, b) => {
-    if(a[i] < b[i])
+    let val_a = columnValue(a, col_index, schema_entry);
+    let val_b = columnValue(b, col_index, schema_entry);
+    if(val_a < val_b)
       return -1 * sort_direction;
-    if(a[i] > b[i])
+    if(val_a > val_b)
       return 1 * sort_direction;
     return 0;
   };
@@ -85,18 +94,18 @@ export default class ResultTable extends React.Component {
     }, 200);
   }
 
-  updateSort = (sort_index, key) => {
+  updateSort = (sort_index, key, schema) => {
     let sort_direction = (Math.abs(this.state.sort_index) === sort_index) ?
       -this.state.sort_direction : 1;
+
     this.setState(
-      {sort_index, sort_direction},
-      () => this.sortTable(key)
+      {sort_index, sort_direction}, () => this.sortTable(comparisonFactory(key, schema[sort_index]))
     );
   }
 
-  sortTable = (key) => {
+  sortTable = (comparison) => {
     const table = this.state.table;
-    table.sort(comparisonFactory(key));
+    table.sort(comparison);
     if (this.state.sort_direction < 0) table.reverse();
     this.setState({table});
   }
@@ -114,7 +123,7 @@ export default class ResultTable extends React.Component {
         if (showColumnIf && !showColumnIf()) return null;
         return (
           <th key={index} onClick={
-            () => sortable !== false && this.updateSort(index, fieldName)
+            () => sortable !== false && this.updateSort(index, fieldName, schema)
           }>
             {columnLabel}
             {this.renderSortArrow(index)}

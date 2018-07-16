@@ -120,6 +120,7 @@ class AuthorProfile extends React.Component {
                   {
                     columnLabel:"Bot name",
                     fieldName:"name",
+                    sortValue: row => row.name.toLowerCase(),
                     onClick: row => {
                       this.props.history.push(`/bot/?bot_id=${row.id}`);
                     }
@@ -127,6 +128,7 @@ class AuthorProfile extends React.Component {
                   {
                     columnLabel:"Race",
                     fieldName:"race",
+                    sortValue: row => row.race.toLowerCase(),
                     onClick: row => {
                       this.props.history.push(`/bots/?race=${row.race}`);
                     }
@@ -172,7 +174,6 @@ class AuthorProfile extends React.Component {
                     Real name:
                   </span>{this.state.profile.name}</li>
               </ul>
-
             </div>
             */
           }
