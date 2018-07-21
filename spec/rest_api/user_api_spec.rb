@@ -1,11 +1,8 @@
 require 'rails_helper'
 
-def github_test(user, github_url, result)
-  result ||= 200
-  expect(post users_path(user), params: {
-    github: github_url
-  }).to eq result
-  expect(user.github).to eq github_url
+def github_test(user, github_url, result=200)
+  expect(patch user_path(user), params: { github: github_url }).to eq result
+  expect(User.find(user.id).github).to eq github_url if result == 200
 end
 
 describe 'User API -', type: :request  do
@@ -20,7 +17,7 @@ describe 'User API -', type: :request  do
     end
 
     it 'cannot update github' do
-      github_test(@standard_user, 'https://github.com/logged_in_user/', 403)
+      github_test(@standard_user, 'https://github.com/logged_in_user/', 401)
     end
 
     it 'cannot update avatar'

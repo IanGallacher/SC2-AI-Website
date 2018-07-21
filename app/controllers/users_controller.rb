@@ -17,7 +17,11 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     authorize! :update, @user
-    @user.update_attributes(update_params)
+    if @user.update_attributes(update_params)
+      render json: { status: :ok }
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
   end
 
   private

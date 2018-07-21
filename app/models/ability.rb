@@ -8,38 +8,17 @@ class Ability
     #cannot :read, GameResult unless signed_in
     can :create, GameResult if user.role == 'admin'
     can :create, Bot if signed_in
-    can :update, Bot, owner_id: user.id if signed_in
-    can :update, Bot if user.role == 'admin'
-    can :destroy, Bot, owner_id: user.id if signed_in
-    can :destroy, Bot if user.role == 'admin'
+    can :update, Bot do |bot|
+      (signed_in && bot.owner_id == user.id) || user.role == 'admin'
+    end
+
+    can :destroy, Bot do |bot|
+      (signed_in && bot.owner_id == user.id) || user.role == 'admin'
+    end
 
     can :create, User, id: user.id
-    can :update, User, id: user.id
-    # Define abilities for the passed in user here. For example:
-    #
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-    #
-    # The first argument to `can` is the action you are giving the user
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on.
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details:
-    # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+    can :update, User do |u|
+      (signed_in && u.id == user.id) || user.role == 'admin'
+    end
   end
 end

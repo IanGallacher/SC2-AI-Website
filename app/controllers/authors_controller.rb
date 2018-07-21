@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-  protect_from_forgery except: :destroy
+  # protect_from_forgery except: :destroy
   def index
     render json: User.all
   end

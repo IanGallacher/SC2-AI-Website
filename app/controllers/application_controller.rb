@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     else
       render json: {error: "You must be logged in to perform this action."}, status: 401
     end
-  end 
+  end
 
   # Configure devise to use usernames for login.
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -32,5 +32,5 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
     devise_parameter_sanitizer.permit :sign_in, keys: added_attrs
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
-  end 
+  end
 end
