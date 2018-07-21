@@ -8,11 +8,6 @@ script:
 cache: bundler
 services:
   - mysql
-addons:
-  apt:
-    packages:
-      - mysql-server
-      - mysql-client
 before_install:
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
   - sudo mysql_upgrade
