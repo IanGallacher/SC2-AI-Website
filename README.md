@@ -1,6 +1,7 @@
+# Sc2 AI Website
 [![Build Status](https://travis-ci.com/IanGallacher/SC2-AI-Website.svg?branch=master)](https://travis-ci.com/IanGallacher/SC2-AI-Website)
 
-# Rough Instructions
+## Rough Instructions
 
 These instructions are very quick and dirty. If you get stuck, feel free to ask for help on one of the [comunity hubs](http://sc2ai.net/Joinus.php).
 
@@ -43,5 +44,3 @@ Note that this guide does not yet cover setting up pre-requisite software, and i
 * The website should display on your screen.
 
 * Any issues, blame TheDoctor (it's definitely all his fault).
-
-
