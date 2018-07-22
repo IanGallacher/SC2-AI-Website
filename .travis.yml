@@ -1,13 +1,20 @@
 language: ruby
 rvm:
-- 2.3.1
+  - 2.3.1
+node_js:
+  - '9'
 bundler_args: --jobs=2
 script:
+  - ./node_modules/.bin/eslint client-src/js
   - bundle exec rake db:setup RAILS_ENV=test
   - bundle exec rspec
-cache: bundler
+cache:
+  bundler: true
+  directories:
+  - node_modules
 services:
   - mysql
 before_install:
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - npm install
   - sudo service mysql restart
