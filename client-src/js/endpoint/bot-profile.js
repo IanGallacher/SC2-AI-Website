@@ -110,7 +110,7 @@ class BotProfile extends React.Component {
     const win_rate_zerg = bot.win_rate_race.zerg;
     return <div className="trading-card-horizontal">
       <div className="trading-card-header">
-        <title>{`Bot Name: ${bot.name}`}</title>
+        <h2>{`Bot Name: ${bot.name}`}</h2>
         <Link to={`/authors/?author_id=${bot.owner_id}`}>
           {`Bot Author: ${bot.author}`}
         </Link>

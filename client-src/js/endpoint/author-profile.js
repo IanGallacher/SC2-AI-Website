@@ -46,7 +46,6 @@ function renderBotDetails(bot) {
   return <BotUpload
     bot={bot}
     uploadPath={`/bots/${bot.id}`}
-    label="asdf"
     method="patch"
   />;
 }
