@@ -15,14 +15,17 @@ import ResetPassword from "./endpoint/reset-password.js";
 import Season from "./endpoint/season.js";
 import SignUp from "./endpoint/sign-up.js";
 import SplashScreen from "./endpoint/splash-screen.js";
+import TwitchStream from "./endpoint/twitch.js";
 import FAQ from "./endpoint/faq.js";
 import PageNotFound from "./endpoint/404.js";
 
 function pageView(WrappedComponent) {
   return class pageViewWrapper extends React.Component {
     render() {
-      return <div className="page-area">
-        <WrappedComponent props={{...this.props}}/>
+      return <div className="page-scroll-offset">
+        <div className="page-area">
+          <WrappedComponent props={{...this.props}}/>
+        </div>
       </div>;
     }
   };
@@ -49,6 +52,7 @@ export default class PageRouting extends React.Component {
         <PageRoute path="/login" render={props => <Login {...props}/>}/>
         <PageRoute path="/sign-up" render={props => <SignUp {...props}/>}/>
         <PageRoute path="/reset-password" component={ResetPassword}/>
+        <Route path="/twitch" render={props => <TwitchStream {...props}/>}/>
         <PageRoute exact strict path="/authors" component={AuthorList}/>
         <PageRoute path="/authors/*" component={AuthorProfile}/>
         <RequireLoggedInRoute

@@ -72,10 +72,8 @@ export default class App extends React.Component {
                 logout={this.logout}/>
               <div className="scroll-zone">
                 <div className="page-zone">
-                  <div className="page-scroll-offset">
-                    <AlertZone messages={this.state.alert_messages}/>
-                    <PageRouting ctx={this}/>
-                  </div>
+                  <AlertZone messages={this.state.alert_messages}/>
+                  <PageRouting ctx={this}/>
                 </div>
               </div>
               <Modal ref={r => this.modal = r}/>

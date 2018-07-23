@@ -57,6 +57,7 @@ export default class Header extends React.Component {
           <HeaderLink link="/bots" text="Ladder"/>
           <HeaderLink link="/results" text="Results"/>
           <HeaderLink link="/authors" text="Authors"/>
+          <HeaderLink link="/twitch" text="Twitch"/>
           <li className="navbar-btn unessential">
             <a href="http://wiki.sc2ai.net">Wiki</a>
           </li>

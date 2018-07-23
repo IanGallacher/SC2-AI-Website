@@ -6,7 +6,8 @@
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "globals": {
-    "require": true
+    "require": true,
+    "Twitch": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
