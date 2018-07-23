@@ -32,8 +32,10 @@ function pageView(WrappedComponent) {
 }
 
 function PageRoute({component, render, ...props}) {
-  return <div className="page-area">
-    <Route props={{...props}} component={component} render={render}/>
+  return <div className="page-scroll-offset">
+    <div className="page-area">
+      <Route props={{...props}} component={component} render={render}/>
+    </div>
   </div>;
 
 }
