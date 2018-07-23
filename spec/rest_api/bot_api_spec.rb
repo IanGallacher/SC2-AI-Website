@@ -65,6 +65,28 @@ describe 'Bot API -', type: :request do
       Bot.last.send(:destroy_bot_executable)
     end
 
+    it 'help me'
+    # Users can not create bots that share a name of an existing bot.
+    it 'cannot create duplicate bot' do
+      bot_name = "#{Faker::Pokemon.name} bot"
+      bot_race = %w[Terran Protoss Zerg Random].sample
+      expect(
+        post bots_path, params: {
+          name: bot_name,
+          race: bot_race,
+          file: fixture_file_upload('bot.examp')
+        }
+      ).to eq 200
+      expect(
+        post bots_path, params: {
+          name: bot_name,
+          race: bot_race,
+          file: fixture_file_upload('bot.examp')
+        }
+      ).to eq 422
+      Bot.last.send(:destroy_bot_executable)
+    end
+
     it 'can update owned bot' do
       expect(patch bot_path(@bots[1])).to eq 200
     end
