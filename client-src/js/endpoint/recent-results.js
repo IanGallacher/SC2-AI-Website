@@ -27,7 +27,7 @@ export default class RecentResults extends React.Component {
             [
               {
                 columnLabel:"First Bot",
-                sortValue: row => row.bots[0].name.toLowerCase(),
+                sortValue: row => (row.bots[0].name || "").toLowerCase(),
                 render: row => {
                   if(row.bots.length > 0 && row.bots.length >= 2)
                     return row.bots[0].name;
@@ -35,7 +35,7 @@ export default class RecentResults extends React.Component {
               },
               {
                 columnLabel:"Second Bot",
-                sortValue: row => row.bots[1].name.toLowerCase(),
+                sortValue: row => (row.bots[1].name || "").toLowerCase(),
                 render: row => {
                   if(row.bots.length > 0 && row.bots.length >= 2)
                     return row.bots[1].name;
@@ -44,12 +44,12 @@ export default class RecentResults extends React.Component {
               {
                 columnLabel:"Map",
                 fieldName:"map",
-                sortValue: row => row.map.toLowerCase()
+                sortValue: row => (row.map || "").toLowerCase()
               },
               {
                 columnLabel:"Winner",
                 fieldName:"winner_name",
-                sortValue: row => row.winner_name.toLowerCase(),
+                sortValue: row => (row.winner_name || "").toLowerCase(),
                 onClick: row => {
                   this.props.history.push(`/bot/?bot_id=${row.winner_id}`);
                 }

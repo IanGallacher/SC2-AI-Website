@@ -55,12 +55,12 @@ class EditAllBots extends React.PureComponent {
             {
               columnLabel:"Bot name",
               fieldName:"name",
-              sortValue: row => row.name.toLowerCase()
+              sortValue: row => (row.name || "").toLowerCase()
             },
             {
               columnLabel:"Author",
               fieldName:"author",
-              sortValue: row => row.author.toLowerCase()
+              sortValue: row => (row.author || "").toLowerCase()
             },
             {
               columnLabel:"Race",

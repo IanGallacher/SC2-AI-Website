@@ -99,7 +99,9 @@ export default class ResultTable extends React.Component {
       -this.state.sort_direction : 1;
 
     this.setState(
-      {sort_index, sort_direction}, () => this.sortTable(comparisonFactory(key, schema[sort_index]))
+      {sort_index, sort_direction}, () => this.sortTable(
+        comparisonFactory(key, schema[sort_index])
+      )
     );
   }
 

@@ -71,7 +71,7 @@ class Bots extends React.Component {
             {
               columnLabel:"Bot name",
               fieldName:"name",
-              sortValue: row => row.name.toLowerCase(),
+              sortValue: row => (row.name || "").toLowerCase(),
               onClick: row => {
                 this.props.history.push(`/bot/?bot_id=${row.id}`);
               }
@@ -79,7 +79,7 @@ class Bots extends React.Component {
             {
               columnLabel:"Author",
               fieldName:"author",
-              sortValue: row => row.author.toLowerCase(),
+              sortValue: row => (row.author || "").toLowerCase(),
               onClick: row => {
                 this.props.history.push(`/authors/?author_id=${row.owner_id}`);
               }
