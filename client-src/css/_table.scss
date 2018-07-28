@@ -53,7 +53,9 @@ table {
     box-sizing: border-box;
     width: 100%;
   }
-  .optional { display: none; }
+  @media(max-width: $max-mobile-width) {
+    .optional { display: none; }
+  }
 }
 
 .sub-table-container {
