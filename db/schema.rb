@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180702032842) do
+ActiveRecord::Schema.define(version: 20180728181541) do
 
   create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20180702032842) do
     t.string "map", null: false
     t.bigint "winner_id"
     t.string "replay"
+    t.datetime "created_at"
     t.index ["winner_id"], name: "fk_rails_f187e71c0b"
   end
 

@@ -2,10 +2,11 @@
 #
 # Table name: game_results
 #
-#  id        :bigint(8)        not null, primary key
-#  map       :string(255)      not null
-#  replay    :string(255)
-#  winner_id :bigint(8)
+#  id         :bigint(8)        not null, primary key
+#  map        :string(255)      not null
+#  replay     :string(255)
+#  created_at :datetime
+#  winner_id  :bigint(8)
 #
 # Indexes
 #
