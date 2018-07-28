@@ -28,7 +28,7 @@ $line-height, $border-radius) {
 
   background-color: buttonface;
   transition: background-color 0.2s ease-in-out;
-  &:hover {background-color: #eee; }
+  &:hover { background-color: #eee; }
 }
 
 .btn-block {
@@ -66,14 +66,21 @@ $toggle-width: 30px;
 $toggle-center-dist: ($toggle-width/2);
 
 .toggle-wrap {
-  position: absolute;
+  position: relative;
+  float: right;
   cursor: pointer;
-  top: $toggle-center-dist;
   right: $toggle-center-dist;
+
+  top: 40px;// center vertically.
+  transform: translateY(-50%);// center vertically.
 
   /*disable selection*/
   -webkit-touch-callout: none;
   user-select: none;
+
+  @media(min-width: $min-mobile-width) {
+    display: none;
+  }
 }
 
 .toggle-bar,

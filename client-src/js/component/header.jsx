@@ -11,29 +11,12 @@ import {
 } from "./../logic/permission.js";
 
 const logo_path = require("./../../img/Yc40O.png");
-const Separator = () => <li>|</li>;
-
-const HeaderLink = ({link, text}) => <li className="navbar-btn">
-  <NavLink to={link}>{text}</NavLink>
-</li>;
-HeaderLink.propTypes = {
-  link: PropTypes.string,
-  text: PropTypes.string
-};
-const UnessentialHeaderLink = ({link, text}) => <li className="navbar-btn unessential">
-  <NavLink to={link}>{text}</NavLink>
-</li>;
-UnessentialHeaderLink.propTypes = {
-  link: PropTypes.string,
-  text: PropTypes.string
-};
+const Separator = () => <li className="navbar-divider">|</li>;
 
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { season : [{id:1,name:"current"}],
-      sidebarExpanded : false,
-      seasonExpanded : false };
+    this.state = { season : [{ id:1, name:"current" }], navbarExpanded : false  };
   }
 
   static propTypes = {
@@ -46,33 +29,59 @@ export default class Header extends React.Component {
     AlertLogic.addSuccess("Logout successful");
   }
 
+  expandHeader = () => {
+    this.setState({navbarExpanded: true});
+  }
+
+  collapseHeader = () => {
+    this.setState({navbarExpanded: false});
+  }
+
+  toggleHeader = () => {
+    console.log("HI");
+    let newState = !this.state.navbarExpanded;
+    this.setState({navbarExpanded: newState});
+  }
+
+  HeaderLink = ({link, text}) => <li className="navbar-btn">
+    <NavLink to={link} onClick={this.toggleHeader}>{text}</NavLink>
+  </li>;
+
   render() {
+    let headerClass = "navbar";
+    headerClass += (this.state.navbarExpanded) ? " expanded" : " collapsed";
+    let toggleClass = "toggle-bar";
+    toggleClass += (this.state.navbarExpanded) ? " expanded" : " collapsed";
+
     return (
       <nav className="header">
+        <div className="toggle-wrap" data-expanded={this.state.navbarExpanded}>
+          <div className={toggleClass} onClick={this.toggleHeader}/>
+        </div>
         <Link to="/">
           <img className="header-img" src={logo_path} alt="Sc2Ladder"/>
         </Link>
         <div className="navbar-header">Starcraft 2 AI Ladder</div>
-        <ul className="navbar">
-          <HeaderLink link="/bots" text="Ladder"/>
-          <HeaderLink link="/results" text="Results"/>
-          <HeaderLink link="/authors" text="Authors"/>
-          <HeaderLink link="/twitch" text="Twitch"/>
-          <li className="navbar-btn unessential">
+        <ul className={headerClass}>
+          <this.HeaderLink link="/bots" text="Ladder"/>
+          <this.HeaderLink link="/results" text="Results"/>
+          <this.HeaderLink link="/authors" text="Authors"/>
+          <this.HeaderLink link="/twitch" text="Twitch"/>
+          <li className="navbar-btn">
             <a href="http://wiki.sc2ai.net">Wiki</a>
           </li>
-          <UnessentialHeaderLink link="/faq" text="FAQ"/>
+          <this.HeaderLink link="/faq" text="FAQ"/>
           <RenderIfLoggedOut>
             <Separator/>
-            <HeaderLink link="/sign-up" text="Sign Up"/>
-            <HeaderLink link="/login" text="Login"/>
+            <this.HeaderLink link="/sign-up" text="Sign Up"/>
+            <this.HeaderLink link="/login" text="Login"/>
           </RenderIfLoggedOut>
           <RenderIfLoggedIn>
             <Separator/>
             <RenderIfRole role="admin">
-              <HeaderLink link="/admin-control-panel" text="Admin"/>
+              <this.HeaderLink link="/admin-control-panel" text="Admin"/>
             </RenderIfRole>
-            <HeaderLink link="/my-profile" text="Profile"/>
+            <this.HeaderLink link="/my-profile" text="Profile"/>
             <li className="navbar-btn" onClick={this.logout}><a>Logout</a></li>
           </RenderIfLoggedIn>
         </ul>

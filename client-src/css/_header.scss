@@ -12,7 +12,6 @@
   margin: 0;
   top: 0;
   width: 100%;
-  height: $navbar-height;
   line-height: $navbar-height;
   z-index: 1; // The navbar always needs to be above all other content.
   border-style: none;
@@ -20,7 +19,6 @@
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
   background: $nav-background;
   color: rgba(255, 255, 255, 0.75);
-  @media (max-width: $max-content-width) { height: $navbar-height * 2; }
 }
 
 .header-img {
@@ -38,15 +36,27 @@
   margin: 0;
   > li { float: left; }
 
-  @media (min-width: $max-content-width + 1px) {
+  @media (min-width: $min-content-width) {
     float: left;
     margin: 0;
     height: 100%; // Needed so border-box children are calculated correctly.
+    width: auto !important;
   }
 
-  @media (max-width: $max-content-width) {
+  @media (min-width: $min-mobile-width) {
     width: 100vw;
     height: $navbar-height; // Needed so border-box children are calculated correctly.
+  }
+
+  &.collapsed .navbar-btn {
+    // When the navbar is vertical, no need to have the buttons quite so tall.
+    @media(max-width: $max-mobile-width) {
+      overflow: hidden;
+
+      // Hide the navbar when collapsed.
+      line-height: 0;
+      height: 0;
+    }
   }
 }
 
@@ -55,39 +65,60 @@
   margin-left: 20px;
   float: left;
 
-  @media (max-width: 410px) {
-    font-size: 24px;
-  }
+  @media(max-width: 410px) { margin-left: 5px; }
+  @media(max-width: $max-mobile-width) { font-size: 6vw; }
 }
 
 .navbar-btn {
   position: relative;
-  height: 100%;
   float: right;
+  transition: height 0.2s ease-out;
 
-  > a {
-    position: relative;
-    display: block;
+  @media(min-width: $min-mobile-width) {
     height: 100%;
-    padding: 0 11px;
-    //font-size: 14px;
 
-    &:hover,
-    &:focus,
-    &[aria-current='true'] {
-      text-decoration: none;
-      background-color: #777;
+    > a {
+      position: relative;
+      display: block;
+      height: 100%;
+      padding: 0 11px;
+
+      &:hover,
+      &:focus,
+      &[aria-current='true'] {
+        text-decoration: none;
+        background-color: #777;
+      }
+    }
+
+    > a[aria-current='true'] {
+      box-sizing: border-box;
+      border-bottom: 5px solid $accent-color;
     }
   }
 
-  > a[aria-current='true'] {
-    box-sizing: border-box;
-    border-bottom: 5px solid $accent-color;
-  }
+  @media(max-width: $max-mobile-width) {
+    width: 100%;
+    background: $nav-background;
+    // Without an explicit height, the collapse animation won't work.
+    height: 60px;
+    line-height: 60px;
 
-  &.unessential {
-    @media (max-width: $max-mobile-width) {
-      display: none;
+    > a {
+      float: right;
+      padding: 0 25px;
+    }
+
+    > a[aria-current='true'] {
+      box-sizing: border-box;
+      border-right: 5px solid $accent-color;
     }
   }
+}
+
+.navbar-divider {
+  // Once we switch to using a dropdown menu, the buttons are arranged
+  // vertically instead of horizontally.
+  // There is no longer any point to displaying the divider.
+  @media(max-width: $max-mobile-width) { display: none; }
 }

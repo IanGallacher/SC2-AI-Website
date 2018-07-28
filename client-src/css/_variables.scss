@@ -1,7 +1,7 @@
-$sidebar-width: 250px;
-$sidebar-collapse-size: 0;//50px;
 $max-content-width: 992px;
+$min-content-width: $max-content-width + 1;
 $max-mobile-width: 600px;
+$min-mobile-width: $max-mobile-width + 1;
 $navbar-padding-vertical: 20px;
 $navbar-height: 80px;
 $nav-background: #24292e;
