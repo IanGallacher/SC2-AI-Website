@@ -58,6 +58,7 @@ export default class RecentResults extends React.Component {
                 columnLabel:"Replay",
                 fieldName:"replay",
                 sortable: false,
+                optional: true,
                 render: row => {
                   if (row.replay)
                     return <form method="get" action={row.replay}>

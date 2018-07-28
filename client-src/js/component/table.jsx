@@ -8,9 +8,11 @@ function renderTableCell(row, schema_entry) {
   let {fieldName, render, onClick, columnLabel, showColumnIf} = schema_entry;
   if (showColumnIf && !showColumnIf()) return null;
   let contents = (render) ? render(row) : row[fieldName];
+  let cellClass = schema_entry.optional ? "optional" : "";
+  cellClass += onClick ? " clickable" : "";
   return <td
     key={columnLabel}
-    className={ onClick && "clickable" }
+    className={ cellClass }
     onClick={() => onClick && onClick(row)}>
     <div className="collapse-container">{ contents }</div>
   </td>;
@@ -121,10 +123,11 @@ export default class ResultTable extends React.Component {
 
   TableHeader = ({schema}) => {
     return <tr>
-      { schema.map(({columnLabel, fieldName, sortable, showColumnIf}, index) => {
+      { schema.map(({columnLabel, fieldName, sortable, showColumnIf, optional}, index) => {
         if (showColumnIf && !showColumnIf()) return null;
+        let cellClass = optional ? "optional" : "";
         return (
-          <th key={index} onClick={
+          <th key={index} className={cellClass} onClick={
             () => sortable !== false && this.updateSort(index, fieldName, schema)
           }>
             {columnLabel}

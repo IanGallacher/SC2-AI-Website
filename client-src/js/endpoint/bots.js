@@ -82,14 +82,16 @@ class Bots extends React.Component {
               sortValue: row => (row.author || "").toLowerCase(),
               onClick: row => {
                 this.props.history.push(`/authors/?author_id=${row.owner_id}`);
-              }
+              },
+              optional: true
             },
             {
               columnLabel:"Race",
               fieldName:"race",
               onClick: row => {
                 this.props.history.push(`/bots/?race=${row.race}`);
-              }
+              },
+              optional: true
             },
             {
               columnLabel:"Games Won",
@@ -97,7 +99,8 @@ class Bots extends React.Component {
             },
             {
               columnLabel:"Games Played",
-              fieldName:"match_count"
+              fieldName:"match_count",
+              optional: true
             },
             {
               columnLabel:"MMR",
