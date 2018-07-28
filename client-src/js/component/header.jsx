@@ -16,7 +16,7 @@ const Separator = () => <li className="navbar-divider">|</li>;
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { season : [{ id:1, name:"current" }], navbarExpanded : false  };
+    this.state = { season : [{ id:1, name:"current" }], navbarExpanded : false };
   }
 
   static propTypes = {
@@ -38,7 +38,6 @@ export default class Header extends React.Component {
   }
 
   toggleHeader = () => {
-    console.log("HI");
     let newState = !this.state.navbarExpanded;
     this.setState({navbarExpanded: newState});
   }
@@ -55,8 +54,11 @@ export default class Header extends React.Component {
 
     return (
       <nav className="header">
-        <div className="toggle-wrap" data-expanded={this.state.navbarExpanded}>
-          <div className={toggleClass} onClick={this.toggleHeader}/>
+        <div
+          className="toggle-wrap"
+          data-expanded={this.state.navbarExpanded}
+          onClick={this.toggleHeader}>
+          <div className={toggleClass}/>
         </div>
         <Link to="/">
           <img className="header-img" src={logo_path} alt="Sc2Ladder"/>
