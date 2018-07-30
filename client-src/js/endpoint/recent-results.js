@@ -8,17 +8,42 @@ import ResultTable from "./../component/table.jsx";
 export default class RecentResults extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { game_results: null };
+    this.state = {
+      page: 1,
+      game_results: null
+    };
   }
 
   static propTypes = { history: ReactRouterPropTypes.history }
 
   componentDidMount() {
-    axios.get(API_URL + "/game_results")
+    this.loadResultsData();
+  }
+
+  loadResultsData() {
+    axios.get(API_URL + "/game_results?page=" + this.state.page)
       .then(response => this.setState({game_results: response.data}));
   }
 
+  getPage(page) {
+    this.setState({page: page});
+    let self = this;
+    setTimeout(function(){ self.loadResultsData() ; }, 1000);
+  }
+
+  initPageNumbers(){
+    let total_rows = parseInt(15);//todo
+    let page = 1;
+    let rows = [];
+    for(var x = 0; x < total_rows; x += 5){//todo
+      rows.push(page);
+      page++;
+    }
+    return rows;
+  }
+
   render() {
+    let rows = this.initPageNumbers();
     return (
       <div>
         <ResultTable
@@ -69,6 +94,15 @@ export default class RecentResults extends React.Component {
               },
             ]
           }/>
+        <div>
+          <ul className="pagination">
+            {rows.map((r) =>
+              <li key={r}>
+                <a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a>
+              </li>
+            ) }
+          </ul>
+        </div>
       </div>
     );
   }
