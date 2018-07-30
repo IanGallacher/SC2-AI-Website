@@ -10,6 +10,7 @@ export default class RecentResults extends React.Component {
     super(props);
     this.state = {
       page: 1,
+      max_pages: null,
       game_results: null
     };
   }
@@ -22,7 +23,7 @@ export default class RecentResults extends React.Component {
 
   loadResultsData() {
     axios.get(API_URL + "/game_results?page=" + this.state.page)
-      .then(response => this.setState({game_results: response.data}));
+      .then(response => this.setState({game_results: response.data, page: 1}));
   }
 
   getPage(page) {
