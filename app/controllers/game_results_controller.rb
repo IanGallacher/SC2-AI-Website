@@ -3,7 +3,7 @@ class GameResultsController < ApplicationController
     authorize! :read, GameResult
     game_results = GameResult.includes(:bots, :winner)
     #game_results = GameResult.eager_load( :bots )
-    render json: game_results.as_json(template: :index)
+    render json: game_results.all.paginate(page: params[:page], per_page: 5).as_json(template: :index)
   end
 
   def create
