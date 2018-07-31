@@ -10,8 +10,9 @@ export default class RecentResults extends React.Component {
     super(props);
     this.state = {
       page: 1,
-      max_pages: null,
-      game_results: null
+      per_page: 10,
+      game_results: null,
+      total_results: null
     };
   }
 
@@ -22,8 +23,8 @@ export default class RecentResults extends React.Component {
   }
 
   loadResultsData() {
-    axios.get(API_URL + "/game_results?page=" + this.state.page)
-      .then(response => this.setState({game_results: response.data}));
+    axios.get(API_URL + "/game_results?per_page=" + this.state.per_page + "&page=" + this.state.page)
+      .then(response => this.setState({game_results: response.data.game_results, total_results: response.data.total}));
   }
 
   getPage(page) {
@@ -33,10 +34,10 @@ export default class RecentResults extends React.Component {
   }
 
   initPageNumbers(){
-    let total_rows = parseInt(15);//todo
+    let total_rows = parseInt(this.state.total_results);
     let page = 1;
     let rows = [];
-    for(var x = 0; x < total_rows; x += 5){//todo
+    for(let x = 0; x < total_rows; x += this.state.per_page){
       rows.push(page);
       page++;
     }
