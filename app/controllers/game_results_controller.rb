@@ -3,11 +3,13 @@ class GameResultsController < ApplicationController
     authorize! :read, GameResult
     game_results = GameResult.includes(:bots, :winner)
     #game_results = GameResult.eager_load( :bots )
-    if params.has_key?(:page) && params.has_key?(:per_page)
+
+    # Page the game results
+    if params.has_key?(:page) && params.has_key?(:per_page) # list page number with number entries per page
       render json: game_results.all.paginate(page: params[:page], per_page: params[:per_page]).as_json(template: :index)
-    elsif params.has_key?(:page)
+    elsif params.has_key?(:page) # per_page not supplied - make it 10
       render json: game_results.all.paginate(page: params[:page], per_page: 10).as_json(template: :index)
-    else
+    else # return all entries
       render json: game_results.as_json(template: :index)
     end
   end
