@@ -5,13 +5,23 @@ class GameResultsController < ApplicationController
     #game_results = GameResult.eager_load( :bots )
 
     # Page the game results
-    if params.has_key?(:page) && params.has_key?(:per_page) # list page number with number entries per page
-      render json: game_results.all.paginate(page: params[:page], per_page: params[:per_page]).as_json(template: :index)
-    elsif params.has_key?(:page) # per_page not supplied - make it 10
-      render json: game_results.all.paginate(page: params[:page], per_page: 10).as_json(template: :index)
-    else # return all entries
-      render json: game_results.as_json(template: :index)
+    if params.has_key?(:page)
+      # page is set
+      if params.has_key?(:per_page)
+        # per_page is set
+        game_results = game_results.paginate(page: params[:page], per_page: params[:per_page])
+      else
+        # per_page not set - default to 100
+        game_results = game_results.paginate(page: params[:page], per_page: 100)
+      end
+
+      response = {game_results: game_results.as_json(template: :index), total: game_results.total_entries}
+    else
+      # page not set - return all results
+      response = {game_results: game_results.as_json(template: :index), total: game_results.length}
     end
+    
+    render json: response
   end
 
   def create
