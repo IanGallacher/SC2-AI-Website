@@ -23,7 +23,7 @@ export default class RecentResults extends React.Component {
 
   loadResultsData() {
     axios.get(API_URL + "/game_results?page=" + this.state.page)
-      .then(response => this.setState({game_results: response.data, page: 1}));
+      .then(response => this.setState({game_results: response.data}));
   }
 
   getPage(page) {
