@@ -6,11 +6,13 @@
 #  map        :string(255)      not null
 #  replay     :string(255)
 #  created_at :datetime
+#  season_id  :bigint(8)        not null
 #  winner_id  :bigint(8)
 #
 # Indexes
 #
-#  fk_rails_f187e71c0b  (winner_id)
+#  fk_rails_f187e71c0b              (winner_id)
+#  index_game_results_on_season_id  (season_id)
 #
 # Foreign Keys
 #

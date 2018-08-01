@@ -17,6 +17,7 @@
 #  role                   :string(255)      default("user")
 #  sign_in_count          :integer          default(0), not null
 #  username               :string(255)      not null
+#  website                :string(255)      default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

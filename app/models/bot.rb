@@ -46,8 +46,9 @@ class Bot < ApplicationRecord
     File.open("#{bot_filepath}", 'wb') { |file| file.write(@file.read) }
   end
 
-  def create_history
-    BotHistory.create(bot_id: self.id, mmr: 1600)
+  def create_history(season=nil)
+    season ||= Season.first
+    BotHistory.create(bot_id: self.id, mmr: 1600, season: season)
   end
 
   def current_mmr
