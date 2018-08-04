@@ -9,6 +9,8 @@
 #
 
 class Season < ApplicationRecord
+  has_many :bot_season_statistics
+  has_many :bots, through: :bot_season_statistics
   has_many :game_results
   after_create :create_histories
 

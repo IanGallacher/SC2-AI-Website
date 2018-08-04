@@ -18,12 +18,12 @@ class GameResultsController < ApplicationController
   def game_result_params
     p = params.permit(:map, :replayfile, :winner_id)
     if params.key? :gba
-      p[:game_result_bots_attributes] = JSON.parse(params[:gba])
+      p[:bot_game_results_attributes] = JSON.parse(params[:gba])
     else
       attributes = []
       attributes.push bot_id: Bot.where(name: params[:Bot1Name]).first.id
       attributes.push bot_id: Bot.where(name: params[:Bot2Name]).first.id
-      p[:game_result_bots_attributes] = attributes
+      p[:bot_game_results_attributes] = attributes
       p[:map] = params[:Map]
       if params[:Result] == "Player1Win"
         p[:winner_id] = Bot.where(name: params[:Bot1Name]).first.id

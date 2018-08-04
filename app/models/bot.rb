@@ -2,14 +2,12 @@
 #
 # Table name: bots
 #
-#  id          :bigint(8)        not null, primary key
-#  author      :string(255)      not null
-#  executable  :string(255)
-#  match_count :integer          default(0), not null
-#  name        :string(255)      not null
-#  race        :string(255)      not null
-#  win_count   :integer          default(0), not null
-#  owner_id    :bigint(8)
+#  id         :bigint(8)        not null, primary key
+#  author     :string(255)      not null
+#  executable :string(255)
+#  name       :string(255)      not null
+#  race       :string(255)      not null
+#  owner_id   :bigint(8)
 #
 # Indexes
 #
@@ -23,12 +21,16 @@
 class Bot < ApplicationRecord
   include BetterJson
   has_many :bot_histories
-  has_many :game_result_bots, dependent: :nullify
-  has_many :game_results, through: :game_result_bots
+  # has_many :game_result_bots, dependent: :nullify
+  has_many :bot_season_statistics
+  has_many :seasons, through: :bot_season_statistics
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
+  has_and_belongs_to_many :game_results
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
+
   validates :name, :author, :race, presence: true
   validates :name, uniqueness: { case_sensitive: false }
+
   after_create :create_history
   before_save :set_file_path
   after_save :save_dll
@@ -48,7 +50,7 @@ class Bot < ApplicationRecord
 
   def create_history(season=nil)
     season ||= Season.first
-    BotHistory.create(bot_id: self.id, mmr: 1600, season: season)
+    BotHistory.create(bot_id: self.id, mmr: 1600, season: season, created_at: season.start_date)
   end
 
   def current_mmr

@@ -1,15 +1,20 @@
 namespace :legacy_db do
   desc "Import ALL data from the php ladder database, no duplicate checking."
   task import: :environment do
-    legacy_seasons = legacy_database.query("SELECT * FROM seasons").to_a
-    legacy_seasonids = legacy_database.query("SELECT * FROM seasonids").to_a
-    legacy_results = legacy_database.query("SELECT * FROM results").to_a
-    legacy_bots = legacy_database.query("SELECT * FROM participants").to_a
-    legacy_members = legacy_database.query("SELECT * FROM members").to_a
-    # Create the bots before seasons in order to give each bot a starting mmr per season.
-    convert_bots(legacy_bots, legacy_members)
-    convert_seasons(legacy_seasonids)
-    convert_results(legacy_results, legacy_bots, legacy_members, legacy_seasonids)
+    begin
+      ActiveRecord::Base.record_timestamps = false
+      legacy_seasons = legacy_database.query("SELECT * FROM seasons").to_a
+      legacy_seasonids = legacy_database.query("SELECT * FROM seasonids").to_a
+      legacy_results = legacy_database.query("SELECT * FROM results").to_a
+      legacy_bots = legacy_database.query("SELECT * FROM participants").to_a
+      legacy_members = legacy_database.query("SELECT * FROM members").to_a
+      # Create the bots before seasons in order to give each bot a starting mmr per season.
+      convert_bots(legacy_bots, legacy_members)
+      convert_seasons(legacy_seasonids)
+      convert_results(legacy_results, legacy_bots, legacy_members, legacy_seasonids)
+    ensure
+      ActiveRecord::Base.record_timestamps = true  # don't forget to enable it again!
+    end
   end
 
   def convert_seasons(legacy_seasonids)
@@ -18,7 +23,8 @@ namespace :legacy_db do
       Season.create!(
         name: season['SeasonName'],
         start_date: season['StartDate'],
-        end_date: season['EndDate']
+        end_date: season['EndDate'],
+        bots: Bot.all
       )
     end
   end
@@ -33,15 +39,16 @@ namespace :legacy_db do
       next if bot_2_hash.blank?
       next if bot_winner.blank?
       next if season.blank?
+      next if result['Date'].blank?
       puts result if season.blank?
-      attributes = []
-      attributes.push bot_id: Bot.where(name: bot_1_hash['Name']).first.id
-      attributes.push bot_id: Bot.where(name: bot_2_hash['Name']).first.id
+      bot_ids = []
+      bot_ids.push Bot.where(name: bot_1_hash['Name']).first.id
+      bot_ids.push Bot.where(name: bot_2_hash['Name']).first.id
       GameResult.create!(
         map: (result['Map'] || 'map missing'),
-        game_result_bots_attributes: attributes,
+        bot_ids: bot_ids,
         winner_id: Bot.where(name: bot_winner['Name']).first.id,
-        created_at: (result['Date'] || nil),
+        created_at: result['Date'],
         season_id: Season.find_by(name: season['SeasonName']).id
       )
     end

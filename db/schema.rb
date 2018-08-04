@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180729184855) do
+ActiveRecord::Schema.define(version: 20180804170858) do
 
   create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -21,22 +21,27 @@ ActiveRecord::Schema.define(version: 20180729184855) do
     t.index ["season_id"], name: "index_bot_histories_on_season_id"
   end
 
+  create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "season_id", null: false
+    t.index ["bot_id"], name: "index_bot_season_statistics_on_bot_id"
+    t.index ["season_id"], name: "index_bot_season_statistics_on_season_id"
+  end
+
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "owner_id"
     t.string "name", null: false
     t.string "author", null: false
     t.string "race", null: false
-    t.integer "match_count", default: 0, null: false
-    t.integer "win_count", default: 0, null: false
     t.string "executable"
     t.index ["owner_id"], name: "fk_rails_f93a12e463"
   end
 
-  create_table "game_result_bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "bot_id", null: false
+  create_table "bots_game_results", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "game_result_id", null: false
-    t.index ["bot_id"], name: "fk_rails_1e2878cb84"
-    t.index ["game_result_id"], name: "fk_rails_2975451098"
+    t.bigint "bot_id", null: false
+    t.index ["bot_id"], name: "index_bots_game_results_on_bot_id"
+    t.index ["game_result_id"], name: "index_bots_game_results_on_game_result_id"
   end
 
   create_table "game_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -80,7 +85,5 @@ ActiveRecord::Schema.define(version: 20180729184855) do
 
   add_foreign_key "bot_histories", "bots"
   add_foreign_key "bots", "users", column: "owner_id"
-  add_foreign_key "game_result_bots", "bots"
-  add_foreign_key "game_result_bots", "game_results"
   add_foreign_key "game_results", "bots", column: "winner_id"
 end

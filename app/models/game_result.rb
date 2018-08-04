@@ -21,15 +21,26 @@
 
 class GameResult < ApplicationRecord
   include BetterJson
-  has_many :game_result_bots
-  accepts_nested_attributes_for :game_result_bots
-  has_many :bots, through: 'game_result_bots'
+  has_and_belongs_to_many :bots
+  accepts_nested_attributes_for :bots
   belongs_to :season
-  belongs_to :winner, class_name: 'Bot', foreign_key: 'winner_id', optional: true, counter_cache: :win_count
+  belongs_to :winner, class_name: 'Bot', foreign_key: 'winner_id', optional: true
+
+  validates :map, presence: true
 
   attr_writer :replayfile
+  attr_writer :bot_ids
+  before_save :add_bots_from_ids
   after_save :save_replay, :update_mmr
 
+  # before_save
+  def add_bots_from_ids
+    @bot_ids.each do |bot_id|
+      self.bots.push Bot.find(bot_id)
+    end
+  end
+
+  # after_save
   def save_replay
     return unless @replayfile.present?
     self.replay = replay_url
@@ -38,20 +49,21 @@ class GameResult < ApplicationRecord
     end
   end
 
-  def winner_name
-    return if winner.nil?
-    winner.name
-  end
-
+  # after_save
   def update_mmr
-    bot_1_id = self.game_result_bots[0].bot_id
-    bot_2_id = self.game_result_bots[1].bot_id
+    bot_1_id = self.bots.first.id
+    bot_2_id = self.bots.second.id
     # Keep track of the current mmr before changing the database
     bot_1_mmr = BotHistory.where(bot_id: bot_1_id).last.mmr
     bot_2_mmr = BotHistory.where(bot_id: bot_2_id).last.mmr
     score = (self.winner_id == bot_1_id) ? 1 : 0
     add_history(bot_1_id, bot_2_mmr, score)
     add_history(bot_2_id, bot_1_mmr, 1-score)
+  end
+
+  def winner_name
+    return if winner.nil?
+    winner.name
   end
 
   def replay_url
@@ -64,6 +76,7 @@ class GameResult < ApplicationRecord
     BotHistory.create!(
       bot_id: bot_id,
       competitor_mmr: enemy_mmr,
+      created_at: self.created_at,
       score: score,
       season: season
     )
