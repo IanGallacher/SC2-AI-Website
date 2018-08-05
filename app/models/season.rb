@@ -12,9 +12,8 @@ class Season < ApplicationRecord
   has_many :bot_season_statistics
   has_many :bots, through: :bot_season_statistics
   has_many :game_results
-  after_create :create_histories
 
-  def create_histories
-    Bot.all.each { |bot| bot.create_history(self) }
+  def self.current_season
+    Season.first || Season.create!
   end
 end

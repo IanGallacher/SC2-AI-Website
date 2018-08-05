@@ -24,7 +24,7 @@ class GameResult < ApplicationRecord
   has_and_belongs_to_many :bots
   accepts_nested_attributes_for :bots
   belongs_to :season
-  belongs_to :winner, class_name: 'Bot', foreign_key: 'winner_id', optional: true
+  belongs_to :winner, class_name: 'Bot', foreign_key: :winner_id, optional: true
 
   validates :map, presence: true
 
@@ -35,6 +35,7 @@ class GameResult < ApplicationRecord
 
   # before_save
   def add_bots_from_ids
+    return unless @bot_ids.present?
     @bot_ids.each do |bot_id|
       self.bots.push Bot.find(bot_id)
     end
@@ -51,14 +52,14 @@ class GameResult < ApplicationRecord
 
   # after_save
   def update_mmr
-    bot_1_id = self.bots.first.id
-    bot_2_id = self.bots.second.id
+    bot_1 = self.bots.first
+    bot_2 = self.bots.second
     # Keep track of the current mmr before changing the database
-    bot_1_mmr = BotHistory.where(bot_id: bot_1_id).last.mmr
-    bot_2_mmr = BotHistory.where(bot_id: bot_2_id).last.mmr
-    score = (self.winner_id == bot_1_id) ? 1 : 0
-    add_history(bot_1_id, bot_2_mmr, score)
-    add_history(bot_2_id, bot_1_mmr, 1-score)
+    bot_1_mmr = bot_1.current_mmr(self.season)
+    bot_2_mmr = bot_2.current_mmr(self.season)
+    score = (self.winner_id == bot_1.id) ? 1 : 0
+    add_history(bot_1.id, bot_2_mmr, score)
+    add_history(bot_2.id, bot_1_mmr, 1-score)
   end
 
   def winner_name
@@ -71,6 +72,19 @@ class GameResult < ApplicationRecord
   end
 
   private
+
+  # If this is the first time a bot has competed this season, setup the default
+  # mmr.
+  def create_first_history_if_necessary
+    season = self.season || Season::current_season
+    return if BotHistory.find_by(bot: self, season: season).present?
+    BotHistory.create(
+      bot_id: self.id,
+      mmr: 1600,
+      season: season,
+      created_at: season.start_date
+    )
+  end
 
   def add_history(bot_id, enemy_mmr, score)
     BotHistory.create!(

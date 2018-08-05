@@ -71,6 +71,8 @@ describe 'Game Result API -', type: :request do
       expect(post_game_result).to eq 200
     end
 
+    it 'can create game result from new format'
+
     # it 'can edit game result' do
     #   expect(patch "/api/game_results/#{@result0.id}").to raise_error(ActionController::RoutingError)
     # end

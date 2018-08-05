@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Bot History API -', type: :request do
   before do
     @bots = create_list(:bot, 4)
+    FactoryBot.create(:game_result, bots: [@bots[0], @bots[1]])
   end
 
   it 'should show history of one bot' do
