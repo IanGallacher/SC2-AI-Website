@@ -1,5 +1,7 @@
 # Sc2 AI Website
 [![Build Status](https://travis-ci.com/IanGallacher/SC2-AI-Website.svg?branch=master)](https://travis-ci.com/IanGallacher/SC2-AI-Website)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5bc82fccdd4ce3b208c6/maintainability)](https://codeclimate.com/github/IanGallacher/SC2-AI-Website/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/5bc82fccdd4ce3b208c6/test_coverage)](https://codeclimate.com/github/IanGallacher/SC2-AI-Website/test_coverage)
 
 ## Rough Instructions
 
