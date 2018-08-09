@@ -31,9 +31,21 @@ class GameResult < ApplicationRecord
   attr_writer :replayfile
   attr_writer :bot_ids
   before_save :add_bots_from_ids
+  after_create :increment_match_counters
+  after_destroy :decrement_match_counters
   after_save :save_replay, :update_mmr
 
-  # before_save
+  def winner_name
+    winner&.name
+  end
+
+  def replay_url
+    file_path + filename
+  end
+
+  private
+
+  # private before_save
   def add_bots_from_ids
     return unless @bot_ids.present?
     @bot_ids.each do |bot_id|
@@ -41,7 +53,37 @@ class GameResult < ApplicationRecord
     end
   end
 
-  # after_save
+  # before_create
+  def increment_match_counters
+    increment_bot_counter(self.bots[0], self.season, :match_count)
+    increment_bot_counter(self.bots[1], self.season, :match_count)
+    increment_bot_counter(self.winner, self.season, :win_count)
+  end
+
+  # private
+  def increment_bot_counter(bot, season, counter_name)
+    BotSeasonStatistic.find_or_create_by(bot: bot, season: season)
+                      .increment(counter_name)
+                      .save
+    bot.increment(counter_name).save
+  end
+
+  # private before_destory
+  def decrement_match_counters
+    decrement_bot_counter(self.bots[0], self.season, :match_count)
+    decrement_bot_counter(self.bots[1], self.season, :match_count)
+    decrement_bot_counter(self.winner, self.season, :win_count)
+  end
+
+  # private
+  def decrement_bot_counter(bot, season, counter_name)
+    BotSeasonStatistic.find_or_create_by(bot: bot, season: season)
+                      .decrement(counter_name)
+                      .save
+    bot.decrement(counter_name).save
+  end
+
+  # private after_save
   def save_replay
     return unless @replayfile.present?
     self.replay = replay_url
@@ -50,7 +92,7 @@ class GameResult < ApplicationRecord
     end
   end
 
-  # after_save
+  # private after_save
   def update_mmr
     bot_1 = self.bots.first
     bot_2 = self.bots.second
@@ -62,30 +104,7 @@ class GameResult < ApplicationRecord
     add_history(bot_2.id, bot_1_mmr, 1-score)
   end
 
-  def winner_name
-    return if winner.nil?
-    winner.name
-  end
-
-  def replay_url
-    file_path + filename
-  end
-
-  private
-
-  # If this is the first time a bot has competed this season, setup the default
-  # mmr.
-  def create_first_history_if_necessary
-    season = self.season || Season::current_season
-    return if BotHistory.find_by(bot: self, season: season).present?
-    BotHistory.create(
-      bot_id: self.id,
-      mmr: 1600,
-      season: season,
-      created_at: season.start_date
-    )
-  end
-
+  # private
   def add_history(bot_id, enemy_mmr, score)
     BotHistory.create!(
       bot_id: bot_id,
@@ -96,10 +115,12 @@ class GameResult < ApplicationRecord
     )
   end
 
+  # private
   def file_path
     '/replay/'
   end
 
+  # private
   def filename
     extname = File.extname(@replayfile.original_filename)
     basename = File.basename(@replayfile.original_filename, extname)

@@ -2,9 +2,11 @@
 #
 # Table name: bot_season_statistics
 #
-#  id        :bigint(8)        not null, primary key
-#  bot_id    :bigint(8)        not null
-#  season_id :bigint(8)        not null
+#  id          :bigint(8)        not null, primary key
+#  match_count :integer          default(0), not null
+#  win_count   :integer          default(0), not null
+#  bot_id      :bigint(8)        not null
+#  season_id   :bigint(8)        not null
 #
 # Indexes
 #
@@ -13,14 +15,11 @@
 #
 
 class BotSeasonStatistic < ApplicationRecord
+  include BetterJson
   belongs_to :bot
   belongs_to :season
 
-  def match_count
-    return bot.game_results.where(season: season).count
-  end
-
-  def win_count
-    return bot.game_results.where(season: season, winner_id: bot.id).count
+  def mmr
+    bot.current_mmr(season)
   end
 end

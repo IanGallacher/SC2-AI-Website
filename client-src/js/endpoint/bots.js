@@ -19,7 +19,13 @@ class Bots extends React.Component {
   }
 
   componentDidMount() {
-    let axios_url = `${API_URL}/bots`;
+    let season = 1;
+    const search = this.props.location.search;
+    if(search != "") {
+      const params = new URLSearchParams(search);
+      season = params.get("season");
+    }
+    let axios_url = `${API_URL}/seasons/${season}`;
     axios.get(axios_url)
       .then(response => this.setState({ bots: response.data }));
   }
@@ -57,7 +63,7 @@ class Bots extends React.Component {
       // Default sorting of the data is sorting by bot MMR.
       bot_table = bot_table.sort(
         (row1, row2) => {
-          if(row1.current_mmr < row2.current_mmr)
+          if(row1.mmr < row2.mmr)
             return 1;
           else return -1;
         }
@@ -104,7 +110,7 @@ class Bots extends React.Component {
             },
             {
               columnLabel:"MMR",
-              fieldName:"current_mmr"
+              fieldName:"mmr"
             }
           ]
         }

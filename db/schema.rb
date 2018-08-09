@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20180804170858) do
   create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
     t.bigint "season_id", null: false
+    t.integer "match_count", default: 0, null: false
+    t.integer "win_count", default: 0, null: false
     t.index ["bot_id"], name: "index_bot_season_statistics_on_bot_id"
     t.index ["season_id"], name: "index_bot_season_statistics_on_season_id"
   end
@@ -33,6 +35,8 @@ ActiveRecord::Schema.define(version: 20180804170858) do
     t.string "name", null: false
     t.string "author", null: false
     t.string "race", null: false
+    t.integer "match_count", default: 0, null: false
+    t.integer "win_count", default: 0, null: false
     t.string "executable"
     t.index ["owner_id"], name: "fk_rails_f93a12e463"
   end

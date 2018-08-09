@@ -3,9 +3,8 @@ class AddBotSeasonRelations < ActiveRecord::Migration[5.1]
     create_table :bot_season_statistics do |t|
       t.references :bot, null: false, index: true
       t.references :season, null: false, index: true
+      t.integer :match_count, default: 0, null: false
+      t.integer :win_count, default: 0, null: false
     end
-
-    remove_column :bots, :match_count
-    remove_column :bots, :win_count
   end
 end

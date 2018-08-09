@@ -1,4 +1,5 @@
 # Better name pending
+# Made by Colin Allen. https://github.com/matortheeternal
 module BetterJson
   extend ActiveSupport::Concern
 

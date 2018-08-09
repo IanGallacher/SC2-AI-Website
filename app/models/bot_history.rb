@@ -37,9 +37,17 @@ class BotHistory < ApplicationRecord
     self.mmr = previous_mmr + K_FACTOR * expected
   end
 
-  def self.most_recent_result(bot_id, season)
-    season ||= Season::current_season
-    history = BotHistory.find_by(bot_id: bot_id, season: season)
+  def self.add_to_season(season=Season::current_season)
+    BotHistory.create(
+      bot_id: bot_id,
+      mmr: 1600,
+      season: season,
+      created_at: season.start_date
+    )
+  end
+
+  def self.most_recent_result(bot_id, season=Season::current_season)
+    history = BotHistory.where(bot_id: bot_id, season: season).last
     return BotHistory.create(
       bot_id: bot_id,
       mmr: 1600,
