@@ -14,6 +14,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def password_reset
+    user = User.find_by_email(params[:email])
+    user.send_reset_password_instructions if user
+    # always return ok to avoid people fishing for emails
+    render json: { status: :ok }
+  end
+
   def update
     @user = User.find(params[:id])
     authorize! :update, @user
