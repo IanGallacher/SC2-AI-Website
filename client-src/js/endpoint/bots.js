@@ -4,13 +4,14 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
+import { SeasonSelector } from "./../context/season-context.js";
 import FilterBar from "./../component/filter.jsx";
 import ResultTable from "./../component/table.jsx";
 
 class Bots extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {old_season: 1};
   }
 
   static propTypes = {
@@ -18,16 +19,25 @@ class Bots extends React.Component {
     location: ReactRouterPropTypes.location.isRequired
   }
 
-  componentDidMount() {
-    let season = 1;
+  componentDidMount = () => {
+    this.updateBotData(this.getSeasonId());
+  }
+
+  getSeasonId = () => {
+    let season_id = null;
     const search = this.props.location.search;
     if(search != "") {
       const params = new URLSearchParams(search);
-      season = params.get("season");
+      season_id = params.get("season");
     }
-    let axios_url = `${API_URL}/seasons/${season}`;
-    axios.get(axios_url)
-      .then(response => this.setState({ bots: response.data }));
+    return Number.parseInt(season_id || "1");
+  }
+
+  updateBotData = (season_id) => {
+    let axios_url = `${API_URL}/seasons/${season_id}`;
+    axios.get(axios_url).then(response => {
+      this.setState({ bots: response.data, old_season: season_id });
+    });
   }
 
   renderLabel = (args) => {
@@ -50,6 +60,9 @@ class Bots extends React.Component {
     const params = new URLSearchParams(search);
     let bot_table = null;
 
+    let new_season_id = this.getSeasonId();
+    if(this.state.old_season != new_season_id) this.updateBotData(new_season_id);
+
     // If we have recieved data, filter and sort the data.
     if(this.state.bots) {
       // Filter based on search params.
@@ -71,6 +84,7 @@ class Bots extends React.Component {
     }
     return <React.Fragment>
       <FilterBar/>
+      <SeasonSelector/>
       <ResultTable table={bot_table} nullMessage="No bots found for user"
         schema={
           [

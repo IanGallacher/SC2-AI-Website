@@ -1,5 +1,4 @@
 {
- "include": {
- },
- "methods": "current_mmr"
+  "include": {},
+  "methods": "current_mmr"
 }
