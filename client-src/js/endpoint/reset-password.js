@@ -7,7 +7,7 @@ import AlertLogic from "../logic/alert";
 export default class ResetPassword extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { email: "" };
+    this.state = { errors: [], email: "" };
   }
 
   onChange = e => { this.setState({ [e.target.name]: e.target.value }); }
@@ -17,9 +17,9 @@ export default class ResetPassword extends React.PureComponent {
     if(LoginLogic.isLoggedIn()) {
       AlertLogic.addError("You are already logged in!");
     } else {
-      ResetPasswordLogic.sendResetPasswordInstructions(this.state).then(() => {
-        AlertLogic.addSuccess("Instructions have been sent!");
-      });
+      ResetPasswordLogic.sendResetPasswordInstructions(this.state)
+        .then(() => AlertLogic.addSuccess("Reset password request submitted!"))
+        .catch(errors => this.setState({errors}));
     }
   }
 
@@ -32,6 +32,7 @@ export default class ResetPassword extends React.PureComponent {
         <div>Enter your account&apos;s email address and we will send you instructions to reset your password.</div>
         <TextInput name="email"
           type="text"
+          error={this.state.errors.email}
           placeholder="Email address"
           onChange={this.onChange} autoFocus />
         <br/>

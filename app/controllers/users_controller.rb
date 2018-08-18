@@ -15,10 +15,16 @@ class UsersController < ApplicationController
   end
 
   def password_reset
-    user = User.find_by_email(params[:email])
-    user.send_reset_password_instructions if user
-    # always return ok to avoid people fishing for emails
-    render json: { status: :ok }
+    @email = params[:email]
+    if @email.blank?
+      render json: { email: ["can't be blank"] }, status: :unprocessable_entity
+    else
+      user = User.find_by_email(params[:email])
+      user.send_reset_password_instructions if user
+      # always return ok regardless of whether user exists
+      # to avoid people fishing for emails
+      render json: { status: :ok }
+    end
   end
 
   def update
