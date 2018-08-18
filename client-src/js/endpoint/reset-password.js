@@ -28,7 +28,7 @@ export default class ResetPassword extends React.PureComponent {
       <form name="reset-password-form"
         className="flex-vertical form-container"
         onSubmit={this.onSubmit}>
-        <h2 className="form-signin-heading">Reset password</h2>
+        <h2 className="form-reset-password-heading">Reset password</h2>
         <div>Enter your account&apos;s email address and we will send you instructions to reset your password.</div>
         <TextInput name="email"
           type="text"
