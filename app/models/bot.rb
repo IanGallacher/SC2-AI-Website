@@ -23,13 +23,16 @@
 class Bot < ApplicationRecord
   include BetterJson
   has_many :bot_histories
-  has_many :game_result_bots, dependent: :nullify
-  has_many :game_results, through: :game_result_bots
+  # has_many :game_result_bots, dependent: :nullify
+  has_many :bot_season_statistics
+  has_many :seasons, through: :bot_season_statistics
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
+  has_and_belongs_to_many :game_results
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
+
   validates :name, :author, :race, presence: true
   validates :name, uniqueness: { case_sensitive: false }
-  after_create :create_history
+
   before_save :set_file_path
   after_save :save_dll
   before_destroy :destroy_history, :destroy_bot_executable
@@ -46,12 +49,8 @@ class Bot < ApplicationRecord
     File.open("#{bot_filepath}", 'wb') { |file| file.write(@file.read) }
   end
 
-  def create_history
-    BotHistory.create(bot_id: self.id, mmr: 1600)
-  end
-
-  def current_mmr
-    return BotHistory.where(bot_id: self.id).last.mmr
+  def current_mmr(season=Season::current_season)
+    return BotHistory.most_recent_result(self.id, season).mmr
   end
 
   def win_rate_race

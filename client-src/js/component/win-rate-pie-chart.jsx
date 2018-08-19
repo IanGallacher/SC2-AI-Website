@@ -20,7 +20,6 @@ export default class WinRatePieChart extends React.Component {
       {name: "Victories", value: props.victories},
       {name: "Defeats", value: props.defeats}
     ];
-    /// if (props.victories + props.defeats <= 0) return null;
     return <div className="win-rate-zone">
       <div className="win-rate-label">{props.label}</div>
       {

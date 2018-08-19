@@ -9,6 +9,5 @@ describe 'Bot API -', type: :request do
     get game_results_path
     results = JSON.parse response.body
     expect(results.count).to eq 4
-    expect
   end
 end
