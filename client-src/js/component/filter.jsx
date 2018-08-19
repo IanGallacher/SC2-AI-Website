@@ -53,21 +53,29 @@ class FilterBar extends React.Component {
     let total_count = entry_list.length + children_count;
     let is_hidden_class = (total_count <= 0) ? "filter-hidden" : "";
 
-    const childrenWithProps = React.Children.map(this.props.children, child =>
-      React.cloneElement(child, { className: "filter-tag" }));
+    let ignoring = [];
+    const childrenWithProps = React.Children.map(this.props.children, child => {
+      // If any child has the filterIgnore prop, don't include that when
+      // auto generating what filters to include on the filter bar.
+      if(child.props.filterIgnore) ignoring.push(child.props.filterIgnore);
+      return React.cloneElement(child, { className: "filter-tag" });
+    });
 
     // Filter based on search params.
     return <div className={`filter-bar ${is_hidden_class}`}>
       <div className="filter-bar-label">Filters:</div>
       {childrenWithProps}
       {
-        entry_list.map(pair => <FilterTag
-          key={pair[0]}
-          category={pair[0]}
-          query={pair[1]}
-          location={this.props.location}
-          history={this.props.history}
-        />)
+        entry_list.map(pair => {
+          if(ignoring.includes(pair[0])) return null;
+          return <FilterTag
+            key={pair[0]}
+            category={pair[0]}
+            query={pair[1]}
+            location={this.props.location}
+            history={this.props.history}
+          />;
+        })
       }
     </div>;
   }

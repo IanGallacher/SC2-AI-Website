@@ -84,7 +84,7 @@ class Bots extends React.Component {
     }
     return <React.Fragment>
       <FilterBar>
-        <SeasonSelector/>
+        <SeasonSelector filterIgnore="season"/>
       </FilterBar>
       <ResultTable table={bot_table} nullMessage="No bots found for user"
         schema={
