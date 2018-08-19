@@ -20,7 +20,7 @@ class GameResultsController < ApplicationController
       # page not set - return all results
       response = {game_results: game_results.as_json(template: :index), total: game_results.length}
     end
-    
+
     render json: response
   end
 
