@@ -5,31 +5,18 @@ class GameResultsController < ApplicationController
 
     # Paginate the game results
     if params.has_key?(:page)
-      # page is set
-      if params.has_key?(:per_page)
-        # per_page is set
-        game_results = game_results.paginate(
-                          page: params[:page],
-                          per_page: params[:per_page]
-                        )
-      else
-        # per_page not set - default to 100
-        game_results = game_results.paginate(page: params[:page], per_page: 100)
-      end
-
-      render json: {
-        game_results: game_results.as_json(template: :index),
-        total: game_results.total_entries
-      }
-      return
+      game_results = game_results.paginate(
+        page: params[:page],
+        per_page: params.has_key?(:per_page) ? params[:per_page] : 100
+      )
+      total = game_results.total_entries
     else
-      # page not set - return all results
-      render json: {
-        game_results: game_results.as_json(template: :index),
-        total: game_results.length
-      }
-      return
+      total = game_results.length
     end
+    render json: {
+      game_results: game_results.as_json(template: :index),
+      total: total
+    }
   end
 
   def create
@@ -51,10 +38,10 @@ class GameResultsController < ApplicationController
       bot_ids.push bot_id: Bot.where(name: params[:Bot2Name]).first.id
       p[:bot_ids] = bot_ids
       p[:map] = params[:Map]
-      if params[:Result] == "Player1Win"
+      if params[:Result] == 'Player1Win'
         p[:winner_id] = Bot.where(name: params[:Bot1Name]).first.id
       end
-      if params[:Result] == "Player2Win"
+      if params[:Result] == 'Player2Win'
         p[:winner_id] = Bot.where(name: params[:Bot2Name]).first.id
       end
     end

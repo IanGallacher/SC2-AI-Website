@@ -11,26 +11,28 @@ export default class RecentResults extends React.Component {
     this.state = {
       page: 1,
       per_page: 10,
-      game_results: null,
+      game_results: [],
       total_results: null
     };
   }
 
   static propTypes = { history: ReactRouterPropTypes.history }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.loadResultsData();
   }
 
-  loadResultsData() {
-    axios.get(API_URL + "/game_results?per_page=" + this.state.per_page + "&page=" + this.state.page)
-      .then(response => this.setState({game_results: response.data.game_results, total_results: response.data.total}));
+  loadResultsData = () => {
+    let axios_url = `${API_URL}/game_results?per_page=${this.state.per_page}&page=${this.state.page}`;
+    axios.get(axios_url)
+      .then(response => this.setState({
+        game_results: response.data.game_results,
+        total_results: response.data.total
+      }));
   }
 
-  getPage(page) {
-    this.setState({page: page});
-    let self = this;
-    setTimeout(function(){ self.loadResultsData() ; }, 1000);
+  getPage = (page) => {
+    this.setState({page: page}, this.loadResultsData());
   }
 
   initPageNumbers(){
