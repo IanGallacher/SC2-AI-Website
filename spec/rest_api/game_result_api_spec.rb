@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 def post_game_result
-  result = %w[Player1Win Player2Win].select
+  result = %w[Player1Win Player2Win].sample
   replay = fixture_file_upload('replay.examp')
   post game_results_path, params: {
     replayfile: replay,
@@ -70,6 +70,8 @@ describe 'Game Result API -', type: :request do
     it 'can create game result' do
       expect(post_game_result).to eq 200
     end
+
+    it 'can create game result from new format'
 
     # it 'can edit game result' do
     #   expect(patch "/api/game_results/#{@result0.id}").to raise_error(ActionController::RoutingError)

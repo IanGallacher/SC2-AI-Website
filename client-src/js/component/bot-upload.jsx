@@ -10,7 +10,7 @@ import { API_URL } from "./../app.js";
 export default class BotUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: "", name: "", race: "Terran", errors: []};
+    this.state = { file: "", name: "", race: "Terran", errors: [] };
   }
 
   static propTypes = {
