@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 def post_game_result
-  result = %w[Player1Win Player2Win].select
+  result = %w[Player1Win Player2Win].sample
   replay = fixture_file_upload('replay.examp')
   post game_results_path, params: {
     replayfile: replay,

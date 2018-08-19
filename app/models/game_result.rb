@@ -30,6 +30,7 @@ class GameResult < ApplicationRecord
 
   attr_writer :replayfile
   attr_writer :bot_ids
+  around_update :update_victory_counter
   before_save :add_bots_from_ids
   after_create :increment_match_counters
   after_destroy :decrement_match_counters
@@ -53,11 +54,19 @@ class GameResult < ApplicationRecord
     end
   end
 
+  # private around_update
+  def update_victory_counter
+    old_winner = Bot.find(self.winner_id_was) if winner_id_was.present?
+    decrement_bot_counter(old_winner, self.season, :win_count) if winner_id_was.present?
+    yield
+    increment_bot_counter(self.winner, self.season, :win_count) if self.winner.present?
+  end
+
   # before_create
   def increment_match_counters
     increment_bot_counter(self.bots[0], self.season, :match_count)
     increment_bot_counter(self.bots[1], self.season, :match_count)
-    increment_bot_counter(self.winner, self.season, :win_count)
+    increment_bot_counter(self.winner, self.season, :win_count) if self.winner.present?
   end
 
   # private
@@ -72,7 +81,7 @@ class GameResult < ApplicationRecord
   def decrement_match_counters
     decrement_bot_counter(self.bots[0], self.season, :match_count)
     decrement_bot_counter(self.bots[1], self.season, :match_count)
-    decrement_bot_counter(self.winner, self.season, :win_count)
+    decrement_bot_counter(self.winner, self.season, :win_count) if self.winner.present?
   end
 
   # private

@@ -27,5 +27,6 @@ FactoryBot.define do
     replay { fixture_file_upload('spec/fixtures/replay.examp') }
     season { Season.first || create(:season) }
     bots { create_list(:bot, 2) }
+    winner { bots.sample }
   end
 end
