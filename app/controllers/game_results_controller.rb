@@ -2,7 +2,34 @@ class GameResultsController < ApplicationController
   def index
     authorize! :read, GameResult
     game_results = GameResult.includes(:bots, :winner)
-    render json: game_results
+
+    # Paginate the game results
+    if params.has_key?(:page)
+      # page is set
+      if params.has_key?(:per_page)
+        # per_page is set
+        game_results = game_results.paginate(
+                          page: params[:page],
+                          per_page: params[:per_page]
+                        )
+      else
+        # per_page not set - default to 100
+        game_results = game_results.paginate(page: params[:page], per_page: 100)
+      end
+
+      render json: {
+        game_results: game_results.as_json(template: :index),
+        total: game_results.total_entries
+      }
+      return
+    else
+      # page not set - return all results
+      render json: {
+        game_results: game_results.as_json(template: :index),
+        total: game_results.length
+      }
+      return
+    end
   end
 
   def create

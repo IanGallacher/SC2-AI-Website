@@ -58,6 +58,15 @@ table {
   }
 }
 
+.pagination {
+  margin: 0;
+
+  li {
+    padding: 1em;
+    float: left;
+  }
+}
+
 .sub-table-container {
   margin: 15px;
 }

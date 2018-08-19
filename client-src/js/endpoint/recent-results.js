@@ -8,17 +8,44 @@ import ResultTable from "./../component/table.jsx";
 export default class RecentResults extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { game_results: null };
+    this.state = {
+      page: 1,
+      per_page: 10,
+      game_results: null,
+      total_results: null
+    };
   }
 
   static propTypes = { history: ReactRouterPropTypes.history }
 
   componentDidMount() {
-    axios.get(API_URL + "/game_results")
-      .then(response => this.setState({game_results: response.data}));
+    this.loadResultsData();
+  }
+
+  loadResultsData() {
+    axios.get(API_URL + "/game_results?per_page=" + this.state.per_page + "&page=" + this.state.page)
+      .then(response => this.setState({game_results: response.data.game_results, total_results: response.data.total}));
+  }
+
+  getPage(page) {
+    this.setState({page: page});
+    let self = this;
+    setTimeout(function(){ self.loadResultsData() ; }, 1000);
+  }
+
+  initPageNumbers(){
+    let total_rows = parseInt(this.state.total_results);
+    let page = 1;
+    let rows = [];
+    for(let x = 0; x < total_rows; x += this.state.per_page){
+      rows.push(page);
+      page++;
+    }
+    return rows;
   }
 
   render() {
+    let rows = this.initPageNumbers();
     return (
       <div>
         <ResultTable
@@ -69,6 +96,15 @@ export default class RecentResults extends React.Component {
               },
             ]
           }/>
+        <div>
+          <ul className="pagination">
+            {rows.map((r) =>
+              <li key={r}>
+                <a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a>
+              </li>
+            ) }
+          </ul>
+        </div>
       </div>
     );
   }
