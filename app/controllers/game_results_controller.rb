@@ -3,6 +3,10 @@ class GameResultsController < ApplicationController
     authorize! :read, GameResult
     game_results = GameResult.includes(:bots, :winner)
 
+    if params.has_key?(:season_id)
+      game_results = game_results.where(season: params[:season_id])
+    end
+
     # Paginate the game results
     if params.has_key?(:page)
       game_results = game_results.paginate(

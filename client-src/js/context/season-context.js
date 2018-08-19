@@ -15,6 +15,16 @@ export const SeasonContext = React.createContext(
   }
 );
 
+export const getSeasonFromUrl = (url) => {
+  let season_id = null;
+  const search = url;
+  if(search != "") {
+    const params = new URLSearchParams(search);
+    season_id = params.get("season");
+  }
+  return Number.parseInt(season_id || "1");
+};
+
 export const SeasonSelector = props => {
   return <SeasonContext.Consumer>{seasonContext =>
     <Dropdown

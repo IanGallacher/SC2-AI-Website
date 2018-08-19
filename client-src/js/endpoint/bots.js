@@ -4,7 +4,9 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
-import { SeasonSelector } from "./../context/season-context.js";
+import {
+  SeasonSelector,
+  getSeasonFromUrl } from "./../context/season-context.js";
 import FilterBar from "./../component/filter.jsx";
 import ResultTable from "./../component/table.jsx";
 
@@ -23,15 +25,7 @@ class Bots extends React.Component {
     this.updateBotData(this.getSeasonId());
   }
 
-  getSeasonId = () => {
-    let season_id = null;
-    const search = this.props.location.search;
-    if(search != "") {
-      const params = new URLSearchParams(search);
-      season_id = params.get("season");
-    }
-    return Number.parseInt(season_id || "1");
-  }
+  getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
 
   updateBotData = (season_id) => {
     let axios_url = `${API_URL}/seasons/${season_id}`;
