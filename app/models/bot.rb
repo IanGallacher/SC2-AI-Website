@@ -38,6 +38,7 @@ class Bot < ApplicationRecord
   before_destroy :destroy_history, :destroy_bot_executable
 
   attr_writer :file
+  attr_writer :season_id
 
   def set_file_path
     return unless @file.present?
@@ -54,7 +55,9 @@ class Bot < ApplicationRecord
   end
 
   def win_rate_race
-    my_matches = GameResult.joins(:bots).where(:bots => { id: self.id }).to_a
+    my_matches = GameResult.joins(:bots).where(bots: { id: self.id })
+    my_matches = my_matches.where(season_id: @season_id) if @season_id.present?
+    my_matches = my_matches.to_a
     victory = GameResult.where(winner_id: self.id).to_a
     vs_terran = my_matches & vs_race("Terran", self.id).to_a
     vs_protoss = my_matches & vs_race("Protoss", self.id).to_a

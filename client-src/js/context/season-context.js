@@ -17,9 +17,8 @@ export const SeasonContext = React.createContext(
 
 export const getSeasonFromUrl = (url) => {
   let season_id = null;
-  const search = url;
-  if(search != "") {
-    const params = new URLSearchParams(search);
+  if(url != "") {
+    const params = new URLSearchParams(url);
     season_id = params.get("season");
   }
   return Number.parseInt(season_id || "1");
@@ -46,6 +45,7 @@ class SeasonProvider extends React.Component {
   static propTypes = {
     children: PropTypes.element,
     history: ReactRouterPropTypes.history,
+    location: ReactRouterPropTypes.location.isRequired,
     root: PropTypes.element,
     seasonContext: PropTypes.shape({
       changeSeason: PropTypes.function,
@@ -69,7 +69,9 @@ class SeasonProvider extends React.Component {
 
   changeSeason = (newSeasonId) => {
     let seasonContext = this.props.root.state.seasonContext;
-    this.props.history.push({search: `?season=${newSeasonId}`});
+    const params = new URLSearchParams(this.props.location.search);
+    params.set("season", newSeasonId);
+    this.props.history.push({ search: params.toString() });
     this.props.root.setState({
       seasonContext: {
         changeSeason: seasonContext.changeSeason,
