@@ -5,6 +5,14 @@
   height: $filterbar-height;
   width: 100%;
   background-color: #3b4044;
+
+  .input-dropdown {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    // padding-left: 15px !important;
+  }
 }
 
 .filter-bar-label {
@@ -16,11 +24,11 @@
 }
 
 .filter-tag {
-  height: $filterbar-height;
+  height: $filterbar-height + 1; // Adding 1 makes dropdown display correctly.
   line-height: $filterbar-height;
   background-color: #efc07a;
   padding: 0 10px;
-  margin-left: 15px;
+  margin-left: 15px !important;
   width: auto;
   display: inline-block;
 

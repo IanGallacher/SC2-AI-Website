@@ -83,8 +83,9 @@ class Bots extends React.Component {
       );
     }
     return <React.Fragment>
-      <FilterBar/>
-      <SeasonSelector/>
+      <FilterBar>
+        <SeasonSelector/>
+      </FilterBar>
       <ResultTable table={bot_table} nullMessage="No bots found for user"
         schema={
           [

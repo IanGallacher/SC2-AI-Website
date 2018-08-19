@@ -37,6 +37,7 @@ class FilterBar extends React.Component {
   }
 
   static propTypes = {
+    children: PropTypes.element,
     location: ReactRouterPropTypes.location.isRequired,
     history: ReactRouterPropTypes.history.isRequired
   }
@@ -48,16 +49,25 @@ class FilterBar extends React.Component {
     for(let pair of params.entries()) entry_list.push(pair);
 
     // Don't draw the filter bar if there is nothing to draw.
-    let is_hidden = (entry_list.length <= 0) ? "filter-hidden" : "";
+    let children_count = React.Children.count(this.props.children);
+    let total_count = entry_list.length + children_count;
+    let is_hidden_class = (total_count <= 0) ? "filter-hidden" : "";
+
+    const childrenWithProps = React.Children.map(this.props.children, child =>
+      React.cloneElement(child, { className: "filter-tag" }));
 
     // Filter based on search params.
-    return <div className={`filter-bar ${is_hidden}`}>
+    return <div className={`filter-bar ${is_hidden_class}`}>
       <div className="filter-bar-label">Filters:</div>
+      {childrenWithProps}
       {
-        entry_list.map(pair => {
-          return <FilterTag key={pair[0]} category={pair[0]} query={pair[1]}
-            location={this.props.location} history={this.props.history}/>;
-        })
+        entry_list.map(pair => <FilterTag
+          key={pair[0]}
+          category={pair[0]}
+          query={pair[1]}
+          location={this.props.location}
+          history={this.props.history}
+        />)
       }
     </div>;
   }

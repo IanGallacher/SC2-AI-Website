@@ -15,14 +15,15 @@ export const SeasonContext = React.createContext(
   }
 );
 
-export const SeasonSelector = () => {
+export const SeasonSelector = props => {
   return <SeasonContext.Consumer>{seasonContext =>
     <Dropdown
       options={seasonContext.all_seasons}
       onChange={(event) => {
         seasonContext.changeSeason(Number.parseInt(event.target.value));
-      }}/>
-
+      }}
+      {...props}
+    />
   }</SeasonContext.Consumer>;
 };
 
