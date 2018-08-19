@@ -16,7 +16,7 @@ shared_examples 'can view game results' do
   it 'can view all game results' do
     get game_results_path
     results = JSON.parse response.body
-    expect(results.count).to eq 4
+    expect(results['game_results'].count).to eq 4
   end
 end
 
