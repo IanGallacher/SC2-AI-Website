@@ -28,6 +28,7 @@ class GameResultsController < ApplicationController
     end
   end
 
+  # Parse the input of the ladder manager.
   def game_result_params
     p = params.permit(:map, :replayfile, :winner_id)
     if params.key? :gba

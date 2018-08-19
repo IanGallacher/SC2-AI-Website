@@ -10,7 +10,7 @@ export default class RecentResults extends React.Component {
     super(props);
     this.state = {
       page: 1,
-      per_page: 10,
+      per_page: 30,
       game_results: [],
       total_results: null
     };
@@ -18,28 +18,23 @@ export default class RecentResults extends React.Component {
 
   static propTypes = { history: ReactRouterPropTypes.history }
 
-  componentDidMount = () => {
-    this.loadResultsData();
-  }
+  componentDidMount = () => { this.loadResultsData(); }
 
   loadResultsData = () => {
     let axios_url = `${API_URL}/game_results?per_page=${this.state.per_page}&page=${this.state.page}`;
-    axios.get(axios_url)
-      .then(response => this.setState({
-        game_results: response.data.game_results,
-        total_results: response.data.total
-      }));
+    axios.get(axios_url).then(response => this.setState({
+      game_results: response.data.game_results,
+      total_results: response.data.total
+    }));
   }
 
-  getPage = (page) => {
-    this.setState({page: page}, this.loadResultsData());
-  }
+  getPage = page => { this.setState({page: page}, this.loadResultsData()); }
 
-  initPageNumbers(){
+  initPageNumbers() {
     let total_rows = parseInt(this.state.total_results);
     let page = 1;
     let rows = [];
-    for(let x = 0; x < total_rows; x += this.state.per_page){
+    for(let x = 0; x < total_rows; x += this.state.per_page) {
       rows.push(page);
       page++;
     }
