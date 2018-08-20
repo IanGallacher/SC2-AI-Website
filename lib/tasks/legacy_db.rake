@@ -24,6 +24,16 @@ namespace :legacy_db do
     end
   end
 
+  def import_php_bots(php_bots, php_members)
+    php_bots.each do |bot|
+      next if bot['Deleted'] == 1
+      user_hash = php_members.find { |m| m['id'] == bot['Author'] }
+      next if user_hash.blank?
+      user = find_or_create_user(user_hash)
+      find_or_create_bot(bot, user)
+    end
+  end
+
   def import_php_seasons(php_seasons)
     php_seasons.each do |season|
       Season.create!(
@@ -55,16 +65,6 @@ namespace :legacy_db do
         created_at: result['Date'],
         season_id: Season.find_by(name: season['SeasonName']).id
       )
-    end
-  end
-
-  def import_php_bots(php_bots, php_members)
-    php_bots.each do |bot|
-      next if bot['Deleted'] == 1
-      user_hash = php_members.find { |m| m['id'] == bot['Author'] }
-      next if user_hash.blank?
-      user = find_or_create_user(user_hash)
-      find_or_create_bot(bot, user)
     end
   end
 
