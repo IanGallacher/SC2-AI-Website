@@ -2,6 +2,7 @@
   "include": {
     "bot": {
       "only": [
+        "id",
         "name",
         "author",
         "race"

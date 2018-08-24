@@ -26,7 +26,10 @@ namespace :legacy_db do
 
   def import_php_bots(php_bots, php_members)
     php_bots.each do |bot|
-      next if bot['Deleted'] == 1
+      # We need a entry for bots, even if they are marked deleted.
+      # Otherwise, we won't be able to create match history for them.
+      # We mark the record deleted at some future point.
+      # next if bot['Deleted'] == 1
       user_hash = php_members.find { |m| m['id'] == bot['Author'] }
       next if user_hash.blank?
       user = find_or_create_user(user_hash)

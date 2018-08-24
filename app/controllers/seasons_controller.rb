@@ -28,6 +28,7 @@ class SeasonsController < ApplicationController
     statistics.as_json(template: :show).map do |statistic|
       {
         id: statistic['id'],
+        bot_id: statistic[:bot]['id'],
         match_count: statistic['match_count'],
         win_count: statistic['win_count'],
         name: statistic[:bot]['name'],
