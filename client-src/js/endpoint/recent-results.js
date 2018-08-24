@@ -28,8 +28,12 @@ export default class RecentResults extends React.Component {
 
   componentDidMount = () => { this.updateResultData(this.getSeasonId()); }
 
-  updateResultData = (season_id) => {
-    let axios_url = `${API_URL}/game_results?per_page=${this.state.per_page}&page=${this.state.page}`;
+  updateResultData = (season_id, page=null) => {
+    // There is a bug with react that is causing the setState callback to not use the updated state.
+    // The current workaround is to pass the variable direclty
+    page = page || this.state.page;
+    let axios_url = `${API_URL}/game_results?per_page=${this.state.per_page}`;
+    axios_url += `&page=${page}`;
     axios_url += `&season_id=${season_id}`;
     axios.get(axios_url).then(response => this.setState({
       game_results: response.data.game_results,
@@ -41,7 +45,7 @@ export default class RecentResults extends React.Component {
   getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
 
   getPage = page => {
-    this.setState({ page: page }, this.updateResultData(this.getSeasonId()));
+    this.setState({ page },this.updateResultData(this.getSeasonId(), page));
   }
 
   initPageNumbers() {
