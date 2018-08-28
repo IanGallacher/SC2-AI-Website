@@ -73,7 +73,7 @@ class Bots extends React.Component {
               fieldName:"name",
               sortValue: row => (row.name || "").toLowerCase(),
               onClick: row => {
-                this.props.history.push(`/bot/?bot_id=${row.id}`);
+                this.props.history.push(`/bot/?bot_id=${row.bot_id}`);
               }
             },
             {
