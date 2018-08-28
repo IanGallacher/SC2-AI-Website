@@ -34,6 +34,7 @@ class SeasonsController < ApplicationController
         name: statistic[:bot]['name'],
         race: statistic[:bot]['race'],
         author: statistic[:bot]['author'],
+        author_id: statistic[:bot]['owner_id'],
         mmr: statistic['mmr']
       }
     end

@@ -34,21 +34,6 @@ class Bots extends React.Component {
     });
   }
 
-  renderLabel = (args) => {
-    let { cx, cy, name, midAngle, innerRadius, outerRadius, percent } = args;
-    const radius = innerRadius + (outerRadius - innerRadius) + 20;
-    const RADIAN = 3.14/180;
-    const x  = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy  + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="black" textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central">
-        {`${name}: ${(percent * 100).toFixed(0)}%`}
-      </text>
-    );
-  }
-
   render() {
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
@@ -96,7 +81,7 @@ class Bots extends React.Component {
               fieldName:"author",
               sortValue: row => (row.author || "").toLowerCase(),
               onClick: row => {
-                this.props.history.push(`/authors/?author_id=${row.owner_id}`);
+                this.props.history.push(`/authors/?author_id=${row.author_id}`);
               },
               optional: true
             },
