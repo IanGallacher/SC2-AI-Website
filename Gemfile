@@ -23,6 +23,10 @@ gem 'therubyracer', platforms: :ruby
 gem 'devise'
 gem 'cancancan'
 
+# Add gems for zipping.
+# Anything less than rubyzip 1.2.1 has a security vulnerability.
+gem 'rubyzip', '>= 1.2.1'
+
 # Required for maicatcher to not segfault
 gem 'eventmachine', '= 1.0.7'
 # Gem to catch outgoing mail
