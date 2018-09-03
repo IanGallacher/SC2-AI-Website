@@ -23,8 +23,8 @@
 class Bot < ApplicationRecord
   include BetterJson
   has_many :bot_histories
-  # has_many :game_result_bots, dependent: :nullify
   has_many :bot_season_statistics
+  has_many :bot_versions
   has_many :seasons, through: :bot_season_statistics
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
   has_and_belongs_to_many :game_results
@@ -39,6 +39,10 @@ class Bot < ApplicationRecord
 
   attr_writer :file
   attr_writer :season_id
+
+  def latest_version(season=Season.current_season)
+    self.bot_versions.where(season: season).last
+  end
 
   def set_file_path
     return unless @file.present?
@@ -99,11 +103,13 @@ class Bot < ApplicationRecord
   end
 
   def bot_file_extension
+    return '' if @file.blank?
     return File.extname @file.path
   end
 
   def bot_filename
-    return File.basename(self.executable) if self.executable.present?
+    executable = latest_version.executable
+    return File.basename(executable) if executable.present?
     return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{bot_file_extension}"
   end
 

@@ -12,6 +12,7 @@ class Season < ApplicationRecord
   has_many :bot_season_statistics
   has_many :bots, through: :bot_season_statistics
   has_many :game_results
+  has_many :bot_versions
 
   def self.current_season
     Season.first || Season.create!
