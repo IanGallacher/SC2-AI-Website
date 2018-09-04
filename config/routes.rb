@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post :create_avatar, to: 'users#upload'
     end
     resources :bots, only: [:index, :show, :create, :update, :destroy]
+    resources :bot_downloads, only: [:index, :show]
     resources :bot_histories, only: [:index, :show]
     resources :game_results, only: [:index, :create]
     resources :seasons, only: [:index, :show, :create]
