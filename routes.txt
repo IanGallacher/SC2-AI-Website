@@ -1,0 +1,40 @@
+                  Prefix Verb   URI Pattern                                 Controller#Action
+                 authors GET    /api/authors(.:format)                      authors#index
+                  author GET    /api/authors/:id(.:format)                  authors#show
+        new_user_session GET    /api/users/sign_in(.:format)                sessions#new
+            user_session POST   /api/users/sign_in(.:format)                sessions#create
+    destroy_user_session DELETE /api/users/sign_out(.:format)               sessions#destroy
+       new_user_password GET    /api/users/password/new(.:format)           devise/passwords#new
+      edit_user_password GET    /api/users/password/edit(.:format)          devise/passwords#edit
+           user_password PATCH  /api/users/password(.:format)               devise/passwords#update
+                         PUT    /api/users/password(.:format)               devise/passwords#update
+                         POST   /api/users/password(.:format)               devise/passwords#create
+cancel_user_registration GET    /api/users/cancel(.:format)                 registrations#cancel
+   new_user_registration GET    /api/users/sign_up(.:format)                registrations#new
+  edit_user_registration GET    /api/users/edit(.:format)                   registrations#edit
+       user_registration PATCH  /api/users(.:format)                        registrations#update
+                         PUT    /api/users(.:format)                        registrations#update
+                         DELETE /api/users(.:format)                        registrations#destroy
+                         POST   /api/users(.:format)                        registrations#create
+                   login GET    /api/login(.:format)                        sessions#new
+                         POST   /api/login(.:format)                        sessions#create
+                  logout GET    /api/logout(.:format)                       sessions#destroy
+               user_bots GET    /api/users/:user_id/bots(.:format)          user_bots#index
+      user_create_avatar POST   /api/users/:user_id/create_avatar(.:format) users#upload
+                   users GET    /api/users(.:format)                        users#index
+                    user PATCH  /api/users/:id(.:format)                    users#update
+                         PUT    /api/users/:id(.:format)                    users#update
+                    bots GET    /api/bots(.:format)                         bots#index
+                         POST   /api/bots(.:format)                         bots#create
+                     bot GET    /api/bots/:id(.:format)                     bots#show
+                         PATCH  /api/bots/:id(.:format)                     bots#update
+                         PUT    /api/bots/:id(.:format)                     bots#update
+                         DELETE /api/bots/:id(.:format)                     bots#destroy
+           bot_histories GET    /api/bot_histories(.:format)                bot_histories#index
+             bot_history GET    /api/bot_histories/:id(.:format)            bot_histories#show
+            game_results GET    /api/game_results(.:format)                 game_results#index
+                         POST   /api/game_results(.:format)                 game_results#create
+          password_reset POST   /api/password_reset(.:format)               users#password_reset
+                         GET    /api/*path(.:format)                        routes#invalid
+                         GET    /*path(.:format)                            home#index
+                    root GET    /                                           home#index

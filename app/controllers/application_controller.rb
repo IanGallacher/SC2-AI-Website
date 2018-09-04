@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 #  rescue_from ActiveRecord::RecordNotFound do |exception|
 #    render_standard_error(exception, 404)
 #  end
+  respond_to :json
 
   rescue_from CanCan::AccessDenied do |exception|
     if exception.message != "You are not authorized to access this page."
