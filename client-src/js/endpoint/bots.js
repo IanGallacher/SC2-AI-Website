@@ -4,13 +4,16 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
+import {
+  SeasonSelector,
+  getSeasonFromUrl } from "./../context/season-context.js";
 import FilterBar from "./../component/filter.jsx";
 import ResultTable from "./../component/table.jsx";
 
 class Bots extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {old_season: 1};
   }
 
   static propTypes = {
@@ -18,31 +21,26 @@ class Bots extends React.Component {
     location: ReactRouterPropTypes.location.isRequired
   }
 
-  componentDidMount() {
-    let axios_url = `${API_URL}/bots`;
-    axios.get(axios_url)
-      .then(response => this.setState({ bots: response.data }));
+  componentDidMount = () => {
+    this.updateBotData(this.getSeasonId());
   }
 
-  renderLabel = (args) => {
-    let { cx, cy, name, midAngle, innerRadius, outerRadius, percent } = args;
-    const radius = innerRadius + (outerRadius - innerRadius) + 20;
-    const RADIAN = 3.14/180;
-    const x  = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+  getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
 
-    return (
-      <text x={x} y={y} fill="black" textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central">
-        {`${name}: ${(percent * 100).toFixed(0)}%`}
-      </text>
-    );
+  updateBotData = (season_id) => {
+    let axios_url = `${API_URL}/seasons/${season_id}`;
+    axios.get(axios_url).then(response => {
+      this.setState({ bots: response.data, old_season: season_id });
+    });
   }
 
   render() {
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
     let bot_table = null;
+
+    let new_season_id = this.getSeasonId();
+    if(this.state.old_season != new_season_id) this.updateBotData(new_season_id);
 
     // If we have recieved data, filter and sort the data.
     if(this.state.bots) {
@@ -57,14 +55,16 @@ class Bots extends React.Component {
       // Default sorting of the data is sorting by bot MMR.
       bot_table = bot_table.sort(
         (row1, row2) => {
-          if(row1.current_mmr < row2.current_mmr)
+          if(row1.mmr < row2.mmr)
             return 1;
           else return -1;
         }
       );
     }
     return <React.Fragment>
-      <FilterBar/>
+      <FilterBar>
+        <SeasonSelector filterIgnore="season"/>
+      </FilterBar>
       <ResultTable table={bot_table} nullMessage="No bots found for user"
         schema={
           [
@@ -73,7 +73,7 @@ class Bots extends React.Component {
               fieldName:"name",
               sortValue: row => (row.name || "").toLowerCase(),
               onClick: row => {
-                this.props.history.push(`/bot/?bot_id=${row.id}`);
+                this.props.history.push(`/bot/?bot_id=${row.bot_id}`);
               }
             },
             {
@@ -81,7 +81,7 @@ class Bots extends React.Component {
               fieldName:"author",
               sortValue: row => (row.author || "").toLowerCase(),
               onClick: row => {
-                this.props.history.push(`/authors/?author_id=${row.owner_id}`);
+                this.props.history.push(`/authors/?author_id=${row.author_id}`);
               },
               optional: true
             },
@@ -104,7 +104,7 @@ class Bots extends React.Component {
             },
             {
               columnLabel:"MMR",
-              fieldName:"current_mmr"
+              fieldName:"mmr"
             }
           ]
         }

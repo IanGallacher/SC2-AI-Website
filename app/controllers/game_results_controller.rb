@@ -2,33 +2,51 @@ class GameResultsController < ApplicationController
   def index
     authorize! :read, GameResult
     game_results = GameResult.includes(:bots, :winner)
-    #game_results = GameResult.eager_load( :bots )
-    render json: game_results.as_json(template: :index)
+
+    if params.has_key?(:season_id)
+      game_results = game_results.where(season: params[:season_id])
+    end
+
+    # Paginate the game results
+    if params.has_key?(:page)
+      game_results = game_results.paginate(
+        page: params[:page],
+        per_page: params.has_key?(:per_page) ? params[:per_page] : 100
+      )
+      total = game_results.total_entries
+    else
+      total = game_results.length
+    end
+    render json: {
+      game_results: game_results.as_json(template: :index),
+      total: total
+    }
   end
 
   def create
     authorize! :create, GameResult
     if GameResult.create(game_result_params)
-      render json: {status: :ok}
+      render json: { status: :ok }
     else
       render json: @bot.errors, status: :unprocessable_entity
     end
   end
 
+  # Parse the input of the ladder manager.
   def game_result_params
     p = params.permit(:map, :replayfile, :winner_id)
     if params.key? :gba
-      p[:game_result_bots_attributes] = JSON.parse(params[:gba])
+      p[:bot_game_results_attributes] = JSON.parse(params[:gba])
     else
-      attributes = []
-      attributes.push bot_id: Bot.where(name: params[:Bot1Name]).first.id
-      attributes.push bot_id: Bot.where(name: params[:Bot2Name]).first.id
-      p[:game_result_bots_attributes] = attributes
+      bot_ids = []
+      bot_ids.push bot_id: Bot.where(name: params[:Bot1Name]).first.id
+      bot_ids.push bot_id: Bot.where(name: params[:Bot2Name]).first.id
+      p[:bot_ids] = bot_ids
       p[:map] = params[:Map]
-      if params[:Result] == "Player1Win"
+      if params[:Result] == 'Player1Win'
         p[:winner_id] = Bot.where(name: params[:Bot1Name]).first.id
       end
-      if params[:Result] == "Player2Win"
+      if params[:Result] == 'Player2Win'
         p[:winner_id] = Bot.where(name: params[:Bot2Name]).first.id
       end
     end

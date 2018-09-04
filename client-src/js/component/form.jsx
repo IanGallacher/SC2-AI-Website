@@ -5,7 +5,7 @@ export const Dropdown = props => {
   return (
     <select
       name={props.name}
-      className="text-input"
+      className={`input-dropdown ${props.className}`}
       group={props.group}
       id={props.id}
       onChange={props.onChange}
@@ -17,6 +17,7 @@ export const Dropdown = props => {
   );
 };
 Dropdown.propTypes = {
+  className: PropTypes.string,
   name: PropTypes.string,
   id: PropTypes.string,
   group: PropTypes.string,
@@ -40,7 +41,7 @@ export const TextInput = props => {
       name={props.name}
       type={props.type}
       group={props.group}
-      className={"text-input " + (props.error && "error")}
+      className={"input-text " + (props.error && "error")}
       placeholder={props.placeholder}
       onChange={props.onChange}
     />

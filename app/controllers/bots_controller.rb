@@ -5,7 +5,9 @@ class BotsController < ApplicationController
   end
 
   def show
-    render json: Bot.find(params[:id])
+    bot = Bot.find(params[:id])
+    bot.season_id = params[:season_id] if params[:season_id]
+    render json: bot
   end
 
   def create

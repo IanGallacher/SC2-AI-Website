@@ -45,13 +45,9 @@ export default class App extends React.Component {
     LoginLogic.notify = user_data => this.setState({ user_data });
   }
 
-  showModal = (m) => {
-    this.modal.showModal(m);
-  }
+  showModal = (m) => { this.modal.showModal(m); }
 
-  closeModal = (m) => {
-    this.modal.closeModal(m);
-  }
+  closeModal = (m) => { this.modal.closeModal(m); }
 
   render() {
     // Router must be where it is on the tree, don't put providers below it.

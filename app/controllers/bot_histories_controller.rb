@@ -4,6 +4,9 @@ class BotHistoriesController < ApplicationController
   end
 
   def show
-    render json: BotHistory.where(bot_id: params[:id])
+    histories = BotHistory.where(bot_id: params[:id])
+    season_id = params[:season_id]
+    histories = histories.where(season_id: season_id) if season_id.present?
+    render json: histories
   end
 end

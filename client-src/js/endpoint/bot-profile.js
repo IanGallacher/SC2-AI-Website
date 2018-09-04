@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
+import {
+  SeasonSelector,
+  getSeasonFromUrl } from "./../context/season-context.js";
 import LoadingAnimation from "./../component/loading.jsx";
 import { SimpleLineChart } from "./../component/chart.jsx";
 import WinRatePieChart from "./../component/win-rate-pie-chart.jsx";
@@ -26,18 +29,21 @@ class BotProfile extends React.Component {
     let axios_url = `${API_URL}/bots/${this.getBotId()}`;
     axios.get(axios_url)
       .then(response => this.setState({ bot: response.data }));
-    this.getBotData(this.getBotId());
+    this.updateBotData(this.getBotId());
   }
 
   UNSAFE_componentWillReceiveProps() {
-    this.getBotData(this.getBotId());
+    this.updateBotData(this.getBotId());
   }
 
-  getBotData(bot_id) {
-    axios.get(`${API_URL}/bots/${bot_id}`)
-      .then(response => this.setState({ bot_id, bot_data: response.data }) );
-    axios.get(`${API_URL}/bot_histories/${bot_id}`)
+  updateBotData(bot_id) {
+    let season_id = this.getSeasonId();
+    if(this.state.old_season == season_id) return null;
+    axios.get(`${API_URL}/bots/${bot_id}?season_id=${season_id}`)
+      .then(response => this.setState({ bot: response.data }) );
+    axios.get(`${API_URL}/bot_histories/${bot_id}?season_id=${season_id}`)
       .then(response => this.setState({ bot_history: response.data }));
+    this.setState({ old_season: season_id });
   }
 
   getBotId() {
@@ -45,10 +51,12 @@ class BotProfile extends React.Component {
     const search = this.props.location.search;
     if(search != "") {
       const params = new URLSearchParams(search);
-      bot_id = params.get("bot_id");
+      bot_id = params.get("bot_id") || bot_id;
     }
     return bot_id;
   }
+
+  getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
 
   renderBotTable(bot_table) {
     return <ResultTable table={bot_table} nullMessage="No bots found for user"
@@ -96,6 +104,8 @@ class BotProfile extends React.Component {
       </div>;
     }
 
+    this.updateBotData(this.getBotId());
+
     let bot_history = [];
     if(this.state.bot_history)
       bot_history = this.state.bot_history.map(entry => {
@@ -108,17 +118,22 @@ class BotProfile extends React.Component {
     const win_rate_terran = bot.win_rate_race.terran;
     const win_rate_protoss = bot.win_rate_race.protoss;
     const win_rate_zerg = bot.win_rate_race.zerg;
+    // The server currently sends match data representing the total
+    // for all seasons. As a work around, let's calculate it instead.
+    const win_total = win_rate_terran.win_count + win_rate_protoss.win_count + win_rate_zerg.win_count;
+    const match_toal = win_rate_terran.match_count + win_rate_protoss.match_count + win_rate_zerg.match_count;
     return <div className="trading-card-horizontal">
       <div className="trading-card-header">
         <h2>{`Bot Name: ${bot.name}`}</h2>
         <Link to={`/authors/?author_id=${bot.owner_id}`}>
           {`Bot Author: ${bot.author}`}
         </Link>
+        <SeasonSelector/>
       </div>
       <WinRatePieChart
         label="vs all"
-        victories={bot.win_count}
-        defeats={bot.match_count - bot.win_count}/>
+        victories={win_total}
+        defeats={match_toal - win_total}/>
       <WinRatePieChart
         label="vs terran"
         victories={win_rate_terran.win_count}

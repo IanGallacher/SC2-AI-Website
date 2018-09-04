@@ -10,7 +10,7 @@ import { API_URL } from "./../app.js";
 export default class BotUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: "", name: "", race: "Terran", errors: []};
+    this.state = { file: "", name: "", race: "Terran", errors: [] };
   }
 
   static propTypes = {
@@ -65,14 +65,14 @@ export default class BotUpload extends React.Component {
           error={this.state.errors.name}
           type="text"
           placeholder={ bot ? bot.name : "Bot Name" }
-          className="text-input"
+          className="input-text"
           onChange={this.onChange}/>
         <input name="file"
           type="file"
           className="btn"
           onChange={this.onFileChange}/>
         <select name="race"
-          className="text-input"
+          className="input-text"
           onChange={this.onChange}
           defaultValue={bot && bot.race}>
           <option value="Terran">Terran</option>

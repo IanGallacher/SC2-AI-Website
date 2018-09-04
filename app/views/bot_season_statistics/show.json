@@ -1,0 +1,16 @@
+{
+  "include": {
+    "bot": {
+      "only": [
+        "id",
+        "name",
+        "author",
+        "owner_id",
+        "race"
+      ]
+    }
+  },
+  "methods": [
+    "mmr"
+  ]
+}

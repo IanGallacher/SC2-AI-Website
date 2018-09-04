@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 
+import SeasonProvider from "./context/season-context.js";
 import AuthorList from "./endpoint/author-list.js";
 import AuthorProfile from "./endpoint/author-profile.js";
 import AdminControlPanel from "./endpoint/admin.js";
@@ -45,28 +46,41 @@ PageRoute.propTypes = {
 };
 
 export default class PageRouting extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      seasonContext: {
+        changeSeason: () => {},
+        selected: "",
+        all_seasons: [{ name: "loading..." }]
+      }
+    };
+  }
+
   render() {
     return (
-      <Switch>
-        <PageRoute path="/results" component={RecentResults}/>
-        <RequireLoggedInRoute path="/admin-control-panel"
-          component={pageView(AdminControlPanel)}/>
-        <PageRoute path="/login" render={props => <Login {...props}/>}/>
-        <PageRoute path="/sign-up" render={props => <SignUp {...props}/>}/>
-        <PageRoute path="/reset-password" component={ResetPassword}/>
-        <Route path="/twitch" render={props => <TwitchStream {...props}/>}/>
-        <PageRoute exact strict path="/authors" component={AuthorList}/>
-        <PageRoute path="/authors/*" component={AuthorProfile}/>
-        <RequireLoggedInRoute
-          path="/my-profile"
-          component={pageView(ProfileSettings)}/>
-        <PageRoute path="/faq" component={FAQ}/>
-        <PageRoute path="/bots" component={Bots}/>
-        <PageRoute path="/bot/*" component={BotProfile}/>
-        <PageRoute path="/season" component={Season}/>
-        <Route exact strict path="/" component={SplashScreen}/>
-        <PageRoute path="*" exact={true} component={PageNotFound}/>
-      </Switch>
+      <SeasonProvider seasonContext={this.state.seasonContext} root={this}>
+        <Switch>
+          <PageRoute path="/results" component={RecentResults}/>
+          <RequireLoggedInRoute path="/admin-control-panel"
+            component={pageView(AdminControlPanel)}/>
+          <PageRoute path="/login" render={props => <Login {...props}/>}/>
+          <PageRoute path="/sign-up" render={props => <SignUp {...props}/>}/>
+          <PageRoute path="/reset-password" component={ResetPassword}/>
+          <Route path="/twitch" render={props => <TwitchStream {...props}/>}/>
+          <PageRoute exact strict path="/authors" component={AuthorList}/>
+          <PageRoute path="/authors/*" component={AuthorProfile}/>
+          <RequireLoggedInRoute
+            path="/my-profile"
+            component={pageView(ProfileSettings)}/>
+          <PageRoute path="/faq" component={FAQ}/>
+          <PageRoute path="/bots" component={Bots}/>
+          <PageRoute path="/bot/*" component={BotProfile}/>
+          <PageRoute path="/season" component={Season}/>
+          <Route exact strict path="/" component={SplashScreen}/>
+          <PageRoute path="*" exact={true} component={PageNotFound}/>
+        </Switch>
+      </SeasonProvider>
     );
   }
 }

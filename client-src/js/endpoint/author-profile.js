@@ -24,7 +24,7 @@ function AuthorDetails(props) {
     <TextInput name="github"
       type="text"
       placeholder={props.profile.github ? props.profile.github : "Github"}
-      className="text-input"/>
+      className="input-text"/>
   </FormZone>;
   if (props.profile.github) return <div className="author-details">
     <div className="profile-details">

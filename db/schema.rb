@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180729173533) do
+ActiveRecord::Schema.define(version: 20180804170858) do
 
   create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
     t.integer "mmr", null: false
     t.datetime "created_at", null: false
+    t.bigint "season_id", null: false
     t.index ["bot_id"], name: "index_bot_histories_on_bot_id"
+    t.index ["season_id"], name: "index_bot_histories_on_season_id"
+  end
+
+  create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "season_id", null: false
+    t.integer "match_count", default: 0, null: false
+    t.integer "win_count", default: 0, null: false
+    t.index ["bot_id"], name: "index_bot_season_statistics_on_bot_id"
+    t.index ["season_id"], name: "index_bot_season_statistics_on_season_id"
   end
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -30,11 +41,11 @@ ActiveRecord::Schema.define(version: 20180729173533) do
     t.index ["owner_id"], name: "fk_rails_f93a12e463"
   end
 
-  create_table "game_result_bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "bot_id", null: false
+  create_table "bots_game_results", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "game_result_id", null: false
-    t.index ["bot_id"], name: "fk_rails_1e2878cb84"
-    t.index ["game_result_id"], name: "fk_rails_2975451098"
+    t.bigint "bot_id", null: false
+    t.index ["bot_id"], name: "index_bots_game_results_on_bot_id"
+    t.index ["game_result_id"], name: "index_bots_game_results_on_game_result_id"
   end
 
   create_table "game_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -42,7 +53,15 @@ ActiveRecord::Schema.define(version: 20180729173533) do
     t.string "map", null: false
     t.bigint "winner_id"
     t.string "replay"
+    t.bigint "season_id", null: false
+    t.index ["season_id"], name: "index_game_results_on_season_id"
     t.index ["winner_id"], name: "fk_rails_f187e71c0b"
+  end
+
+  create_table "seasons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "start_date"
+    t.datetime "end_date"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -62,6 +81,7 @@ ActiveRecord::Schema.define(version: 20180729173533) do
     t.datetime "updated_at", null: false
     t.string "username", null: false
     t.string "github"
+    t.string "website", default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
@@ -69,7 +89,5 @@ ActiveRecord::Schema.define(version: 20180729173533) do
 
   add_foreign_key "bot_histories", "bots"
   add_foreign_key "bots", "users", column: "owner_id"
-  add_foreign_key "game_result_bots", "bots"
-  add_foreign_key "game_result_bots", "game_results"
   add_foreign_key "game_results", "bots", column: "winner_id"
 end

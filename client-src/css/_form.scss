@@ -36,10 +36,10 @@ $error-color: #f90;
   // Let the children of input-contianers draw on top of each other.
   z-index: auto;
 
-  .text-input {
+  .input-text {
     width: 100%;
     box-sizing: border-box;
-    // Create a stacking context for children eleements.
+    // Create a stacking context for children elements.
     // IE: their z-orders interact.
     position: relative;
   }
@@ -70,7 +70,8 @@ $error-color: #f90;
   border-color: transparent transparent transparent $error-color;
 }
 
-.text-input {
+.input-text,
+.input-dropdown {
   display: inherit;
   padding: 10px;
   border: 1px solid #ccc;
