@@ -10,6 +10,6 @@ ActionMailer::Base.smtp_settings = {
   domain: 'sc2ai.net',
   address: 'smtp.gmail.com',
   port: 587,
-  authentication: :plain,
+  authentication: :login,
   enable_starttls_auto: true
 }
