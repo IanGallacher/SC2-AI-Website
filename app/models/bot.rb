@@ -4,7 +4,6 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  author      :string(255)      not null
-#  executable  :string(255)
 #  match_count :integer          default(0), not null
 #  name        :string(255)      not null
 #  race        :string(255)      not null
@@ -33,7 +32,6 @@ class Bot < ApplicationRecord
   validates :name, :author, :race, presence: true
   validates :name, uniqueness: { case_sensitive: false }
 
-  before_save :set_file_path
   after_save :save_dll
   before_destroy :destroy_history, :destroy_bot_executable
 
@@ -44,13 +42,9 @@ class Bot < ApplicationRecord
     self.bot_versions.where(season: season).last
   end
 
-  def set_file_path
-    return unless @file.present?
-    self.executable = "#{bot_url}"
-  end
-
   def save_dll
     return unless @file.present?
+    BotVersion.create!(bot_id: self.id, executable: bot_url)
     File.open("#{bot_filepath}", 'wb') { |file| file.write(@file.read) }
   end
 
@@ -108,7 +102,7 @@ class Bot < ApplicationRecord
   end
 
   def bot_filename
-    executable = latest_version.executable
+    executable = latest_version&.executable unless executable.present?
     return File.basename(executable) if executable.present?
     return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{bot_file_extension}"
   end
