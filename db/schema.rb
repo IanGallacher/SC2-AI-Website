@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20180831025238) do
 
   create_table "bot_versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
-    t.bigint "season_id", null: false
+    t.bigint "season_id"
     t.integer "version", null: false
     t.string "executable", null: false
     t.boolean "visable", default: true, null: false

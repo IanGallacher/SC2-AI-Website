@@ -9,7 +9,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  bot_id     :bigint(8)        not null
-#  season_id  :bigint(8)        not null
+#  season_id  :bigint(8)
 #
 # Indexes
 #
