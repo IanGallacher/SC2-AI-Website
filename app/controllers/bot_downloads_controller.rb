@@ -6,6 +6,6 @@ class BotDownloadsController < ApplicationController
   end
 
   def show
-    redirect_to Bot.find(params[:bot_id]).bot_url
+    redirect_to Bot.find(params[:bot_id]).download_url
   end
 end

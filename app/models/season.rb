@@ -28,7 +28,7 @@ class Season < ApplicationRecord
         # Two arguments:
         # - The name of the file as it will appear in the archive
         # - The original file, including the path to find it
-        filepath = bot.bot_filepath if File.exist?(bot.bot_filepath)
+        filepath = bot.download_filepath if File.exist?(bot.download_filepath)
         zipfile.add(bot.name, filepath) if filepath.present?
       end
     end
