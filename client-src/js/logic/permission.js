@@ -19,7 +19,7 @@ export function RequireLoggedInRoute ({
 }
 RequireLoggedInRoute.propTypes = {
   location: ReactRouterPropTypes.location.isRequired,
-  component: PropTypes.node
+  component: PropTypes.func
 };
 
 export function RenderIfLoggedOut(props) {

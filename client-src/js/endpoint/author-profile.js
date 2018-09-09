@@ -152,7 +152,7 @@ class AuthorProfile extends React.Component {
                     onClick: row => {
                       modal.showModal(renderBotDetails(row));
                     },
-                    render: row => <div className="fa fa-edit"/>
+                    render: () => <div className="fa fa-edit"/>
                   }
                 ]}/>
             ) : (

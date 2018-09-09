@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ModalContext } from "./../context/modal-context.js";
-
 export default class Modal extends React.Component {
   constructor(props) {
     super(props);

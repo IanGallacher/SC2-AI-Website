@@ -42,7 +42,7 @@ function PageRoute({component, render, ...props}) {
 }
 PageRoute.propTypes = {
   render: PropTypes.func,
-  component: PropTypes.node
+  component: PropTypes.func
 };
 
 export default class PageRouting extends React.Component {
