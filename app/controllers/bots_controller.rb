@@ -1,5 +1,4 @@
 class BotsController < ApplicationController
-#  protect_from_forgery only: :destroy
   def index
     render json: Bot.all
   end

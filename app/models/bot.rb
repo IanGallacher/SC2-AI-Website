@@ -93,7 +93,7 @@ class Bot < ApplicationRecord
 
   # Things are uploaded to the public folder, but public is not part of the url.
   def bot_urlroot
-    return "user-upload/dll/"
+    return '/user-upload/dll/'
   end
 
   def bot_file_extension
