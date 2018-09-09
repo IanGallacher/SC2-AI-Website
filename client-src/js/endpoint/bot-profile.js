@@ -11,6 +11,7 @@ import {
   getSeasonFromUrl } from "./../context/season-context.js";
 import LoadingAnimation from "./../component/loading.jsx";
 import { SimpleLineChart } from "./../component/chart.jsx";
+import FetchTable from "./../component/table-fetch.jsx";
 import WinRatePieChart from "./../component/win-rate-pie-chart.jsx";
 import ResultTable from "./../component/table.jsx";
 
@@ -147,6 +148,23 @@ class BotProfile extends React.Component {
         victories={win_rate_zerg.win_count}
         defeats={win_rate_zerg.match_count - win_rate_zerg.win_count}/>
       {SimpleLineChart(bot_history, "MMR")}
+      <FetchTable url={`${API_URL}/bot_versions/${this.getBotId()}/`}
+        schema={[
+          {
+            columnLabel:"Version",
+            fieldName:"version"
+          },
+          {
+            columnLabel:"Download",
+            fieldName:"executable",
+            sortable: false,
+            render: row => {
+              if (row.executable)
+                return <a href={row.executable} className="btn" download>Download</a>;
+              else return <div>Replay missing</div>;
+            }
+          },
+        ]}/>
     </div>;
   }
 }

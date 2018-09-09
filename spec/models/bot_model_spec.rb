@@ -4,14 +4,16 @@ describe 'Bot Model -' do
   let(:bot) { FactoryBot.create(:bot, file: fixture_file_upload('bot.examp')) }
 
   it 'should save dll to disk' do
-    expect(File.exist? bot.bot_filepath).to be true
+    expect(File.exist? bot.download_filepath).to be true
   end
+
+  it 'should delete dll on destroy'
 
   it 'should find win rates against specific races'
 
   after do
-    # The destroy executable method is protected so we don't accidently call it.
-    # Sending the command directly to the object gets around this.
-    bot.send(:destroy_bot_executable)
+    # Be sure to get rid of any files created from the test.
+    # The bot_version before_destroy callback will delete any saved executables.
+    bot.destroy
   end
 end

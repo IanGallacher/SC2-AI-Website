@@ -62,7 +62,6 @@ describe 'Bot API -', type: :request do
       ).to eq 200
       expect(Bot.last.name).to eq bot_name
       expect(Bot.last.race).to eq bot_race
-      Bot.last.send(:destroy_bot_executable)
     end
 
     it 'help me'
@@ -84,7 +83,6 @@ describe 'Bot API -', type: :request do
           file: fixture_file_upload('bot.examp')
         }
       ).to eq 422
-      Bot.last.send(:destroy_bot_executable)
     end
 
     it 'can update owned bot' do
@@ -135,5 +133,11 @@ describe 'Bot API -', type: :request do
       expect(delete bot_path(@bots[2])).to eq 200
     end
   end
-end
 
+
+  after do
+    # The on destroy callback will make sure we don't have any lingering
+    # executables on the filesystem.
+    Bot.destroy_all
+  end
+end
