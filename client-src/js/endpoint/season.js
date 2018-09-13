@@ -2,7 +2,8 @@ import axios from "axios";
 import React from "react";
 
 import { API_URL } from "./../app.js";
-import ResultTable from "./../component/table.jsx";
+import CustomReactTable from "./../table/table.jsx";
+import TableCell from "./../table/table-cell.jsx";
 
 export default class Season extends React.Component {
   constructor(props) {
@@ -19,36 +20,17 @@ export default class Season extends React.Component {
   render() {
     return (
       <div>
-        <ResultTable label={this.state.season.name}
-          table={this.state.season.summary}
-          schema={
-            [
-              {
-                columnLabel:"BotName",
-                fieldName:"BotName"
-              },
-              {
-                columnLabel:"Author",
-                fieldName:"author"
-              },
-              {
-                columnLabel:"Race",
-                fieldName:"race"
-              },
-              {
-                columnLabel:"Matches",
-                fieldName:"matches"
-              },
-              {
-                columnLabel:"Wins",
-                fieldName:"wins"
-              },
-              {
-                columnLabel:"Win Pct",
-                fieldName:"winpct"
-              }
-            ]
-          }/>
+        <CustomReactTable
+          label={this.state.season.name}
+          table={this.state.season.summary}>
+          <TableCell header={"BotName"} fieldName={"BotName"}/>
+          <TableCell header={"Author"} fieldName={"author"}/>
+          <TableCell header={"Race"} fieldName={"race"}/>
+          <TableCell header={"Matches"} fieldName={"matches"}/>
+          <TableCell header={"Race"} fieldName={"race"}/>
+          <TableCell header={"Wins"} fieldName={"wins"}/>
+          <TableCell header={"Win Pct"} fieldName={"winpct"}/>
+        </CustomReactTable>
       </div>
     );
   }

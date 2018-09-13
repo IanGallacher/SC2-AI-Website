@@ -66,7 +66,8 @@ namespace :legacy_db do
         bot_ids: bot_ids,
         winner_id: Bot.where(name: bot_winner['Name']).first.id,
         created_at: result['Date'],
-        season_id: Season.find_by(name: season['SeasonName']).id
+        season_id: Season.find_by(name: season['SeasonName']).id,
+        replay: result['ReplayFile']
       )
     end
   end

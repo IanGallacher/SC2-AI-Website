@@ -12,7 +12,6 @@ import {
 import LoadingAnimation from "./../component/loading.jsx";
 import { SimpleLineChart } from "./../component/chart.jsx";
 import WinRatePieChart from "./../component/win-rate-pie-chart.jsx";
-import ResultTable from "./../component/table.jsx";
 
 class BotProfile extends React.Component {
   constructor(props) {
@@ -57,44 +56,6 @@ class BotProfile extends React.Component {
   }
 
   getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
-
-  renderBotTable(bot_table) {
-    return <ResultTable table={bot_table} nullMessage="No bots found for user"
-      schema={
-        [
-          {
-            columnLabel:"Bot name",
-            fieldName:"name",
-            onClick: row => {
-              this.props.history.push(`/bot/?bot_id=${row.id}`);
-            }
-          },
-          {
-            columnLabel:"Author",
-            fieldName:"author",
-            onClick: row => {
-              this.props.history.push(`/authors/?author_id=${row.owner_id}`);
-            }
-          },
-          {
-            columnLabel:"Race",
-            fieldName:"race",
-            onClick: row => {
-              this.props.history.push(`/bots/?race=${row.race}`);
-            }
-          },
-          {
-            columnLabel:"Games Won",
-            fieldName:"win_count"
-          },
-          {
-            columnLabel:"Games Played",
-            fieldName:"match_count"
-          }
-        ]
-      }
-    />;
-  }
 
   render() {
     const bot = this.state.bot;

@@ -4,23 +4,22 @@ import PropTypes from "prop-types";
 import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
-import ResultTable from "./table.jsx";
+import CustomReactTable from "./../table/table.jsx";
 
 class FetchTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      table: null,
-      schema: this.props.schema
+      table: null
     };
   }
 
   static propTypes = {
+    children: PropTypes.element,
     filter: PropTypes.func,
     location: ReactRouterPropTypes.location.isRequired,
     style: PropTypes.string,
-    url: PropTypes.string.isRequired,
-    schema: PropTypes.array
+    url: PropTypes.string.isRequired
   }
 
   componentDidMount() {
@@ -30,11 +29,12 @@ class FetchTable extends React.Component {
 
   render() {
     let table = this.state.table;
-    return <ResultTable
+    return <CustomReactTable
       table={table}
       nullMessage="Nothing found!"
-      schema={this.state.schema}
-      style={this.props.style}/>;
+      style={this.props.style}>
+      {this.props.children}
+    </CustomReactTable>;
   }
 }
 export default withRouter(FetchTable);
