@@ -4,7 +4,6 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  author      :string(255)      not null
-#  executable  :string(255)
 #  match_count :integer          default(0), not null
 #  name        :string(255)      not null
 #  race        :string(255)      not null
@@ -23,8 +22,8 @@
 class Bot < ApplicationRecord
   include BetterJson
   has_many :bot_histories
-  # has_many :game_result_bots, dependent: :nullify
   has_many :bot_season_statistics
+  has_many :bot_versions, dependent: :destroy
   has_many :seasons, through: :bot_season_statistics
   has_many :won_games, class_name: "GameResult", foreign_key: "winner_id"
   has_and_belongs_to_many :game_results
@@ -33,21 +32,24 @@ class Bot < ApplicationRecord
   validates :name, :author, :race, presence: true
   validates :name, uniqueness: { case_sensitive: false }
 
-  before_save :set_file_path
   after_save :save_dll
-  before_destroy :destroy_history, :destroy_bot_executable
+  before_destroy :destroy_history
+
+  delegate :executable, to: :latest_version
+  delegate :download_url, to: :latest_version
+  delegate :download_filepath, to: :latest_version
 
   attr_writer :file
   attr_writer :season_id
 
-  def set_file_path
-    return unless @file.present?
-    self.executable = "#{bot_url}"
+  def latest_version(season=Season.current_season)
+    self.bot_versions.where(season: season).last
   end
 
   def save_dll
     return unless @file.present?
-    File.open("#{bot_filepath}", 'wb') { |file| file.write(@file.read) }
+    BotVersion.create!(bot_id: self.id, file: @file)
+    File.open("#{download_filepath}", 'wb') { |file| file.write(@file.read) }
   end
 
   def current_mmr(season=Season::current_season)
@@ -71,40 +73,10 @@ class Bot < ApplicationRecord
     return return_array
   end
 
-  def bot_url
-    return "#{bot_urlroot}#{bot_filename}"
-  end
-
-  def bot_filepath
-    return "#{bot_directory}#{bot_filename}"
-  end
-
   private
+
   def destroy_history
     BotHistory.where(bot_id: self.id).destroy_all
-  end
-
-  def destroy_bot_executable
-    return unless self.executable.present?
-    File.delete("#{bot_filepath}")
-  end
-
-  def bot_directory
-    return "public/user-upload/dll/"
-  end
-
-  # Things are uploaded to the public folder, but public is not part of the url.
-  def bot_urlroot
-    return "user-upload/dll/"
-  end
-
-  def bot_file_extension
-    return File.extname @file.path
-  end
-
-  def bot_filename
-    return File.basename(self.executable) if self.executable.present?
-    return "#{name.gsub(/[^0-9A-z.\-]/, '_')}#{id}#{bot_file_extension}"
   end
 
   def vs_race(race, id)

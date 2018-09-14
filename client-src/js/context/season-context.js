@@ -46,7 +46,7 @@ class SeasonProvider extends React.Component {
     children: PropTypes.element,
     history: ReactRouterPropTypes.history,
     location: ReactRouterPropTypes.location.isRequired,
-    root: PropTypes.element,
+    root: PropTypes.object,
     seasonContext: PropTypes.shape({
       changeSeason: PropTypes.function,
       selected: PropTypes.string,

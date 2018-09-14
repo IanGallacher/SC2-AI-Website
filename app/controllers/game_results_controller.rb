@@ -34,9 +34,9 @@ class GameResultsController < ApplicationController
 
   # Parse the input of the ladder manager.
   def game_result_params
-    p = params.permit(:map, :replayfile, :winner_id)
+    p = params.permit(:map, :replayfile, :winner_id, :gba)
     if params.key? :gba
-      p[:bot_game_results_attributes] = JSON.parse(params[:gba])
+      p[:bot_ids] = JSON.parse(params[:gba])
     else
       bot_ids = []
       bot_ids.push bot_id: Bot.where(name: params[:Bot1Name]).first.id

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180804170858) do
+ActiveRecord::Schema.define(version: 20180908223622) do
 
   create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 20180804170858) do
     t.index ["season_id"], name: "index_bot_season_statistics_on_season_id"
   end
 
+  create_table "bot_versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "season_id"
+    t.integer "version", null: false
+    t.string "executable", null: false
+    t.boolean "visable", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_bot_versions_on_bot_id"
+    t.index ["season_id"], name: "index_bot_versions_on_season_id"
+  end
+
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "owner_id"
     t.string "name", null: false
@@ -37,7 +49,6 @@ ActiveRecord::Schema.define(version: 20180804170858) do
     t.string "race", null: false
     t.integer "match_count", default: 0, null: false
     t.integer "win_count", default: 0, null: false
-    t.string "executable"
     t.index ["owner_id"], name: "fk_rails_f93a12e463"
   end
 

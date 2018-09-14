@@ -4,7 +4,6 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  author      :string(255)      not null
-#  executable  :string(255)
 #  match_count :integer          default(0), not null
 #  name        :string(255)      not null
 #  race        :string(255)      not null
