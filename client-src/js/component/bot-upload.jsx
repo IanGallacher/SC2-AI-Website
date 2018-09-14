@@ -58,6 +58,7 @@ export default class BotUpload extends React.Component {
 
   render() {
     let bot = this.props.bot;
+    let onFileChange = this.onFileChange;
     return <React.Fragment>
       <title>{this.props.label}</title>
       <form className="flex-horizontal" onSubmit={this.onSubmit}>
@@ -67,10 +68,7 @@ export default class BotUpload extends React.Component {
           placeholder={ bot ? bot.name : "Bot Name" }
           className="input-text"
           onChange={this.onChange}/>
-        <input name="file"
-          type="file"
-          className="btn"
-          onChange={this.onFileChange}/>
+        <input name="file" type="file" className="btn" onChange={onFileChange}/>
         <select name="race"
           className="input-text"
           onChange={this.onChange}

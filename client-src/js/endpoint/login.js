@@ -5,7 +5,7 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import AlertLogic from "./../logic/alert.js";
 import LoginLogic from "./../logic/login.js";
 
-import { TextInput } from "./../component/form.jsx";
+import { TextInput, PrimaryButton } from "./../component/form.jsx";
 
 export default class Login extends React.PureComponent {
   constructor(props) {
@@ -42,12 +42,7 @@ export default class Login extends React.PureComponent {
           placeholder="Password"
           onChange={this.onChange} />
         <br/>
-        <button name="Submit"
-          id="submit"
-          className="btn btn-lg btn-primary"
-          type="submit">
-                  Sign in
-        </button>
+        <PrimaryButton name="Submit" id="submit" label="Sign in"/>
         <br/>
         <Link to="/sign-up">Create new account</Link>
         <div id="message">{ this.state.error }</div>

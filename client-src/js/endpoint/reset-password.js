@@ -1,7 +1,7 @@
 import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
 
-import {TextInput} from "../component/form";
+import { TextInput, PrimaryButton } from "../component/form";
 import LoginLogic from "../logic/login";
 import ResetPasswordLogic from "../logic/reset-password";
 import AlertLogic from "../logic/alert";
@@ -61,9 +61,7 @@ export default class ResetPassword extends React.PureComponent {
           placeholder="Confirm Password"
           onChange={this.onChange} />
         <br/>
-        <button name="Submit"
-          className="btn btn-lg btn-primary"
-          type="submit">Submit</button>
+        <PrimaryButton name="Submit" id="submit" label="Submit"/>
       </form>;
     return (
       <form name="reset-password-form"
@@ -77,12 +75,7 @@ export default class ResetPassword extends React.PureComponent {
           placeholder="Email address"
           onChange={this.onChange} autoFocus />
         <br/>
-        <button name="Submit"
-          id="submit"
-          className="btn btn-lg btn-primary"
-          type="submit">
-          Send email
-        </button>
+        <PrimaryButton name="Submit" id="submit" label="Send email"/>
         <br/>
       </form>
     );

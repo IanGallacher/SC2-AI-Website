@@ -3,7 +3,7 @@ import React from "react";
 import AlertLogic from "./../logic/alert.js";
 import LoginLogic from "./../logic/login.js";
 
-import { TextInput } from "./../component/form.jsx";
+import { TextInput, PrimaryButton } from "./../component/form.jsx";
 
 export default class SignUp extends React.PureComponent {
   constructor(props) {
@@ -60,9 +60,7 @@ export default class SignUp extends React.PureComponent {
           placeholder="Confirm Password"
           onChange={this.onChange} />
         <br/>
-        <button name="Submit"
-          className="btn btn-lg btn-primary"
-          type="submit">Sign up</button>
+        <PrimaryButton name="Submit" id="submit" label="Sign up"/>
       </form>
     );
   }

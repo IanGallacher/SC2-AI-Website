@@ -98,23 +98,17 @@ export class PieChartCustom extends React.Component {
     width: PropTypes.number
   }
 
-  onPieEnter = (data, index) => {
-    this.setState({ activeIndex: index });
-  }
+  onPieEnter = (data, index) => { this.setState({ activeIndex: index }); }
 
-  onPieLeave = () => {
-    this.setState({ activeIndex: null });
-  }
+  onPieLeave = () => { this.setState({ activeIndex: null }); }
+
+  COLORS = ["#00CC22", "#BB1100", "#FFBB28", "#FF8042"];
 
   render() {
-    const props = this.props;
-    let width = props.width || 200;
-    let height = props.height || 300;
-    const COLORS = ["#00CC22", "#BB1100", "#FFBB28", "#FF8042"];
+    let width = this.props.width || 200;
+    let height = this.props.height || 300;
     let offset = -(400 - width)/2;
-    let style= {
-      top: "-25px"
-    };
+    let style= { top: "-25px" };
     if(this.state.activeIndex !== null) {
       style.width = "400px";
       style.left = `${offset}px`;
@@ -135,7 +129,7 @@ export class PieChartCustom extends React.Component {
         onMouseLeave={this.onPieLeave}>
         {
           this.props.data.map((entry, index) => <Cell
-            key={index} fill={COLORS[index % COLORS.length]}/>)
+            key={index} fill={this.COLORS[index % this.COLORS.length]}/>)
         }
       </Pie>
     </PieChart>;

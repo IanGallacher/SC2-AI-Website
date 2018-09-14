@@ -57,6 +57,23 @@ TextInput.propTypes = {
   onChange: PropTypes.func
 };
 
+
+export const PrimaryButton = props => {
+  return (
+    <button name={props.name}
+      id={props.id}
+      className="btn btn-lg btn-primary"
+      type="submit">
+      {props.label}
+    </button>
+  );
+};
+PrimaryButton.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string
+};
+
 export const RadioButton = props => {
   return <label htmlFor={props.id} className="radioButtonContainer">
     {props.label}
