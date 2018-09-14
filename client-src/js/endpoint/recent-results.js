@@ -7,7 +7,9 @@ import {
   SeasonSelector,
   getSeasonFromUrl } from "./../context/season-context.js";
 import FilterBar from "./../component/filter.jsx";
-import ResultTable from "./../component/table.jsx";
+
+import CustomReactTable from "./../table/table.jsx";
+import TableCell from "./../table/table-cell.jsx";
 
 export default class RecentResults extends React.Component {
   constructor(props) {
@@ -70,54 +72,50 @@ export default class RecentResults extends React.Component {
         <FilterBar>
           <SeasonSelector filterIgnore="season"/>
         </FilterBar>
-        <ResultTable
-          table={this.state.game_results}
-          schema={
-            [
-              {
-                columnLabel:"First Bot",
-                sortValue: row => (row.bots[0].name || "").toLowerCase(),
-                render: row => {
-                  if(row.bots.length > 0 && row.bots.length >= 2)
-                    return row.bots[0].name;
-                }
-              },
-              {
-                columnLabel:"Second Bot",
-                sortValue: row => (row.bots[1].name || "").toLowerCase(),
-                render: row => {
-                  if(row.bots.length > 0 && row.bots.length >= 2)
-                    return row.bots[1].name;
-                }
-              },
-              {
-                columnLabel:"Map",
-                fieldName:"map",
-                sortValue: row => (row.map || "").toLowerCase()
-              },
-              {
-                columnLabel:"Winner",
-                fieldName:"winner_name",
-                sortValue: row => (row.winner_name || "").toLowerCase(),
-                onClick: row => {
-                  this.props.history.push(`/bot/?bot_id=${row.winner_id}`);
-                }
-              },
-              {
-                columnLabel:"Replay",
-                fieldName:"replay",
-                sortable: false,
-                optional: true,
-                render: row => {
-                  if (row.replay)
-                    return <form method="get" action={row.replay}>
-                      <button className="btn">Download</button>
-                    </form>;
-                  else return <div>Replay missing</div>;
-                }
-              },
-            ]
-          }/>
+        <CustomReactTable table={this.state.game_results}>
+          <TableCell
+            header={"First bot"}
+            sortValue={row => (row.bots[0].name || "").toLowerCase()}
+            render={row => {
+              if(row.bots.length > 0 && row.bots.length >= 2)
+                return row.bots[0].name;
+            }}
+          />
+          <TableCell
+            header={"Second bot"}
+            sortValue={row => (row.bots[1].name || "").toLowerCase()}
+            render={row => {
+              if(row.bots.length > 0 && row.bots.length >= 2)
+                return row.bots[1].name;
+            }}
+          />
+          <TableCell
+            header={"Map"}
+            fieldName={"map"}
+            sortValue={row => (row.map || "").toLowerCase()}
+          />
+          <TableCell
+            header={"Winner"}
+            fieldName={"winner_name"}
+            sortValue={row => (row.winner_name || "").toLowerCase()}
+            onClick={row => {
+              this.props.history.push(`/bot/?bot_id=${row.winner_id}`);
+            }}
+          />
+          <TableCell
+            header={"Replay"}
+            fieldName={"replay"}
+            sortable={false}
+            optional={true}
+            render={row => {
+              if (row.replay)
+                return <form method="get" action={row.replay}>
+                  <button className="btn">Download</button>
+                </form>;
+              else return <div>Replay missing</div>;
+            }}
+          />
+        </CustomReactTable>
         <div>
           <ul className="pagination">
             {rows.map((r) =>

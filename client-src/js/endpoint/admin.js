@@ -1,13 +1,16 @@
 import axios from "axios";
 import React from "react";
 import PropTypes from "prop-types";
+import ReactRouterPropTypes from "react-router-prop-types";
 
 import AlertLogic from "./../logic/alert.js";
 import { API_URL } from "./../app.js";
 import FileUpload from "./../component/file-upload.jsx";
 import { TextInput, Dropdown } from "./../component/form.jsx";
 import { confirmDestructiveAction } from "./../component/confirm-destructive-action.jsx";
-import ResultTable from "./../component/table.jsx";
+
+import CustomReactTable from "./../table/table.jsx";
+import TableCell from "./../table/table-cell.jsx";
 
 import { ModalContext } from "./../context/modal-context.js";
 
@@ -42,57 +45,51 @@ class ManualGameUpload extends React.PureComponent {
 
 class EditAllBots extends React.PureComponent {
   static propTypes = {
-    bots: PropTypes.object
+    bots: PropTypes.object,
+    history: ReactRouterPropTypes.history
   }
 
   render() {
     // If we have recieved data, filter and sort the data.
     let bot_table = this.props.bots;
     return <ModalContext.Consumer>{modalContext =>
-      <ResultTable table={bot_table} nullMessage="No bots found for user"
-        schema={
-          [
-            {
-              columnLabel:"Bot name",
-              fieldName:"name",
-              sortValue: row => (row.name || "").toLowerCase()
-            },
-            {
-              columnLabel:"Author",
-              fieldName:"author",
-              sortValue: row => (row.author || "").toLowerCase()
-            },
-            {
-              columnLabel:"Race",
-              fieldName:"race"
-            },
-            {
-              columnLabel:"Games Played",
-              fieldName:"match_count"
-            },
-            {
-              columnLabel:"delete?",
-              onClick: row => {
-                modalContext.showModal(
-                  confirmDestructiveAction(
-                    function() {
-                      const axios_url = `${API_URL}/bots/${row.id}`;
-                      axios.delete(axios_url).then(
-                        () => AlertLogic.addSuccess("Succesfully deleted bot")
-                      ).catch(
-                        () => AlertLogic.addError("Something went wrong")
-                      );
-                    }
-                  )
-                );
-              },
-              render: () => {
-                return <div className="fa fa-trash"/>;
-              }
-            }
-          ]
-        }
-      />
+      <CustomReactTable table={bot_table} nullMessage="No bots found for user">
+        <TableCell
+          header={"Bot name"}
+          fieldName={"name"}
+          sortValue={row => (row.name || "").toLowerCase()}
+        />
+        <TableCell
+          header={"Author"}
+          fieldName={"author"}
+          sortValue={row => (row.name || "").toLowerCase()}
+        />
+        <TableCell
+          header={"Race"}
+          fieldName={"race"}
+          onClick={row => this.props.history.push(`/bots/?race=${row.race}`)}
+          optional={true}
+        />
+        <TableCell header={"Games Played"} fieldName={"match_count"}/>
+        <TableCell
+          header={"delete?"}
+          onClick={row => {
+            modalContext.showModal(
+              confirmDestructiveAction(
+                function() {
+                  const axios_url = `${API_URL}/bots/${row.id}`;
+                  axios.delete(axios_url).then(
+                    () => AlertLogic.addSuccess("Succesfully deleted bot")
+                  ).catch(
+                    () => AlertLogic.addError("Something went wrong")
+                  );
+                }
+              )
+            );
+          }}
+          render={() => <div className="fa fa-trash"/>}
+        />
+      </CustomReactTable>
     }</ModalContext.Consumer>;
   }
 }

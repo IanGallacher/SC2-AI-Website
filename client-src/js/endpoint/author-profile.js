@@ -10,10 +10,13 @@ import { ModalContext } from "./../context/modal-context.js";
 import { API_URL } from "./../app.js";
 import { EditableImage } from "./../component/image.jsx";
 import BotUpload from "./../component/bot-upload.jsx";
-import FetchTable from "./../component/table-fetch.jsx";
 import { TextInput } from "./../component/form.jsx";
 import FormZone from "./../component/form-zone.jsx";
 import UserTitle from "./../component/user-title.jsx";
+
+import FetchTable from "./../table/table-fetch.jsx";
+import TableCell from "./../table/table-cell.jsx";
+import TableCellBotName from "./../table/cell/bot-name.jsx";
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 
@@ -68,7 +71,7 @@ class AuthorProfile extends React.Component {
     if (author_id == "") return;
 
     axios.get(`${API_URL}/authors/${author_id}`)
-      .then(response => this.setState({ profile: response.data }) );
+      .then(response => this.setState({ profile: response.data }));
   }
 
   getAuthorId() {
@@ -114,47 +117,31 @@ class AuthorProfile extends React.Component {
           </div>
           {
             (this.state.profile.username) ? (
-              <FetchTable url={`${API_URL}/users/${this.state.profile.id}/bots`}
-                schema={[
-                  {
-                    columnLabel:"Bot name",
-                    fieldName:"name",
-                    sortValue: row => (row.name || "").toLowerCase(),
-                    onClick: row => {
-                      this.props.history.push(`/bot/?bot_id=${row.id}`);
-                    }
-                  },
-                  {
-                    columnLabel:"Race",
-                    fieldName:"race",
-                    sortValue: row => (row.race || "").toLowerCase(),
-                    onClick: row => {
-                      this.props.history.push(`/bots/?race=${row.race}`);
-                    }
-                  },
-                  {
-                    columnLabel:"Win Rate",
-                    render: row => {
-                      // Avoid dividing by 0.
-                      if(row.match_count === 0) return ("N/A");
-                      let win_ratio = row.win_count / row.match_count;
-                      return `${win_ratio.toFixed(2) * 100}%`;
-                    }
-                  },
-                  {
-                    columnLabel:"MMR",
-                    fieldName:"current_mmr"
-                  },
-                  {
-                    columnLabel:"Edit",
-                    fieldName:"current_mmr",
-                    showColumnIf: () => this.props.editing,
-                    onClick: row => {
-                      modal.showModal(renderBotDetails(row));
-                    },
-                    render: () => <div className="fa fa-edit"/>
-                  }
-                ]}/>
+              <FetchTable url={`${API_URL}/users/${this.state.profile.id}/bots`}>
+                <TableCellBotName header={"Bot name"} fieldName={"name"}
+                  sortValue={row => (row.name || "").toLowerCase()}
+                  onClick={row => this.props.history.push(`/bot/?bot_id=${row.id}`)}
+                />
+                <TableCellBotName header={"Race"} fieldName={"race"}
+                  sortValue={row => (row.race || "").toLowerCase()}
+                  onClick={row => this.props.history.push(`/bot/?race=${row.race}`)}
+                />
+                <TableCellBotName header={"Win rate"}
+                  render={row => {
+                    // Avoid dividing by 0.
+                    if(row.match_count === 0) return ("N/A");
+                    let win_ratio = row.win_count / row.match_count;
+                    return `${win_ratio.toFixed(2) * 100}%`;
+                  }}
+                />
+                <TableCellBotName header={"MMR"} fieldName={"current_mmr"}/>
+                <TableCellBotName header={"Edit"}
+                  showColumnIf={() => this.props.editing}
+                  sortable={false}
+                  onClick={row => modal.showModal(renderBotDetails(row))}
+                  render={row => <div className="fa fa-edit"/>}
+                />
+              </FetchTable>
             ) : (
               <div/>
             )
