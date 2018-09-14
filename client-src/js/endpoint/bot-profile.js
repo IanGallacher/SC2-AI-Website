@@ -11,7 +11,7 @@ import {
   getSeasonFromUrl } from "./../context/season-context.js";
 import LoadingAnimation from "./../component/loading.jsx";
 import { SimpleLineChart } from "./../component/chart.jsx";
-import FetchTable from "./../component/table-fetch.jsx";
+import FetchTable from "./../table/table-fetch.jsx";
 import WinRatePieChart from "./../component/win-rate-pie-chart.jsx";
 
 class BotProfile extends React.Component {
