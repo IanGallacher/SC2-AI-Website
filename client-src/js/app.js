@@ -56,10 +56,7 @@ export default class App extends React.Component {
         updateGoal: this.updateGoal,
         ...this.state.user_data}}>
         <ModalContext.Provider value={
-          {
-            showModal: this.showModal,
-            closeModal: this.closeModal
-          }
+          { showModal: this.showModal, closeModal: this.closeModal }
         }>
           <Router>
             <React.Fragment>
