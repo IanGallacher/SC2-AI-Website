@@ -11,7 +11,7 @@ class GameResultsController < ApplicationController
     if params.has_key?(:page)
       game_results = game_results.paginate(
         page: params[:page],
-        per_page: params.has_key?(:per_page) ? params[:per_page] : 100
+        per_page: params[:per_page] || 100
       )
       total = game_results.total_entries
     else

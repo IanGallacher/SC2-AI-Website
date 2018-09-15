@@ -26,11 +26,7 @@ export default class BotUpload extends React.Component {
     this.setState(new_state);
   }
 
-  onFileChange = event => {
-    this.setState({
-      file: event.target.files[0]
-    });
-  }
+  onFileChange = event => { this.setState({ file: event.target.files[0] }); }
 
   onSubmit = event => {
     event.preventDefault();

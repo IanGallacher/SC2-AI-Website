@@ -47,15 +47,14 @@ export default class AlertZone extends React.Component {
 
   UNSAFE_componentWillReceiveProps(props) {
     // If the prop has removed the element, update the state
-    for(let m of this.state.messages) {
-      if(!props.messages.find(e => e.id === m.id))
-        this._deleteMessage(m);
+    for(let message of this.state.messages) {
+      if(!props.messages.find(e => e.id === message.id))
+        this._deleteMessage(message);
     }
-    for(let m of props.messages) {
-      if(!this.state.messages.find(e => e.id === m.id)) {
-        let new_m = this.state.messages;
-        new_m.push(m);
-        this.setState( {messages:  new_m} );
+    for(let message of props.messages) {
+      if(!this.state.messages.find(e => e.id === message.id)) {
+        this.state.messages.push(message);
+        this.setState({ messages:  this.state.messages });
       }
     }
   }
