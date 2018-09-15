@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 export default class TableCell extends React.Component {
   static propTypes = {
     contents: PropTypes.string,
-    schema: PropTypes.object,
     header: PropTypes.string, // The name shown above the table.
     field: PropTypes.string,
     render: PropTypes.func,
@@ -15,9 +14,8 @@ export default class TableCell extends React.Component {
   }
 
   render() {
-    if(!this.props.schema) return null;
     let row = this.props.row;
-    let {field, render, onClick, header, showColumnIf, optional} = this.props.schema;
+    let {field, render, onClick, header, showColumnIf, optional} = this.props;
     if (showColumnIf && !showColumnIf()) return null;
     let contents = (render) ? render(row) : row[field];
     let cellClass = optional ? "optional" : "";

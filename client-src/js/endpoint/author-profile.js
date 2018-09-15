@@ -99,8 +99,6 @@ class AuthorProfile extends React.Component {
   }
 
   render() {
-    if (!this.state.profile.username)
-      return "profile not found";
     return (
       <ModalContext.Consumer>{modal => <div className="trading-card-horizontal">
         <UserTitle user={this.state.profile}/>
@@ -120,15 +118,37 @@ class AuthorProfile extends React.Component {
           {
             (this.state.profile.username) ? (
               <FetchTable url={`${API_URL}/users/${this.state.profile.id}/bots`}>
-                <TableCell schema={SchemaFactory.BotNameSchema(this)}/>
-                <TableCell schema={SchemaFactory.BotRaceSchema(this)}/>
-                <TableCell schema={SchemaFactory.WinRateSchema(this)}/>
-                <TableCell schema={SchemaFactory.MMRSchema(this)}/>
-                <TableCell schema={SchemaFactory.EditAuthorProfile(this, modal)}/>
+                <TableCell {...SchemaFactory.BotNameSchema(this)}/>
+                <TableCell {...SchemaFactory.BotRaceSchema(this)}/>
+                <TableCell {...SchemaFactory.WinRateSchema(this)}/>
+                <TableCell {...SchemaFactory.MMRSchema(this)}/>
+                <TableCell header={"Edit"}
+                  showColumnIf={() => this.props.editing}
+                  sortable={false}
+                  onClick={row => modal.showModal(renderBotDetails(row))}
+                  render={row => <div className="fa fa-edit"/>}
+                />
               </FetchTable>
             ) : (
               <div/>
             )
+          }
+          {
+          /*
+          <div className="grid-one-quarter">
+              <ul className="list-group">
+                <li className="list-group-item text-muted">Profile: </li>
+                <li className="list-group-item text-right">
+                  <span className="pull-left">
+                    Joined:
+                  </span>{this.state.profile.joindate}</li>
+                <li className="list-group-item text-right">
+                  <span className="pull-left">
+                    Real name:
+                  </span>{this.state.profile.name}</li>
+              </ul>
+            </div>
+            */
           }
         </div>
       </div>}

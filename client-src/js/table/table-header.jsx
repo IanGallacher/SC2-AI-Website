@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export default class TableHeader extends React.Component {
   static propTypes = {
-    child_cells: PropTypes.array,
+    column_definitions: PropTypes.array,
     sort_direction: PropTypes.number,
     sort_index: PropTypes.number,
     updateSort: PropTypes.func
@@ -17,12 +17,10 @@ export default class TableHeader extends React.Component {
   }
 
   render() {
-    let columns = this.props.child_cells.map(cell => cell.props.schema);
+    let columns = this.props.column_definitions;
     return <thead>
       <tr>
-        { columns.map((schema, index) => {
-          if (!schema) return null;
-          let {header, field, sortable, showColumnIf, optional} = schema;
+        { columns.map(({header, field, sortable, showColumnIf, optional}, index) => {
           if (showColumnIf && !showColumnIf()) return null;
           let cell_class = optional ? "optional" : "";
           return (

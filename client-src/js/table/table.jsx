@@ -91,13 +91,16 @@ export default class CustomReactTable extends React.Component {
   }
 
   render() {
+    const children = this.props.children;
+    let column_definitions = [];
     if(!this.props.table) return <LoadingAnimation/>;
+    React.Children.map(children, child => column_definitions.push(child.props));
     return (
       <table className="table table-striped">
         <TableHeader
           sort_direction={this.state.sort_direction}
           sort_index={this.state.sort_index}
-          child_cells={this.props.children}
+          column_definitions={column_definitions}
           updateSort={this.updateSort}/>
         <TableBody
           table={this.state.table}

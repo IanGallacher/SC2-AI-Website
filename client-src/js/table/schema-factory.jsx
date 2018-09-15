@@ -19,12 +19,25 @@ export default class SchemaFactory {
     };
   }
 
-  static MMRSchema(context) {
+  static BotAuthorSchema(context) {
     return {
-      header: "MMR",
-      field: "current_mmr"
+      header: "Author",
+      field: "author",
+      sortValue: row => (row.author || "").toLowerCase(),
+      onClick: row => this.props.history.push(`/authors/?author_id=${row.author_id}`),
+      optional: true
     };
   }
+
+  static GamesWonSchema() {
+    return { header: "Games Won", field: "win_count" };
+  }
+
+  static GamesPlayedSchema(context) {
+    return { header: "Games Played", field: "match_count" };
+  }
+
+  static MMRSchema(context) { return { header: "MMR", field: "current_mmr" }; }
 
   static WinRateSchema(context) {
     return {
@@ -41,22 +54,6 @@ export default class SchemaFactory {
         let win_ratio = row.win_count / row.match_count;
         return `${win_ratio.toFixed(2) * 100}%`;
       }
-    };
-  }
-
-  static EditAuthorProfile(context, modal) {
-    return {
-      header: "Edit",
-      showColumnIf: () => this.props.editing,
-      sortable: false,
-      onClick: row => modal.showModal(
-        <BotUpload
-          bot={bot}
-          uploadPath={`/bots/${bot.id}`}
-          method="patch"
-        />
-      ),
-      render: row => <div className="fa fa-edit"/>
     };
   }
 }
