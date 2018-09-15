@@ -14,8 +14,7 @@ export default class TableCell extends React.Component {
   }
 
   render() {
-    let row = this.props.row;
-    let {field, render, onClick, header, showColumnIf, optional} = this.props;
+    let {row, field, render, onClick, header, showColumnIf, optional} = this.props;
     if (showColumnIf && !showColumnIf()) return null;
     let contents = (render) ? render(row) : row[field];
     let cellClass = optional ? "optional" : "";

@@ -6,7 +6,7 @@ export default class SchemaFactory {
       header: "Bot name",
       field: "name",
       sortValue: row => (row.name || "").toLowerCase(),
-      onClick: row => context.props.history.push(`/bot/?bot_id=${row.id}`)
+      onClick: row => context.props.history.push(`/bot/?bot_id=${row.bot_id}`)
     };
   }
 
@@ -15,7 +15,7 @@ export default class SchemaFactory {
       header: "Race",
       field: "race",
       sortValue: row => (row.race || "").toLowerCase(),
-      onClick: row => context.props.history.push(`/bot/?bot_id=${row.id}`)
+      onClick: row => context.props.history.push(`/bots/?race=${row.race}`)
     };
   }
 
@@ -24,7 +24,10 @@ export default class SchemaFactory {
       header: "Author",
       field: "author",
       sortValue: row => (row.author || "").toLowerCase(),
-      onClick: row => this.props.history.push(`/authors/?author_id=${row.author_id}`),
+      onClick: row => {
+        let owner_id = row.author_id || row.owner_id;
+        context.props.history.push(`/authors/?author_id=${owner_id}`);
+      },
       optional: true
     };
   }

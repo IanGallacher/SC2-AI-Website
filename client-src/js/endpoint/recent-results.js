@@ -92,12 +92,12 @@ export default class RecentResults extends React.Component {
           />
           <TableCell
             header={"Map"}
-            fieldName={"map"}
+            field={"map"}
             sortValue={row => (row.map || "").toLowerCase()}
           />
           <TableCell
             header={"Winner"}
-            fieldName={"winner_name"}
+            field={"winner_name"}
             sortValue={row => (row.winner_name || "").toLowerCase()}
             onClick={row => {
               this.props.history.push(`/bot/?bot_id=${row.winner_id}`);
@@ -105,7 +105,7 @@ export default class RecentResults extends React.Component {
           />
           <TableCell
             header={"Replay"}
-            fieldName={"replay"}
+            field={"replay"}
             sortable={false}
             optional={true}
             render={row => {
