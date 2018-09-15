@@ -20,12 +20,12 @@ export default class TableHeader extends React.Component {
     let columns = this.props.column_definitions;
     return <thead>
       <tr>
-        { columns.map(({header, fieldName, sortable, showColumnIf, optional}, index) => {
+        { columns.map(({header, field, sortable, showColumnIf, optional}, index) => {
           if (showColumnIf && !showColumnIf()) return null;
           let cell_class = optional ? "optional" : "";
           return (
             <th key={index} className={cell_class} onClick={
-              () => sortable !== false && this.props.updateSort(index, fieldName, columns)
+              () => sortable !== false && this.props.updateSort(index, field, columns)
             }>
               {header}
               {this.renderSortArrow(index)}

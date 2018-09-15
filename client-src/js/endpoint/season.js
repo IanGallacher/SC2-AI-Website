@@ -23,13 +23,13 @@ export default class Season extends React.Component {
         <CustomReactTable
           label={this.state.season.name}
           table={this.state.season.summary}>
-          <TableCell header={"BotName"} fieldName={"BotName"}/>
-          <TableCell header={"Author"} fieldName={"author"}/>
-          <TableCell header={"Race"} fieldName={"race"}/>
-          <TableCell header={"Matches"} fieldName={"matches"}/>
-          <TableCell header={"Race"} fieldName={"race"}/>
-          <TableCell header={"Wins"} fieldName={"wins"}/>
-          <TableCell header={"Win Pct"} fieldName={"winpct"}/>
+          <TableCell header={"BotName"} field={"BotName"}/>
+          <TableCell header={"Author"} field={"author"}/>
+          <TableCell header={"Race"} field={"race"}/>
+          <TableCell header={"Matches"} field={"matches"}/>
+          <TableCell header={"Race"} field={"race"}/>
+          <TableCell header={"Wins"} field={"wins"}/>
+          <TableCell header={"Win Pct"} field={"winpct"}/>
         </CustomReactTable>
       </div>
     );

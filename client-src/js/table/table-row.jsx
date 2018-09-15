@@ -5,7 +5,7 @@ import TableCell from "./table-cell.jsx";
 
 export default class TableRow extends React.Component {
   static propTypes = {
-    column_definitions: PropTypes.array,
+    child_cells: PropTypes.array,
     style: PropTypes.string,
     row: PropTypes.object
   }
@@ -13,12 +13,10 @@ export default class TableRow extends React.Component {
   render() {
     return <tr key={this.props.row.id} className={this.props.style}>
       {
-        this.props.column_definitions.map(column => {
-          return (
-            <TableCell
-              key={column.header}
-              row={this.props.row}
-              column={column}/>
+        this.props.child_cells.map(child_cell => {
+          return React.cloneElement(
+            child_cell,
+            { key: child_cell.props.header, row: this.props.row }
           );
         })
       }

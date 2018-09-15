@@ -11,8 +11,9 @@ import {
   getSeasonFromUrl } from "./../context/season-context.js";
 import LoadingAnimation from "./../component/loading.jsx";
 import { SimpleLineChart } from "./../component/chart.jsx";
-import FetchTable from "./../component/table-fetch.jsx";
 import WinRatePieChart from "./../component/win-rate-pie-chart.jsx";
+
+import FetchTable from "./../table/table-fetch.jsx";
 
 class BotProfile extends React.Component {
   constructor(props) {
@@ -113,11 +114,11 @@ class BotProfile extends React.Component {
         schema={[
           {
             columnLabel:"Version",
-            fieldName:"version"
+            field:"version"
           },
           {
             columnLabel:"Download",
-            fieldName:"executable",
+            field:"executable",
             sortable: false,
             render: row => {
               if (row.executable)

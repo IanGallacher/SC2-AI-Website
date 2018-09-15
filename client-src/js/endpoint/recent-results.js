@@ -10,6 +10,7 @@ import FilterBar from "./../component/filter.jsx";
 
 import CustomReactTable from "./../table/table.jsx";
 import TableCell from "./../table/table-cell.jsx";
+import TablePagination from "./../table/table-pagination.jsx";
 
 export default class RecentResults extends React.Component {
   constructor(props) {
@@ -91,12 +92,12 @@ export default class RecentResults extends React.Component {
           />
           <TableCell
             header={"Map"}
-            fieldName={"map"}
+            field={"map"}
             sortValue={row => (row.map || "").toLowerCase()}
           />
           <TableCell
             header={"Winner"}
-            fieldName={"winner_name"}
+            field={"winner_name"}
             sortValue={row => (row.winner_name || "").toLowerCase()}
             onClick={row => {
               this.props.history.push(`/bot/?bot_id=${row.winner_id}`);
@@ -104,7 +105,7 @@ export default class RecentResults extends React.Component {
           />
           <TableCell
             header={"Replay"}
-            fieldName={"replay"}
+            field={"replay"}
             sortable={false}
             optional={true}
             render={row => {
@@ -116,15 +117,7 @@ export default class RecentResults extends React.Component {
             }}
           />
         </CustomReactTable>
-        <div>
-          <ul className="pagination">
-            {rows.map((r) =>
-              <li key={r}>
-                <a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a>
-              </li>
-            ) }
-          </ul>
-        </div>
+        <TablePagination rows={rows} getPage={this.getPage}/>
       </div>
     );
   }

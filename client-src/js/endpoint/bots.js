@@ -11,6 +11,7 @@ import FilterBar from "./../component/filter.jsx";
 
 import CustomReactTable from "./../table/table.jsx";
 import TableCell from "./../table/table-cell.jsx";
+import SchemaFactory from "./../table/schema-factory.jsx";
 
 class Bots extends React.Component {
   constructor(props) {
@@ -36,14 +37,8 @@ class Bots extends React.Component {
     });
   }
 
-  render() {
-    const search = this.props.location.search;
-    const params = new URLSearchParams(search);
+  getBotTable = (params) => {
     let bot_table = null;
-
-    let new_season_id = this.getSeasonId();
-    if(this.state.old_season != new_season_id) this.updateBotData(new_season_id);
-
     // If we have recieved data, filter and sort the data.
     if(this.state.bots) {
       // Filter based on search params.
@@ -57,33 +52,29 @@ class Bots extends React.Component {
       // Default sorting of the data is sorting by bot MMR.
       bot_table = bot_table.sort((row1, row2) => row1.mmr < row2.mmr ? 1 : -1);
     }
+    return bot_table;
+  }
+
+  render() {
+    const search = this.props.location.search;
+    const params = new URLSearchParams(search);
+
+    let new_season_id = this.getSeasonId();
+    if(this.state.old_season != new_season_id) this.updateBotData(new_season_id);
+
+    const bot_table = this.getBotTable(params);
+
     return <React.Fragment>
       <FilterBar>
         <SeasonSelector filterIgnore="season"/>
       </FilterBar>
       <CustomReactTable table={bot_table} nullMessage="No bots found for user">
-        <TableCell
-          header={"Bot name"}
-          fieldName={"name"}
-          sortValue={row => (row.name || "").toLowerCase()}
-          onClick={row => this.props.history.push(`/bot/?bot_id=${row.bot_id}`)}
-        />
-        <TableCell
-          header={"Author"}
-          fieldName={"author"}
-          sortValue={row => (row.name || "").toLowerCase()}
-          onClick={row => this.props.history.push(`/authors/?author_id=${row.author_id}`)}
-          optional={true}
-        />
-        <TableCell
-          header={"Race"}
-          fieldName={"race"}
-          onClick={row => this.props.history.push(`/bots/?race=${row.race}`)}
-          optional={true}
-        />
-        <TableCell header={"Games Won"} fieldName={"win_count"}/>
-        <TableCell header={"Games Played"} fieldName={"match_count"}/>
-        <TableCell header={"MMR"} fieldName={"mmr"}/>
+        <TableCell {...SchemaFactory.BotNameSchema(this)}/>
+        <TableCell {...SchemaFactory.BotAuthorSchema(this)}/>
+        <TableCell {...SchemaFactory.BotRaceSchema(this)}/>
+        <TableCell {...SchemaFactory.GamesWonSchema(this)}/>
+        <TableCell {...SchemaFactory.GamesPlayedSchema(this)}/>
+        <TableCell header={"MMR"} field={"mmr"}/>
       </CustomReactTable>
     </React.Fragment>;
   }

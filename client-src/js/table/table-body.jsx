@@ -5,7 +5,7 @@ import TableRow from "./table-row.jsx";
 
 export default class TableBody extends React.Component {
   static propTypes = {
-    column_definitions: PropTypes.array,
+    child_cells: PropTypes.array,
     destroying: PropTypes.array,
     table: PropTypes.array,
     style: PropTypes.string
@@ -13,7 +13,6 @@ export default class TableBody extends React.Component {
 
   render() {
     let style = this.props.style;
-    let column_definitions = this.props.column_definitions;
     let table = this.props.table;
     return <tbody>{table.map((row, i) => {
       let style = "";
@@ -22,7 +21,7 @@ export default class TableBody extends React.Component {
         <TableRow
           key={row.id}
           row={row}
-          column_definitions={column_definitions}
+          child_cells={this.props.child_cells}
           style={style}/>
       );
     })}</tbody>;

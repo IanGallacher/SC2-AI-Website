@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 
 let SchemaEntryPropType = PropTypes.shape({
   columnLabel: PropTypes.string.isRequired,
-  // Specify either fieldName or render to tell the table how to draw the row.
-  fieldName: PropTypes.string,
+  // Specify either field or render to tell the table how to draw the row.
+  field: PropTypes.string,
   render: PropTypes.func,
   // Set sortable to false to disable sorting when clicking the column header.
   sortable: PropTypes.bool,

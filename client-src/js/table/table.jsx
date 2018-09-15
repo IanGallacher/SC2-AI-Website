@@ -104,7 +104,7 @@ export default class CustomReactTable extends React.Component {
           updateSort={this.updateSort}/>
         <TableBody
           table={this.state.table}
-          column_definitions={column_definitions}
+          child_cells={this.props.children}
           destroying={this.state.destroying}/>
       </table>
     );

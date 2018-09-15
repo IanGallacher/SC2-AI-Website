@@ -11,6 +11,7 @@ import { confirmDestructiveAction } from "./../component/confirm-destructive-act
 
 import CustomReactTable from "./../table/table.jsx";
 import TableCell from "./../table/table-cell.jsx";
+import SchemaFactory from "./../table/schema-factory.jsx";
 
 import { ModalContext } from "./../context/modal-context.js";
 
@@ -26,18 +27,10 @@ class ManualGameUpload extends React.PureComponent {
         ajaxFileKey="replayfile"
         uploadPath={"/game_results"}
         validFileExtensions={[".png"]}>
-        <TextInput name="map"
-          type="text"
-          placeholder="Map Name"/>
-        <TextInput name="winner_name"
-          type="text"
-          placeholder="Winner Name"/>
-        <Dropdown name="bot_id" options={this.props.bots}
-          id="0"
-          group="gba"/>
-        <Dropdown name="bot_id" options={this.props.bots}
-          id="1"
-          group="gba"/>
+        <TextInput name="map" type="text" placeholder="Map Name"/>
+        <TextInput name="winner_name" type="text" placeholder="Winner Name"/>
+        <Dropdown name="bot_id" options={this.props.bots} id="0" group="gba"/>
+        <Dropdown name="bot_id" options={this.props.bots} id="1" group="gba"/>
       </FileUpload>
     </div>;
   }
@@ -56,21 +49,12 @@ class EditAllBots extends React.PureComponent {
       <CustomReactTable table={bot_table} nullMessage="No bots found for user">
         <TableCell
           header={"Bot name"}
-          fieldName={"name"}
+          field={"name"}
           sortValue={row => (row.name || "").toLowerCase()}
         />
-        <TableCell
-          header={"Author"}
-          fieldName={"author"}
-          sortValue={row => (row.name || "").toLowerCase()}
-        />
-        <TableCell
-          header={"Race"}
-          fieldName={"race"}
-          onClick={row => this.props.history.push(`/bots/?race=${row.race}`)}
-          optional={true}
-        />
-        <TableCell header={"Games Played"} fieldName={"match_count"}/>
+        <TableCell {...SchemaFactory.BotAuthorSchema(this)}/>
+        <TableCell {...SchemaFactory.BotRaceSchema(this)}/>
+        <TableCell header={"Games Played"} field={"match_count"}/>
         <TableCell
           header={"delete?"}
           onClick={row => {
