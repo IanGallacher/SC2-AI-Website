@@ -64,26 +64,26 @@ class Bots extends React.Component {
       <CustomReactTable table={bot_table} nullMessage="No bots found for user">
         <TableCell
           header={"Bot name"}
-          fieldName={"name"}
+          field={"name"}
           sortValue={row => (row.name || "").toLowerCase()}
           onClick={row => this.props.history.push(`/bot/?bot_id=${row.bot_id}`)}
         />
         <TableCell
           header={"Author"}
-          fieldName={"author"}
+          field={"author"}
           sortValue={row => (row.name || "").toLowerCase()}
           onClick={row => this.props.history.push(`/authors/?author_id=${row.author_id}`)}
           optional={true}
         />
         <TableCell
           header={"Race"}
-          fieldName={"race"}
+          field={"race"}
           onClick={row => this.props.history.push(`/bots/?race=${row.race}`)}
           optional={true}
         />
-        <TableCell header={"Games Won"} fieldName={"win_count"}/>
-        <TableCell header={"Games Played"} fieldName={"match_count"}/>
-        <TableCell header={"MMR"} fieldName={"mmr"}/>
+        <TableCell header={"Games Won"} field={"win_count"}/>
+        <TableCell header={"Games Played"} field={"match_count"}/>
+        <TableCell header={"MMR"} field={"mmr"}/>
       </CustomReactTable>
     </React.Fragment>;
   }

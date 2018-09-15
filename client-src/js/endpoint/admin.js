@@ -56,21 +56,21 @@ class EditAllBots extends React.PureComponent {
       <CustomReactTable table={bot_table} nullMessage="No bots found for user">
         <TableCell
           header={"Bot name"}
-          fieldName={"name"}
+          field={"name"}
           sortValue={row => (row.name || "").toLowerCase()}
         />
         <TableCell
           header={"Author"}
-          fieldName={"author"}
+          field={"author"}
           sortValue={row => (row.name || "").toLowerCase()}
         />
         <TableCell
           header={"Race"}
-          fieldName={"race"}
+          field={"race"}
           onClick={row => this.props.history.push(`/bots/?race=${row.race}`)}
           optional={true}
         />
-        <TableCell header={"Games Played"} fieldName={"match_count"}/>
+        <TableCell header={"Games Played"} field={"match_count"}/>
         <TableCell
           header={"delete?"}
           onClick={row => {

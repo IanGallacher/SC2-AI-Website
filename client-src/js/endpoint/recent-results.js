@@ -10,6 +10,7 @@ import FilterBar from "./../component/filter.jsx";
 
 import CustomReactTable from "./../table/table.jsx";
 import TableCell from "./../table/table-cell.jsx";
+import TablePagination from "./../table/table-pagination.jsx";
 
 export default class RecentResults extends React.Component {
   constructor(props) {
@@ -116,15 +117,7 @@ export default class RecentResults extends React.Component {
             }}
           />
         </CustomReactTable>
-        <div>
-          <ul className="pagination">
-            {rows.map((r) =>
-              <li key={r}>
-                <a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a>
-              </li>
-            ) }
-          </ul>
-        </div>
+        <TablePagination rows={rows} getPage={this.getPage}/>
       </div>
     );
   }

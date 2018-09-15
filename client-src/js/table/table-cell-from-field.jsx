@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default class TableCell extends React.Component {
+export default class TableCellFromField extends React.Component {
   static propTypes = {
     contents: PropTypes.string,
     schema: PropTypes.object,
@@ -15,7 +15,6 @@ export default class TableCell extends React.Component {
   }
 
   render() {
-    if(!this.props.schema) return null;
     let row = this.props.row;
     let {field, render, onClick, header, showColumnIf, optional} = this.props.schema;
     if (showColumnIf && !showColumnIf()) return null;

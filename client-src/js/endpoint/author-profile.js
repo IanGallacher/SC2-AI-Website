@@ -16,7 +16,7 @@ import UserTitle from "./../component/user-title.jsx";
 
 import FetchTable from "./../table/table-fetch.jsx";
 import TableCell from "./../table/table-cell.jsx";
-import TableCellBotName from "./../table/cell/bot-name.jsx";
+import SchemaFactory from "./../table/schema-factory.jsx";
 
 const default_avatar_path = require("./../../img/avatar.jpg");
 
@@ -99,6 +99,8 @@ class AuthorProfile extends React.Component {
   }
 
   render() {
+    if (!this.state.profile.username)
+      return "profile not found";
     return (
       <ModalContext.Consumer>{modal => <div className="trading-card-horizontal">
         <UserTitle user={this.state.profile}/>
@@ -118,50 +120,15 @@ class AuthorProfile extends React.Component {
           {
             (this.state.profile.username) ? (
               <FetchTable url={`${API_URL}/users/${this.state.profile.id}/bots`}>
-                <TableCellBotName header={"Bot name"} fieldName={"name"}
-                  sortValue={row => (row.name || "").toLowerCase()}
-                  onClick={row => this.props.history.push(`/bot/?bot_id=${row.id}`)}
-                />
-                <TableCellBotName header={"Race"} fieldName={"race"}
-                  sortValue={row => (row.race || "").toLowerCase()}
-                  onClick={row => this.props.history.push(`/bot/?race=${row.race}`)}
-                />
-                <TableCellBotName header={"Win rate"}
-                  render={row => {
-                    // Avoid dividing by 0.
-                    if(row.match_count === 0) return ("N/A");
-                    let win_ratio = row.win_count / row.match_count;
-                    return `${win_ratio.toFixed(2) * 100}%`;
-                  }}
-                />
-                <TableCellBotName header={"MMR"} fieldName={"current_mmr"}/>
-                <TableCellBotName header={"Edit"}
-                  showColumnIf={() => this.props.editing}
-                  sortable={false}
-                  onClick={row => modal.showModal(renderBotDetails(row))}
-                  render={row => <div className="fa fa-edit"/>}
-                />
+                <TableCell schema={SchemaFactory.BotNameSchema(this)}/>
+                <TableCell schema={SchemaFactory.BotRaceSchema(this)}/>
+                <TableCell schema={SchemaFactory.WinRateSchema(this)}/>
+                <TableCell schema={SchemaFactory.MMRSchema(this)}/>
+                <TableCell schema={SchemaFactory.EditAuthorProfile(this, modal)}/>
               </FetchTable>
             ) : (
               <div/>
             )
-          }
-          {
-          /*
-          <div className="grid-one-quarter">
-              <ul className="list-group">
-                <li className="list-group-item text-muted">Profile: </li>
-                <li className="list-group-item text-right">
-                  <span className="pull-left">
-                    Joined:
-                  </span>{this.state.profile.joindate}</li>
-                <li className="list-group-item text-right">
-                  <span className="pull-left">
-                    Real name:
-                  </span>{this.state.profile.name}</li>
-              </ul>
-            </div>
-            */
           }
         </div>
       </div>}
