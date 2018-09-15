@@ -11,7 +11,7 @@ function editImage(edit_url) {
   </React.Fragment>;
 }
 
-export const Image = (props) => {
+export const Image = props => {
   return (props.img) ? (
     <img className={props.className} src={props.img}/>
   ) : (
@@ -30,12 +30,8 @@ export const EditableImage = props => {
     // If we are in edit mode and the image was clicked, open a modal to edit.
     onClick={()=>props.editing && modal.showModal(editImage(props.edit_url))}
     // fa is font awesome, used for the pencil icon.
-    className={`fa img-container ${edit_class}`}> {
-      (props.img) ? (
-        <img className={props.className} src={props.img}/>
-      ) : (
-        <img className={props.className} src={props.fallback}/>
-      ) }
+    className={`fa img-container ${edit_class}`}>
+    <Image {...props}/>
   </div>}
   </ModalContext.Consumer>;
 };
