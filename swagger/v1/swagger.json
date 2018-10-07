@@ -1,0 +1,87 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "definitions": {
+    "author": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "github": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "username"
+      ]
+    }
+  },
+  "paths": {
+    "/api/authors": {
+      "get": {
+        "summary": "Retrieves all authors",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "all authors found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/author"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authors/{id}": {
+      "get": {
+        "summary": "Retrieves a single author",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "author found",
+            "schema": {
+              "$ref": "#/definitions/author"
+            }
+          }
+        }
+      }
+    }
+  }
+}
