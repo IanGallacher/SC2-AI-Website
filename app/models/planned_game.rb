@@ -2,10 +2,16 @@
 #
 # Table name: planned_games
 #
-#  id          :bigint(8)        not null, primary key
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  computer_id :integer
+#  id           :bigint(8)        not null, primary key
+#  requested_on :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  computer_id  :integer
+#  season_id    :bigint(8)
+#
+# Indexes
+#
+#  index_planned_games_on_season_id  (season_id)
 #
 
 class PlannedGame < ApplicationRecord
