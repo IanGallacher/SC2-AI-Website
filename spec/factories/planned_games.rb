@@ -17,6 +17,10 @@
 FactoryBot.define do
   factory :planned_game do
     season { build(:season) }
-    computer_id { [*0..9].sample }
+
+    trait :reserved do
+      computer_id { [*0..9].sample }
+      reserved_on { Time.utc.now }
+    end
   end
 end
