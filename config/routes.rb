@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
     resources :game_results, only: [:index, :create]
     resources :seasons, only: [:index, :show, :create] do
-      resource :next_game, only: [:create]
+      resource :next_game, only: [:show]
       resources :planned_games, only: [:index, :show, :create, :destroy]
     end
     post :password_reset, to: 'users#password_reset'

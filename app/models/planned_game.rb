@@ -19,7 +19,7 @@ class PlannedGame < ApplicationRecord
   has_and_belongs_to_many :bots
 
   scope :unreserved_games, -> { where(computer_id: nil) }
-  scope :grab_next_game, -> (season) { unreserved_games.find_by(season: season) }
+  scope :next_available_game, -> (season) { unreserved_games.find_by(season: season) }
 
   def self.bulk_create(method, season)
     matches = one_match_with_all(season.bots) if method == :one_match_with_all
@@ -28,8 +28,16 @@ class PlannedGame < ApplicationRecord
     end
   end
 
-  def self.reserve_next_game(season, computer_id)
-    PlannedGame.grab_next_game(season).update_attributes(computer_id: computer_id)
+  def self.reserve_game(season, computer_id)
+    next_game = next_available_game(season)
+    next_game.update_attributes(computer_id: computer_id)
+    return next_game
+  end
+
+  def self.find_or_reserve(season, computer_id)
+    existing_next_game = PlannedGame.find_by(computer_id: computer_id)
+    return existing_next_game if existing_next_game.present?
+    reserve_game(season, computer_id)
   end
 
   private
