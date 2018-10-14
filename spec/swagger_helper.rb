@@ -33,6 +33,26 @@ RSpec.configure do |config|
             username: { type: :string }
           },
           required: [ 'id', 'username' ]
+        },
+        planned_game: {
+          type: :object,
+          properties:  {
+            id: { type: :integer },
+            requested_on: { type: :string, 'x-nullable': true },
+            computer_id: { type: :integer, 'x-nullable': true },
+            season_id: { type: :integer }
+          },
+          required: [ 'computer_id', 'season_id' ]
+        },
+        season: {
+          type: :object,
+          properties:  {
+            id: { type: :integer },
+            name: { type: :string, 'x-nullable': true },
+            start_date: { type: :string },
+            end_date: { type: :string }
+          },
+          required: [ 'id', 'username' ]
         }
       },
       paths: {}

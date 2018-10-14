@@ -1,4 +1,13 @@
 class PlannedGamesController < ApplicationController
+  def index
+    season = Season.find(params[:season_id])
+    render json: PlannedGame.where(season: season)
+  end
+
+  def show
+    render json: PlannedGame.find(params[:id])
+  end
+
   def create
     authorize! :create, PlannedGame
     method = params[:method] || :one_match_with_all
