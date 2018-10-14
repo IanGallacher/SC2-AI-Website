@@ -25,8 +25,12 @@ Rails.application.routes.draw do
     resources :bot_downloads, only: [:index, :show]
     resources :bot_histories, only: [:index, :show]
     resources :bot_versions, only: [:show]
+
     resources :game_results, only: [:index, :create]
-    resources :seasons, only: [:index, :show, :create]
+    resources :seasons, only: [:index, :show, :create] do
+      resource :next_game, only: [:show]
+      resources :planned_games, only: [:index, :show, :create, :destroy]
+    end
     post :password_reset, to: 'users#password_reset'
     get '/*path', to: 'routes#invalid'
   end

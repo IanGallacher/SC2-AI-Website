@@ -12,7 +12,8 @@
           "type": "integer"
         },
         "avatar": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "email": {
           "type": "string"
@@ -24,12 +25,58 @@
           "type": "string"
         },
         "github": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "website": {
           "type": "string"
         },
         "username": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "username"
+      ]
+    },
+    "planned_game": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "requested_on": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "computer_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "season_id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "computer_id",
+        "season_id"
+      ]
+    },
+    "season": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "start_date": {
+          "type": "string"
+        },
+        "end_date": {
           "type": "string"
         }
       },
@@ -78,6 +125,87 @@
             "description": "author found",
             "schema": {
               "$ref": "#/definitions/author"
+            }
+          }
+        }
+      }
+    },
+    "/api/seasons/{season_id}/next_game": {
+      "get": {
+        "summary": "Creates or fetches the next game for a specific computer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "season_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "grabs the next game for the requested computer",
+            "schema": {
+              "$ref": "#/definitions/planned_game"
+            }
+          }
+        }
+      }
+    },
+    "/api/seasons/{season_id}/planned_games": {
+      "get": {
+        "summary": "Retrieves all planned games",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "season_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all planned games found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/planned_game"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/seasons/{season_id}/planned_games/{id}": {
+      "get": {
+        "summary": "Retrieves a single planned game",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "season_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "planned game found",
+            "schema": {
+              "$ref": "#/definitions/planned_game"
             }
           }
         }

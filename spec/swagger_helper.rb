@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
+  # Include our authentication helper in all of our request specs
+  config.include Helpers::Authentication, type: :request
+
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
@@ -31,6 +34,26 @@ RSpec.configure do |config|
             github: { type: :string, 'x-nullable': true },
             website: { type: :string },
             username: { type: :string }
+          },
+          required: [ 'id', 'username' ]
+        },
+        planned_game: {
+          type: :object,
+          properties:  {
+            id: { type: :integer },
+            requested_on: { type: :string, 'x-nullable': true },
+            computer_id: { type: :integer, 'x-nullable': true },
+            season_id: { type: :integer }
+          },
+          required: [ 'computer_id', 'season_id' ]
+        },
+        season: {
+          type: :object,
+          properties:  {
+            id: { type: :integer },
+            name: { type: :string, 'x-nullable': true },
+            start_date: { type: :string },
+            end_date: { type: :string }
           },
           required: [ 'id', 'username' ]
         }
