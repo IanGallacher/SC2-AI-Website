@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180908223622) do
+ActiveRecord::Schema.define(version: 20181008020253) do
 
   create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -59,6 +59,15 @@ ActiveRecord::Schema.define(version: 20180908223622) do
     t.index ["game_result_id"], name: "index_bots_game_results_on_game_result_id"
   end
 
+  create_table "bots_planned_games", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "bot_id"
+    t.bigint "planned_game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_bots_planned_games_on_bot_id"
+    t.index ["planned_game_id"], name: "index_bots_planned_games_on_planned_game_id"
+  end
+
   create_table "game_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at"
     t.string "map", null: false
@@ -67,6 +76,15 @@ ActiveRecord::Schema.define(version: 20180908223622) do
     t.bigint "season_id", null: false
     t.index ["season_id"], name: "index_game_results_on_season_id"
     t.index ["winner_id"], name: "fk_rails_f187e71c0b"
+  end
+
+  create_table "planned_games", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "computer_id"
+    t.datetime "requested_on"
+    t.bigint "season_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["season_id"], name: "index_planned_games_on_season_id"
   end
 
   create_table "seasons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -100,5 +118,7 @@ ActiveRecord::Schema.define(version: 20180908223622) do
 
   add_foreign_key "bot_histories", "bots"
   add_foreign_key "bots", "users", column: "owner_id"
+  add_foreign_key "bots_planned_games", "bots"
+  add_foreign_key "bots_planned_games", "planned_games"
   add_foreign_key "game_results", "bots", column: "winner_id"
 end
