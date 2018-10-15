@@ -88,6 +88,7 @@ class BotProfile extends React.Component {
     return <div className="trading-card-horizontal">
       <div className="trading-card-header">
         <h2>{`Bot Name: ${bot.name}`}</h2>
+        <h3>{`Current MMR: ${bot.current_mmr}`}</h3>
         <Link to={`/authors/?author_id=${bot.owner_id}`}>
           {`Bot Author: ${bot.author}`}
         </Link>
