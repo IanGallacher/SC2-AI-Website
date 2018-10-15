@@ -8,7 +8,7 @@ export default class SchemaFactory {
       sortValue: row => (row.name || "").toLowerCase(),
       onClick: row => {
         let bot_id = row.bot_id || row.id;
-        context.props.history.push(`/bot/?bot_id=${bot_id}`)
+        context.props.history.push(`/bot/?bot_id=${bot_id}`);
       }
     };
   }
