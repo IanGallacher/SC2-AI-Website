@@ -6,7 +6,7 @@ export default class SchemaFactory {
       header: "Bot name",
       field: "name",
       sortValue: row => (row.name || "").toLowerCase(),
-      onClick: row => context.props.history.push(`/bot/?bot_id=${row.bot_id}`)
+      onClick: row => context.props.history.push(`/bot/?bot_id=${row.bot_id || row.id}`)
     };
   }
 
