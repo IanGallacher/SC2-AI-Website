@@ -115,24 +115,26 @@ class AuthorProfile extends React.Component {
               profile={this.state.profile}
               edit_url={`/users/${this.props.author_id}`}/>
           </div>
-          {
-            (this.state.profile.username) ? (
-              <FetchTable url={`${API_URL}/users/${this.state.profile.id}/bots`}>
-                <TableCell {...SchemaFactory.BotNameSchema(this)}/>
-                <TableCell {...SchemaFactory.BotRaceSchema(this)}/>
-                <TableCell {...SchemaFactory.WinRateSchema(this)}/>
-                <TableCell {...SchemaFactory.MMRSchema(this)}/>
-                <TableCell header={"Edit"}
-                  showColumnIf={() => this.props.editing}
-                  sortable={false}
-                  onClick={row => modal.showModal(renderBotDetails(row))}
-                  render={row => <div className="fa fa-edit"/>}
-                />
-              </FetchTable>
-            ) : (
-              <div/>
-            )
-          }
+          <div className="flex-fill-remaining-space">
+            {
+              (this.state.profile.username) ? (
+                <FetchTable url={`${API_URL}/users/${this.state.profile.id}/bots`}>
+                  <TableCell {...SchemaFactory.BotNameSchema(this)}/>
+                  <TableCell {...SchemaFactory.BotRaceSchema(this)}/>
+                  <TableCell {...SchemaFactory.WinRateSchema(this)}/>
+                  <TableCell {...SchemaFactory.MMRSchema(this)}/>
+                  <TableCell header={"Edit"}
+                    showColumnIf={() => this.props.editing}
+                    sortable={false}
+                    onClick={row => modal.showModal(renderBotDetails(row))}
+                    render={row => <div className="fa fa-edit"/>}
+                  />
+                </FetchTable>
+              ) : (
+                <div/>
+              )
+            }
+          </div>
           {
           /*
           <div className="grid-one-quarter">

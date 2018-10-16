@@ -100,6 +100,11 @@ pre {
   @media(max-width: $max-mobile-width) { flex-direction: column; }
 }
 
+.flex-fill-remaining-space {
+  flex: auto;
+  width: 100%;
+}
+
 /* ---------------------------------------------------
     PAGE-AREA STYLE
 ----------------------------------------------------- */
