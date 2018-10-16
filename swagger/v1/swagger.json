@@ -40,6 +40,38 @@
         "username"
       ]
     },
+    "bot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "owner_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "author": {
+          "type": "string"
+        },
+        "match_count": {
+          "type": "integer"
+        },
+        "race": {
+          "type": "string"
+        },
+        "win_count": {
+          "type": "integer"
+        },
+        "current_mmr": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "owner_id",
+        "race"
+      ]
+    },
     "planned_game": {
       "type": "object",
       "properties": {
@@ -125,6 +157,49 @@
             "description": "author found",
             "schema": {
               "$ref": "#/definitions/author"
+            }
+          }
+        }
+      }
+    },
+    "/api/bots": {
+      "get": {
+        "summary": "Retrieves all bots",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "all bots found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/bot"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bots/{id}": {
+      "get": {
+        "summary": "Retrieves a single bot",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "bot found",
+            "schema": {
+              "$ref": "#/definitions/bot"
             }
           }
         }

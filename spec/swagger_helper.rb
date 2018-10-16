@@ -25,7 +25,7 @@ RSpec.configure do |config|
       definitions: {
         author: {
           type: :object,
-          properties:  {
+          properties: {
             id: { type: :integer },
             avatar: { type: :string, 'x-nullable': true },
             email: { type: :string },
@@ -37,9 +37,22 @@ RSpec.configure do |config|
           },
           required: [ 'id', 'username' ]
         },
+        bot: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            owner_id: { type: :integer, 'x-nullable': true },
+            author: { type: :string },
+            match_count: { type: :integer },
+            race: { type: :string },
+            win_count: { type: :integer },
+            current_mmr: { type: :integer }
+          },
+          required: [ 'id', 'owner_id', 'race' ]
+        },
         planned_game: {
           type: :object,
-          properties:  {
+          properties: {
             id: { type: :integer },
             requested_on: { type: :string, 'x-nullable': true },
             computer_id: { type: :integer, 'x-nullable': true },

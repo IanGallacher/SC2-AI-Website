@@ -1,3 +1,39 @@
+require 'swagger_helper'
+
+describe 'Bot API -', type: :request do
+  path '/api/bots' do
+    get 'Retrieves all bots' do
+      produces 'application/json'
+
+      response '200', 'all bots found' do
+        schema type: 'array', items: { '$ref' => '#/definitions/bot' }
+        before do
+          create_list(:bot, 4)
+        end
+
+        it 'should show all bots' do
+          get bots_path
+          bots = JSON.parse response.body
+          expect(bots.count).to eq 4
+        end
+      end
+    end
+  end
+
+  path '/api/bots/{id}' do
+    get 'Retrieves a single bot' do
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response '200', 'bot found' do
+        schema '$ref' => '#/definitions/bot'
+        let (:id) { create(:bot).id }
+        run_test!
+      end
+    end
+  end
+end
+
 require 'rails_helper'
 
 shared_examples 'can view bots' do
@@ -19,25 +55,25 @@ describe 'Bot API -', type: :request do
     @bots = create_list(:bot, 4)
   end
 
-  context 'a logged out user' do
+  context 'logged out user' do
     # Even when logged out, you can still view the bots.
     include_examples 'can view bots'
 
     # Logged out users cannot view bots.
-    it 'cannot create bot' do
+    it 'fails to create bot' do
       expect(post bots_path).to eq 401
     end
 
-    it 'cannot update bot' do
+    it 'fails to update bot' do
       expect(patch bot_path(@bots[1])).to eq 401
     end
 
-    it 'cannot delete bot' do
+    it 'fails to delete bot' do
       expect(delete bot_path(@bots[1])).to eq 401
     end
   end
 
-  context 'a bot owner' do
+  context 'bot owner' do
     before do
       bot_owner = FactoryBot.create(:user, username: 'bot_owner', email: 'bot_owner@example.com')
       bot_owner.update_attributes(role: 'user')
@@ -50,7 +86,7 @@ describe 'Bot API -', type: :request do
     include_examples 'can view bots'
 
     # Users can CRUD owned bots.
-    it 'can create owned bot' do
+    it 'creates owned bot' do
       bot_name = "#{Faker::Pokemon.name} bot"
       bot_race = %w[Terran Protoss Zerg Random].sample
       expect(
@@ -64,9 +100,8 @@ describe 'Bot API -', type: :request do
       expect(Bot.last.race).to eq bot_race
     end
 
-    it 'help me'
     # Users can not create bots that share a name of an existing bot.
-    it 'cannot create duplicate bot' do
+    it 'fails to create duplicate bot' do
       bot_name = "#{Faker::Pokemon.name} bot"
       bot_race = %w[Terran Protoss Zerg Random].sample
       expect(
@@ -85,16 +120,16 @@ describe 'Bot API -', type: :request do
       ).to eq 422
     end
 
-    it 'can update owned bot' do
+    it 'updates owned bot' do
       expect(patch bot_path(@bots[1])).to eq 200
     end
 
-    it 'can delete owned bot' do
+    it 'deletes owned bot' do
       expect(delete bot_path(@bots[1])).to eq 200
     end
 
     # Users are unable to CRUD bots they do not own.
-    it 'cannot create unowned bot'
+    it 'creates unowned bot'
 
     it 'cannot update unowned bot' do
       expect(patch bot_path(@bots[3])).to eq 403
@@ -105,7 +140,7 @@ describe 'Bot API -', type: :request do
     end
   end
 
-  context 'a site admin' do
+  context 'site admin' do
     before do
       bot_owner = FactoryBot.create(:user, username: 'bot_owner', email: 'bot_owner@example.com')
       bot_owner.update_attributes(role: 'user')
@@ -119,21 +154,20 @@ describe 'Bot API -', type: :request do
     include_examples 'can view bots'
 
     # Admins can CRUD any bot.
-    it 'can create any bot'
+    it 'creates any bot'
 
-    it 'can update any bot' do
+    it 'updates any bot' do
       expect(patch bot_path(@bots[0])).to eq 200
       expect(patch bot_path(@bots[1])).to eq 200
       expect(patch bot_path(@bots[2])).to eq 200
     end
 
-    it 'can delete any bot' do
+    it 'deletes any bot' do
       expect(delete bot_path(@bots[0])).to eq 200
       expect(delete bot_path(@bots[1])).to eq 200
       expect(delete bot_path(@bots[2])).to eq 200
     end
   end
-
 
   after do
     # The on destroy callback will make sure we don't have any lingering
