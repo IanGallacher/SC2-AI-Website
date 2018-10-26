@@ -29,6 +29,7 @@ class GameResult < ApplicationRecord
   accepts_nested_attributes_for :bots
   belongs_to :season
   belongs_to :winner, class_name: 'Bot', foreign_key: :winner_id, optional: true
+  has_many :bot_histories
 
   attr_writer :replayfile
   attr_writer :bot_ids

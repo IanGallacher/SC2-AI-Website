@@ -2,25 +2,30 @@
 #
 # Table name: bot_histories
 #
-#  id         :bigint(8)        not null, primary key
-#  mmr        :integer          not null
-#  created_at :datetime         not null
-#  bot_id     :bigint(8)        not null
-#  season_id  :bigint(8)        not null
+#  id             :bigint(8)        not null, primary key
+#  mmr            :integer          not null
+#  created_at     :datetime         not null
+#  bot_id         :bigint(8)        not null
+#  game_result_id :bigint(8)
+#  season_id      :bigint(8)        not null
 #
 # Indexes
 #
-#  index_bot_histories_on_bot_id     (bot_id)
-#  index_bot_histories_on_season_id  (season_id)
+#  index_bot_histories_on_bot_id          (bot_id)
+#  index_bot_histories_on_game_result_id  (game_result_id)
+#  index_bot_histories_on_season_id       (season_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (bot_id => bots.id)
+#  fk_rails_...  (game_result_id => game_results.id)
 #
 
 class BotHistory < ApplicationRecord
   belongs_to :bot
   belongs_to :season
+  belongs_to :game_result
+
   before_save :calculate_mmr, :create_first_history_if_necessary
   attr_writer :competitor_mmr # the mmr of the enemy, used to calculate new mmr.
   attr_writer :score # integer representing who won.

@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026023102) do
+ActiveRecord::Schema.define(version: 20181026033703) do
 
   create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
     t.integer "mmr", null: false
     t.datetime "created_at", null: false
     t.bigint "season_id", null: false
+    t.bigint "game_result_id"
     t.index ["bot_id"], name: "index_bot_histories_on_bot_id"
+    t.index ["game_result_id"], name: "index_bot_histories_on_game_result_id"
     t.index ["season_id"], name: "index_bot_histories_on_season_id"
   end
 
@@ -120,6 +122,7 @@ ActiveRecord::Schema.define(version: 20181026023102) do
   end
 
   add_foreign_key "bot_histories", "bots"
+  add_foreign_key "bot_histories", "game_results"
   add_foreign_key "bots", "users", column: "owner_id"
   add_foreign_key "bots_planned_games", "bots"
   add_foreign_key "bots_planned_games", "planned_games"
