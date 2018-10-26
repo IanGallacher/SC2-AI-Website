@@ -68,7 +68,7 @@ namespace :legacy_db do
       bot_ids = []
       bot_ids.push Bot.where(name: bot_1_hash['Name']).first.id
       bot_ids.push Bot.where(name: bot_2_hash['Name']).first.id
-      status = 'compgamplete'
+      status = 'complete'
       status = STATUS_MAP[result['Result']] if result['Result'].present?
       status = 'crash' if bot_winner.blank?
       status = 'crash' if result['Crash'] != 0 # result['Crash'] is a bot_id
@@ -82,7 +82,7 @@ namespace :legacy_db do
         created_at: result['Date'],
         season_id: Season.find_by(name: season['SeasonName']).id,
         replay: result['ReplayFile'],
-        elo_changes: [result['Bot1Change', 'Bot2Change']]
+        mmr_changes: [result['Bot1Change'], result['Bot2Change']]
       )
     end
   end

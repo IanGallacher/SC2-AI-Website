@@ -2,20 +2,26 @@
 #
 # Table name: seasons
 #
-#  id         :bigint(8)        not null, primary key
-#  end_date   :datetime
-#  name       :string(255)
-#  start_date :datetime
+#  id          :bigint(8)        not null, primary key
+#  end_date    :datetime
+#  initial_mmr :integer          default(1200), not null
+#  mmr_method  :string(255)
+#  name        :string(255)
+#  start_date  :datetime
 #
 
 require 'zip'
 
 class Season < ApplicationRecord
+  MMR_METHODS = ::MMRAlgorithms.instance_methods
+
   has_many :bot_season_statistics
   has_many :bots, through: :bot_season_statistics
   has_many :game_results
   has_many :planned_games
   has_many :bot_versions
+
+  validates :mmr_method, inclusion: { in: MMR_METHODS }, allow_nil: true
 
   def self.current_season
     Season.first || Season.create!

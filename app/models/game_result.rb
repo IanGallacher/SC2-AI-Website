@@ -130,6 +130,7 @@ class GameResult < ApplicationRecord
   def add_history(bot_id, enemy_mmr, score, mmr_change)
     BotHistory.create!(
       bot_id: bot_id,
+      game_result_id: self.id,
       competitor_mmr: enemy_mmr,
       created_at: self.created_at,
       score: score,

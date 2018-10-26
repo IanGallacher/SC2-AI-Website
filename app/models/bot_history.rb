@@ -33,11 +33,11 @@ class BotHistory < ApplicationRecord
   # to us.
   def calculate_mmr
     my_history = BotHistory.where(bot_id: self.bot_id, season: self.season).last
-    return if my_history.blank? || @competitor_mmr.blank? || @score.blank?
+    return if my_history.blank?
     previous_mmr = my_history.mmr
     # If we are passing in an explicit mmr, use that.
-    self.mmr = previous_mmr if mmr_change.present?
-    return if self.mmr.present?
+    self.mmr = previous_mmr + mmr_change if mmr_change.present?
+    return if self.mmr.present? || @competitor_mmr.blank? || @score.blank?
     # Otherwise use the elo algorithm.
     expected = @score - expected_mmr(previous_mmr, @competitor_mmr)
     self.mmr = previous_mmr + K_FACTOR * expected
@@ -46,7 +46,7 @@ class BotHistory < ApplicationRecord
   def self.add_to_season(season=Season::current_season)
     BotHistory.create(
       bot_id: bot_id,
-      mmr: 1600,
+      mmr: season.initial_mmr,
       season: season,
       created_at: season.start_date
     )
@@ -56,7 +56,7 @@ class BotHistory < ApplicationRecord
     history = BotHistory.where(bot_id: bot_id, season: season).last
     return BotHistory.create(
       bot_id: bot_id,
-      mmr: 1600,
+      mmr: season.initial_mmr,
       season: season,
       created_at: season.start_date
     ) if history.blank?
@@ -72,7 +72,7 @@ class BotHistory < ApplicationRecord
     return if BotHistory.find_by(bot: self, season: season).present?
     BotHistory.create(
       bot_id: self.id,
-      mmr: 1600,
+      mmr: season.initial_mmr,
       season: season,
       created_at: season.start_date
     )
