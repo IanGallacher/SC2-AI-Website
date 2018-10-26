@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181008020253) do
+ActiveRecord::Schema.define(version: 20181024161334) do
 
   create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20181008020253) do
     t.datetime "created_at"
     t.string "map", null: false
     t.bigint "winner_id"
+    t.string "status", null: false
     t.string "replay"
     t.bigint "season_id", null: false
     t.index ["season_id"], name: "index_game_results_on_season_id"
