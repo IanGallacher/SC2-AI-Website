@@ -50,6 +50,17 @@ RSpec.configure do |config|
           },
           required: [ 'id', 'owner_id', 'race' ]
         },
+        bot_history: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            bot_id: { type: :integer },
+            mmr: { type: :integer },
+            created_at: { type: :string },
+            season_id: { type: :integer }
+          },
+          required: [ 'id', 'bot_id', 'mmr', 'season_id' ]
+        },
         planned_game: {
           type: :object,
           properties: {
