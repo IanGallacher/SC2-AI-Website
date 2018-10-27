@@ -75,7 +75,7 @@ namespace :legacy_db do
       winner_id = nil
       winner_id = Bot.where(name: bot_winner['Name'])&.first&.id if bot_winner.present?
       GameResult.create!(
-        map: (result['Map'] || 'map missing'),
+        map: (result['Map'].chomp('.SC2Map') || 'map missing'),
         bot_ids: bot_ids,
         winner_id: winner_id,
         status: status,
