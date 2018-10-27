@@ -123,12 +123,12 @@ class GameResult < ApplicationRecord
     bot_1_mmr = bot_1.current_mmr(self.season)
     bot_2_mmr = bot_2.current_mmr(self.season)
     score = (self.winner_id == bot_1.id) ? 1 : 0
-    add_history(bot_1.id, bot_2_mmr, score, @mmr_changes[0])
-    add_history(bot_2.id, bot_1_mmr, 1-score, @mmr_changes[1])
+    add_history(bot_1.id, bot_2_mmr, score, @mmr_changes&.send(:[], 0))
+    add_history(bot_2.id, bot_1_mmr, 1-score, @mmr_changes&.send(:[], 1))
   end
 
   # private
-  def add_history(bot_id, enemy_mmr, score, mmr_change)
+  def add_history(bot_id, enemy_mmr, score, change_mmr_by)
     BotHistory.create!(
       bot_id: bot_id,
       game_result_id: self.id,
@@ -136,7 +136,7 @@ class GameResult < ApplicationRecord
       created_at: self.created_at,
       score: score,
       season: season,
-      mmr_change: mmr_change
+      change_mmr_by: change_mmr_by
     )
   end
 

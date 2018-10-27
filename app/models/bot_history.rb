@@ -29,8 +29,7 @@ class BotHistory < ApplicationRecord
   before_save :calculate_mmr, :create_first_history_if_necessary
   attr_writer :competitor_mmr # the mmr of the enemy, used to calculate new mmr.
   attr_writer :score # integer representing who won.
-
-  attr_writer :mmr_change
+  attr_writer :change_mmr_by # If present, manually change mmr instead of using algorithm.
 
   K_FACTOR = 10
 
@@ -38,11 +37,13 @@ class BotHistory < ApplicationRecord
   # to us.
   def calculate_mmr
     my_history = BotHistory.where(bot_id: self.bot_id, season: self.season).last
+    self.mmr = season.initial_mmr
+    self.mmr += @change_mmr_by if @change_mmr_by.present?
     return if my_history.blank?
     previous_mmr = my_history.mmr
     # If we are passing in an explicit mmr, use that.
-    self.mmr = previous_mmr + mmr_change if mmr_change.present?
-    return if self.mmr.present? || @competitor_mmr.blank? || @score.blank?
+    self.mmr = previous_mmr + @change_mmr_by if @change_mmr_by.present?
+    return if @change_mmr_by.present? || @competitor_mmr.blank? || @score.blank?
     # Otherwise use the elo algorithm.
     expected = @score - expected_mmr(previous_mmr, @competitor_mmr)
     self.mmr = previous_mmr + K_FACTOR * expected

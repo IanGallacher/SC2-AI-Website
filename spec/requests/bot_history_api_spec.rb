@@ -53,6 +53,6 @@ describe 'Bot History API -', type: :request do
   it 'should show all bot histories' do
     get bot_histories_path
     history = JSON.parse response.body
-    expect(history.count).to eq 4
+    expect(history.count).to eq 2
   end
 end
