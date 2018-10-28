@@ -24,5 +24,11 @@ FactoryBot.define do
     name { "#{Faker::Pokemon.unique.name} bot" }
     author { Faker::GameOfThrones.unique.character }
     race { %w[Terran Protoss Zerg Random].sample }
+
+    trait :with_history do
+      after :build do |bot|
+        create_list(:mmr_history, 4, bot: bot)
+      end
+    end
   end
 end

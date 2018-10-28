@@ -21,7 +21,12 @@ Rails.application.routes.draw do
       get :bots, to: 'user_bots#index'
       post :create_avatar, to: 'users#upload'
     end
+
     resources :bots, only: [:index, :show, :create, :update, :destroy]
+    resources :bots, only: [] do
+      resources :mmr_histories, only: [:index]
+    end
+
     resources :bot_downloads, only: [:index, :show]
     resources :mmr_histories, only: [:index, :show]
     resources :bot_versions, only: [:show]

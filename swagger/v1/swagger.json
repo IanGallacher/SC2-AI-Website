@@ -98,7 +98,8 @@
         "id",
         "bot_id",
         "mmr",
-        "season_id"
+        "season_id",
+        "game_result_id"
       ]
     },
     "planned_game": {
@@ -234,6 +235,52 @@
         }
       }
     },
+    "/api/mmr_histories": {
+      "get": {
+        "summary": "Retrieves all bot histories",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "all bot histories found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/mmr_history"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bots/{bot_id}/mmr_histories": {
+      "get": {
+        "summary": "Retrieves a single mmr history",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "bot_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "shows all mmr histories for a bot",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/mmr_history"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/mmr_histories/{id}": {
       "get": {
         "summary": "Retrieves a single mmr history",
@@ -250,7 +297,7 @@
         ],
         "responses": {
           "200": {
-            "description": "mmr history found",
+            "description": "shows a single mmr history",
             "schema": {
               "$ref": "#/definitions/mmr_history"
             }

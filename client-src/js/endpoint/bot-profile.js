@@ -42,7 +42,7 @@ class BotProfile extends React.Component {
     if(this.state.old_season == season_id) return null;
     axios.get(`${API_URL}/bots/${bot_id}?season_id=${season_id}`)
       .then(response => this.setState({ bot: response.data }) );
-    axios.get(`${API_URL}/mmr_histories/${bot_id}?season_id=${season_id}`)
+    axios.get(`${API_URL}/bots/${bot_id}/mmr_histories/?season_id=${season_id}`)
       .then(response => this.setState({ mmr_history: response.data }));
     this.setState({ old_season: season_id });
   }
