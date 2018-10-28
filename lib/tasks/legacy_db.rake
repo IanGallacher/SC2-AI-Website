@@ -73,7 +73,7 @@ namespace :legacy_db do
       status = 'crash' if bot_winner.blank?
       status = 'crash' if result['Crash'] != 0 # result['Crash'] is a bot_id
       winner_id = nil
-      winner_id = Bot.where(name: bot_winner['Name'])&.first&.id if bot_winner.present?
+      winner_id = Bot.where(name: bot_winner&.send(:[], 'Name'))&.first&.id
       GameResult.create!(
         map: (result['Map'].chomp('.SC2Map') || 'map missing'),
         bot_ids: bot_ids,
@@ -94,17 +94,27 @@ namespace :legacy_db do
     end
   end
 
+  def patreon_values
+    {
+      0 => nil,
+      1 => 'Bronze',
+      2 => 'Silver',
+      3 => 'Gold',
+    }
+  end
+
   def find_or_create_user(user_hash)
     user ||= User.find_by(username: user_hash['username'])
     user ||= User.find_by(email: user_hash['email'])
     user ||= User.create!(
       username: user_hash['username'],
-      email: user_hash['id'] + '@example.com',
+      email: user_hash['email'],
       password: Faker::Internet.password(min_length = 32, max_length = 64),
       created_at: user_hash['Joined'],
       updated_at: user_hash['mod_timestamp'],
       github: user_hash['Github'],
-      website: (user_hash['Website'] || '')
+      website: (user_hash['Website'] || ''),
+      patreon_tier: patreon_values[user_hash['Patreon']]
     )
     return user
   end
