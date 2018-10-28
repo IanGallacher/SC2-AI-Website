@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181028040138) do
+ActiveRecord::Schema.define(version: 20181028192522) do
 
   create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20181028040138) do
     t.datetime "updated_at", null: false
     t.string "username", null: false
     t.string "github"
+    t.string "patreon_tier"
     t.string "website", default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
