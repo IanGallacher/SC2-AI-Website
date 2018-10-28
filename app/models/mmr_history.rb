@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: bot_histories
+# Table name: mmr_histories
 #
 #  id             :bigint(8)        not null, primary key
 #  mmr            :integer          not null
@@ -11,9 +11,9 @@
 #
 # Indexes
 #
-#  index_bot_histories_on_bot_id          (bot_id)
-#  index_bot_histories_on_game_result_id  (game_result_id)
-#  index_bot_histories_on_season_id       (season_id)
+#  index_mmr_histories_on_bot_id          (bot_id)
+#  index_mmr_histories_on_game_result_id  (game_result_id)
+#  index_mmr_histories_on_season_id       (season_id)
 #
 # Foreign Keys
 #
@@ -21,7 +21,7 @@
 #  fk_rails_...  (game_result_id => game_results.id)
 #
 
-class BotHistory < ApplicationRecord
+class MmrHistory < ApplicationRecord
   belongs_to :bot
   belongs_to :season
   belongs_to :game_result
@@ -36,7 +36,7 @@ class BotHistory < ApplicationRecord
   # We calculate the mmr that we save based on two attr_writer attributes passed
   # to us.
   def calculate_mmr
-    my_history = BotHistory.where(bot_id: self.bot_id, season: self.season).last
+    my_history = MmrHistory.where(bot_id: self.bot_id, season: self.season).last
     self.mmr = season.initial_mmr
     self.mmr += @change_mmr_by if @change_mmr_by.present?
     return if my_history.blank?
@@ -50,7 +50,7 @@ class BotHistory < ApplicationRecord
   end
 
   def self.add_to_season(season=Season::current_season)
-    BotHistory.create(
+    MmrHistory.create(
       bot_id: bot_id,
       mmr: season.initial_mmr,
       season: season,
@@ -59,8 +59,8 @@ class BotHistory < ApplicationRecord
   end
 
   def self.most_recent_result(bot_id, season=Season::current_season)
-    history = BotHistory.where(bot_id: bot_id, season: season).last
-    return BotHistory.create(
+    history = MmrHistory.where(bot_id: bot_id, season: season).last
+    return MmrHistory.create(
       bot_id: bot_id,
       mmr: season.initial_mmr,
       season: season,
@@ -75,8 +75,8 @@ class BotHistory < ApplicationRecord
   # mmr.
   def create_first_history_if_necessary
     season = self.season || Season::current_season
-    return if BotHistory.find_by(bot: self, season: season).present?
-    BotHistory.create(
+    return if MmrHistory.find_by(bot: self, season: season).present?
+    MmrHistory.create(
       bot_id: self.id,
       mmr: season.initial_mmr,
       season: season,

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
     resources :bots, only: [:index, :show, :create, :update, :destroy]
     resources :bot_downloads, only: [:index, :show]
-    resources :bot_histories, only: [:index, :show]
+    resources :mmr_histories, only: [:index, :show]
     resources :bot_versions, only: [:show]
 
     resources :game_results, only: [:index, :create]

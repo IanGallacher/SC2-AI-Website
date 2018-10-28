@@ -21,11 +21,8 @@
 #  fk_rails_...  (game_result_id => game_results.id)
 #
 
-FactoryBot.define do
-  factory :mmr_history do
-    bot
-    game_result { create(:game_result, :without_history) }
-    mmr { [*1000..2000].sample }
-    season
-  end
+require 'rails_helper'
+
+RSpec.describe MmrHistory, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

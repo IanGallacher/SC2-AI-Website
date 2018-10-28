@@ -29,7 +29,7 @@ class GameResult < ApplicationRecord
   accepts_nested_attributes_for :bots
   belongs_to :season
   belongs_to :winner, class_name: 'Bot', foreign_key: :winner_id, optional: true
-  has_many :bot_histories
+  has_many :mmr_histories
 
   attr_writer :replayfile
   attr_writer :bot_ids
@@ -131,7 +131,7 @@ class GameResult < ApplicationRecord
 
   # private
   def add_history(bot_id, enemy_mmr, score, change_mmr_by)
-    BotHistory.create!(
+    MmrHistory.create!(
       bot_id: bot_id,
       game_result_id: self.id,
       competitor_mmr: enemy_mmr,

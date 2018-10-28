@@ -1,12 +1,15 @@
-class BotHistoriesController < ApplicationController
+class MmrHistoriesController < ApplicationController
   def index
-    render json: BotHistory.all
+    render json: MmrHistory.where(mmr_history_params)
   end
 
   def show
-    histories = BotHistory.where(bot_id: params[:id])
-    season_id = params[:season_id]
-    histories = histories.where(season_id: season_id) if season_id.present?
-    render json: histories
+    render json: MmrHistory.find(params[:id])
+  end
+
+  private
+
+  def mmr_history_params
+    params.permit(:bot_id, :season_id)
   end
 end

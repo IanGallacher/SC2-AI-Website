@@ -72,7 +72,7 @@
         "race"
       ]
     },
-    "bot_history": {
+    "mmr_history": {
       "type": "object",
       "properties": {
         "id": {
@@ -88,6 +88,9 @@
           "type": "string"
         },
         "season_id": {
+          "type": "integer"
+        },
+        "game_result_id": {
           "type": "integer"
         }
       },
@@ -231,28 +234,9 @@
         }
       }
     },
-    "/api/bot_histories": {
+    "/api/mmr_histories/{id}": {
       "get": {
-        "summary": "Retrieves all bot histories",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "all bot histories found",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/bot_history"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/bot_histories/{id}": {
-      "get": {
-        "summary": "Retrieves a single bot history",
+        "summary": "Retrieves a single mmr history",
         "produces": [
           "application/json"
         ],
@@ -266,9 +250,9 @@
         ],
         "responses": {
           "200": {
-            "description": "bot history found",
+            "description": "mmr history found",
             "schema": {
-              "$ref": "#/definitions/bot_history"
+              "$ref": "#/definitions/mmr_history"
             }
           }
         }
