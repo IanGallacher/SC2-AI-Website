@@ -1,8 +1,20 @@
 import React from "react";
 import UserPropType from "./../custom-proptypes/user.js";
 
+let PATREON_TIER_CLASSES = {
+  "Gold": "patreon-tier-gold",
+  "Silver": "patreon-tier-silver",
+  "Bronze": "patreon-tier-bronze"
+};
+
 function renderUserName(user) {
-  return <div className="trading-card-title">{user.username}</div>;
+  let patreon_tier = user.patreon_tier;
+  let patreon_tier_class = "";
+  if(patreon_tier) patreon_tier_class = PATREON_TIER_CLASSES[patreon_tier];
+  return <div className="trading-card-title">
+    {patreon_tier ? <i className={`fa fa-star ${patreon_tier_class}`}/> : null}
+    {user.username}
+  </div>;
 }
 
 function renderRoleIfNecessary(user) {
