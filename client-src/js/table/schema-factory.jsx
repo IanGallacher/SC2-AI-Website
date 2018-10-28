@@ -1,5 +1,3 @@
-import React from "react";
-
 export default class SchemaFactory {
   static BotNameSchema(context) {
     return {
@@ -39,13 +37,13 @@ export default class SchemaFactory {
     return { header: "Games Won", field: "win_count" };
   }
 
-  static GamesPlayedSchema(context) {
+  static GamesPlayedSchema() {
     return { header: "Games Played", field: "match_count" };
   }
 
-  static MMRSchema(context) { return { header: "MMR", field: "current_mmr" }; }
+  static MMRSchema() { return { header: "MMR", field: "current_mmr" }; }
 
-  static WinRateSchema(context) {
+  static WinRateSchema() {
     return {
       header: "Win rate",
       sortValue: row => {

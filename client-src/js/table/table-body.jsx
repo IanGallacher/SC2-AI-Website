@@ -12,10 +12,9 @@ export default class TableBody extends React.Component {
   }
 
   render() {
-    let style = this.props.style;
     let table = this.props.table;
-    return <tbody>{table.map((row, i) => {
-      let style = "";
+    return <tbody>{table.map(row => {
+      let style = this.props.style;
       if (this.props.destroying.indexOf(row.id) > -1) style += " destroying";
       return (
         <TableRow

@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import TableCell from "./table-cell.jsx";
-
 export default class TableRow extends React.Component {
   static propTypes = {
     child_cells: PropTypes.array,
