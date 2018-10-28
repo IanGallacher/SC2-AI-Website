@@ -34,6 +34,7 @@ class GameResult < ApplicationRecord
   attr_writer :replayfile
   attr_writer :bot_ids
   attr_writer :mmr_changes
+  attr_writer :without_history # Needed for automated tests.
 
   around_update :update_victory_counter
   before_save :set_result_status
@@ -123,6 +124,7 @@ class GameResult < ApplicationRecord
     bot_1_mmr = bot_1.current_mmr(self.season)
     bot_2_mmr = bot_2.current_mmr(self.season)
     score = (self.winner_id == bot_1.id) ? 1 : 0
+    return if @without_history == true
     add_history(bot_1.id, bot_2_mmr, score, @mmr_changes&.send(:[], 0))
     add_history(bot_2.id, bot_1_mmr, 1-score, @mmr_changes&.send(:[], 1))
   end

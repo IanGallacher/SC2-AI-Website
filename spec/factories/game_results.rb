@@ -30,5 +30,9 @@ FactoryBot.define do
     bots { create_list(:bot, 2) }
     winner { bots.sample }
     status { 'complete' }
+
+    trait :without_history do
+      without_history { true }
+    end
   end
 end
