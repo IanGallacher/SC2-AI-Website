@@ -104,6 +104,11 @@ export default class RecentResults extends React.Component {
             }}
           />
           <TableCell
+            header={"Game Status"}
+            field={"status"}
+            optional={true}
+          />
+          <TableCell
             header={"Replay"}
             field={"replay"}
             sortable={false}

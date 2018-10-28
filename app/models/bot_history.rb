@@ -2,28 +2,34 @@
 #
 # Table name: bot_histories
 #
-#  id         :bigint(8)        not null, primary key
-#  mmr        :integer          not null
-#  created_at :datetime         not null
-#  bot_id     :bigint(8)        not null
-#  season_id  :bigint(8)        not null
+#  id             :bigint(8)        not null, primary key
+#  mmr            :integer          not null
+#  created_at     :datetime         not null
+#  bot_id         :bigint(8)        not null
+#  game_result_id :bigint(8)
+#  season_id      :bigint(8)        not null
 #
 # Indexes
 #
-#  index_bot_histories_on_bot_id     (bot_id)
-#  index_bot_histories_on_season_id  (season_id)
+#  index_bot_histories_on_bot_id          (bot_id)
+#  index_bot_histories_on_game_result_id  (game_result_id)
+#  index_bot_histories_on_season_id       (season_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (bot_id => bots.id)
+#  fk_rails_...  (game_result_id => game_results.id)
 #
 
 class BotHistory < ApplicationRecord
   belongs_to :bot
   belongs_to :season
+  belongs_to :game_result
+
   before_save :calculate_mmr, :create_first_history_if_necessary
   attr_writer :competitor_mmr # the mmr of the enemy, used to calculate new mmr.
   attr_writer :score # integer representing who won.
+  attr_writer :change_mmr_by # If present, manually change mmr instead of using algorithm.
 
   K_FACTOR = 10
 
@@ -31,8 +37,14 @@ class BotHistory < ApplicationRecord
   # to us.
   def calculate_mmr
     my_history = BotHistory.where(bot_id: self.bot_id, season: self.season).last
-    return if my_history.blank? || @competitor_mmr.blank? || @score.blank?
+    self.mmr = season.initial_mmr
+    self.mmr += @change_mmr_by if @change_mmr_by.present?
+    return if my_history.blank?
     previous_mmr = my_history.mmr
+    # If we are passing in an explicit mmr, use that.
+    self.mmr = previous_mmr + @change_mmr_by if @change_mmr_by.present?
+    return if @change_mmr_by.present? || @competitor_mmr.blank? || @score.blank?
+    # Otherwise use the elo algorithm.
     expected = @score - expected_mmr(previous_mmr, @competitor_mmr)
     self.mmr = previous_mmr + K_FACTOR * expected
   end
@@ -40,7 +52,7 @@ class BotHistory < ApplicationRecord
   def self.add_to_season(season=Season::current_season)
     BotHistory.create(
       bot_id: bot_id,
-      mmr: 1600,
+      mmr: season.initial_mmr,
       season: season,
       created_at: season.start_date
     )
@@ -50,7 +62,7 @@ class BotHistory < ApplicationRecord
     history = BotHistory.where(bot_id: bot_id, season: season).last
     return BotHistory.create(
       bot_id: bot_id,
-      mmr: 1600,
+      mmr: season.initial_mmr,
       season: season,
       created_at: season.start_date
     ) if history.blank?
@@ -66,7 +78,7 @@ class BotHistory < ApplicationRecord
     return if BotHistory.find_by(bot: self, season: season).present?
     BotHistory.create(
       bot_id: self.id,
-      mmr: 1600,
+      mmr: season.initial_mmr,
       season: season,
       created_at: season.start_date
     )

@@ -27,7 +27,7 @@ describe 'Game Result Model -' do
   end
 
   it 'should create a default mmr' do
-    expect(BotHistory.first.mmr).to eq 1600
+    expect(BotHistory.first.mmr).to eq BotHistory.first.season.initial_mmr
   end
 
   it 'should save the replay to disk'

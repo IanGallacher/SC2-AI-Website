@@ -5,6 +5,7 @@
 #  id         :bigint(8)        not null, primary key
 #  map        :string(255)      not null
 #  replay     :string(255)
+#  status     :string(255)      not null
 #  created_at :datetime
 #  season_id  :bigint(8)        not null
 #  winner_id  :bigint(8)
@@ -28,5 +29,10 @@ FactoryBot.define do
     season { Season.first || create(:season) }
     bots { create_list(:bot, 2) }
     winner { bots.sample }
+    status { 'complete' }
+
+    trait :without_history do
+      without_history { true }
+    end
   end
 end

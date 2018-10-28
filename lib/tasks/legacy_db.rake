@@ -1,4 +1,12 @@
 namespace :legacy_db do
+  STATUS_MAP = {
+    'Timeout' => 'timeout',
+    'Tie' => 'draw',
+    'Player1Crash' => 'crash',
+    'Player2Crash' => 'crash',
+    'Player1Win' => 'complete',
+    'Player2Win' => 'complete'
+  }
   desc 'Create a new record for ALL data from the legacy php ladder database.'
   task import: :environment do
     begin
@@ -55,19 +63,26 @@ namespace :legacy_db do
       season = php_seasons.find { |season| season['id'] == result['SeasonId'] }
       next if bot_1_hash.blank?
       next if bot_2_hash.blank?
-      next if bot_winner.blank?
       next if season.blank?
       next if result['Date'].blank?
       bot_ids = []
       bot_ids.push Bot.where(name: bot_1_hash['Name']).first.id
       bot_ids.push Bot.where(name: bot_2_hash['Name']).first.id
+      status = 'complete'
+      status = STATUS_MAP[result['Result']] if result['Result'].present?
+      status = 'crash' if bot_winner.blank?
+      status = 'crash' if result['Crash'] != 0 # result['Crash'] is a bot_id
+      winner_id = nil
+      winner_id = Bot.where(name: bot_winner['Name'])&.first&.id if bot_winner.present?
       GameResult.create!(
-        map: (result['Map'] || 'map missing'),
+        map: (result['Map'].chomp('.SC2Map') || 'map missing'),
         bot_ids: bot_ids,
-        winner_id: Bot.where(name: bot_winner['Name']).first.id,
+        winner_id: winner_id,
+        status: status,
         created_at: result['Date'],
         season_id: Season.find_by(name: season['SeasonName']).id,
-        replay: result['ReplayFile']
+        replay: result['ReplayFile'],
+        mmr_changes: [result['Bot1Change'], result['Bot2Change']]
       )
     end
   end

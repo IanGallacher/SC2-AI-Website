@@ -72,6 +72,32 @@
         "race"
       ]
     },
+    "bot_history": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "bot_id": {
+          "type": "integer"
+        },
+        "mmr": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "season_id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "bot_id",
+        "mmr",
+        "season_id"
+      ]
+    },
     "planned_game": {
       "type": "object",
       "properties": {
@@ -200,6 +226,49 @@
             "description": "bot found",
             "schema": {
               "$ref": "#/definitions/bot"
+            }
+          }
+        }
+      }
+    },
+    "/api/bot_histories": {
+      "get": {
+        "summary": "Retrieves all bot histories",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "all bot histories found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/bot_history"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bot_histories/{id}": {
+      "get": {
+        "summary": "Retrieves a single bot history",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "bot history found",
+            "schema": {
+              "$ref": "#/definitions/bot_history"
             }
           }
         }

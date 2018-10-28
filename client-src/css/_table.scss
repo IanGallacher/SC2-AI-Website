@@ -12,7 +12,6 @@ table {
   margin: 0;
 
   tr {
-    transition: all 0.2s ease-in-out;
     &:nth-child(0) { background-color: rgba(0, 0, 0, 0.1); }
     &:nth-child(even) { background-color: rgba(0, 0, 0, 0.1); }
     &:nth-child(odd) { background-color: rgba(0, 0, 0, 0.15); }
@@ -20,6 +19,7 @@ table {
     td { transition: all 0.2s ease-in-out; }
 
     &.destroying td {
+      transition: all 0.2s ease-in-out;
       height: 0 !important;
       line-height: 0 !important;
       padding: 0 !important;
