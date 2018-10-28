@@ -13,6 +13,7 @@ import BotUpload from "./../component/bot-upload.jsx";
 import { TextInput } from "./../component/form.jsx";
 import FormZone from "./../component/form-zone.jsx";
 import UserTitle from "./../component/user-title.jsx";
+import ProfileDetail from "./../component/profile/profile-detail.jsx";
 
 import FetchTable from "./../table/table-fetch.jsx";
 import TableCell from "./../table/table-cell.jsx";
@@ -31,10 +32,8 @@ function AuthorDetails(props) {
   </FormZone>;
   if (props.profile.github) return <div className="author-details">
     <div className="profile-details">
-      <a href={props.profile.github}>
-        <i className="fab fa-github"></i>
-        &nbsp;Github: {props.profile.github}
-      </a>
+      {ProfileDetail("fa-github", "Github", props.profile.github, true)}
+      {ProfileDetail("fa-patreon","Patreon Tier", props.profile.patreon_tier, false)}
     </div>
   </div>;
   return null;
@@ -127,7 +126,7 @@ class AuthorProfile extends React.Component {
                     showColumnIf={() => this.props.editing}
                     sortable={false}
                     onClick={row => modal.showModal(renderBotDetails(row))}
-                    render={row => <div className="fa fa-edit"/>}
+                    render={() => <div className="fa fa-edit"/>}
                   />
                 </FetchTable>
               ) : (

@@ -11,6 +11,7 @@
 #  github                 :string(255)
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string(255)
+#  patreon_tier           :string(255)
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string(255)
