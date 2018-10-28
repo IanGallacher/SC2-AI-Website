@@ -10,18 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026033703) do
-
-  create_table "bot_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "bot_id", null: false
-    t.integer "mmr", null: false
-    t.datetime "created_at", null: false
-    t.bigint "season_id", null: false
-    t.bigint "game_result_id"
-    t.index ["bot_id"], name: "index_bot_histories_on_bot_id"
-    t.index ["game_result_id"], name: "index_bot_histories_on_game_result_id"
-    t.index ["season_id"], name: "index_bot_histories_on_season_id"
-  end
+ActiveRecord::Schema.define(version: 20181028040138) do
 
   create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -81,6 +70,17 @@ ActiveRecord::Schema.define(version: 20181026033703) do
     t.index ["winner_id"], name: "fk_rails_f187e71c0b"
   end
 
+  create_table "mmr_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "bot_id", null: false
+    t.integer "mmr", null: false
+    t.datetime "created_at", null: false
+    t.bigint "season_id", null: false
+    t.bigint "game_result_id"
+    t.index ["bot_id"], name: "index_mmr_histories_on_bot_id"
+    t.index ["game_result_id"], name: "index_mmr_histories_on_game_result_id"
+    t.index ["season_id"], name: "index_mmr_histories_on_season_id"
+  end
+
   create_table "planned_games", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "computer_id"
     t.datetime "requested_on"
@@ -121,10 +121,10 @@ ActiveRecord::Schema.define(version: 20181026033703) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "bot_histories", "bots"
-  add_foreign_key "bot_histories", "game_results"
   add_foreign_key "bots", "users", column: "owner_id"
   add_foreign_key "bots_planned_games", "bots"
   add_foreign_key "bots_planned_games", "planned_games"
   add_foreign_key "game_results", "bots", column: "winner_id"
+  add_foreign_key "mmr_histories", "bots"
+  add_foreign_key "mmr_histories", "game_results"
 end

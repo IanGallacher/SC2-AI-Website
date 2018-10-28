@@ -21,7 +21,7 @@
 
 class Bot < ApplicationRecord
   include BetterJson
-  has_many :bot_histories
+  has_many :mmr_histories
   has_many :bot_season_statistics
   has_many :bot_versions, dependent: :destroy
   has_many :seasons, through: :bot_season_statistics
@@ -53,7 +53,7 @@ class Bot < ApplicationRecord
   end
 
   def current_mmr(season=Season::current_season)
-    return BotHistory.most_recent_result(self.id, season).mmr
+    return MmrHistory.most_recent_result(self.id, season).mmr
   end
 
   def win_rate_race
@@ -76,7 +76,7 @@ class Bot < ApplicationRecord
   private
 
   def destroy_history
-    BotHistory.where(bot_id: self.id).destroy_all
+    MmrHistory.where(bot_id: self.id).destroy_all
   end
 
   def vs_race(race, id)

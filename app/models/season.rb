@@ -24,7 +24,7 @@ class Season < ApplicationRecord
   validates :mmr_method, inclusion: { in: MMR_METHODS }, allow_nil: true
 
   def self.current_season
-    Season.first || Season.create!
+    Season.last || Season.create!
   end
 
   def update_download_zip_if_necessary

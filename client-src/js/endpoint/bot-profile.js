@@ -42,8 +42,8 @@ class BotProfile extends React.Component {
     if(this.state.old_season == season_id) return null;
     axios.get(`${API_URL}/bots/${bot_id}?season_id=${season_id}`)
       .then(response => this.setState({ bot: response.data }) );
-    axios.get(`${API_URL}/bot_histories/${bot_id}?season_id=${season_id}`)
-      .then(response => this.setState({ bot_history: response.data }));
+    axios.get(`${API_URL}/bots/${bot_id}/mmr_histories/?season_id=${season_id}`)
+      .then(response => this.setState({ mmr_history: response.data }));
     this.setState({ old_season: season_id });
   }
 
@@ -69,9 +69,9 @@ class BotProfile extends React.Component {
 
     this.updateBotData(this.getBotId());
 
-    let bot_history = [];
-    if(this.state.bot_history)
-      bot_history = this.state.bot_history.map(entry => {
+    let mmr_history = [];
+    if(this.state.mmr_history)
+      mmr_history = this.state.mmr_history.map(entry => {
         let new_entry = {};
         new_entry.name = moment(entry.created_at).calendar();
         new_entry.MMR = entry.mmr;
@@ -110,7 +110,7 @@ class BotProfile extends React.Component {
         label="vs zerg"
         victories={win_rate_zerg.win_count}
         defeats={win_rate_zerg.match_count - win_rate_zerg.win_count}/>
-      {SimpleLineChart(bot_history, "MMR")}
+      {SimpleLineChart(mmr_history, "MMR")}
       <FetchTable url={`${API_URL}/bot_versions/${this.getBotId()}/`}
         schema={[
           {
