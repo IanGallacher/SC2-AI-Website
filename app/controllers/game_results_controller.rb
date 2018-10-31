@@ -39,8 +39,8 @@ class GameResultsController < ApplicationController
       p[:bot_ids] = JSON.parse(params[:gba])
     else
       bot_ids = []
-      bot_ids.push bot_id: Bot.where(name: params[:Bot1Name]).first.id
-      bot_ids.push bot_id: Bot.where(name: params[:Bot2Name]).first.id
+      bot_ids.push Bot.where(name: params[:Bot1Name]).first.id
+      bot_ids.push Bot.where(name: params[:Bot2Name]).first.id
       p[:bot_ids] = bot_ids
       p[:map] = params[:Map]
       if params[:Result] == 'Player1Win'

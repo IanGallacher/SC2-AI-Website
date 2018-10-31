@@ -25,6 +25,15 @@ class GameResult < ApplicationRecord
 
   STATUS = %w[draw crash timeout in_progress complete pending]
 
+  STATUS_MAP = {
+    'Timeout' => 'timeout',
+    'Tie' => 'draw',
+    'Player1Crash' => 'crash',
+    'Player2Crash' => 'crash',
+    'Player1Win' => 'complete',
+    'Player2Win' => 'complete'
+  }
+
   has_and_belongs_to_many :bots
   accepts_nested_attributes_for :bots
   belongs_to :season
@@ -34,10 +43,12 @@ class GameResult < ApplicationRecord
   attr_writer :replayfile
   attr_writer :bot_ids
   attr_writer :mmr_changes
+  attr_writer :result # Compatibility layer for old api
   attr_writer :without_history # Needed for automated tests.
 
+  before_validation :set_season_if_necessary
+  before_validation :set_result_status
   around_update :update_victory_counter
-  before_save :set_result_status
   before_save :add_bots_from_ids
   after_create :increment_match_counters
   after_destroy :decrement_match_counters
@@ -45,11 +56,6 @@ class GameResult < ApplicationRecord
 
   validates :map, presence: true
   validates :status, inclusion: { in: GameResult::STATUS }, presence: true
-
-  def set_result_status
-    self.status ||= 'in_progress'
-    self.status = 'complete' if self.winner_id.present?
-  end
 
   def winner_name
     winner&.name
@@ -67,6 +73,19 @@ class GameResult < ApplicationRecord
     @bot_ids.each do |bot_id|
       self.bots.push Bot.find(bot_id)
     end
+  end
+
+  # private before_validation
+  def set_season_if_necessary
+    self.season = Season.current_season if self.season.blank?
+  end
+
+  # private before_validation
+  def set_result_status
+    self.status ||= 'in_progress'
+    self.status = 'complete' if self.winner_id.present?
+    self.status = 'complete' if self.status.blank?
+    self.status = STATUS_MAP[@result] if @result.present?
   end
 
   # private around_update
@@ -110,7 +129,8 @@ class GameResult < ApplicationRecord
   # private after_save
   def save_replay
     return unless @replayfile.present?
-    self.replay = replay_url
+    return if self.replay == replay_url
+    self.update_attributes(replay: replay_url)
     File.open('public' + file_path + filename, 'wb') do |replayfile|
       replayfile.write(@replayfile.read)
     end
@@ -125,6 +145,7 @@ class GameResult < ApplicationRecord
     bot_2_mmr = bot_2.current_mmr(self.season)
     score = (self.winner_id == bot_1.id) ? 1 : 0
     return if @without_history == true
+    logger.warn("You are saving game_result #{self.id} without automatically calcualting MMR")
     add_history(bot_1.id, bot_2_mmr, score, @mmr_changes&.send(:[], 0))
     add_history(bot_2.id, bot_1_mmr, 1-score, @mmr_changes&.send(:[], 1))
   end

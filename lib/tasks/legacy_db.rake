@@ -1,12 +1,4 @@
 namespace :legacy_db do
-  STATUS_MAP = {
-    'Timeout' => 'timeout',
-    'Tie' => 'draw',
-    'Player1Crash' => 'crash',
-    'Player2Crash' => 'crash',
-    'Player1Win' => 'complete',
-    'Player2Win' => 'complete'
-  }
   desc 'Create a new record for ALL data from the legacy php ladder database.'
   task import: :environment do
     begin
@@ -69,7 +61,7 @@ namespace :legacy_db do
       bot_ids.push Bot.where(name: bot_1_hash['Name']).first.id
       bot_ids.push Bot.where(name: bot_2_hash['Name']).first.id
       status = 'complete'
-      status = STATUS_MAP[result['Result']] if result['Result'].present?
+      status = GameResult::STATUS_MAP[result['Result']] if result['Result'].present?
       status = 'crash' if bot_winner.blank?
       status = 'crash' if result['Crash'] != 0 # result['Crash'] is a bot_id
       winner_id = nil
