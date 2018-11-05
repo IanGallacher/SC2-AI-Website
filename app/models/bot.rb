@@ -2,13 +2,19 @@
 #
 # Table name: bots
 #
-#  id          :bigint(8)        not null, primary key
-#  author      :string(255)      not null
-#  match_count :integer          default(0), not null
-#  name        :string(255)      not null
-#  race        :string(255)      not null
-#  win_count   :integer          default(0), not null
-#  owner_id    :bigint(8)
+#  id           :bigint(8)        not null, primary key
+#  author       :string(255)      not null
+#  description  :text(65535)
+#  downloadable :string(255)      default("false"), not null
+#  enabled      :boolean          default(FALSE), not null
+#  github       :string(255)
+#  license      :string(255)
+#  match_count  :integer          default(0), not null
+#  name         :string(255)      not null
+#  race         :string(255)      not null
+#  summary      :text(65535)
+#  win_count    :integer          default(0), not null
+#  owner_id     :bigint(8)
 #
 # Indexes
 #
@@ -21,6 +27,10 @@
 
 class Bot < ApplicationRecord
   include BetterJson
+
+  attr_writer :file
+  attr_writer :season_id
+
   has_many :mmr_histories
   has_many :bot_season_statistics
   has_many :bot_versions, dependent: :destroy
@@ -29,7 +39,9 @@ class Bot < ApplicationRecord
   has_and_belongs_to_many :game_results
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
 
-  validates :name, :author, :race, presence: true
+  validates :license, length: { maximum: 255 }
+  validates :github, http_url: true, length: { maximum: 255 }, allow_blank: true
+  validates :name, :author, :race, length: { maximum: 255 }, presence: true
   validates :name, uniqueness: { case_sensitive: false }
 
   after_save :save_dll
@@ -38,9 +50,6 @@ class Bot < ApplicationRecord
   delegate :executable, to: :latest_version
   delegate :download_url, to: :latest_version
   delegate :download_filepath, to: :latest_version
-
-  attr_writer :file
-  attr_writer :season_id
 
   def latest_version(season=Season.current_season)
     self.bot_versions.where(season: season).last
