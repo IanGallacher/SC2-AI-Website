@@ -1,81 +1,44 @@
-import axios from "axios";
 import React from "react";
 import PropTypes from "prop-types";
 
-import AlertLogic from "./../logic/alert.js";
 import BotPropType from "./../custom-proptypes/bot.js";
-import { TextInput } from "./form.jsx";
-import { API_URL } from "./../app.js";
+import { TextInput, TextArea, Dropdown, DropdownOption } from "./form.jsx";
+import FormZone from "./../component/form-zone.jsx";
 
 export default class BotUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { file: "", name: "", race: "Terran", errors: [] };
   }
 
   static propTypes = {
     bot: BotPropType,
-    uploadPath: PropTypes.string,
     label: PropTypes.string,
-    method: PropTypes.string
-  }
-
-  onChange = event => {
-    let new_state = {};
-    new_state[event.target.name] = event.target.value;
-    this.setState(new_state);
-  }
-
-  onFileChange = event => { this.setState({ file: event.target.files[0] }); }
-
-  onSubmit = event => {
-    event.preventDefault();
-    this.fileUpload(this.state.file, this.state.name, this.state.race);
-  }
-
-  fileUpload = (file, name, race) => {
-    // Configure upload.
-    const url = API_URL + this.props.uploadPath;
-    const formData = new FormData();
-    if (file) formData.append("file", file);
-    if (name) formData.append("name", name);
-    if (race) formData.append("race", race);
-    const config = { headers: { "content-type": "multipart/form-data" } };
-    // Submit the upload
-    if (this.props.method == "patch")
-      axios.patch(url, formData, config)
-        .then(() => AlertLogic.addSuccess("Upload successful!"))
-        .catch(error=>this.setState({errors: error.response.data}));
-    else
-      axios.post(url, formData, config)
-        .then(() => AlertLogic.addSuccess("Upload successful!"))
-        .catch(error=>this.setState({errors: error.response.data}));
+    method: PropTypes.string.isRequired
   }
 
   render() {
     let bot = this.props.bot;
-    let onFileChange = this.onFileChange;
-    return <React.Fragment>
-      <title>{this.props.label}</title>
-      <form className="flex-horizontal" onSubmit={this.onSubmit}>
-        <TextInput name="name"
-          error={this.state.errors.name}
-          type="text"
-          placeholder={ bot ? bot.name : "Bot Name" }
-          className="input-text"
-          onChange={this.onChange}/>
-        <input name="file" type="file" className="btn" onChange={onFileChange}/>
-        <select name="race"
-          className="input-text"
-          onChange={this.onChange}
-          defaultValue={bot && bot.race}>
-          <option value="Terran">Terran</option>
-          <option value="Protoss">Protoss</option>
-          <option value="Zerg">Zerg</option>
-          <option value="Random">Random</option>
-        </select>
-        <input type="submit" value="Submit" className="btn"/>
-      </form>
-    </React.Fragment>;
+    let uploadPath = `/bots${bot && `/${bot.id}`}`;
+    return <FormZone uploadPath={uploadPath} method={this.props.method}>
+      <h3>{this.props.label}</h3>
+      <TextInput name="name" placeholder={ bot ? bot.name : "Bot Name" }/>
+      <input name="file" type="file" className="btn"/>
+      <TextArea name="summary" placeholder={ bot ? bot.summary : "Summary (optional)" }/>
+      <TextArea name="description" placeholder={bot ? bot.description : "Description (optional)"}/>
+      <TextInput name="license" placeholder={bot ? bot.license : "License (optional)"}/>
+      <TextInput name="github" placeholder="Github (optional)"/>
+      <Dropdown name="downloadable" defaultValue={bot && bot.downloadable}>
+        <DropdownOption value="Please select a downloadable status."/>
+        <DropdownOption value="false" label="Downloadable: False"/>
+        <DropdownOption value="true" label="Downloadable: True"/>
+      </Dropdown>
+      <Dropdown name="race" defaultValue={bot && bot.race}>
+        <DropdownOption value="Please select a race."/>
+        <DropdownOption value="Terran"/>
+        <DropdownOption value="Protoss"/>
+        <DropdownOption value="Zerg"/>
+        <DropdownOption value="Random"/>
+      </Dropdown>
+    </FormZone>;
   }
 }
