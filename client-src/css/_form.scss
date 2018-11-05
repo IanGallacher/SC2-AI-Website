@@ -70,6 +70,12 @@ $error-color: #f90;
   border-color: transparent transparent transparent $error-color;
 }
 
+textarea.input-text {
+  resize: vertical;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .input-text,
 .input-dropdown {
   display: inherit;

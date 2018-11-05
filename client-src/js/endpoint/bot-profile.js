@@ -89,6 +89,11 @@ class BotProfile extends React.Component {
       <div className="trading-card-header">
         <h2>{`Bot Name: ${bot.name}`}</h2>
         <h3>{`Current MMR: ${bot.current_mmr}`}</h3>
+        { bot.github && <p className="bot-text">{`Github: ${bot.github}`}</p> }
+        { bot.license && <p className="bot-text">{`License: ${bot.license}`}</p> }
+        { bot.summary && <p className="bot-text">{`Summary: ${bot.summary}`}</p> }
+        { bot.description && <p className="bot-text">{`Description: ${bot.description}`}</p> }
+        { bot.downloadable && <p className="bot-text">{`Downloadable: ${bot.downloadable}`}</p> }
         <Link to={`/authors/?author_id=${bot.owner_id}`}>
           {`Bot Author: ${bot.author}`}
         </Link>
@@ -114,12 +119,12 @@ class BotProfile extends React.Component {
       <FetchTable url={`${API_URL}/bot_versions/${this.getBotId()}/`}
         schema={[
           {
-            columnLabel:"Version",
-            field:"version"
+            columnLabel: "Version",
+            field: "version"
           },
           {
-            columnLabel:"Download",
-            field:"executable",
+            columnLabel: "Download",
+            field: "executable",
             sortable: false,
             render: row => {
               if (row.executable)
