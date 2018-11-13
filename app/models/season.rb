@@ -61,7 +61,7 @@ class Season < ApplicationRecord
         .group(*fields_to_select)
         .select(*fields_to_select)
         .each do |bot|
-      bots_updated_at.push(bot.current_version.updated_at)
+      bots_updated_at.push(bot.latest_version.updated_at)
     end
     return "/season/#{self.id}/#{bots_updated_at_hash}"
   end
@@ -69,7 +69,7 @@ class Season < ApplicationRecord
   def bots_updated_at_hash
     bots_updated_at = []
     self.bots.each do |bot|
-      bot_updated_at = bot.current_version&.updated_at
+      bot_updated_at = bot.latest_version&.updated_at
       bots_updated_at.push(bot_updated_at) if bot_updated_at.present?
     end
     return bots_updated_at.hash

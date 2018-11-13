@@ -11,7 +11,7 @@ export default class TableRow extends React.Component {
   render() {
     return <tr key={this.props.row.id} className={this.props.style}>
       {
-        this.props.child_cells.map(child_cell => {
+        this.props.child_cells && this.props.child_cells.map(child_cell => {
           return React.cloneElement(
             child_cell,
             { key: child_cell.props.header, row: this.props.row }

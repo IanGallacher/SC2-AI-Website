@@ -49,7 +49,9 @@ class BotsController < ApplicationController
   private
 
   def bot_params
-    p = params.permit(:name, :author, :race, :file)
+    p = params.permit(%i[
+      name author race file enabled downloadable license summary description github
+    ])
     p[:owner_id] = current_user.id if current_user.present?
     p[:author] ||= current_user.username if current_user.present?
     return p

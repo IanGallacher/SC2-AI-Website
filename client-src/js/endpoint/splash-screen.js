@@ -111,7 +111,9 @@ export default class SplashScreen extends React.Component {
         width={this.width}
         height={this.height}/>
       <div className="splash-title">
-        Welcome to the SC2 AI Bot Ladder!
+        <div className="splash-line"></div>
+        <span className="splash-text">Welcome to the SC2 AI Bot Ladder!</span>
+        <div className="splash-line"></div>
       </div>
     </React.Fragment>;
   }

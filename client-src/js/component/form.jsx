@@ -2,6 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const Dropdown = props => {
+  let children = props.children;
+  if (!props.children || props.children.length == 0) {
+    children = props.options.map(
+      opt => <DropdownOption key={opt.id} value={opt.id} label={opt.name}/>
+    );
+  }
   return (
     <select
       name={props.name}
@@ -9,15 +15,13 @@ export const Dropdown = props => {
       group={props.group}
       id={props.id}
       onChange={props.onChange}
-    >
-      { props.options.map(
-        opt => <DropdownOption key={opt.id} value={opt.id} label={opt.name}/>
-      )}
-    </select>
+      defaultValue={props.defaultValue}> {children} </select>
   );
 };
 Dropdown.propTypes = {
+  children: PropTypes.array,
   className: PropTypes.string,
+  defaultValue: PropTypes.string,
   name: PropTypes.string,
   id: PropTypes.string,
   group: PropTypes.string,
@@ -26,7 +30,9 @@ Dropdown.propTypes = {
 };
 
 export const DropdownOption = props => {
-  return <option value={props.value}>{props.label}</option>;
+  // If we are not given a user-friendly label to use, fallback to the value.
+  let label = props.label || props.value;
+  return <option value={props.value}>{label}</option>;
 };
 DropdownOption.propTypes = {
   label: PropTypes.string,
@@ -57,6 +63,29 @@ TextInput.propTypes = {
   onChange: PropTypes.func
 };
 
+export const TextArea = props => {
+  return <div className="input-container">
+    { props.error && <div className="tooltip-error">{props.error}</div> }
+    <textarea
+      id={props.id}
+      name={props.name}
+      type={props.type}
+      group={props.group}
+      className={"input-text " + (props.error && "error")}
+      placeholder={props.placeholder}
+      onChange={props.onChange}
+    />
+  </div>;
+};
+TextArea.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  type: PropTypes.string,
+  group: PropTypes.string,
+  error: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func
+};
 
 export const PrimaryButton = props => {
   return (
