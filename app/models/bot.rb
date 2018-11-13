@@ -5,7 +5,7 @@
 #  id           :bigint(8)        not null, primary key
 #  author       :string(255)      not null
 #  description  :text(65535)
-#  downloadable :string(255)      default("false"), not null
+#  downloadable :boolean          default(FALSE), not null
 #  enabled      :boolean          default(FALSE), not null
 #  github       :string(255)
 #  license      :string(255)
