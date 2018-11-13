@@ -35,9 +35,7 @@ class Season < ApplicationRecord
   end
 
   def update_download_zip_if_necessary
-    new_zip_path = bots_zip_path
-
-    Zip::File.open(new_zip_path, Zip::File::CREATE) do |zipfile|
+    Zip::File.open(bots_zip_path, Zip::File::CREATE) do |zipfile|
       self.bots.each do |bot|
         # Two arguments:
         # - The name of the file as it will appear in the archive
@@ -63,7 +61,7 @@ class Season < ApplicationRecord
         .group(*fields_to_select)
         .select(*fields_to_select)
         .each do |bot|
-      bots_updated_at.push(bot.latest_version.updated_at)
+      bots_updated_at.push(bot.current_version.updated_at)
     end
     return "/season/#{self.id}/#{bots_updated_at_hash}"
   end
@@ -71,7 +69,7 @@ class Season < ApplicationRecord
   def bots_updated_at_hash
     bots_updated_at = []
     self.bots.each do |bot|
-      bot_updated_at = bot.latest_version&.updated_at
+      bot_updated_at = bot.current_version&.updated_at
       bots_updated_at.push(bot_updated_at) if bot_updated_at.present?
     end
     return bots_updated_at.hash

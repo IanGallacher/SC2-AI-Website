@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181028192522) do
+ActiveRecord::Schema.define(version: 20181103210742) do
 
   create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20181028192522) do
     t.bigint "season_id"
     t.integer "version", null: false
     t.string "executable", null: false
+    t.boolean "enabled", default: true, null: false
     t.boolean "visable", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -12,7 +12,7 @@ class BotsController < ApplicationController
 
     respond_to do |format|
       format.json { render json: bot }
-      format.zip { redirect_to Bot.find(params[:bot_id]).download_url }
+      format.zip { send_file bot.zip_path }
     end
   end
 

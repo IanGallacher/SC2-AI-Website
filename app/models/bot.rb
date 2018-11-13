@@ -35,15 +35,17 @@ class Bot < ApplicationRecord
   after_save :save_dll
   before_destroy :destroy_history
 
-  delegate :executable, to: :latest_version
-  delegate :download_url, to: :latest_version
-  delegate :download_filepath, to: :latest_version
+  delegate :download_url, to: :current_version
+  delegate :download_filepath, to: :current_version, allow_nil: true
+  delegate :executable, to: :current_version
+  delegate :executable_filename, to: :current_version
+  delegate :version, to: :current_version, allow_nil: true
 
   attr_writer :file
   attr_writer :season_id
 
-  def latest_version(season=Season.current_season)
-    self.bot_versions.where(season: season).last
+  def current_version(season=Season.current_season)
+    bot_versions.runable.viewable.order(:version).where(season: season).last
   end
 
   def save_dll
@@ -53,7 +55,7 @@ class Bot < ApplicationRecord
   end
 
   def current_mmr(season=Season::current_season)
-    return MmrHistory.most_recent_result(self.id, season).mmr
+    MmrHistory.most_recent_result(self.id, season).mmr
   end
 
   def win_rate_race
@@ -73,7 +75,29 @@ class Bot < ApplicationRecord
     return return_array
   end
 
+  def zip_path
+    create_zip unless File.exist?(zip_relative_path)
+    Rails.root.join(zip_relative_path).to_s
+  end
+
   private
+
+  def create_zip
+    Zip::File.open(zip_relative_path, Zip::File::CREATE) do |zipfile|
+      if current_version.present? && File.exist?(download_filepath)
+        zipfile.add(executable_filename, download_filepath)
+      end
+    end
+  end
+
+  def zip_relative_path
+    "public/cache/bot_zip/#{zip_name}.zip"
+  end
+
+  def zip_name
+    version_string = version ? "v#{version}" : 'is_not_available'
+    "#{id}_#{name}_#{version_string}"
+  end
 
   def destroy_history
     MmrHistory.where(bot_id: self.id).destroy_all
