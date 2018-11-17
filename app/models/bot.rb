@@ -13,7 +13,6 @@
 #  name         :string(255)      not null
 #  race         :string(255)      not null
 #  summary      :text(65535)
-#  win_count    :integer          default(0), not null
 #  owner_id     :bigint(8)
 #
 # Indexes
@@ -91,6 +90,13 @@ class Bot < ApplicationRecord
   def zip_path
     create_zip unless File.exist?(zip_relative_path)
     Rails.root.join(zip_relative_path).to_s
+
+  def victories
+    game_results.where(winner_id: id)
+  end
+
+  def win_count
+    victories.count
   end
 
   private

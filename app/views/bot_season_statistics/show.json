@@ -11,6 +11,8 @@
     }
   },
   "methods": [
-    "mmr"
+    "mmr",
+    "match_count",
+    "win_count"
   ]
 }
