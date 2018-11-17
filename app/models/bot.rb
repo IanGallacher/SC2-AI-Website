@@ -90,6 +90,7 @@ class Bot < ApplicationRecord
   def zip_path
     create_zip unless File.exist?(zip_relative_path)
     Rails.root.join(zip_relative_path).to_s
+  end
 
   def victories
     game_results.where(winner_id: id)
