@@ -15,7 +15,7 @@ class FetchTable extends React.Component {
   }
 
   static propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.array,
     filter: PropTypes.func,
     location: ReactRouterPropTypes.location.isRequired,
     style: PropTypes.string,

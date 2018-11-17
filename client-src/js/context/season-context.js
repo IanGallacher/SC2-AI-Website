@@ -5,7 +5,7 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
-import { Dropdown } from "./../component/form.jsx";
+import { Dropdown, DropdownOption } from "./../component/form.jsx";
 
 export const SeasonContext = React.createContext(
   {
@@ -26,13 +26,13 @@ export const getSeasonFromUrl = (url) => {
 
 export const SeasonSelector = props => {
   return <SeasonContext.Consumer>{seasonContext =>
-    <Dropdown
-      options={seasonContext.all_seasons}
-      onChange={(event) => {
-        seasonContext.changeSeason(Number.parseInt(event.target.value));
-      }}
-      {...props}
-    />
+    <Dropdown onChange={(event) => {
+      seasonContext.changeSeason(Number.parseInt(event.target.value));
+    }} {...props}>
+      { seasonContext.all_seasons.map(
+        opt => <DropdownOption key={opt.id} value={String(opt.id)} label={opt.name}/>
+      )}
+    </Dropdown>
   }</SeasonContext.Consumer>;
 };
 

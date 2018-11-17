@@ -38,7 +38,7 @@ export default class CustomReactTable extends React.Component {
   }
 
   static propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.array,
     table: PropTypes.array, // Immutable table data.
     label: PropTypes.string, // The name shown above the table.
     nullMessage: PropTypes.string // What to show if there is no table contents.

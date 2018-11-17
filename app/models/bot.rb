@@ -27,6 +27,10 @@
 
 class Bot < ApplicationRecord
   include BetterJson
+
+  attr_writer :file
+  attr_writer :season_id
+
   has_many :mmr_histories
   has_many :bot_season_statistics
   has_many :bot_versions, dependent: :destroy
@@ -35,7 +39,9 @@ class Bot < ApplicationRecord
   has_and_belongs_to_many :game_results
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", optional: true
 
-  validates :name, :author, :race, presence: true
+  validates :license, length: { maximum: 255 }
+  validates :github, http_url: true, length: { maximum: 255 }, allow_blank: true
+  validates :name, :author, :race, length: { maximum: 255 }, presence: true
   validates :name, uniqueness: { case_sensitive: false }
 
   after_save :save_dll
@@ -44,9 +50,6 @@ class Bot < ApplicationRecord
   delegate :executable, to: :latest_version
   delegate :download_url, to: :latest_version
   delegate :download_filepath, to: :latest_version
-
-  attr_writer :file
-  attr_writer :season_id
 
   def latest_version(season=Season.current_season)
     self.bot_versions.where(season: season).last

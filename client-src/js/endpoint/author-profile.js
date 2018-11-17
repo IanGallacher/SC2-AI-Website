@@ -27,7 +27,7 @@ function AuthorDetails(props) {
     method="patch" uploadPath={props.edit_url}>
     <TextInput name="github"
       type="text"
-      placeholder={props.profile.github ? props.profile.github : "Github"}
+      placeholder={props.profile.github ? props.profile.github : "My Personal Github"}
       className="input-text"/>
   </FormZone>;
   if (props.profile.github) return <div className="author-details">

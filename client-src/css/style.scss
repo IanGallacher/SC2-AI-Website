@@ -33,6 +33,10 @@ p {
   color: #999;
 }
 
+.bot-text {
+  color: inherit;
+}
+
 a,
 a:hover,
 a:focus {
@@ -143,7 +147,7 @@ pre {
 
 .page-zone {
   flex-grow: 1;
-  background: #333;
+  background: #111;
   height: 100%;
   overflow-y: auto;
 }
