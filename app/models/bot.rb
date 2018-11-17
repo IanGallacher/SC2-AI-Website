@@ -5,7 +5,7 @@
 #  id           :bigint(8)        not null, primary key
 #  author       :string(255)      not null
 #  description  :text(65535)
-#  downloadable :string(255)      default("false"), not null
+#  downloadable :boolean          default(FALSE), not null
 #  enabled      :boolean          default(FALSE), not null
 #  github       :string(255)
 #  license      :string(255)
@@ -13,7 +13,6 @@
 #  name         :string(255)      not null
 #  race         :string(255)      not null
 #  summary      :text(65535)
-#  win_count    :integer          default(0), not null
 #  owner_id     :bigint(8)
 #
 # Indexes
@@ -50,6 +49,7 @@ class Bot < ApplicationRecord
   delegate :executable, to: :latest_version
   delegate :download_url, to: :latest_version
   delegate :download_filepath, to: :latest_version
+  delegate :download_filepath, to: :latest_version
 
   def latest_version(season=Season.current_season)
     self.bot_versions.where(season: season).last
@@ -80,6 +80,14 @@ class Bot < ApplicationRecord
     return_array[:zerg] = { win_count: (vs_zerg & victory).size, match_count: vs_zerg.size }
 
     return return_array
+  end
+
+  def victories
+    game_results.where(winner_id: id)
+  end
+
+  def win_count
+    victories.count
   end
 
   private

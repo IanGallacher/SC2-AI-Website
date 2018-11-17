@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181104165445) do
+ActiveRecord::Schema.define(version: 20181117200229) do
 
   create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20181104165445) do
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean "enabled", default: false, null: false
-    t.string "downloadable", default: "false", null: false
+    t.boolean "downloadable", default: false, null: false
     t.bigint "owner_id"
     t.string "name", null: false
     t.string "author", null: false
