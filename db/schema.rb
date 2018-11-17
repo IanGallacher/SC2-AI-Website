@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181028192522) do
+ActiveRecord::Schema.define(version: 20181117200229) do
 
   create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -34,10 +34,16 @@ ActiveRecord::Schema.define(version: 20181028192522) do
   end
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.boolean "enabled", default: false, null: false
+    t.boolean "downloadable", default: false, null: false
     t.bigint "owner_id"
     t.string "name", null: false
     t.string "author", null: false
+    t.string "license"
     t.string "race", null: false
+    t.text "summary"
+    t.text "description"
+    t.string "github"
     t.integer "match_count", default: 0, null: false
     t.integer "win_count", default: 0, null: false
     t.index ["owner_id"], name: "fk_rails_f93a12e463"

@@ -48,10 +48,7 @@ class GameResult < ApplicationRecord
 
   before_validation :set_season_if_necessary
   before_validation :set_result_status
-  around_update :update_victory_counter
   before_save :add_bots_from_ids
-  after_create :increment_match_counters
-  after_destroy :decrement_match_counters
   after_save :save_replay, :update_mmr
 
   validates :map, presence: true
@@ -86,44 +83,6 @@ class GameResult < ApplicationRecord
     self.status = 'complete' if self.winner_id.present?
     self.status = 'complete' if self.status.blank?
     self.status = STATUS_MAP[@result] if @result.present?
-  end
-
-  # private around_update
-  def update_victory_counter
-    old_winner = Bot.find(self.winner_id_was) if winner_id_was.present?
-    decrement_bot_counter(old_winner, self.season, :win_count) if winner_id_was.present?
-    yield
-    increment_bot_counter(self.winner, self.season, :win_count) if self.winner.present?
-  end
-
-  # private before_create
-  def increment_match_counters
-    increment_bot_counter(self.bots[0], self.season, :match_count)
-    increment_bot_counter(self.bots[1], self.season, :match_count)
-    increment_bot_counter(self.winner, self.season, :win_count) if self.winner.present?
-  end
-
-  # private
-  def increment_bot_counter(bot, season, counter_name)
-    BotSeasonStatistic.find_or_create_by(bot: bot, season: season)
-                      .increment(counter_name)
-                      .save
-    bot.increment(counter_name).save
-  end
-
-  # private before_destory
-  def decrement_match_counters
-    decrement_bot_counter(self.bots[0], self.season, :match_count)
-    decrement_bot_counter(self.bots[1], self.season, :match_count)
-    decrement_bot_counter(self.winner, self.season, :win_count) if self.winner.present?
-  end
-
-  # private
-  def decrement_bot_counter(bot, season, counter_name)
-    BotSeasonStatistic.find_or_create_by(bot: bot, season: season)
-                      .decrement(counter_name)
-                      .save
-    bot.decrement(counter_name).save
   end
 
   # private after_save

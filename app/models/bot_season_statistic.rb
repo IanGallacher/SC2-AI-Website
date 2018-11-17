@@ -22,4 +22,20 @@ class BotSeasonStatistic < ApplicationRecord
   def mmr
     bot.current_mmr(season)
   end
+
+  def matches
+    bot.game_results.where(season_id: season_id)
+  end
+
+  def victories
+    matches.where(winner_id: bot_id)
+  end
+
+  def match_count
+    matches.count
+  end
+
+  def win_count
+    victories.count
+  end
 end
