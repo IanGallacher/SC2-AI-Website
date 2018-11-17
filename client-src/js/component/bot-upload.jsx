@@ -18,7 +18,7 @@ export default class BotUpload extends React.Component {
 
   render() {
     let bot = this.props.bot;
-    let uploadPath = `/bots${bot && `/${bot.id}`}`;
+    let uploadPath = `/bots${bot ? `/${bot.id}` : ""}`;
     return <FormZone uploadPath={uploadPath} method={this.props.method}>
       <h3>{this.props.label}</h3>
       <TextInput name="name" placeholder={ bot ? bot.name : "Bot Name" }/>

@@ -13,6 +13,7 @@
 #  name         :string(255)      not null
 #  race         :string(255)      not null
 #  summary      :text(65535)
+#  win_count    :integer          default(0), not null
 #  owner_id     :bigint(8)
 #
 # Indexes
@@ -52,6 +53,7 @@ class Bot < ApplicationRecord
   delegate :executable_filename, to: :latest_version
   delegate :version, to: :latest_version, allow_nil: true
 
+  alias_method :versions, :bot_versions
 
   attr_writer :file
   attr_writer :season_id

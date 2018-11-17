@@ -99,6 +99,7 @@ class BotProfile extends React.Component {
         </Link>
         <SeasonSelector/>
       </div>
+      <a download href={`/api/bots/${bot.id}.zip`} className="btn">Download Bot</a>
       <WinRatePieChart
         label="vs all"
         victories={win_total}
