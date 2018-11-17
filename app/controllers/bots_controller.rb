@@ -1,12 +1,19 @@
 class BotsController < ApplicationController
   def index
-    render json: Bot.all
+    respond_to do |format|
+      format.json { render json: Bot.all }
+      format.zip { redirect_to Season.find(params[:season_id]).download_bots_url }
+    end
   end
 
   def show
     bot = Bot.find(params[:id])
     bot.season_id = params[:season_id] if params[:season_id]
-    render json: bot
+
+    respond_to do |format|
+      format.json { render json: bot }
+      format.zip { send_file bot.zip_path }
+    end
   end
 
   def create

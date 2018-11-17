@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   # protect_from_forgery with: :exception
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  scope :api do
+  scope :api, defaults: { format: :json } do
     resources :authors, only: [:index, :show]
     devise_for :users, controllers: {
       sessions: 'sessions',
@@ -27,12 +27,12 @@ Rails.application.routes.draw do
       resources :mmr_histories, only: [:index]
     end
 
-    resources :bot_downloads, only: [:index, :show]
     resources :mmr_histories, only: [:index, :show]
     resources :bot_versions, only: [:show]
 
     resources :game_results, only: [:index, :create]
     resources :seasons, only: [:index, :show, :create] do
+      resources :bots, only: [:index, :show]
       resource :next_game, only: [:show]
       resources :planned_games, only: [:index, :show, :create, :destroy]
     end

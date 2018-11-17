@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20181117200229) do
     t.bigint "season_id"
     t.integer "version", null: false
     t.string "executable", null: false
+    t.boolean "enabled", default: true, null: false
     t.boolean "visable", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

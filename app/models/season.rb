@@ -13,7 +13,7 @@
 require 'zip'
 
 class Season < ApplicationRecord
-  MMR_METHODS = ::MMRAlgorithms.instance_methods
+  MMR_METHODS = ::MMRAlgorithms.instance_methods.map(&:to_s)
 
   has_many :bot_season_statistics
   has_many :bots, through: :bot_season_statistics
@@ -27,10 +27,15 @@ class Season < ApplicationRecord
     Season.last || Season.create!
   end
 
-  def update_download_zip_if_necessary
-    new_zip_path = bots_zip_path
+  def download_bots_url
+    Rails.cache.fetch(download_cache_id) do
+      self.update_download_zip_if_necessary
+      bots_zip_path
+    end
+  end
 
-    Zip::File.open(new_zip_path, Zip::File::CREATE) do |zipfile|
+  def update_download_zip_if_necessary
+    Zip::File.open(bots_zip_path, Zip::File::CREATE) do |zipfile|
       self.bots.each do |bot|
         # Two arguments:
         # - The name of the file as it will appear in the archive
@@ -41,14 +46,7 @@ class Season < ApplicationRecord
     end
   end
 
-  def download_bots_url
-    self.update_download_zip_if_necessary
-    Rails.cache.fetch(download_cache_id) do
-      bots_zip_path
-    end
-  end
-
-private
+  private
 
   def download_cache_id
     bots_updated_at = []
