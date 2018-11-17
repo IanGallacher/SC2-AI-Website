@@ -35,11 +35,7 @@ ActiveRecord::Schema.define(version: 20181117200229) do
 
   create_table "bots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean "enabled", default: false, null: false
-<<<<<<< HEAD
     t.boolean "downloadable", default: false, null: false
-=======
-    t.string "downloadable", default: "false", null: false
->>>>>>> master
     t.bigint "owner_id"
     t.string "name", null: false
     t.string "author", null: false
