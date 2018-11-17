@@ -36,9 +36,7 @@ module.exports = {
     contentBase: paths.DIST,
     // For single page applications, we always fallback to index.html.
     // Let React handle routing.
-    historyApiFallback: {
-      index: 'index.html'
-    },
+    historyApiFallback: true,
     proxy: {
       "/api": "http://localhost:3000",
       "/replay": "http://localhost:3000",
