@@ -3,9 +3,7 @@ import React from "react";
 import ReactRouterPropTypes from "react-router-prop-types";
 
 import { API_URL } from "./../app.js";
-import {
-  SeasonSelector,
-  getSeasonFromUrl } from "./../context/season-context.js";
+import { SeasonSelector, SeasonContext } from "./../context/season-context.js";
 import FilterBar from "./../component/filter.jsx";
 
 import CustomReactTable from "./../table/table.jsx";
@@ -13,6 +11,8 @@ import TableCell from "./../table/table-cell.jsx";
 import TablePagination from "./../table/table-pagination.jsx";
 
 export default class RecentResults extends React.Component {
+  static contextType = SeasonContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,7 @@ export default class RecentResults extends React.Component {
     location: ReactRouterPropTypes.location.isRequired
   }
 
-  componentDidMount = () => { this.updateResultData(this.getSeasonId()); }
+  componentDidMount = () => { this.updateResultData(this.context.selected.id); }
 
   updateResultData = (season_id, page=null) => {
     // There is a bug with react that is causing the setState callback to not use the updated state.
@@ -45,10 +45,8 @@ export default class RecentResults extends React.Component {
     }));
   }
 
-  getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
-
   getPage = page => {
-    this.setState({ page },this.updateResultData(this.getSeasonId(), page));
+    this.setState({ page },this.updateResultData(this.context.selected.id, page));
   }
 
   initPageNumbers() {
@@ -63,7 +61,7 @@ export default class RecentResults extends React.Component {
   }
 
   render() {
-    let new_season_id = this.getSeasonId();
+    let new_season_id = this.context.selected.id;
     if(this.state.old_season != new_season_id)
       this.updateResultData(new_season_id);
     let rows = this.initPageNumbers();

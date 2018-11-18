@@ -10,7 +10,7 @@ import { Dropdown, DropdownOption } from "./../component/form.jsx";
 export const SeasonContext = React.createContext(
   {
     changeSeason: () => {},
-    selected: "",
+    selected: {},
     all_seasons: []
   }
 );
@@ -21,20 +21,29 @@ export const getSeasonFromUrl = (url) => {
     const params = new URLSearchParams(url);
     season_id = params.get("season");
   }
-  return Number.parseInt(season_id || "1");
+  return Number.parseInt(season_id);
 };
 
-export const SeasonSelector = props => {
-  return <SeasonContext.Consumer>{seasonContext =>
-    <Dropdown onChange={(event) => {
-      seasonContext.changeSeason(Number.parseInt(event.target.value));
-    }} {...props}>
-      { seasonContext.all_seasons.map(
-        opt => <DropdownOption key={opt.id} value={String(opt.id)} label={opt.name}/>
-      )}
-    </Dropdown>
-  }</SeasonContext.Consumer>;
-};
+export class SeasonSelector extends React.Component {
+  static contextType = SeasonContext;
+
+  render() {
+    return (
+      <Dropdown
+        // Make sure the most recent season is selected by default.
+        value={`${this.context.all_seasons.findIndex(val => this.context.selected.id == val.id) + 1}`}
+        onChange={(event) => {
+          this.context.changeSeason(Number.parseInt(event.target.value));
+        }} {...this.props}>
+        {
+          this.context.all_seasons.map(
+            opt => <DropdownOption key={opt.id} value={String(opt.id)} label={opt.name}/>
+          )
+        }
+      </Dropdown>
+    );
+  }
+}
 
 class SeasonProvider extends React.Component {
   constructor(props) {
@@ -49,7 +58,7 @@ class SeasonProvider extends React.Component {
     root: PropTypes.object,
     seasonContext: PropTypes.shape({
       changeSeason: PropTypes.function,
-      selected: PropTypes.string,
+      selected: PropTypes.object,
       seasons: PropTypes.array
     })
   }
@@ -57,13 +66,18 @@ class SeasonProvider extends React.Component {
   componentDidMount() {
     let axios_url = `${API_URL}/seasons`;
     axios.get(axios_url).then(
-      response => this.props.root.setState({
-        seasonContext: {
-          changeSeason: this.changeSeason,
-          all_seasons: response.data,
-          selected: response.data[0]
-        }
-      })
+      response => {
+        let id_from_url = getSeasonFromUrl(this.props.location.search);
+        let season_key = response.data.findIndex(val => id_from_url == val.id);
+        season_key = season_key == -1 ? (response.data.length-1) : season_key;
+        this.props.root.setState({
+          seasonContext: {
+            changeSeason: this.changeSeason,
+            all_seasons: response.data,
+            selected: response.data[season_key]
+          }
+        });
+      }
     );
   }
 
@@ -72,11 +86,12 @@ class SeasonProvider extends React.Component {
     const params = new URLSearchParams(this.props.location.search);
     params.set("season", newSeasonId);
     this.props.history.push({ search: params.toString() });
+    let season_key = seasonContext.all_seasons.findIndex(val => newSeasonId == val.id);
     this.props.root.setState({
       seasonContext: {
         changeSeason: seasonContext.changeSeason,
         all_seasons: seasonContext.all_seasons,
-        selected: seasonContext.all_seasons[newSeasonId]
+        selected: seasonContext.all_seasons[season_key]
       }
     });
   }

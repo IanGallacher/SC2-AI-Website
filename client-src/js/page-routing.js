@@ -51,7 +51,7 @@ export default class PageRouting extends React.Component {
     this.state = {
       seasonContext: {
         changeSeason: () => {},
-        selected: "",
+        selected: {},
         all_seasons: [{ name: "loading..." }]
       }
     };
