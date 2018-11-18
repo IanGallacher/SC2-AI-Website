@@ -59,6 +59,17 @@ class BotProfile extends React.Component {
 
   getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
 
+  renderDownloadButton = (bot) => {
+    if (bot.downloadable)
+      return <a download href={`/api/bots/${bot.id}.zip`} className="btn btn-md">
+        Download Bot
+      </a>;
+    else
+      return <p className="bot-text">
+        Sorry, this bot is not available for download
+      </p>;
+  }
+
   render() {
     const bot = this.state.bot;
     if (bot === null) {
@@ -93,13 +104,12 @@ class BotProfile extends React.Component {
         { bot.license && <p className="bot-text">{`License: ${bot.license}`}</p> }
         { bot.summary && <p className="bot-text">{`Summary: ${bot.summary}`}</p> }
         { bot.description && <p className="bot-text">{`Description: ${bot.description}`}</p> }
-        { bot.downloadable && <p className="bot-text">{`Downloadable: ${bot.downloadable}`}</p> }
         <Link to={`/authors/?author_id=${bot.owner_id}`}>
           {`Bot Author: ${bot.author}`}
         </Link>
+        { this.renderDownloadButton(bot) }
         <SeasonSelector/>
       </div>
-      <a download href={`/api/bots/${bot.id}.zip`} className="btn">Download Bot</a>
       <WinRatePieChart
         label="vs all"
         victories={win_total}

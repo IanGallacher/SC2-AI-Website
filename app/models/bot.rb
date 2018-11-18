@@ -45,6 +45,7 @@ class Bot < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false }
 
   after_save :save_dll
+  after_save :ensure_valid_downloadable_state
   before_destroy :destroy_history
 
   delegate :download_url, to: :latest_version
@@ -57,6 +58,12 @@ class Bot < ApplicationRecord
 
   attr_writer :file
   attr_writer :season_id
+
+  def ensure_valid_downloadable_state
+    @latest_version = latest_version
+    update_column(:download, false) if @latest_version&.executable.blank?
+    update_column(:download, false) if @latest_version&.visable.blank?
+  end
 
   def latest_version(season=Season.current_season)
     bot_versions.runable.viewable.order(:version).where(season: season).last
