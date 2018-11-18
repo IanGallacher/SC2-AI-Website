@@ -4,9 +4,7 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import { withRouter } from "react-router";
 
 import { API_URL } from "./../app.js";
-import {
-  SeasonSelector,
-  getSeasonFromUrl } from "./../context/season-context.js";
+import { SeasonSelector, SeasonContext } from "./../context/season-context.js";
 import FilterBar from "./../component/filter.jsx";
 
 import CustomReactTable from "./../table/table.jsx";
@@ -14,6 +12,8 @@ import TableCell from "./../table/table-cell.jsx";
 import SchemaFactory from "./../table/schema-factory.jsx";
 
 class Bots extends React.Component {
+  static contextType = SeasonContext;
+
   constructor(props) {
     super(props);
     this.state = {old_season: 1};
@@ -25,10 +25,8 @@ class Bots extends React.Component {
   }
 
   componentDidMount = () => {
-    this.updateBotData(this.getSeasonId());
+    this.updateBotData(this.context.selected.id);
   }
-
-  getSeasonId = () => { return getSeasonFromUrl(this.props.location.search); }
 
   updateBotData = (season_id) => {
     let axios_url = `${API_URL}/seasons/${season_id}`;
@@ -59,7 +57,7 @@ class Bots extends React.Component {
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
 
-    let new_season_id = this.getSeasonId();
+    let new_season_id = this.context.selected.id;
     if(this.state.old_season != new_season_id) this.updateBotData(new_season_id);
 
     const bot_table = this.getBotTable(params);

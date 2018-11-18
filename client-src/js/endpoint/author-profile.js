@@ -47,11 +47,7 @@ AuthorDetails.propTypes = {
 };
 
 function renderBotDetails(bot) {
-  return <BotUpload
-    bot={bot}
-    uploadPath={`/bots/${bot.id}`}
-    method="patch"
-  />;
+  return <BotUpload bot={bot} method="patch"/>;
 }
 
 class AuthorProfile extends React.Component {
