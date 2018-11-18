@@ -30,12 +30,14 @@ function AuthorDetails(props) {
       placeholder={props.profile.github ? props.profile.github : "My Personal Github"}
       className="input-text"/>
   </FormZone>;
-  if (props.profile.github) return <div className="author-details">
-    <div className="profile-details">
-      {ProfileDetail("fa-github", "Github", props.profile.github, true)}
-      {ProfileDetail("fa-patreon","Patreon Tier", props.profile.patreon_tier, false)}
+  if (props.profile.github || props.profile.patreon_tier) return (
+    <div className="author-details">
+      <div className="profile-details">
+        {ProfileDetail("fa-github", "Github", props.profile.github, true)}
+        {ProfileDetail("fa-patreon","Patreon Tier", props.profile.patreon_tier, false)}
+      </div>
     </div>
-  </div>;
+  );
   return null;
 }
 AuthorDetails.propTypes = {
@@ -45,11 +47,7 @@ AuthorDetails.propTypes = {
 };
 
 function renderBotDetails(bot) {
-  return <BotUpload
-    bot={bot}
-    uploadPath={`/bots/${bot.id}`}
-    method="patch"
-  />;
+  return <BotUpload bot={bot} method="patch"/>;
 }
 
 class AuthorProfile extends React.Component {

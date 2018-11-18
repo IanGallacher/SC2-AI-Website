@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export const Dropdown = props => {
   let children = props.children;
   if (!props.children || props.children.length == 0) {
-    children = props.options.map(
+    children = props.options && props.options.map(
       opt => <DropdownOption key={opt.id} value={opt.id} label={opt.name}/>
     );
   }
@@ -15,6 +15,7 @@ export const Dropdown = props => {
       group={props.group}
       id={props.id}
       onChange={props.onChange}
+      value={props.value}
       defaultValue={props.defaultValue}> {children} </select>
   );
 };
@@ -22,6 +23,7 @@ Dropdown.propTypes = {
   children: PropTypes.array,
   className: PropTypes.string,
   defaultValue: PropTypes.string,
+  value: PropTypes.string,
   name: PropTypes.string,
   id: PropTypes.string,
   group: PropTypes.string,
