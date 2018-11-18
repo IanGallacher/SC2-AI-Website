@@ -61,8 +61,8 @@ class Bot < ApplicationRecord
 
   def ensure_valid_downloadable_state
     @latest_version = latest_version
-    update_column(:download, false) if @latest_version&.executable.blank?
-    update_column(:download, false) if @latest_version&.visable.blank?
+    update_column(:downloadable, false) if @latest_version&.executable.blank?
+    update_column(:downloadable, false) if @latest_version&.visable.blank?
   end
 
   def latest_version(season=Season.current_season)
