@@ -2,12 +2,13 @@
 #
 # Table name: seasons
 #
-#  id          :bigint(8)        not null, primary key
-#  end_date    :datetime
-#  initial_mmr :integer          default(1200), not null
-#  mmr_method  :string(255)
-#  name        :string(255)
-#  start_date  :datetime
+#  id              :bigint(8)        not null, primary key
+#  end_date        :datetime
+#  initial_mmr     :integer          default(1200), not null
+#  mmr_method      :string(255)
+#  name            :string(255)
+#  planning_method :string(255)
+#  start_date      :datetime
 #
 
 require 'zip'

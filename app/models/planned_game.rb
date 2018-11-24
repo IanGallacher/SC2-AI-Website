@@ -15,40 +15,52 @@
 #
 
 class PlannedGame < ApplicationRecord
+  VALID_PLANNING_METHODS = ::PlannedGameFactory.instance_methods.map(&:to_s)
+  PLAN_VALID_TIME = 3.hours
+  MAX_MATCH_LENGTH = 1.hour
+
   belongs_to :season
   has_and_belongs_to_many :bots
 
+  scope :reserved_games, -> { where.not(computer_id: nil) }
   scope :unreserved_games, -> { where(computer_id: nil) }
-  scope :next_available_game, -> (season) { unreserved_games.find_by(season: season) }
 
-  def self.bulk_create(method, season)
-    matches = one_match_with_all(season.bots) if method == :one_match_with_all
-    matches.each do |bot_matchup|
-      PlannedGame.create!(bots: bot_matchup, season: Season.current_season)
-    end
+  def self.generate_game(season, computer_id:, planning_method:)
+    validate_planning_method(planning_method)
+    planning_method ||= season.planning_method
+    PlannedGameFactory.send(planning_method, computer_id: computer_id)
+  end
+
+  def self.find_game(season, computer_id)
+    game = PlannedGame.where(season: season, computer_id: computer_id).first
+    game ||= unreserved_games.find_by(season: season)
+    return game unless game.expired?
   end
 
   def self.reserve_game(season, computer_id)
-    next_game = next_available_game(season)
+    next_game = find_or_generate(season, computer_id)
     next_game.update_attributes(computer_id: computer_id)
     return next_game
   end
 
+  def self.find_or_generate(season, computer_id)
+    find_game(season, computer_id) || generate_game(season, computer_id)
+  end
+
   def self.find_or_reserve(season, computer_id)
-    existing_next_game = PlannedGame.find_by(computer_id: computer_id)
-    return existing_next_game if existing_next_game.present?
-    reserve_game(season, computer_id)
+    find_by_computer_id(computer_id) || reserve_game(season, computer_id)
+  end
+
+  def expired?
+    Time.now.utc + MAX_MATCH_LENGTH > created_at + PLAN_VALID_TIME
   end
 
   private
 
-  def self.one_match_with_all(season_bots)
-    matches = []
-    season_bots.each_with_index do |bot_a, bot_a_index|
-      season_bots.each_with_index do |bot_b, bot_b_index|
-        matches.push [bot_a, bot_b] if bot_b_index > bot_a_index
-      end
-    end
-    return matches
+  def self.validate_planning_method
+    return if planning_method.in? VALID_PLANNING_METHODS
+    raise ArgumentError.new(
+      %{Planning method "#{planning_method}" is not in PlannedGameFactory}
+    )
   end
 end

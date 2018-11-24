@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181117200229) do
+ActiveRecord::Schema.define(version: 20181124221004) do
 
   create_table "bot_season_statistics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "bot_id", null: false
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20181117200229) do
   create_table "seasons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "mmr_method"
+    t.string "planning_method"
     t.integer "initial_mmr", default: 1200, null: false
     t.datetime "start_date"
     t.datetime "end_date"
