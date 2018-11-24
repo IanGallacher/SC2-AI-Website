@@ -52,7 +52,7 @@ class PlannedGame < ApplicationRecord
   end
 
   def expired?
-    Time.utc.now + MAX_MATCH_LENGTH > created_at + PLAN_VALID_TIME
+    Time.now.utc + MAX_MATCH_LENGTH > created_at + PLAN_VALID_TIME
   end
 
   private
