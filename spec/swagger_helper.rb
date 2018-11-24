@@ -1,5 +1,11 @@
 require 'rails_helper'
 
+# Setup our test coverage gem. Code Climate requires this.
+require 'simplecov'
+require 'simplecov-console'
+SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.start
+
 RSpec.configure do |config|
   # Include our authentication helper in all of our request specs
   config.include Helpers::Authentication, type: :request

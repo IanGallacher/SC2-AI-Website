@@ -32,9 +32,6 @@ gem 'eventmachine', '= 1.0.7'
 # Gem to catch outgoing mail
 gem 'mailcatcher'
 
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-
 # Pagination
 gem 'will_paginate', '~> 3.1.1'
 
@@ -46,7 +43,9 @@ group :development, :test do
 
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem "faker", "~> 1.8"
+  gem 'faker', '~> 1.8'
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
 end
 
 group :development do
