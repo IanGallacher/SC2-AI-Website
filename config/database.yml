@@ -36,7 +36,7 @@ production:
   reconnect: false
   database: sc2-ai-production
   pool: 5
-  username: root
+  username: ubuntu
   password: <%= ENV["MYSQL_PASSWORD"] %>
   socket: /var/run/mysqld/mysqld.sock
 
@@ -47,6 +47,6 @@ legacy:
   database: alphadb
   host: 127.0.0.1
   pool: 5
-  username: root
+  username: ubuntu
   password: <%= ENV["MYSQL_PASSWORD"] %>
   socket: /var/lib/mysql/mysql.sock
