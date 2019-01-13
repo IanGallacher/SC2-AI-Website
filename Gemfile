@@ -8,7 +8,9 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
-# Use mysql2 as the database for Active Record
+# Use postgres as the database for Active Record
+gem 'pg'
+# Use mysql2 for connecting to the legacy database for migrating records.
 gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
