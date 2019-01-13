@@ -12,8 +12,13 @@ Note that this guide does not yet cover setting up pre-requisite software, and i
 ## Setup
 
 * Install Ruby and stuff...
+The commands you use to install ruby and various dependancies will vary depending on your operating system. On ubuntu, it will look something like this:
+```sh
+sudo apt-get install ruby-dev zlibc zlib1g zlib1g-dev libsqlite3-dev libmysqlclient-dev
+sudo npm install -g npx
+```
 
-* Install Bundler: `gem install bundler`.
+* Install Bundler: `gem install bundler -v 1.16.2`.
 
 * Clone this repo to your computer.
 
