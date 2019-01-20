@@ -101,6 +101,7 @@ namespace :legacy_db do
     user ||= User.create!(
       username: user_hash['username'],
       email: user_hash['email'],
+      avatar: user_hash['Avatar'],
       password: Faker::Internet.password(min_length = 32, max_length = 64),
       created_at: user_hash['Joined'],
       updated_at: user_hash['mod_timestamp'],
