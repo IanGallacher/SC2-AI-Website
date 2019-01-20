@@ -1,4 +1,4 @@
-class GameResultsController < ApplicationController
+class GameResultsController < IncludedLoginCredentialsController
   def index
     authorize! :read, GameResult
     game_results = GameResult.includes(:bots, :winner)

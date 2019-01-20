@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     # Custom endpoints for login and logout.
     # We want /logout instead of /users/logout.
     devise_scope :user do
-      get :login, to: 'sessions#new'
       post :login, to: 'sessions#create'
       get :logout, to: 'sessions#destroy'
     end
