@@ -60,6 +60,10 @@ class User < ApplicationRecord
     role.in? GAME_MANAGEMENT_ROLES
   end
 
+  def admin?
+    role == 'admin'
+  end
+
   private
 
   def get_filename
