@@ -5,10 +5,9 @@ class Ability
     signed_in = user.present?
     user ||= User.new
     can :read, :all
-    #cannot :read, GameResult unless signed_in
-    can :create, GameResult if user.role == 'admin'
 
-    can :update, PlannedGame if user.role == 'admin'
+    can :create, GameResult if user.can_report_games?
+    can :update, PlannedGame if user.can_report_games?
 
     can :create, Bot if signed_in
     can :update, Bot do |bot|

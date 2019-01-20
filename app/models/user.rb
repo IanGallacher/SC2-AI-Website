@@ -30,7 +30,8 @@
 #
 
 class User < ApplicationRecord
-  PATREON_TIERS = %w[Bronze Silver Gold]
+  PATREON_TIERS = %w[Bronze Silver Gold].freeze
+  GAME_MANAGEMENT_ROLES = %w[admin game_reporter].freeze
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -55,7 +56,12 @@ class User < ApplicationRecord
     File.open("public" + self.avatar, 'wb') { |file| file.write(@file.read) }
   end
 
+  def can_report_games?
+    role.in? GAME_MANAGEMENT_ROLES
+  end
+
   private
+
   def get_filename
     "/user-upload/avatar/#{username.gsub(/[^0-9A-z.\-]/, '_')}#{File.extname @file.original_filename}"
   end
