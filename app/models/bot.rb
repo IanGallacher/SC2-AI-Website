@@ -3,7 +3,6 @@
 # Table name: bots
 #
 #  id           :bigint(8)        not null, primary key
-#  author       :string(255)      not null
 #  description  :text(65535)
 #  downloadable :boolean          default(FALSE), not null
 #  enabled      :boolean          default(FALSE), not null
@@ -41,7 +40,7 @@ class Bot < ApplicationRecord
 
   validates :license, length: { maximum: 255 }
   validates :github, http_url: true, length: { maximum: 255 }, allow_blank: true
-  validates :name, :author, :race, length: { maximum: 255 }, presence: true
+  validates :name, :race, length: { maximum: 255 }, presence: true
   validates :name, uniqueness: { case_sensitive: false }
 
   after_save :save_dll

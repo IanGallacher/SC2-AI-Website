@@ -1,6 +1,14 @@
 {
   "include": {
     "bot": {
+      "include": {
+         "owner": {
+           "only": [
+             "username",
+             "patreon_tier"
+           ]
+         }
+      },
       "only": [
         "id",
         "name",

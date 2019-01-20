@@ -1,6 +1,16 @@
 {
  "include": {
-    "bots": {}
+    "bots": {
+      "include": {
+         "owner": {
+           "only": [
+             "id",
+             "username",
+             "patreon_tier"
+           ]
+         }
+      }
+    }
  },
  "methods": "winner_name"
 }

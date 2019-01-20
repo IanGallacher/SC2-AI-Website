@@ -1,4 +1,12 @@
 {
-  "include": {},
+  "include": {
+    "owner": {
+      "only": [
+        "id",
+        "username",
+        "patreon_tier"
+      ]
+    }
+  },
   "methods": "current_mmr"
 }

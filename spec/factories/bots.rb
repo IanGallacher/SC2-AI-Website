@@ -3,7 +3,6 @@
 # Table name: bots
 #
 #  id           :bigint(8)        not null, primary key
-#  author       :string(255)      not null
 #  description  :text(65535)
 #  downloadable :boolean          default(FALSE), not null
 #  enabled      :boolean          default(FALSE), not null
@@ -28,7 +27,6 @@
 FactoryBot.define do
   factory :bot do
     name { "#{Faker::Pokemon.unique.name} bot" }
-    author { Faker::GameOfThrones.unique.character }
     race { %w[Terran Protoss Zerg Random].sample }
 
     trait :with_history do

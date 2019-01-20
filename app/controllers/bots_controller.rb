@@ -53,7 +53,6 @@ class BotsController < ApplicationController
       name author race file enabled downloadable license summary description github
     ])
     p[:owner_id] = current_user.id if current_user.present?
-    p[:author] ||= current_user.username if current_user.present?
     return p
   end
 end

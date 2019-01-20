@@ -1,9 +1,11 @@
+import { renderNameWithPatreon } from "./../component/user-title.jsx";
+
 export default class SchemaFactory {
   static BotNameSchema(context) {
     return {
       header: "Bot name",
-      field: "name",
       sortValue: row => (row.name || "").toLowerCase(),
+      render: row => { return renderNameWithPatreon(row.name, row.patreon_tier); },
       onClick: row => {
         let bot_id = row.bot_id || row.id;
         context.props.history.push(`/bot/?bot_id=${bot_id}`);
