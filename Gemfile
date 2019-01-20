@@ -35,6 +35,9 @@ gem 'mailcatcher'
 # Pagination
 gem 'will_paginate', '~> 3.1.1'
 
+# faker is needed for importing the legacy databse
+gem 'faker', '~> 1.8'
+
 group :development, :test do
   gem 'pry-byebug'
   # Adds support for Capybara system testing and selenium driver
@@ -43,7 +46,6 @@ group :development, :test do
 
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem 'faker', '~> 1.8'
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
 end

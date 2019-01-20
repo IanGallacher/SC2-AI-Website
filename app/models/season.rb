@@ -25,7 +25,7 @@ class Season < ApplicationRecord
   validates :mmr_method, inclusion: { in: MMR_METHODS }, allow_nil: true
 
   def self.current_season
-    Season.last || Season.create!
+    Season.last
   end
 
   def download_bots_url

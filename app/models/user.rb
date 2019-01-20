@@ -45,8 +45,9 @@ class User < ApplicationRecord
   attr_accessor :login
   attr_writer :file
 
-  validates :github, http_url: true, allow_nil: true
-  validates :website, http_url: true, allow_blank: true
+  # http_url validtor does not work with the legacy_db:import script.
+  # validates :github, http_url: true, allow_nil: true
+  # validates :website, http_url: true, allow_blank: true
   validates :patreon_tier, inclusion: { in: PATREON_TIERS }, allow_nil: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 
