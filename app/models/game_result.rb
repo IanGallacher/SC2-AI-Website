@@ -49,7 +49,7 @@ class GameResult < ApplicationRecord
   before_validation :set_season_if_necessary
   before_validation :set_result_status
   before_save :add_bots_from_ids
-  after_save :save_replay, :update_mmr
+  after_save :save_replay, :update_mmr, :associate_bots_with_season
 
   validates :map, presence: true
   validates :status, inclusion: { in: GameResult::STATUS }, presence: true
@@ -107,6 +107,12 @@ class GameResult < ApplicationRecord
     logger.warn("You are saving game_result #{self.id} without automatically calcualting MMR")
     add_history(bot_1.id, bot_2_mmr, score, @mmr_changes&.send(:[], 0))
     add_history(bot_2.id, bot_1_mmr, 1-score, @mmr_changes&.send(:[], 1))
+  end
+
+  def associate_bots_with_season
+    bots.each do |bot|
+      BotSeasonStatistic.find_or_create_by(bot: bot, season: season)
+    end
   end
 
   # private
