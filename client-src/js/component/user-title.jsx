@@ -7,13 +7,25 @@ let PATREON_TIER_CLASSES = {
   "Bronze": "patreon-tier-bronze"
 };
 
-function renderUserName(user) {
-  let patreon_tier = user.patreon_tier;
+
+function renderPatreonStar(patreon_tier) {
   let patreon_tier_class = "";
   if(patreon_tier) patreon_tier_class = PATREON_TIER_CLASSES[patreon_tier];
+  return <React.Fragment>
+    { patreon_tier ? <i className={`fa fa-star ${patreon_tier_class}`}/> : null }
+  </React.Fragment>;
+}
+
+export function renderNameWithPatreon(name, patreon_tier) {
+  return <React.Fragment>
+    {renderPatreonStar(patreon_tier)}
+    {name}
+  </React.Fragment>;
+}
+
+function renderUserTitle(user) {
   return <div className="trading-card-title">
-    {patreon_tier ? <i className={`fa fa-star ${patreon_tier_class}`}/> : null}
-    {user.username}
+    {renderNameWithPatreon(user.username, user.patreon_tier)}
   </div>;
 }
 
@@ -26,7 +38,7 @@ function renderRoleIfNecessary(user) {
 export default function UserTitle(props) {
   let user = props.user;
   return <React.Fragment>
-    { renderUserName(user) }
+    { renderUserTitle(user) }
     { renderRoleIfNecessary(user) }
   </React.Fragment>;
 }

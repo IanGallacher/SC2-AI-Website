@@ -24,7 +24,7 @@ class SeasonsController < ApplicationController
   end
 
   def statistics
-    statistics = Season.find(params[:id]).bot_season_statistics.includes(:bot)
+    statistics = Season.find(params[:id]).bot_season_statistics.includes(bot: [:owner, :mmr_histories])
     statistics.as_json(template: :show).map do |statistic|
       {
         id: statistic['id'],
@@ -33,8 +33,9 @@ class SeasonsController < ApplicationController
         win_count: statistic['win_count'],
         name: statistic[:bot]['name'],
         race: statistic[:bot]['race'],
-        author: statistic[:bot]['author'],
+        author: statistic[:bot][:owner]['username'],
         author_id: statistic[:bot]['owner_id'],
+        patreon_tier: statistic[:bot][:owner]['patreon_tier'],
         mmr: statistic['mmr']
       }
     end

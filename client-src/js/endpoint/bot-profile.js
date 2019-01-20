@@ -103,7 +103,7 @@ class BotProfile extends React.Component {
         { bot.summary && <p className="bot-text">{`Summary: ${bot.summary}`}</p> }
         { bot.description && <p className="bot-text">{`Description: ${bot.description}`}</p> }
         <Link to={`/authors/?author_id=${bot.owner_id}`}>
-          {`Bot Author: ${bot.author}`}
+          {`Bot Author: ${bot.owner.username}`}
         </Link>
         { this.renderDownloadButton(bot) }
         <SeasonSelector/>
