@@ -116,7 +116,6 @@ namespace :legacy_db do
     bot ||= Bot.find_by(name: bot_hash['Name'])
     bot ||= Bot.create!(
       name: bot_hash['Name'],
-      author: author.username,
       owner_id: author.id,
       race: races[bot_hash['Race']]
     )
