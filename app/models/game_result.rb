@@ -86,9 +86,7 @@ class GameResult < ApplicationRecord
     return unless @replayfile.present?
     return if self.replay == replay_url
     self.update_attributes(replay: replay_url)
-    File.open('public' + file_path + filename, 'wb') do |replayfile|
-      replayfile.write(@replayfile.read)
-    end
+    UploadedFile.new(@replayfile).write_to_public(filename)
   end
 
   def update_mmr
