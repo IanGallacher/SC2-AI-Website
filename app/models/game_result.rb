@@ -64,7 +64,6 @@ class GameResult < ApplicationRecord
 
   private
 
-  # private before_save
   def add_bots_from_ids
     return unless @bot_ids.present?
     @bot_ids.each do |bot_id|
@@ -72,12 +71,10 @@ class GameResult < ApplicationRecord
     end
   end
 
-  # private before_validation
   def set_season_if_necessary
     self.season = Season.current_season if self.season.blank?
   end
 
-  # private before_validation
   def set_result_status
     self.status ||= 'in_progress'
     self.status = 'complete' if self.winner_id.present?
@@ -85,7 +82,6 @@ class GameResult < ApplicationRecord
     self.status = STATUS_MAP[@result] if @result.present?
   end
 
-  # private after_save
   def save_replay
     return unless @replayfile.present?
     return if self.replay == replay_url
@@ -95,7 +91,6 @@ class GameResult < ApplicationRecord
     end
   end
 
-  # private after_save
   def update_mmr
     bot_1 = self.bots.first
     bot_2 = self.bots.second
@@ -115,7 +110,6 @@ class GameResult < ApplicationRecord
     end
   end
 
-  # private
   def add_history(bot_id, enemy_mmr, score, change_mmr_by)
     MmrHistory.create!(
       bot_id: bot_id,
@@ -128,12 +122,10 @@ class GameResult < ApplicationRecord
     )
   end
 
-  # private
   def file_path
-    '/replay/'
+    '/replays/'
   end
 
-  # private
   def filename
     extname = File.extname(@replayfile.original_filename)
     basename = File.basename(@replayfile.original_filename, extname)
